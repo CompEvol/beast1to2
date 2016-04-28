@@ -1,0 +1,9 @@
+<addon name='BEAST1to2' version='0.0.1'>
+	<depends on='beast2' atleast='2.4.0'/>
+	<depends on='BEASTLabs' atleast='1.5.0'/>
+    <addonapp description="Beast1to2Converter"
+              class="beast1to2.Beast1to2Converter"
+              args=""
+              icon="beast1to2/BEAST1to2.png"
+            />
+</addon>

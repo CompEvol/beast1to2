@@ -1,0 +1,221 @@
+<!-- Build BEAST1to2. It is also used by Hudson BEAST1to2 project. JUnit test is available for this build. -->
+<project basedir="." default="build_jar_all_BEAST1to2" name="BUILD_BEAST1to2">
+	<description>
+	    Build BEAST1to2. 
+            Also used by Hudson BEAST1to2 project. 
+	    JUnit test is available for this build.
+	    $Id: build_BEAST1to2.xml $
+	</description>
+
+	<!-- set global properties for this build -->
+	<property name="srcBEAST1to2" location="src" />
+	<property name="buildBEAST1to2" location="build" />
+	<property name="libBEAST1to2" location="lib" />
+	<property name="release_dir" value="release" />
+	<property name="distBEAST1to2" location="${buildBEAST1to2}/dist" />
+	<property name="beast2path" location="../beast2" />
+	<property name="libBeast2" location="${beast2path}/lib" />
+	<property name="srcBeast2" location="${beast2path}/src" />
+	<property name="beast_classic_path" location="../beast-classic/build" />
+	<property name="beast2classpath" location="${beast2path}/build" />
+	<property name="beastLabsPath" location="../BEASTLabs/build" />
+	<property name="Add_on_dir" value="${release_dir}/add-on" />
+        <property name="version" value="0.0.1" />
+
+    <import file="${beast2path}/build.xml" />
+
+	<property name="main_class_BEAST" value="beast.app.BeastMCMC" />
+	<property name="report" value="${buildBEAST1to2}/junitreport"/>
+
+	<path id="classpath">
+   		<pathelement path="${buildBEAST1to2}"/>
+		<fileset dir="${libBeast2}" includes="junit-4.8.2.jar"/>
+		<fileset dir="${libBeast2}" includes="fest.jar"/>
+		<fileset dir="${libBeast2}" includes="jam.jar"/>
+		<fileset dir="${libBeast2}" includes="colt.jar"/>
+		<fileset dir="${libBeast2}" includes="commons-math3-3.1.1.jar"/>
+        <fileset dir="${libBeast2}" includes="antlr-runtime-4.5.jar"/>
+		<fileset dir="${libBeast2}" includes="beagle.jar"/>
+		<pathelement path="${beast2classpath}"/>
+		<pathelement path="${beastLabsPath}"/>
+		<!--pathelement path="${beast_classic_path}"/-->
+	</path>
+
+	<!-- start -->
+	<target name="initBEAST1to2">
+		<echo message="${ant.project.name}: ${ant.file}" />
+	</target>
+
+	<target name="cleanBEAST1to2">
+    	<delete dir="${buildBEAST1to2}" />
+	</target>
+
+	<!-- clean previous build, and then compile Java source code, and Juint test -->
+	<target name="build_all_BEAST1to2" depends="cleanBEAST1to2,compile-allBEAST1to2,junitBEAST1to2"
+        description="Clean and Build all run-time stuff">
+	</target>
+
+	<!-- clean previous build, compile Java source code, and Junit test, and make the beast.jar and beauti.jar -->
+	<target name="build_jar_all_BEAST1to2" depends="cleanBEAST1to2,compile-allBEAST1to2,junitBEAST1to2,dist_all_BEAST1to2"
+        description="Clean and Build all run-time stuff">
+	</target>
+
+
+	<!-- No JUnit Test, clean previous build, compile Java source code, and make the BEAST1to2.jar and beauti.jar -->
+	<target name="build_jar_all_BEAST1to2_NoJUnitTest" depends="cleanBEAST1to2,compile-allBEAST1to2,dist_all_BEAST1to2"
+        description="Clean and Build all run-time stuff">
+	</target>
+
+	<!-- compile Java source code -->
+	<target name="compile-allBEAST1to2" depends="initBEAST1to2,compile-all">
+
+
+	    <!-- Capture the path as a delimited property using the refid attribute -->
+	    <property name="myclasspath" refid="classpath"/>
+	    <!-- Emit the property to the ant console -->
+	    <echo message="Classpath = ${myclasspath}"/>
+
+		<mkdir dir="${buildBEAST1to2}" />
+
+		<!-- Compile the java code from ${srcBEAST1to2} into ${buildBEAST1to2} /bin -->
+		<javac srcdir="${srcBEAST1to2}" destdir="${buildBEAST1to2}" classpathref="classpath" 
+		       fork="true"
+		       memoryinitialsize="256m"
+		       memorymaximumsize="256m">
+			<include name="**/**" />
+			<!-- compile JUnit test classes -->
+			<include name="test/beast/**" />
+		</javac>
+        <copy todir="${buildBEAST1to2}">
+            <fileset dir="${srcBEAST1to2}" includes="**/*.properties" />
+            <fileset dir="${srcBEAST1to2}" includes="**/*.png" />
+        </copy>
+		<echo message="Successfully compiled." />
+	</target>
+
+	<!-- make the beast.jar and beauti.jar -->
+	<target name="dist_all_BEAST1to2" depends="compile-allBEAST1to2" description="create BEAST1to2 jar">
+		<!-- Create the distribution directory -->
+		<mkdir dir="${distBEAST1to2}" />
+
+		<!-- Put everything in ${buildBEAST1to2} into the beast.jar file -->
+		<jar jarfile="${distBEAST1to2}/BEAST1to2.jar">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Main-Class" value="${main_class_BEAST}" />
+			</manifest>
+			<fileset dir="${buildBEAST1to2}">
+				<include name="**/*.class" />
+			</fileset>
+			<fileset dir="${beast2classpath}">
+				<include name="beast/**/*.class" />
+				<include name="beast/**/*.properties" />
+				<include name="beast/**/*.png" />
+				<include name="beagle/**/*.class" />
+				<include name="org/**/*.class" />
+			</fileset>
+			<fileset dir="${beastLabsPath}">
+				<include name="**/*.class" />
+			</fileset>
+		</jar>
+		<jar jarfile="${distBEAST1to2}/BEAST1to2.src.jar">
+			<fileset dir="${srcBEAST1to2}">
+				<include name="**/*.java" />
+				<include name="beast/**/*.png" />
+				<include name="beast/**/*.xsl" />
+			</fileset>
+        </jar>
+		<jar jarfile="${distBEAST1to2}/BEAST1to2.addon.jar">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+			</manifest>
+			<fileset dir="${buildBEAST1to2}">
+				<include name="**/*.class" />
+				<include name="**/*.png" />
+				<include name="**/*.properties" />
+			</fileset>
+		</jar>
+	</target>
+
+	<!-- run beast.jar -->
+	<target name="run_BEAST1to2">
+		<java jar="${distBEAST1to2}/BEAST1to2.jar" fork="true" />
+	</target>
+
+	
+	<!-- JUnit test -->
+	<target name="junitBEAST1to2">
+		<mkdir dir="${report}" />
+		<junit printsummary="yes"> <!--showoutput='yes'-->
+			<classpath>
+				<path refid="classpath" />
+				<path location="${buildBEAST1to2}" />
+			</classpath>
+
+			<formatter type="xml" />
+
+			<batchtest fork="yes" todir="${report}">
+				<fileset dir="${srcBEAST1to2}">
+                    <include name="test/**/*Test.java"/>                                         
+				</fileset>
+				<fileset dir="${srcBeast2}">
+                    <include name="test/beast/integration/**/*Test.java"/>                                         
+                    <exclude name="test/beast/integration/**/ResumeTest.java"/>                                         
+				</fileset>
+			</batchtest>
+		</junit>
+		<echo message="JUnit test finished." />
+	</target>
+    
+    <target name="junitreport">
+		<junitreport todir="${report}">
+			<fileset dir="${report}" includes="*.xml"/>
+			<report format="frames" todir="${report}"/>
+		</junitreport>
+		<echo message="JUnit test report finished." />
+	</target>
+
+
+	<target name="addon"
+	        depends="build_jar_all_BEAST1to2_NoJUnitTest"
+	        description="release BEAST 2 add-on version of BEAST1to2">
+
+		<delete dir="${Add_on_dir}" />
+		<!-- Create the release directory -->
+		<mkdir dir="${Add_on_dir}" />
+		<mkdir dir="${Add_on_dir}/doc" />
+		<mkdir dir="${Add_on_dir}/lib" />
+		<mkdir dir="${Add_on_dir}/examples" />
+
+		<copy todir="${Add_on_dir}">
+			<fileset file="version.xml"/>
+		</copy>
+		<!--
+		<copy todir="${Add_on_dir}/examples">
+			<fileset dir="examples" />
+		</copy>
+		<copy todir="${Add_on_dir}/lib">
+			<fileset dir="lib" />
+		</copy>
+		-->
+		<copy todir="${Add_on_dir}/lib">
+			<fileset dir="${distBEAST1to2}" includes="BEAST1to2.addon.jar" />
+		</copy>
+		<!--
+        <copy todir="${Add_on_dir}/doc">
+			<fileset dir="doc/tutorial" includes="phyloBEAST1to2graphy_s.pdf" />
+		</copy>
+		-->
+		<copy todir="${Add_on_dir}">
+			<fileset dir="${distBEAST1to2}" includes="BEAST1to2.src.jar" />
+		</copy>
+
+		<jar jarfile="${distBEAST1to2}/BEAST1to2.addon.v${version}.zip">
+			<fileset dir="${Add_on_dir}">
+				<include name="**/*" />
+			</fileset>
+        </jar>
+		<echo message="Add-on version ${version} release is finished." />
+	</target>
+
+</project>
