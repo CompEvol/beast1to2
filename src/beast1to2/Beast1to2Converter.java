@@ -6,10 +6,22 @@ import beast.core.Input;
 import beast.core.Input.Validate;
 import beast.core.Runnable;
 import beast.util.XMLProducer;
+import dr.app.beast.BeastParser;
+import dr.xml.XMLParseException;
+import dr.xml.XMLParser;
 import jam.util.IconUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import beast.app.beauti.BeautiConfig;
 import beast.app.beauti.BeautiDoc;
@@ -19,6 +31,7 @@ import beast.app.util.*;
 
 @Description("Convert BEAST 1 XML so it can be used by BEAST 2")
 public class Beast1to2Converter extends Runnable { 
+	public static final String NIY = "Not implemented yet"; 
 	public Input<XMLFile> xmlFileInput = new Input<>("xml", "BEASt 1 xml file", Validate.REQUIRED);
 	public Input<OutFile> outFileInput = new Input<>("out", "BEASt 2 xml to output. If not specified, write to stdout");
 	
@@ -51,9 +64,19 @@ public class Beast1to2Converter extends Runnable {
 	}
 
 
-	private BEASTInterface convert(File inputFile) {
-		// TODO
-		return null;
+	private BEASTInterface convert(File inputFile) throws IOException, SAXException, XMLParseException, ParserConfigurationException {
+        String fileName = inputFile.getName();
+        FileReader fileReader = new FileReader(inputFile);
+        List<String> additionalParsers = new ArrayList<String>();
+        final boolean verbose = true;
+        final boolean parserWarning = true; // if dev, then auto turn on, otherwise default to turn off
+        final boolean strictXML = false;
+
+        XMLParser parser = new BeastParser(new String[]{fileName}, additionalParsers, verbose, parserWarning, strictXML);
+
+        parser.parse(fileReader, false);
+        BEASTInterface beast2Object = (BEASTInterface) parser.getRoot().getNativeObject();
+		return beast2Object;
 	}
 	
 	

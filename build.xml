@@ -29,6 +29,7 @@
 
 	<path id="classpath">
    		<pathelement path="${buildBEAST1to2}"/>
+		<fileset dir="${libBEAST1to2}" includes="beast1.jar"/>
 		<fileset dir="${libBeast2}" includes="junit-4.8.2.jar"/>
 		<fileset dir="${libBeast2}" includes="fest.jar"/>
 		<fileset dir="${libBeast2}" includes="jam.jar"/>
@@ -194,10 +195,10 @@
 		<copy todir="${Add_on_dir}/examples">
 			<fileset dir="examples" />
 		</copy>
+		-->
 		<copy todir="${Add_on_dir}/lib">
 			<fileset dir="lib" />
 		</copy>
-		-->
 		<copy todir="${Add_on_dir}/lib">
 			<fileset dir="${distBEAST1to2}" includes="BEAST1to2.addon.jar" />
 		</copy>
