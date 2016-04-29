@@ -25,9 +25,8 @@
 
 package dr.evoxml;
 
-import dr.evolution.util.Taxa;
-import dr.evolution.util.Taxon;
-import dr.evolution.util.TaxonList;
+import beast.evolution.alignment.Taxon;
+import beast.evolution.alignment.TaxonSet;
 import dr.xml.*;
 
 /**
@@ -63,36 +62,32 @@ public class TaxaParser extends AbstractXMLObjectParser {
 
     /** @return an instance of Node created from a DOM element */
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
-        Taxa taxonList = new Taxa();
+        TaxonSet taxonList = new TaxonSet();
 
         for (int i = 0; i < xo.getChildCount(); i++) {
             Object child = xo.getChild(i);
             if (child instanceof Taxon) {
-                Taxon taxon = (Taxon)child;
-                taxonList.addTaxon(taxon);
-            } else if (child instanceof TaxonList) {
-                TaxonList taxonList1 = (TaxonList)child;
-                for (int j = 0; j < taxonList1.getTaxonCount(); j++) {
-                    taxonList.addTaxon(taxonList1.getTaxon(j));
+            	Taxon taxon = (Taxon)child;
+                taxonList.taxonsetInput.setValue(taxon, taxonList);
+            } else if (child instanceof TaxonSet) {
+            	TaxonSet taxonList1 = (TaxonSet)child;
+                for (Taxon taxon : taxonList1.getTaxonSet()) {
+                    taxonList.taxonsetInput.setValue(taxon, taxonList);
                 }
             } else {
                 throwUnrecognizedElement(xo);
             }
         }
         return taxonList;
-    */
-		}
+	}
 
     public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private final XMLSyntaxRule[] rules = {
         new OrRule(
-            new ElementRule(Taxa.class, 1, Integer.MAX_VALUE),
-            new ElementRule(Taxon.class, 1, Integer.MAX_VALUE)
+            new ElementRule(Taxon.class, 1, Integer.MAX_VALUE),
+            new ElementRule(TaxonSet.class, 1, Integer.MAX_VALUE)
         )
     };
 
@@ -100,7 +95,7 @@ public class TaxaParser extends AbstractXMLObjectParser {
         return "Defines a set of taxon objects.";
     }
 
-    public Class getReturnType() { return Taxa.class; }
+    public Class getReturnType() { return TaxonSet.class; }
 }
 
 

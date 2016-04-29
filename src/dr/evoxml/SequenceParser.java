@@ -25,12 +25,14 @@
 
 package dr.evoxml;
 
-import dr.evolution.datatype.*;
-import dr.evolution.sequence.Sequence;
-import dr.evolution.util.Taxon;
 import dr.xml.*;
 
 import java.util.StringTokenizer;
+
+import beast.evolution.alignment.Sequence;
+import beast.evolution.alignment.Taxon;
+import beast.evolution.datatype.*;
+import beast1to2.Beast1to2Converter;;
 
 /**
  * @author Alexei Drummond
@@ -48,26 +50,23 @@ public class SequenceParser extends AbstractXMLObjectParser {
      * @return a sequence object based on the XML element it was passed.
      */
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
-
         Sequence sequence = new Sequence();
 
         Taxon taxon = (Taxon)xo.getChild(Taxon.class);
 
         DataType dataType = null;
-        if (xo.hasAttribute(DataType.DATA_TYPE)) {
-            String dataTypeStr = xo.getStringAttribute(DataType.DATA_TYPE);
+        if (xo.hasAttribute(dr.evolution.datatype.DataType.DATA_TYPE)) {
+            String dataTypeStr = xo.getStringAttribute(dr.evolution.datatype.DataType.DATA_TYPE);
 
-            if (dataTypeStr.equals(Nucleotides.DESCRIPTION)) {
-                dataType = Nucleotides.INSTANCE;
-            } else if (dataTypeStr.equals(AminoAcids.DESCRIPTION)) {
-                dataType = AminoAcids.INSTANCE;
-            } else if (dataTypeStr.equals(Codons.DESCRIPTION)) {
-                dataType = Codons.UNIVERSAL;
-            } else if (dataTypeStr.equals(TwoStates.DESCRIPTION)) {
-                dataType = TwoStates.INSTANCE;
+            if (dataTypeStr.equals(dr.evolution.datatype.Nucleotides.DESCRIPTION)) {
+                dataType = new Nucleotide();
+            } else if (dataTypeStr.equals(dr.evolution.datatype.AminoAcids.DESCRIPTION)) {
+                dataType = new Aminoacid();
+            } else if (dataTypeStr.equals(dr.evolution.datatype.Codons.DESCRIPTION)) {
+            	System.out.println("Codon " + Beast1to2Converter.NIY);
+                dataType = null;
+            } else if (dataTypeStr.equals(dr.evolution.datatype.TwoStates.DESCRIPTION)) {
+                dataType = new Binary();
             }
         }
 
@@ -93,14 +92,13 @@ public class SequenceParser extends AbstractXMLObjectParser {
         }
 
         if (dataType != null) {
-            sequence.setDataType(dataType);
+        	System.out.println("data types on taxon are not implemented yet");
         }
 
-        sequence.setSequenceString(sequenceString);
-        sequence.setTaxon(taxon);
+        sequence.dataInput.setValue(sequenceString, sequence);
+        sequence.taxonInput.setValue(taxon.getID(), sequence);
 
         return sequence;
-    */
 		}
 
     public String getParserDescription() {

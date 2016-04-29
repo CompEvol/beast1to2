@@ -25,9 +25,9 @@
 
 package dr.evoxml;
 
+import beast.evolution.alignment.Taxon;
 import dr.evolution.util.Date;
 import dr.evolution.util.Location;
-import dr.evolution.util.Taxon;
 import dr.util.Attribute;
 import dr.xml.*;
 
@@ -45,9 +45,7 @@ public class TaxonParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
+		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.PI);
 
         if (dr.xml.XMLParser.ID.contains("\'") && dr.xml.XMLParser.ID.contains("\"")) {
             // unable to handle taxon names that contain both single and double quotes
@@ -55,8 +53,9 @@ public class TaxonParser extends AbstractXMLObjectParser {
             throw new XMLParseException("Illegal taxon name, " + dr.xml.XMLParser.ID + ", - contains both single and double quotes");
         }
 
-        Taxon taxon = new Taxon(xo.getStringAttribute(dr.xml.XMLParser.ID));
+        beast.evolution.alignment.Taxon taxon = new beast.evolution.alignment.Taxon(xo.getStringAttribute(dr.xml.XMLParser.ID));
 
+        /*
         for (int i = 0; i < xo.getChildCount(); i++) {
             Object child = xo.getChild(i);
 
@@ -76,9 +75,9 @@ public class TaxonParser extends AbstractXMLObjectParser {
                 throw new XMLParseException("Unrecognized element found in taxon element");
             }
         }
+        */
 
         return taxon;
-    */
 		}
 
     public String getParserDescription() {

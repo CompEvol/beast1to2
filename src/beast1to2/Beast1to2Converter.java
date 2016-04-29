@@ -12,7 +12,6 @@ import dr.xml.XMLParser;
 import jam.util.IconUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -31,7 +30,8 @@ import beast.app.util.*;
 
 @Description("Convert BEAST 1 XML so it can be used by BEAST 2")
 public class Beast1to2Converter extends Runnable { 
-	public static final String NIY = "Not implemented yet"; 
+	public static final String NIY = " parser not implemented yet"; 
+	public static final String PI = " parser partly implemented"; 
 	public Input<XMLFile> xmlFileInput = new Input<>("xml", "BEASt 1 xml file", Validate.REQUIRED);
 	public Input<OutFile> outFileInput = new Input<>("out", "BEASt 2 xml to output. If not specified, write to stdout");
 	
@@ -69,7 +69,7 @@ public class Beast1to2Converter extends Runnable {
         FileReader fileReader = new FileReader(inputFile);
         List<String> additionalParsers = new ArrayList<String>();
         final boolean verbose = true;
-        final boolean parserWarning = true; // if dev, then auto turn on, otherwise default to turn off
+        final boolean parserWarning = false; // if dev, then auto turn on, otherwise default to turn off
         final boolean strictXML = false;
 
         XMLParser parser = new BeastParser(new String[]{fileName}, additionalParsers, verbose, parserWarning, strictXML);
