@@ -25,15 +25,13 @@
 
 package dr.evoxml;
 
-import dr.evolution.alignment.Alignment;
-import dr.evolution.alignment.SimpleAlignment;
-import dr.evolution.datatype.DataType;
 import dr.evolution.datatype.Nucleotides;
-import dr.evolution.sequence.Sequence;
 import dr.evoxml.util.DataTypeUtils;
 import dr.xml.*;
 
-import java.util.logging.Logger;
+import beast.evolution.alignment.Alignment;
+import beast.evolution.alignment.Sequence;
+import beast.evolution.datatype.DataType;
 
 /**
  * @author Alexei Drummond
@@ -49,11 +47,8 @@ public class AlignmentParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
-        final SimpleAlignment alignment = new SimpleAlignment();
+        final Alignment alignment = new Alignment();
 
         final DataType dataType = DataTypeUtils.getDataType(xo);
 
@@ -61,13 +56,13 @@ public class AlignmentParser extends AbstractXMLObjectParser {
             throw new XMLParseException("dataType attribute expected for alignment element");
         }
 
-        alignment.setDataType(dataType);
+        alignment.userDataTypeInput.setValue(dataType, alignment);
 
         for (int i = 0; i < xo.getChildCount(); i++) {
 
             final Object child = xo.getChild(i);
             if (child instanceof Sequence) {
-                alignment.addSequence((Sequence) child);
+                alignment.sequenceInput.setValue((Sequence) child, alignment);
             } else if (child instanceof DataType) {
                 // already dealt with
             } else {
@@ -75,14 +70,15 @@ public class AlignmentParser extends AbstractXMLObjectParser {
             }
         }
 
-        final Logger logger = Logger.getLogger("dr.evoxml");
-        logger.info("Read alignment" + (xo.hasAttribute(XMLParser.ID) ? ": " + xo.getId() : "") +
-                "\n  Sequences = " + alignment.getSequenceCount() +
-                "\n      Sites = " + alignment.getSiteCount() +
-                "\n   Datatype = " + alignment.getDataType().getDescription());
+        alignment.initAndValidate();
+//        final Logger logger = Logger.getLogger("dr.evoxml");
+//        logger.info("Read alignment" + (xo.hasAttribute(XMLParser.ID) ? ": " + xo.getId() : "") +
+//                "\n  Sequences = " + alignment.getSequenceCount() +
+//                "\n      Sites = " + alignment.getSiteCount() +
+//                "\n   Datatype = " + alignment.getDataType().getTypeDescription());
 
         return alignment;
-    */
+    
 		}
 
     public String getParserDescription() {
@@ -118,13 +114,13 @@ public class AlignmentParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new XORRule(
-                    new StringAttributeRule(
-                            DataType.DATA_TYPE,
-                            "The data type",
-                            DataType.getRegisteredDataTypeNames(), false),
-                    new ElementRule(DataType.class)
-            ),
+//            new XORRule(
+//                    new StringAttributeRule(
+//                            DataType.DATA_TYPE,
+//                            "The data type",
+//                            DataType.getRegisteredDataTypeNames(), false),
+//                    new ElementRule(DataType.class)
+//            ),
             new ElementRule(Sequence.class, 1, Integer.MAX_VALUE)
     };
 }

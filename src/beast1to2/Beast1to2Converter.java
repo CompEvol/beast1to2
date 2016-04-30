@@ -32,6 +32,7 @@ import beast.app.util.*;
 public class Beast1to2Converter extends Runnable { 
 	public static final String NIY = " parser not implemented yet"; 
 	public static final String PI = " parser partly implemented"; 
+	
 	public Input<XMLFile> xmlFileInput = new Input<>("xml", "BEASt 1 xml file", Validate.REQUIRED);
 	public Input<OutFile> outFileInput = new Input<>("out", "BEASt 2 xml to output. If not specified, write to stdout");
 	

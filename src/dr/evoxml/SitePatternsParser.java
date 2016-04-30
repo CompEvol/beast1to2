@@ -25,14 +25,15 @@
 
 package dr.evoxml;
 
-import dr.evolution.alignment.Alignment;
-import dr.evolution.alignment.PatternList;
-import dr.evolution.alignment.SitePatterns;
-import dr.evolution.util.TaxonList;
-import dr.inference.model.Parameter;
 import dr.xml.*;
 
 import java.util.logging.Logger;
+
+import beast.core.parameter.RealParameter;
+import beast.evolution.alignment.Alignment;
+import beast.evolution.alignment.FilteredAlignment;
+import beast.evolution.alignment.TaxonSet;
+import beast1to2.Beast1to2Converter;
 
 /**
  * @author Alexei Drummond
@@ -57,29 +58,29 @@ public class SitePatternsParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
-        Alignment alignment = (Alignment) xo.getChild(Alignment.class);
-        TaxonList taxa = null;
+    	Alignment alignment = (Alignment) xo.getChild(Alignment.class);
+        TaxonSet taxa = null;
 
-        int from = 0;
+        int from = 1;
         int to = -1;
         int every = xo.getAttribute(EVERY, 1);
 
         boolean strip = xo.getAttribute(STRIP, true);
 
         boolean unique = xo.getAttribute(UNIQUE, true);
+        if (unique == false) {
+        	System.out.println(getParserName() + ".unique " + Beast1to2Converter.NIY);
+        }
 
         if (xo.hasAttribute(FROM)) {
-            from = xo.getIntegerAttribute(FROM) - 1;
+            from = xo.getIntegerAttribute(FROM);
             if (from < 0)
                 throw new XMLParseException("illegal 'from' attribute in patterns element");
         }
 
         if (xo.hasAttribute(TO)) {
-            to = xo.getIntegerAttribute(TO) - 1;
+            to = xo.getIntegerAttribute(TO);
             if (to < 0 || to < from)
                 throw new XMLParseException("illegal 'to' attribute in patterns element");
         }
@@ -87,18 +88,18 @@ public class SitePatternsParser extends AbstractXMLObjectParser {
         if (every <= 0) throw new XMLParseException("illegal 'every' attribute in patterns element");
 
         if (xo.hasChildNamed(TAXON_LIST)) {
-            taxa = (TaxonList) xo.getElementFirstChild(TAXON_LIST);
+            taxa = (TaxonSet) xo.getElementFirstChild(TAXON_LIST);
         }
 
         int[] constantPatternCounts = null;
         if (xo.hasChildNamed(CONSTANT_PATTERNS)) {
-            Parameter param = (Parameter) xo.getElementFirstChild(CONSTANT_PATTERNS);
-            if (param.getDimension() != alignment.getStateCount()) {
+            RealParameter param = (RealParameter) xo.getElementFirstChild(CONSTANT_PATTERNS);
+            if (param.getDimension() != alignment.getDataType().getStateCount()) {
                 throw new XMLParseException("The " + CONSTANT_PATTERNS + " parameter length should be equal to the number of states");
             }
             constantPatternCounts = new int[param.getDimension()];
             int i = 0;
-            for (double value : param.getParameterValues()) {
+            for (double value : param.getValues()) {
                 constantPatternCounts[i] = (int)value;
                 i++;
             }
@@ -110,7 +111,12 @@ public class SitePatternsParser extends AbstractXMLObjectParser {
         if (to > alignment.getSiteCount())
             throw new XMLParseException("illegal 'to' attribute in patterns element");
 
-        SitePatterns patterns = new SitePatterns(alignment, taxa, from, to, every, strip, unique, constantPatternCounts);
+        FilteredAlignment patterns = new FilteredAlignment();
+        patterns.initByName("data", alignment, 
+        		"taxonset", taxa, 
+        		"filter", from+":" + (to >= 0 ? to : alignment.getSiteCount()) +":" + every, 
+        		"strip", strip,  
+        		"constantSiteWeights", constantPatternCounts);
 
         int f = from + 1;
         int t = to + 1; // fixed a *display* error by adding + 1 for consistency with f = from + 1
@@ -120,7 +126,7 @@ public class SitePatternsParser extends AbstractXMLObjectParser {
             final Logger logger = Logger.getLogger("dr.evoxml");
             logger.info("Site patterns '" + xo.getId() + "' created from positions " +
                     Integer.toString(f) + "-" + Integer.toString(t) +
-                    " of alignment '" + alignment.getId() + "'");
+                    " of alignment '" + alignment.getID() + "'");
 
             if (every > 1) {
                 logger.info("  only using every " + every + " site");
@@ -129,7 +135,7 @@ public class SitePatternsParser extends AbstractXMLObjectParser {
         }
 
         return patterns;
-    */
+    
 		}
 
     //************************************************************************
@@ -145,9 +151,9 @@ public class SitePatternsParser extends AbstractXMLObjectParser {
             AttributeRule.newIntegerRule(TO, true, "The site position to finish at, must be greater than <b>" + FROM + "</b>, default is length of given alignment"),
             AttributeRule.newIntegerRule(EVERY, true, "Determines how many sites are selected. A value of 3 will select every third site starting from <b>" + FROM + "</b>, default is 1 (every site)"),
             new ElementRule(TAXON_LIST,
-                    new XMLSyntaxRule[]{new ElementRule(TaxonList.class)}, true),
+                    new XMLSyntaxRule[]{new ElementRule(TaxonSet.class)}, true),
             new ElementRule(CONSTANT_PATTERNS,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}, true),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}, true),
             new ElementRule(Alignment.class),
             AttributeRule.newBooleanRule(STRIP, true, "Strip out completely ambiguous sites"),
             AttributeRule.newBooleanRule(UNIQUE, true, "Return a weight list of unique patterns"),
@@ -158,7 +164,7 @@ public class SitePatternsParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return PatternList.class;
+        return FilteredAlignment.class;
     }
 
 }
