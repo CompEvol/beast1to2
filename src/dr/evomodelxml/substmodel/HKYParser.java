@@ -25,10 +25,9 @@
 
 package dr.evomodelxml.substmodel;
 
-import dr.evomodel.substmodel.FrequencyModel;
-import dr.evomodel.substmodel.HKY;
-import dr.evomodel.substmodel.NucModelType;
-import dr.inference.model.Variable;
+import beast.core.parameter.RealParameter;
+import beast.evolution.substitutionmodel.*;
+
 import dr.xml.*;
 
 import java.util.logging.Logger;
@@ -43,11 +42,30 @@ public class HKYParser extends AbstractXMLObjectParser {
     public static final String FREQUENCIES = "frequencies";
 
     public String getParserName() {
-        return NucModelType.HKY.getXMLName();
+        return HKY.class.getSimpleName();
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
+//        Variable kappaParam = (Variable) xo.getElementFirstChild(KAPPA);
+//
+//        RealParameter f = new RealParameter(test.getPi());
+//
+//        Frequencies freqs = new Frequencies();
+//        freqs.initByName("frequencies", f, "estimate", false);
+//
+//        beast.evolution.substitutionmodel.HKY hky = new beast.evolution.substitutionmodel.HKY();
+//        hky.initByName("kappa", test.getKappa().toString(), "frequencies", freqs);
+//
+//        double distance = test.getDistance();
+//
+//        double[] mat = new double[4 * 4];
+//        hky.getTransitionProbabilities(null, distance, 0, 1, mat);
+//        final double[] result = test.getExpectedResult();
+//
+//        return hky;
+
+
+        System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
 
@@ -79,9 +97,9 @@ public class HKYParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(FrequencyModelParser.FREQUENCIES,
-                    new XMLSyntaxRule[]{new ElementRule(FrequencyModel.class)}),
-            new ElementRule(KAPPA,
-                    new XMLSyntaxRule[]{new ElementRule(Variable.class)})
+//            new ElementRule(FrequencyModelParser.FREQUENCIES,
+//                    new XMLSyntaxRule[]{new ElementRule(FrequencyModel.class)}),
+//            new ElementRule(KAPPA,
+//                    new XMLSyntaxRule[]{new ElementRule(Variable.class)})
     };
 }
