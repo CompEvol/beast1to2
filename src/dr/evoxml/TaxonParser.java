@@ -25,7 +25,11 @@
 
 package dr.evoxml;
 
+import java.util.Map;
+
 import beast.evolution.alignment.Taxon;
+import beast.evolution.tree.TraitSet;
+import beast1to2.Beast1to2Converter;
 import dr.evolution.util.Date;
 import dr.evolution.util.Location;
 import dr.util.Attribute;
@@ -37,6 +41,9 @@ import dr.xml.*;
  * @version $Id: TaxonParser.java,v 1.2 2005/05/24 20:25:59 rambaut Exp $
  */
 public class TaxonParser extends AbstractXMLObjectParser {
+	
+	// traits are stored here, to be used later once the tree is parsed
+	public static Map<String, TraitSet> traits;
 
     public final static String TAXON = "taxon";
 
@@ -55,27 +62,77 @@ public class TaxonParser extends AbstractXMLObjectParser {
 
         beast.evolution.alignment.Taxon taxon = new beast.evolution.alignment.Taxon(xo.getStringAttribute(dr.xml.XMLParser.ID));
 
-        /*
         for (int i = 0; i < xo.getChildCount(); i++) {
             Object child = xo.getChild(i);
 
             if (child instanceof Date) {
-                taxon.setDate((Date) child);
+            	Date date = (Date) child;
+            	if (date.isBackwards()) {
+            		if (traits.get("date") == null) {
+            			TraitSet trait = new TraitSet();
+            			trait.traitNameInput.setValue("date", trait);
+            			trait.unitsInput.setValue(date.getUnits().name(), trait);
+            			trait.traitsInput.setValue(taxon.getID() + "=" +date.toString(), trait);
+            			traits.put("date", trait);
+            		} else {
+            			TraitSet trait = traits.get("date");
+            			trait.traitsInput.setValue(
+            					trait.traitsInput.get() +",\n" +
+            					taxon.getID() + "=" +date.toString(), trait);
+            			
+            		}
+            	} else {
+            		if (traits.get("date-forward") == null) {
+            			TraitSet trait = new TraitSet();
+            			trait.traitNameInput.setValue("date-forward", trait);
+            			trait.unitsInput.setValue(date.getUnits().name(), trait);
+            			trait.traitsInput.setValue(taxon.getID() + "=" +date.toString(), trait);
+            			traits.put("date-forward", trait);
+            		} else {
+            			TraitSet trait = traits.get("date-forward");
+            			trait.traitsInput.setValue(
+            					trait.traitsInput.get() +",\n" +
+            					taxon.getID() + "=" +date.toString(), trait);
+            			
+            		}
+            	}
             } else if (child instanceof Location) {
-                taxon.setLocation((Location) child);
+            	Location attr = (Location) child;
+        		if (traits.get("location") == null) {
+        			TraitSet trait = new TraitSet();
+        			trait.traitNameInput.setValue("location", trait);
+        			trait.traitsInput.setValue(taxon.getID() + "=" + attr.getLatitude() + " " + attr.getLongitude(), trait);
+        			traits.put("location", trait);
+        		} else {
+        			TraitSet trait = traits.get("location");
+        			trait.traitsInput.setValue(
+        					trait.traitsInput.get() +",\n" +
+        					taxon.getID() + "=" + attr.getLatitude() + " " + attr.getLongitude(), trait);
+        		}
             } else if (child instanceof Attribute) {
                 final Attribute attr = (Attribute) child;
-                taxon.setAttribute(attr.getAttributeName(), attr.getAttributeValue());
+        		if (traits.get(attr.getAttributeName()) == null) {
+        			TraitSet trait = new TraitSet();
+        			trait.traitNameInput.setValue(attr.getAttributeName(), trait);
+        			trait.traitsInput.setValue(taxon.getID() + "=" + attr.getAttributeValue(), trait);
+        			traits.put(attr.getAttributeName(), trait);
+        		} else {
+        			TraitSet trait = traits.get(attr.getAttributeName());
+        			trait.traitsInput.setValue(
+        					trait.traitsInput.get() +",\n" +
+        					taxon.getID() + "=" + attr.getAttributeValue(), trait);
+        			
+        		}
             } else if (child instanceof Attribute[]) {
-                Attribute[] attrs = (Attribute[]) child;
-                for (Attribute attr : attrs) {
-                    taxon.setAttribute(attr.getAttributeName(), attr.getAttributeValue());
-                }
+            	System.out.println("attribute arrays in taxon element " + Beast1to2Converter.NIY);
+//                Attribute[] attrs = (Attribute[]) child;
+//                for (Attribute attr : attrs) {
+//                    taxon.setAttribute(attr.getAttributeName(), attr.getAttributeValue());
+//                }
             } else {
                 throw new XMLParseException("Unrecognized element found in taxon element");
             }
         }
-        */
 
         return taxon;
 		}
