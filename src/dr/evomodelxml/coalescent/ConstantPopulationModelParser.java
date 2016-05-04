@@ -25,11 +25,13 @@
 
 package dr.evomodelxml.coalescent;
 
+import beast.core.parameter.RealParameter;
+import beast.evolution.tree.coalescent.ConstantPopulation;
+
 import dr.evolution.util.Units;
-import dr.evomodel.coalescent.ConstantPopulationModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
 import dr.xml.*;
+
 
 /**
  * Parses an element from an DOM document into a ConstantPopulation.
@@ -44,13 +46,16 @@ public class ConstantPopulationModelParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
+        XMLObject cxo = xo.getChild(POPULATION_SIZE);
+        RealParameter N0Param = (RealParameter) cxo.getChild(RealParameter.class);
 
+        ConstantPopulation cp = new ConstantPopulation();
+        cp.popSizeParameter.setValue(N0Param.getValue(), cp);
 
+        return cp;
 
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
 		/*
-
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
         XMLObject cxo = xo.getChild(POPULATION_SIZE);
@@ -70,7 +75,7 @@ public class ConstantPopulationModelParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return ConstantPopulationModel.class;
+        return ConstantPopulation.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -80,7 +85,7 @@ public class ConstantPopulationModelParser extends AbstractXMLObjectParser {
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             XMLUnits.UNITS_RULE,
             new ElementRule(POPULATION_SIZE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)})
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)})
     };
 
 }
