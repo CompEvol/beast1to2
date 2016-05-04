@@ -6,10 +6,11 @@ import beast.core.Input;
 import beast.core.Input.Validate;
 import beast.core.Runnable;
 import beast.util.XMLProducer;
-import dr.app.beast.BeastParser;
 import dr.xml.XMLParseException;
-import dr.xml.XMLParser;
 import jam.util.IconUtils;
+
+//beast1to2
+import dr.xml.XMLParser;
 
 import java.io.File;
 import java.io.FileReader;

@@ -51,7 +51,7 @@ public class ConstantPopulationModelParser extends AbstractXMLObjectParser {
         RealParameter N0Param = (RealParameter) cxo.getChild(RealParameter.class);
 
         ConstantPopulation cp = new ConstantPopulation();
-        cp.popSizeParameter.setValue(N0Param.getValue(), cp);
+        cp.popSizeParameter.setValue(N0Param, cp);
 
         return cp;
 

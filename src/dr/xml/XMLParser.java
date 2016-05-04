@@ -25,9 +25,9 @@
 
 package dr.xml;
 
+import beast.core.parameter.Parameter;
 import dr.inference.model.Likelihood;
 import dr.inference.model.Model;
-import dr.inference.model.Parameter;
 import dr.inferencexml.loggers.LoggerParser;
 import dr.util.FileHelpers;
 import dr.util.Identifiable;
@@ -325,7 +325,7 @@ public class XMLParser {
                 } else if (obj instanceof Model) {
                     Model.FULL_MODEL_SET.add((Model) obj);
                 } else if (obj instanceof Parameter) {
-                    Parameter.FULL_PARAMETER_SET.add((Parameter) obj);
+//                    Parameter.FULL_PARAMETER_SET.add((Parameter) obj);
                 }
 
                 xo.setNativeObject(obj);
