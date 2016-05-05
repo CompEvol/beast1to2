@@ -27,11 +27,8 @@ package dr.evomodelxml.substmodel;
 
 import beast.core.parameter.RealParameter;
 import beast.evolution.alignment.Alignment;
-import beast.evolution.alignment.FilteredAlignment;
 import beast.evolution.alignment.TaxonSet;
-import beast.evolution.datatype.DataType;
 import beast.evolution.substitutionmodel.Frequencies;
-import dr.evoxml.util.DataTypeUtils;
 import dr.xml.*;
 
 import java.text.NumberFormat;
@@ -71,7 +68,7 @@ public class FrequencyModelParser extends AbstractXMLObjectParser {
             }
         }
 
-        StringBuilder sb = new StringBuilder("Creating state frequencies model '" + freqsParam.getID() + "': ");
+        StringBuilder sb = new StringBuilder("Creating state frequencies model '" + freqs.getID() + "': ");
         if (freqs.getFreqs() != null) {
             if (freqsParam.getDimension() != freqs.getFreqs().length) {
                 throw new XMLParseException("dimension of frequency parameter and number of sequence states don't match!");

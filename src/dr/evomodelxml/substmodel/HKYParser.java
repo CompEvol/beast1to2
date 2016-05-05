@@ -47,10 +47,12 @@ public class HKYParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        HKY hky = new HKY();
+        hky.setID(xo.getId());
+
         RealParameter kappaParam = (RealParameter) xo.getElementFirstChild(KAPPA);
 
         Frequencies freqs = (Frequencies) xo.getElementFirstChild(FrequencyModelParser.FREQUENCIES);
-        HKY hky = new HKY();
         hky.initByName("kappa", kappaParam, "frequencies", freqs);
 
         Logger.getLogger("dr.evomodel").info("Creating HKY substitution model. Initial kappa = " +

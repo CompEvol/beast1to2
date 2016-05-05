@@ -25,10 +25,11 @@
 
 package dr.evomodelxml.sitemodel;
 
-import dr.evomodel.sitemodel.GammaSiteModel;
-import dr.evomodel.sitemodel.SiteModel;
-import dr.evomodel.substmodel.SubstitutionModel;
-import dr.inference.model.Parameter;
+
+import beast.core.parameter.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.evolution.sitemodel.SiteModel;
+import beast.evolution.substitutionmodel.SubstitutionModel;
 import dr.xml.*;
 
 import java.util.logging.Logger;
@@ -53,53 +54,58 @@ public class GammaSiteModelParser extends AbstractXMLObjectParser {
     }
 
     public String getParserName() {
-        return SiteModel.SITE_MODEL;
+        return SiteModel.class.getSimpleName();
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
-        SubstitutionModel substitutionModel = (SubstitutionModel) xo.getElementFirstChild(SUBSTITUTION_MODEL);
+        SubstitutionModel substModel = (SubstitutionModel) xo.getElementFirstChild(SUBSTITUTION_MODEL);
+        SiteModel siteModel = new SiteModel();
+        siteModel.initByName("substModel", substModel);
 
         String msg = "";
 
-        Parameter muParam = null;
+        RealParameter muParam = null;
         if (xo.hasChildNamed(SUBSTITUTION_RATE)) {
-            muParam = (Parameter) xo.getElementFirstChild(SUBSTITUTION_RATE);
-
-            msg += "\n  with initial substitution rate = " + muParam.getParameterValue(0);
+            muParam = (RealParameter) xo.getElementFirstChild(SUBSTITUTION_RATE);
+            muParam.setID(xo.getId());
+            msg += "\n  with initial substitution rate = " + muParam.getValue();
         } else  if (xo.hasChildNamed(MUTATION_RATE)) {
-            muParam = (Parameter) xo.getElementFirstChild(MUTATION_RATE);
-
-            msg += "\n  with initial substitution rate = " + muParam.getParameterValue(0);
+            muParam = (RealParameter) xo.getElementFirstChild(MUTATION_RATE);
+            muParam.setID(xo.getId());
+            msg += "\n  with initial substitution rate = " + muParam.getValue();
         } else if (xo.hasChildNamed(RELATIVE_RATE)) {
-            muParam = (Parameter) xo.getElementFirstChild(RELATIVE_RATE);
-
-            msg += "\n  with initial relative rate = " + muParam.getParameterValue(0);
+            muParam = (RealParameter) xo.getElementFirstChild(RELATIVE_RATE);
+            muParam.setID(xo.getId());
+            msg += "\n  with initial relative rate = " + muParam.getValue();
         }
+        if (muParam != null)
+            siteModel.initByName("mutationRate", muParam);
 
-        Parameter shapeParam = null;
+//TODO Remco check the default same to BEAST 2
+        RealParameter shapeParam = null;
         int catCount = 4;
         if (xo.hasChildNamed(GAMMA_SHAPE)) {
             final XMLObject cxo = xo.getChild(GAMMA_SHAPE);
             catCount = cxo.getIntegerAttribute(GAMMA_CATEGORIES);
-            shapeParam = (Parameter) cxo.getChild(Parameter.class);
+            siteModel.gammaCategoryCount.setValue(catCount, siteModel);
 
-            msg += "\n  " + catCount + " category discrete gamma with initial shape = " + shapeParam.getParameterValue(0);
+            shapeParam = (RealParameter) cxo.getChild(RealParameter.class);
+            siteModel.initByName("shape", shapeParam);
+
+            msg += "\n  " + catCount + " category discrete gamma with initial shape = " + shapeParam.getValue();
         }
 
-        Parameter invarParam = null;
+        RealParameter invarParam = null;
         if (xo.hasChildNamed(PROPORTION_INVARIANT)) {
-            invarParam = (Parameter) xo.getElementFirstChild(PROPORTION_INVARIANT);
-            msg += "\n  initial proportion of invariant sites = " + invarParam.getParameterValue(0);
+            invarParam = (RealParameter) xo.getElementFirstChild(PROPORTION_INVARIANT);
+            siteModel.initByName("proportionInvariant", invarParam);
+            msg += "\n  initial proportion of invariant sites = " + invarParam.getValue();
         }
 
         Logger.getLogger("dr.evomodel").info("Creating site model." + (msg.length() > 0 ? msg : ""));
 
-        return new GammaSiteModel(substitutionModel, muParam, shapeParam, catCount, invarParam);
-    */
-		}
+        return siteModel;
+    }
 
     //************************************************************************
     // AbstractXMLObjectParser implementation
@@ -110,7 +116,7 @@ public class GammaSiteModelParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return GammaSiteModel.class;
+        return SiteModel.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
