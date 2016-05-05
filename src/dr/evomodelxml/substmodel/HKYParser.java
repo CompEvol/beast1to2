@@ -25,6 +25,7 @@
 
 package dr.evomodelxml.substmodel;
 
+import beast.core.parameter.Parameter;
 import beast.core.parameter.RealParameter;
 import beast.evolution.substitutionmodel.*;
 
@@ -46,38 +47,17 @@ public class HKYParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-//        Variable kappaParam = (Variable) xo.getElementFirstChild(KAPPA);
-//
-//        RealParameter f = new RealParameter(test.getPi());
-//
-//        Frequencies freqs = new Frequencies();
-//        freqs.initByName("frequencies", f, "estimate", false);
-//
-//        beast.evolution.substitutionmodel.HKY hky = new beast.evolution.substitutionmodel.HKY();
-//        hky.initByName("kappa", test.getKappa().toString(), "frequencies", freqs);
-//
-//        double distance = test.getDistance();
-//
-//        double[] mat = new double[4 * 4];
-//        hky.getTransitionProbabilities(null, distance, 0, 1, mat);
-//        final double[] result = test.getExpectedResult();
-//
-//        return hky;
+        RealParameter kappaParam = (RealParameter) xo.getElementFirstChild(KAPPA);
 
-
-        System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
-
-        Variable kappaParam = (Variable) xo.getElementFirstChild(KAPPA);
-        FrequencyModel freqModel = (FrequencyModel) xo.getElementFirstChild(FrequencyModelParser.FREQUENCIES);
+        Frequencies freqs = (Frequencies) xo.getElementFirstChild(FrequencyModelParser.FREQUENCIES);
+        HKY hky = new HKY();
+        hky.initByName("kappa", kappaParam, "frequencies", freqs);
 
         Logger.getLogger("dr.evomodel").info("Creating HKY substitution model. Initial kappa = " +
-                kappaParam.getValue(0));
+                kappaParam.getValue());
 
-        return new HKY(kappaParam, freqModel);
-    */
-		}
+        return hky;
+	}
 
     //************************************************************************
     // AbstractXMLObjectParser implementation
@@ -97,9 +77,9 @@ public class HKYParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-//            new ElementRule(FrequencyModelParser.FREQUENCIES,
-//                    new XMLSyntaxRule[]{new ElementRule(FrequencyModel.class)}),
-//            new ElementRule(KAPPA,
-//                    new XMLSyntaxRule[]{new ElementRule(Variable.class)})
+            new ElementRule(FrequencyModelParser.FREQUENCIES,
+                    new XMLSyntaxRule[]{new ElementRule(Frequencies.class)}),
+            new ElementRule(KAPPA,
+                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)})
     };
 }
