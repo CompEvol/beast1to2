@@ -57,6 +57,7 @@ public class AlignmentParser extends AbstractXMLObjectParser {
         }
 
         alignment.userDataTypeInput.setValue(dataType, alignment);
+        alignment.setID(xo.getId());
 
         for (int i = 0; i < xo.getChildCount(); i++) {
 

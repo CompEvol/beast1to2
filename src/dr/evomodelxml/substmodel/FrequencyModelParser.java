@@ -25,11 +25,13 @@
 
 package dr.evomodelxml.substmodel;
 
-import dr.evolution.alignment.PatternList;
-import dr.evolution.datatype.DataType;
-import dr.evomodel.substmodel.FrequencyModel;
+import beast.core.parameter.RealParameter;
+import beast.evolution.alignment.Alignment;
+import beast.evolution.alignment.FilteredAlignment;
+import beast.evolution.alignment.TaxonSet;
+import beast.evolution.datatype.DataType;
+import beast.evolution.substitutionmodel.Frequencies;
 import dr.evoxml.util.DataTypeUtils;
-import dr.inference.model.Parameter;
 import dr.xml.*;
 
 import java.text.NumberFormat;
@@ -55,8 +57,60 @@ public class FrequencyModelParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
+//        DataType dataType = DataTypeUtils.getDataType(xo);
+
+        Frequencies freqs = new Frequencies();
+        freqs.setID("freqs");
+        RealParameter freqsParam = (RealParameter) xo.getElementFirstChild(FREQUENCIES);
+
+        for (int i = 0; i < xo.getChildCount(); i++) {
+            Object obj = xo.getChild(i);
+            if (obj instanceof Alignment) {
+                freqs.initByName("data", (Alignment) obj);
+                break;
+            }
+        }
+
+        StringBuilder sb = new StringBuilder("Creating state frequencies model '" + freqsParam.getID() + "': ");
+        if (freqs.getFreqs() != null) {
+            if (freqsParam.getDimension() != freqs.getFreqs().length) {
+                throw new XMLParseException("dimension of frequency parameter and number of sequence states don't match!");
+            }
+            sb.append("Using empirical frequencies from data ");
+        } else {
+            freqs.initByName("frequencies", freqsParam);
+            sb.append("Initial frequencies ");
+        }
+        sb.append("= {");
+
+        double sum = 0;
+        for (int j = 0; j < freqsParam.getDimension(); j++) {
+            sum += freqs.getFreqs()[j];
+        }
+
+        if (xo.getAttribute(NORMALIZE, false)) {
+            System.out.println(getParserName() + " " + NORMALIZE + " " + beast1to2.Beast1to2Converter.NIY);
+            return null;
+        }
+
+        if (Math.abs(sum - 1.0) > 1e-8) {
+            throw new XMLParseException("Frequencies do not sum to 1 (they sum to " + sum + ")");
+        }
+
+        NumberFormat format = NumberFormat.getNumberInstance();
+        format.setMaximumFractionDigits(5);
+
+        sb.append(format.format(freqs.getFreqs()[0]));
+        for (int j = 1; j < freqsParam.getDimension(); j++) {
+            sb.append(", ");
+            sb.append(format.format(freqs.getFreqs()[j]));
+        }
+        sb.append("}");
+        Logger.getLogger("dr.evomodel").info(sb.toString());
+
+        return freqs;
+
+
 		/*
 
         DataType dataType = DataTypeUtils.getDataType(xo);
@@ -126,7 +180,7 @@ public class FrequencyModelParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return FrequencyModel.class;
+        return Frequencies.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -136,16 +190,16 @@ public class FrequencyModelParser extends AbstractXMLObjectParser {
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newBooleanRule(NORMALIZE, true),
 
-            new ElementRule(PatternList.class, "Initial value", 0, 1),
+            new ElementRule(TaxonSet.class, "Initial value", 0, 1),
 
-            new XORRule(
-                    new StringAttributeRule(DataType.DATA_TYPE, "The type of sequence data",
-                            DataType.getRegisteredDataTypeNames(), false),
-                    new ElementRule(DataType.class)
-            ),
+//            new XORRule(
+//                    new StringAttributeRule(DataType.DATA_TYPE, "The type of sequence data",
+//                            DataType.getRegisteredDataTypeNames(), false),
+//                    new ElementRule(DataType.class)
+//            ),
 
             new ElementRule(FREQUENCIES,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
 
     };
 
