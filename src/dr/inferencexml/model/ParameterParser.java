@@ -119,11 +119,11 @@ public class ParameterParser extends AbstractXMLObjectParser {
 
         if( xo.hasAttribute(UPPER) ) {
             double[] v = xo.getDoubleArrayAttribute(UPPER);
-            if( v.length == uppers.length ) {
+            if( v.length == 1 ) {
+                param.setUpper(v[0]);
+            } else if( v.length == uppers.length ) {
                 System.out.println(getParserName() + " multi-dimension bounds " + beast1to2.Beast1to2Converter.NIY);
                 return null;
-            } else if( v.length == 1 ) {
-                param.setUpper(v[0]);
             } else {
                 throw new XMLParseException("uppers string must have 1 value or dimension values");
             }
@@ -131,11 +131,11 @@ public class ParameterParser extends AbstractXMLObjectParser {
 
         if( xo.hasAttribute(LOWER) ) {
             double[] v = xo.getDoubleArrayAttribute(LOWER);
-            if( v.length == lowers.length ) {
+            if( v.length == 1 ) {
+                param.setLower(v[0]);
+            } else if( v.length == lowers.length ) {
                 System.out.println(getParserName() + " multi-dimension bounds " + beast1to2.Beast1to2Converter.NIY);
                 return null;
-            } else if( v.length == 1 ) {
-                param.setLower(v[0]);
             } else {
                 throw new XMLParseException("lowers string must have 1 value or dimension values");
             }
