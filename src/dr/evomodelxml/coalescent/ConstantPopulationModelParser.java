@@ -23,6 +23,8 @@
  * Boston, MA  02110-1301  USA
  */
 
+package dr.evomodelxml.coalescent;
+
 import beast.core.parameter.RealParameter;
 import beast.evolution.tree.coalescent.ConstantPopulation;
 import dr.evolution.util.Units;
