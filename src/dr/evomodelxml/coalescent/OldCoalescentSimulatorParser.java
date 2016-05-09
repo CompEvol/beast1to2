@@ -25,15 +25,18 @@
 
 package dr.evomodelxml.coalescent;
 
-import dr.evolution.tree.SimpleTree;
-import dr.evolution.tree.Tree;
-import dr.evolution.util.Taxa;
-import dr.evolution.util.Taxon;
-import dr.evolution.util.TaxonList;
+
+import beast.evolution.alignment.Alignment;
+import beast.evolution.alignment.TaxonSet;
+import beast.evolution.tree.Node;
+import beast.evolution.tree.RandomTree;
+import beast.evolution.tree.Tree;
+import beast.evolution.tree.TreeDistribution;
+import beast.evolution.tree.coalescent.ConstantPopulation;
+import beast.evolution.tree.coalescent.PopulationFunction;
+import beast.math.distributions.MRCAPrior;
 import dr.evomodel.coalescent.CoalescentSimulator;
-import dr.evomodel.coalescent.DemographicModel;
 import dr.evomodelxml.tree.TreeModelParser;
-import dr.inference.distribution.ParametricDistributionModel;
 import dr.xml.*;
 
 import java.util.ArrayList;
@@ -60,10 +63,98 @@ public class OldCoalescentSimulatorParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
+        RandomTree randomTree = new RandomTree();
 
+        PopulationFunction populationFunction = (PopulationFunction) xo.getChild(PopulationFunction.class);
+        List<TaxonSet> taxonLists = new ArrayList<TaxonSet>();
+        List<Tree> subtrees = new ArrayList<Tree>();
+
+        Double rootHeight = xo.getAttribute(ROOT_HEIGHT, -1.0);
+
+        if (xo.hasAttribute(RESCALE_HEIGHT)) {
+            rootHeight = xo.getDoubleAttribute(RESCALE_HEIGHT);
+        }
+
+        // should have one child that is node
+        for (int i = 0; i < xo.getChildCount(); i++) {
+            final Object child = xo.getChild(i);
+
+            // AER - swapped the order of these round because Trees are TaxonLists...
+            if (child instanceof Tree) {
+                throw new UnsupportedOperationException(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
+//                subtrees.add((Tree) child);
+            } else if (child instanceof TaxonSet) {
+                taxonLists.add((TaxonSet) child);
+            } else if (xo.getChildName(i).equals(CONSTRAINED_TAXA)) {
+                throw new UnsupportedOperationException(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
+                /*
+                XMLObject constrainedTaxa = (XMLObject) child;
+
+                // all taxa
+                final TaxonSet taxa = (TaxonSet) constrainedTaxa.getChild(TaxonSet.class);
+
+                List<MRCAPrior> constraints = new ArrayList<>();
+                final String setsNotCompatibleMessage = "taxa sets not compatible";
+
+                // pick up all constraints. order in partial order, where taxa_1 @in taxa_2 implies
+                // taxa_1 is before taxa_2.
+
+
+                for (int nc = 0; nc < constrainedTaxa.getChildCount(); ++nc) {
+
+                    final Object object = constrainedTaxa.getChild(nc);
+                    if (object instanceof XMLObject) {
+                        final XMLObject constraint = (XMLObject) object;
+
+                        if (constraint.getName().equals(TMRCA_CONSTRAINT)) {
+                            TaxonSet taxaSubSet = (TaxonSet) constraint.getChild(TaxonSet.class);
+
+
+
+                            boolean isMono = constraint.getAttribute(IS_MONOPHYLETIC, true);
+
+                        }
+                    }
+                }
+                final int nConstraints = constraints.size();
+
+                if (nConstraints == 0) {
+                    if (taxa != null) {
+                        taxonLists.add(taxa);
+                    }
+                } else {
+                    for (int nc = 0; nc < nConstraints; ++nc) {
+
+                    }
+                }*/
+            }
+        }
+
+        if (taxonLists.size() == 0) {
+            if (subtrees.size() == 1) {
+                return subtrees.get(0);
+            }
+            throw new XMLParseException("Expected at least one taxonList or two subtrees in "
+                    + getParserName() + " element.");
+        }
+
+
+        if (taxonLists.size() > 1)
+            throw new UnsupportedOperationException(getParserName() + " multi-taxonset " + beast1to2.Beast1to2Converter.NIY);
+
+        try {
+            if (rootHeight < 0) rootHeight = null;
+
+            randomTree.initByName("taxonset", taxonLists.get(0), "populationModel", populationFunction, "rootHeight", rootHeight);
+
+            return randomTree;
+
+        } catch (Exception iae) {
+            throw new XMLParseException(iae.getMessage());
+        }
+
+
+		/*
         CoalescentSimulator simulator = new CoalescentSimulator();
 
         DemographicModel demoModel = (DemographicModel) xo.getChild(DemographicModel.class);
@@ -286,7 +377,7 @@ public class OldCoalescentSimulatorParser extends AbstractXMLObjectParser {
             throw new XMLParseException(iae.getMessage());
         }
     */
-		}
+    }
 
     //************************************************************************
     // AbstractXMLObjectParser implementation
@@ -297,7 +388,7 @@ public class OldCoalescentSimulatorParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return CoalescentSimulator.class; //Object.class;
+        return Tree.class; //Object.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -308,13 +399,13 @@ public class OldCoalescentSimulatorParser extends AbstractXMLObjectParser {
             AttributeRule.newDoubleRule(RESCALE_HEIGHT, true, "Attempt to rescale the tree to the given root height"),
             AttributeRule.newDoubleRule(ROOT_HEIGHT, true, ""),
             new ElementRule(Tree.class, 0, Integer.MAX_VALUE),
-            new ElementRule(TaxonList.class, 0, Integer.MAX_VALUE),
+            new ElementRule(TaxonSet.class, 0, Integer.MAX_VALUE),
             new ElementRule(CONSTRAINED_TAXA, new XMLSyntaxRule[]{
-                    new ElementRule(TaxonList.class, 0, Integer.MAX_VALUE),
+                    new ElementRule(TaxonSet.class, 0, Integer.MAX_VALUE),
                     new ElementRule(TMRCA_CONSTRAINT, new XMLSyntaxRule[]{
-                          new ElementRule(TaxonList.class, 0, Integer.MAX_VALUE),
+                          new ElementRule(TaxonSet.class, 0, Integer.MAX_VALUE),
                     }),
             }, true),
-            new ElementRule(DemographicModel.class),
+            new ElementRule(ConstantPopulation.class),
     };
 }

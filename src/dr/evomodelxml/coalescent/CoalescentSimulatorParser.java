@@ -25,16 +25,9 @@
 
 package dr.evomodelxml.coalescent;
 
-import dr.evolution.tree.SimpleNode;
-import dr.evolution.tree.SimpleTree;
-import dr.evolution.tree.Tree;
-import dr.evolution.util.Taxa;
-import dr.evolution.util.Taxon;
-import dr.evolution.util.TaxonList;
-import dr.evomodel.coalescent.CoalescentSimulator;
-import dr.evomodel.coalescent.DemographicModel;
-import dr.evomodelxml.tree.TreeModelParser;
-import dr.inference.distribution.ParametricDistributionModel;
+import beast.evolution.alignment.TaxonSet;
+import beast.evolution.tree.Tree;
+import beast.evolution.tree.coalescent.ConstantPopulation;
 import dr.xml.*;
 
 import java.util.ArrayList;
@@ -128,7 +121,7 @@ public class CoalescentSimulatorParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return CoalescentSimulator.class; //Object.class;
+        return Tree.class; //Object.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -138,7 +131,7 @@ public class CoalescentSimulatorParser extends AbstractXMLObjectParser {
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newDoubleRule(HEIGHT, true, ""),
             new ElementRule(Tree.class, 0, Integer.MAX_VALUE),
-            new ElementRule(TaxonList.class, 0, Integer.MAX_VALUE),
-            new ElementRule(DemographicModel.class, 0, Integer.MAX_VALUE),
+            new ElementRule(TaxonSet.class, 0, Integer.MAX_VALUE),
+            new ElementRule(ConstantPopulation.class, 0, Integer.MAX_VALUE),
     };
 }

@@ -25,15 +25,12 @@
 
 package dr.evomodelxml.tree;
 
-import dr.evolution.tree.NodeRef;
-import dr.evolution.tree.Tree;
-import dr.evolution.util.Date;
-import dr.evolution.util.Taxon;
-import dr.evolution.util.TaxonList;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.CompoundParameter;
-import dr.inference.model.Parameter;
-import dr.inference.model.ParameterParser;
+
+
+import beast.core.parameter.Parameter;
+import beast.evolution.alignment.TaxonSet;
+import beast.evolution.tree.Tree;
+import beast.evolution.tree.coalescent.TreeIntervals;
 import dr.xml.*;
 
 import java.util.logging.Logger;
@@ -108,21 +105,34 @@ public class TreeModelParser extends AbstractXMLObjectParser {
                         }, 0, Integer.MAX_VALUE),
                 new ElementRule(LEAF_HEIGHTS,
                         new XMLSyntaxRule[]{
-                                new ElementRule(TaxonList.class, "A set of taxa for which leaf heights are required"),
+                                new ElementRule(TaxonSet.class, "A set of taxa for which leaf heights are required"),
                                 new ElementRule(Parameter.class, "A compound parameter containing the leaf heights")
                         }, true)
         };
     }
 
     public String getParserName() {
-        return TreeModel.TREE_MODEL;
+        return Tree.class.getSimpleName() + "Model";
     }
 
     /**
      * @return a tree object based on the XML element it was passed.
      */
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
+        Tree tree = (Tree) xo.getChild(Tree.class);
+
+        if (xo.getAttribute(FIX_HEIGHTS, false)) {
+            throw new IllegalArgumentException(getParserName() + " " +  FIX_HEIGHTS + " " + beast1to2.Beast1to2Converter.NIY);
+        }
+
+        TreeIntervals treeIntervals = new TreeIntervals();
+        treeIntervals.initByName("tree", tree);
+
+        Logger.getLogger("dr.evomodel").info("Creating the tree model, '" + xo.getId() + "'");
+
+
+
+        System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
 
@@ -281,7 +291,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
         return treeModel;
     */
 		}
-
+/*
     private void setPrecisionBounds(Parameter newParameter, Taxon taxon) {
         Date date = taxon.getDate();
         if (date != null) {
@@ -303,7 +313,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
                 newParameter.setParameterValue(0, (upper + lower) / 2);
             }
         }
-    }
+    }*/
 
     //************************************************************************
     // AbstractXMLObjectParser implementation
@@ -338,7 +348,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return TreeModel.class;
+        return Tree.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
