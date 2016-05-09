@@ -81,7 +81,7 @@ public class GammaSiteModelParser extends AbstractXMLObjectParser {
         if (muParam != null)
             siteModel.initByName("mutationRate", muParam);
 
-//TODO Remco check the default same to BEAST 2
+//TODO the default not same to BEAST 2
         RealParameter shapeParam = null;
         int catCount = 4;
         if (xo.hasChildNamed(GAMMA_SHAPE)) {

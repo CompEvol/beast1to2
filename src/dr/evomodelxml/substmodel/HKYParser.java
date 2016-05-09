@@ -43,12 +43,11 @@ public class HKYParser extends AbstractXMLObjectParser {
     public static final String FREQUENCIES = "frequencies";
 
     public String getParserName() {
-        return HKY.class.getSimpleName();
+        return HKY.class.getSimpleName() + "Model";
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         HKY hky = new HKY();
-        hky.setID(xo.getId());
 
         RealParameter kappaParam = (RealParameter) xo.getElementFirstChild(KAPPA);
 

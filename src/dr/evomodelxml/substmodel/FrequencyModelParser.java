@@ -57,7 +57,6 @@ public class FrequencyModelParser extends AbstractXMLObjectParser {
 //        DataType dataType = DataTypeUtils.getDataType(xo);
 
         Frequencies freqs = new Frequencies();
-        freqs.setID("freqs");
         RealParameter freqsParam = (RealParameter) xo.getElementFirstChild(FREQUENCIES);
 
         for (int i = 0; i < xo.getChildCount(); i++) {
@@ -68,7 +67,7 @@ public class FrequencyModelParser extends AbstractXMLObjectParser {
             }
         }
 
-        StringBuilder sb = new StringBuilder("Creating state frequencies model '" + freqs.getID() + "': ");
+        StringBuilder sb = new StringBuilder("Creating state frequencies model '" + freqsParam.getID() + "': ");
         if (freqs.getFreqs() != null) {
             if (freqsParam.getDimension() != freqs.getFreqs().length) {
                 throw new XMLParseException("dimension of frequency parameter and number of sequence states don't match!");

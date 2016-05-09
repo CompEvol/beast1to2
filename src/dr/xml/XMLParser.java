@@ -25,6 +25,7 @@
 
 package dr.xml;
 
+import beast.core.BEASTInterface;
 import beast.core.Distribution;
 import beast.core.parameter.Parameter;
 import beast.evolution.branchratemodel.BranchRateModel;
@@ -319,19 +320,18 @@ public class XMLParser {
             if (parser != null) {
                 obj = parser.parseXMLObject(xo, id, objectStore, strictXML);
 
-                // TODO set BEAST2 obj id?
-                if (id != null && obj instanceof Identifiable) {
-                    ((Identifiable) obj).setId(id);
+                if (id != null && obj instanceof BEASTInterface) {
+                    ((BEASTInterface) obj).setID(id);
                 }
 
                 //TODO Remco check
                 if (obj instanceof Distribution) {
                     //TODO MarkovChain for (Likelihood l : Likelihood.FULL_LIKELIHOOD_SET) {
 //                    Likelihood.FULL_LIKELIHOOD_SET.add((Likelihood) obj);
-                } else if (obj instanceof SubstitutionModel || obj instanceof SiteModelInterface ||
-                        obj instanceof BranchRateModel) {
+                } else if (obj instanceof SubstitutionModel.Base || obj instanceof SiteModelInterface.Base ||
+                        obj instanceof BranchRateModel.Base) {
 //                    Model.FULL_MODEL_SET.add((Model) obj);
-                } else if (obj instanceof Parameter) {
+                } else if (obj instanceof Parameter.Base) {
 //                    Parameter.FULL_PARAMETER_SET.add((Parameter) obj);
                 }
 
