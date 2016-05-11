@@ -79,6 +79,7 @@ public class TaxaParser extends AbstractXMLObjectParser {
                 throwUnrecognizedElement(xo);
             }
         }
+        taxonList.initAndValidate();
         return taxonList;
 	}
 
