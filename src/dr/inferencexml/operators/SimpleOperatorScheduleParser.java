@@ -25,9 +25,9 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.operators.MCMCOperator;
-import dr.inference.operators.OperatorSchedule;
-import dr.inference.operators.SimpleOperatorSchedule;
+
+import beast.core.Operator;
+import beast.core.OperatorSchedule;
 import dr.xml.*;
 
 import java.util.logging.Logger;
@@ -46,8 +46,28 @@ public class SimpleOperatorScheduleParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
+        OperatorSchedule schedule = new OperatorSchedule();
+
+        if (xo.hasAttribute(SEQUENTIAL)) {
+            throw new UnsupportedOperationException(getParserName() + " " +
+                    SEQUENTIAL + " " + beast1to2.Beast1to2Converter.NIY);
+        }
+        if (xo.hasAttribute(OPTIMIZATION_SCHEDULE)) {
+            throw new UnsupportedOperationException(getParserName() + " " +
+                    OPTIMIZATION_SCHEDULE + " " + beast1to2.Beast1to2Converter.NIY);
+        }
+
+        // BEAST 2 default to autoOptimise
+        for (int i = 0; i < xo.getChildCount(); i++) {
+            Object child = xo.getChild(i);
+            if (child instanceof Operator) {
+                schedule.addOperator((Operator) child);
+            }
+        }
+        schedule.initAndValidate();
+
+        return schedule;
+
 		/*
 
         SimpleOperatorSchedule schedule = new SimpleOperatorSchedule();
@@ -88,7 +108,7 @@ public class SimpleOperatorScheduleParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newBooleanRule(SEQUENTIAL, true),
-            new ElementRule(MCMCOperator.class, 1, Integer.MAX_VALUE),
+            new ElementRule(Operator.class, 1, Integer.MAX_VALUE),
             AttributeRule.newStringRule(OPTIMIZATION_SCHEDULE, true)
     };
 
@@ -97,7 +117,7 @@ public class SimpleOperatorScheduleParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return SimpleOperatorSchedule.class;
+        return OperatorSchedule.class;
     }
     
 }

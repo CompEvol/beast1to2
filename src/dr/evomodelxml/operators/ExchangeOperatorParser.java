@@ -25,9 +25,9 @@
 
 package dr.evomodelxml.operators;
 
-import dr.evomodel.operators.ExchangeOperator;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.operators.MCMCOperator;
+import beast.evolution.operators.Exchange;
+import beast.evolution.tree.Tree;
+import dr.inferencexml.operators.ScaleOperatorParser;
 import dr.xml.*;
 
 /**
@@ -44,14 +44,12 @@ public class ExchangeOperatorParser {
         }
 
         public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
+		    final Tree treeModel = (Tree) xo.getChild(Tree.class);
+            final double weight = xo.getDoubleAttribute(ScaleOperatorParser.WEIGHT);
 
-            final TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
-            final double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
-            return new ExchangeOperator(ExchangeOperator.NARROW, treeModel, weight);
-        */
+            Exchange exchange = new Exchange();
+            exchange.initByName(ScaleOperatorParser.WEIGHT, weight, "tree", treeModel);
+            return exchange;
 		}
 
         // ************************************************************************
@@ -64,7 +62,7 @@ public class ExchangeOperatorParser {
         }
 
         public Class getReturnType() {
-            return ExchangeOperator.class;
+            return Exchange.class;
         }
 
         public XMLSyntaxRule[] getSyntaxRules() {
@@ -72,8 +70,8 @@ public class ExchangeOperatorParser {
         }
 
         private final XMLSyntaxRule[] rules = {
-                AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
-                new ElementRule(TreeModel.class)
+                AttributeRule.newDoubleRule(ScaleOperatorParser.WEIGHT),
+                new ElementRule(Tree.class)
         };
     };
 
@@ -103,7 +101,7 @@ public class ExchangeOperatorParser {
         }
 
         public Class getReturnType() {
-            return ExchangeOperator.class;
+            return Exchange.class;
         }
 
         public XMLSyntaxRule[] getSyntaxRules() {
@@ -111,8 +109,8 @@ public class ExchangeOperatorParser {
         }
 
         private final XMLSyntaxRule[] rules = {
-                AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
-                new ElementRule(TreeModel.class)
+                AttributeRule.newDoubleRule(ScaleOperatorParser.WEIGHT),
+                new ElementRule(Tree.class)
         };
     };
 
@@ -123,19 +121,16 @@ public class ExchangeOperatorParser {
         }
 
         public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
-
-            final TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
-            if (treeModel.getExternalNodeCount() <= 2) {
+            final Tree treeModel = (Tree) xo.getChild(Tree.class);
+            if (treeModel.getLeafNodeCount() <= 2) {
                 throw new XMLParseException("Tree with fewer than 3 taxa");
             }
-            final double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
+            final double weight = xo.getDoubleAttribute(ScaleOperatorParser.WEIGHT);
 
-            return new ExchangeOperator(ExchangeOperator.WIDE, treeModel, weight);
-        */
-		}
+            Exchange exchange = new Exchange();
+            exchange.initByName(ScaleOperatorParser.WEIGHT, weight, "tree", treeModel, "isNarrow", false);
+            return exchange;
+        }
 
         // ************************************************************************
         // AbstractXMLObjectParser implementation
@@ -147,7 +142,7 @@ public class ExchangeOperatorParser {
         }
 
         public Class getReturnType() {
-            return ExchangeOperator.class;
+            return Exchange.class;
         }
 
         public XMLSyntaxRule[] getSyntaxRules() {
@@ -156,8 +151,8 @@ public class ExchangeOperatorParser {
 
         private final XMLSyntaxRule[] rules;{
             rules = new XMLSyntaxRule[]{
-                    AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
-                    new ElementRule(TreeModel.class)
+                    AttributeRule.newDoubleRule(ScaleOperatorParser.WEIGHT),
+                    new ElementRule(Tree.class)
             };
         }
     };

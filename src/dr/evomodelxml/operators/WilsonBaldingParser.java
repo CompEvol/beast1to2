@@ -25,13 +25,11 @@
 
 package dr.evomodelxml.operators;
 
-import dr.evomodel.operators.WilsonBalding;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.operators.MCMCOperator;
+import beast.evolution.operators.WilsonBalding;
+import beast.evolution.tree.Tree;
+import dr.inferencexml.operators.ScaleOperatorParser;
 import dr.xml.*;
 
-/**
- */
 public class WilsonBaldingParser extends AbstractXMLObjectParser {
 
     public static final String WILSON_BALDING = "wilsonBalding";
@@ -42,17 +40,16 @@ public class WilsonBaldingParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
-        final double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
+        final double weight = xo.getDoubleAttribute(ScaleOperatorParser.WEIGHT);
 
-        final TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        final Tree treeModel = (Tree) xo.getChild(Tree.class);
 
-        return new WilsonBalding(treeModel, weight);
-    */
-		}
+        WilsonBalding wilsonBalding = new WilsonBalding();
+        wilsonBalding.initByName(ScaleOperatorParser.WEIGHT, weight, "tree", treeModel);
+
+        return wilsonBalding;
+    }
 
     //************************************************************************
     // AbstractXMLObjectParser implementation
@@ -63,8 +60,8 @@ public class WilsonBaldingParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
-            new ElementRule(TreeModel.class)
+            AttributeRule.newDoubleRule(ScaleOperatorParser.WEIGHT),
+            new ElementRule(Tree.class)
     };
 
     public String getParserDescription() {
