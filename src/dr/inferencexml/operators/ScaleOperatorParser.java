@@ -25,16 +25,16 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.evolution.operators.ScaleOperator;
 import dr.inference.operators.CoercableMCMCOperator;
-import dr.inference.operators.CoercionMode;
-import dr.inference.operators.MCMCOperator;
-import dr.inference.operators.ScaleOperator;
 import dr.xml.*;
 
 /**
  */
 public class ScaleOperatorParser extends AbstractXMLObjectParser {
+    public static final String AUTO_OPTIMIZE = "autoOptimize";
+    public static final String WEIGHT = "weight";
     public static final String SCALE_OPERATOR = "scaleOperator";
     public static final String SCALE_ALL = "scaleAll";
     public static final String SCALE_ALL_IND = "scaleAllIndependently";
@@ -48,8 +48,33 @@ public class ScaleOperatorParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
+        final boolean optimise = xo.getAttribute(AUTO_OPTIMIZE, true);
+        final boolean scaleAll = xo.getAttribute(SCALE_ALL, false);
+        final boolean scaleAllInd = xo.getAttribute(SCALE_ALL_IND, false);
+        final int degreesOfFreedom = xo.getAttribute(DEGREES_OF_FREEDOM, 0);
+
+        final double weight = xo.getDoubleAttribute(WEIGHT);
+        final double scaleFactor = xo.getDoubleAttribute(SCALE_FACTOR);
+
+        if (scaleFactor <= 0.0 || scaleFactor >= 1.0) {
+            throw new XMLParseException("scaleFactor must be between 0.0 and 1.0");
+        }
+        final RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
+
+//        Parameter indicator = null; // TODO BooleanParameter
+        final XMLObject inds = xo.getChild(INDICATORS);
+        if (inds != null) {
+            throw new UnsupportedOperationException(getParserName() + " " +
+                    INDICATORS + " " + beast1to2.Beast1to2Converter.NIY);
+        }
+
+        ScaleOperator operator = new ScaleOperator();
+        operator.initByName(WEIGHT, weight, "parameter", parameter, "scaleFactor", scaleFactor,
+                "scaleAll", scaleAll, "scaleAllIndependently", scaleAllInd,
+                "degreesOfFreedom", degreesOfFreedom, "optimise", optimise);
+
+        return operator;
+
 		/*
 
         final boolean scaleAll = xo.getAttribute(SCALE_ALL, false);
@@ -87,7 +112,7 @@ public class ScaleOperatorParser extends AbstractXMLObjectParser {
         operator.setWeight(weight);
         return operator;
     */
-		}
+    }
 
     //************************************************************************
     // AbstractXMLObjectParser implementation
@@ -109,14 +134,14 @@ public class ScaleOperatorParser extends AbstractXMLObjectParser {
             AttributeRule.newDoubleRule(SCALE_FACTOR),
             AttributeRule.newBooleanRule(SCALE_ALL, true),
             AttributeRule.newBooleanRule(SCALE_ALL_IND, true),
-            AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
-            AttributeRule.newBooleanRule(CoercableMCMCOperator.AUTO_OPTIMIZE, true),
+            AttributeRule.newDoubleRule(WEIGHT),
+            AttributeRule.newBooleanRule(AUTO_OPTIMIZE, true),
             AttributeRule.newIntegerRule(DEGREES_OF_FREEDOM, true),
 
-            new ElementRule(Parameter.class),
+            new ElementRule(RealParameter.class),
             new ElementRule(INDICATORS,
                     new XMLSyntaxRule[]{
                             AttributeRule.newDoubleRule(PICKONEPROB, true),
-                            new ElementRule(Parameter.class)}, true),
+                            new ElementRule(RealParameter.class)}, true),
     };
 }
