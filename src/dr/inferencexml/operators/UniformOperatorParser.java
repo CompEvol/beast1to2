@@ -25,13 +25,11 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
-import dr.inference.operators.MCMCOperator;
-import dr.inference.operators.UniformOperator;
+import beast.core.parameter.RealParameter;
+import beast.evolution.operators.UniformOperator;
 import dr.xml.*;
 
-/**
- */
+
 public class UniformOperatorParser extends AbstractXMLObjectParser {
     public final static String UNIFORM_OPERATOR = "uniformOperator";
     public static final String LOWER = "lower";
@@ -42,8 +40,23 @@ public class UniformOperatorParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
+        double weight = xo.getDoubleAttribute(ScaleOperatorParser.WEIGHT);
+        RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
+
+        if( parameter.getDimension() == 0 ) {
+            throw new XMLParseException("parameter with 0 dimension.");
+        }
+
+        if (xo.hasAttribute(LOWER) || xo.hasAttribute(UPPER)) {
+            throw new UnsupportedOperationException(getParserName() + " " +
+                    LOWER + " and " + UPPER + " " + beast1to2.Beast1to2Converter.NIY);
+        }
+
+        UniformOperator uniformOperator = new UniformOperator();
+        uniformOperator.initByName(ScaleOperatorParser.WEIGHT, weight, "parameter", parameter);
+
+        return uniformOperator;
+
 		/*
 
         double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
@@ -86,9 +99,9 @@ public class UniformOperatorParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
+            AttributeRule.newDoubleRule(ScaleOperatorParser.WEIGHT),
             AttributeRule.newDoubleRule(LOWER, true),
             AttributeRule.newDoubleRule(UPPER, true),
-            new ElementRule(Parameter.class)
+            new ElementRule(RealParameter.class)
     };
 }
