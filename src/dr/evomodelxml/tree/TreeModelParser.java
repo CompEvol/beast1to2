@@ -27,10 +27,9 @@ package dr.evomodelxml.tree;
 
 
 
-import beast.core.parameter.Parameter;
-import beast.evolution.alignment.TaxonSet;
+import beast.core.parameter.RealParameter;
+import beast.evolution.alignment.Alignment;
 import beast.evolution.tree.Tree;
-import beast.evolution.tree.coalescent.TreeIntervals;
 import dr.xml.*;
 
 import java.util.logging.Logger;
@@ -65,18 +64,18 @@ public class TreeModelParser extends AbstractXMLObjectParser {
     public TreeModelParser() {
         rules = new XMLSyntaxRule[]{
                 new ElementRule(Tree.class),
-                new ElementRule(ROOT_HEIGHT, Parameter.class, "A parameter definition with id only (cannot be a reference!)", false),
+                new ElementRule(ROOT_HEIGHT, RealParameter.class, "A parameter definition with id only (cannot be a reference!)", false),
                 AttributeRule.newBooleanRule(FIX_HEIGHTS, true),
                 new ElementRule(NODE_HEIGHTS,
                         new XMLSyntaxRule[]{
                                 AttributeRule.newBooleanRule(ROOT_NODE, true, "If true the root height is included in the parameter"),
                                 AttributeRule.newBooleanRule(INTERNAL_NODES, true, "If true the internal node heights (minus the root) are included in the parameter"),
-                                new ElementRule(Parameter.class, "A parameter definition with id only (cannot be a reference!)")
+                                new ElementRule(RealParameter.class, "A parameter definition with id only (cannot be a reference!)")
                         }, 1, Integer.MAX_VALUE),
                 new ElementRule(LEAF_HEIGHT,
                         new XMLSyntaxRule[]{
                                 AttributeRule.newStringRule(TAXON, false, "The name of the taxon for the leaf"),
-                                new ElementRule(Parameter.class, "A parameter definition with id only (cannot be a reference!)")
+                                new ElementRule(RealParameter.class, "A parameter definition with id only (cannot be a reference!)")
                         }, 0, Integer.MAX_VALUE),
                 new ElementRule(NODE_TRAITS,
                         new XMLSyntaxRule[]{
@@ -87,7 +86,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
                                 AttributeRule.newIntegerRule(MULTIVARIATE_TRAIT, true, "The number of dimensions (if multivariate)"),
                                 AttributeRule.newDoubleRule(INITIAL_VALUE, true, "The initial value(s)"),
                                 AttributeRule.newBooleanRule(FIRE_TREE_EVENTS, true, "Whether to fire tree events if the traits change"),
-                                new ElementRule(Parameter.class, "A parameter definition with id only (cannot be a reference!)")
+                                new ElementRule(RealParameter.class, "A parameter definition with id only (cannot be a reference!)")
                         }, 0, Integer.MAX_VALUE),
                 new ElementRule(NODE_RATES,
                         new XMLSyntaxRule[]{
@@ -95,24 +94,24 @@ public class TreeModelParser extends AbstractXMLObjectParser {
                                 AttributeRule.newBooleanRule(INTERNAL_NODES, true, "If true the internal node rate (minus the root) are included in the parameter"),
                                 AttributeRule.newBooleanRule(LEAF_NODES, true, "If true the leaf node rate are included in the parameter"),
                                 AttributeRule.newDoubleRule(INITIAL_VALUE, true, "The initial value(s)"),
-                                new ElementRule(Parameter.class, "A parameter definition with id only (cannot be a reference!)")
+                                new ElementRule(RealParameter.class, "A parameter definition with id only (cannot be a reference!)")
                         }, 0, Integer.MAX_VALUE),
                 new ElementRule(LEAF_TRAIT,
                         new XMLSyntaxRule[]{
                                 AttributeRule.newStringRule(TAXON, false, "The name of the taxon for the leaf"),
                                 AttributeRule.newStringRule(NAME, false, "The name of the trait attribute in the taxa"),
-                                new ElementRule(Parameter.class, "A parameter definition with id only (cannot be a reference!)")
+                                new ElementRule(RealParameter.class, "A parameter definition with id only (cannot be a reference!)")
                         }, 0, Integer.MAX_VALUE),
                 new ElementRule(LEAF_HEIGHTS,
                         new XMLSyntaxRule[]{
-                                new ElementRule(TaxonSet.class, "A set of taxa for which leaf heights are required"),
-                                new ElementRule(Parameter.class, "A compound parameter containing the leaf heights")
+                                new ElementRule(Alignment.class, "A set of taxa for which leaf heights are required"),
+                                new ElementRule(RealParameter.class, "A compound parameter containing the leaf heights")
                         }, true)
         };
     }
 
     public String getParserName() {
-        return Tree.class.getSimpleName() + "Model";
+        return "treeModel";
     }
 
     /**
@@ -120,20 +119,157 @@ public class TreeModelParser extends AbstractXMLObjectParser {
      */
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         Tree tree = (Tree) xo.getChild(Tree.class);
-
-        if (xo.getAttribute(FIX_HEIGHTS, false)) {
-            throw new IllegalArgumentException(getParserName() + " " +  FIX_HEIGHTS + " " + beast1to2.Beast1to2Converter.NIY);
-        }
-
-        TreeIntervals treeIntervals = new TreeIntervals();
-        treeIntervals.initByName("tree", tree);
+        boolean fixHeights = xo.getAttribute(FIX_HEIGHTS, false);
 
         Logger.getLogger("dr.evomodel").info("Creating the tree model, '" + xo.getId() + "'");
 
+        for (int i = 0; i < xo.getChildCount(); i++) {
+            if (xo.getChild(i) instanceof XMLObject) {
 
+                XMLObject cxo = (XMLObject) xo.getChild(i);
 
-        System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
+                if (cxo.getName().equals(ROOT_HEIGHT)) {
+
+//                    ParameterParser.replaceParameter(cxo, treeModel.getRootHeightParameter());
+
+                } else if (cxo.getName().equals(LEAF_HEIGHT)) {
+
+                    String taxonName;
+                    if (cxo.hasAttribute(TAXON)) {
+                        taxonName = cxo.getStringAttribute(TAXON);
+                    } else {
+                        throw new XMLParseException("taxa element missing from leafHeight element in treeModel element");
+                    }
+
+//                    int index = treeModel.getTaxonIndex(taxonName);
+//                    if (index == -1) {
+//                        throw new XMLParseException("taxon " + taxonName + " not found for leafHeight element in treeModel element");
+//                    }
+//                    NodeRef node = treeModel.getExternalNode(index);
+//
+//                    Parameter newParameter = treeModel.getLeafHeightParameter(node);
+//
+//                    ParameterParser.replaceParameter(cxo, newParameter);
+//
+//                    Taxon taxon = treeModel.getTaxon(index);
+//
+//                    setPrecisionBounds(newParameter, taxon);
+
+                } else if (cxo.getName().equals(LEAF_HEIGHTS)) {
+                    // get a set of leaf height parameters out as a compound parameter...
+
+//                    TaxonList taxa = (TaxonList)cxo.getChild(TaxonList.class);
+//                    Parameter offsetParameter = (Parameter)cxo.getChild(Parameter.class);
+//
+//                    CompoundParameter leafHeights = new CompoundParameter("leafHeights");
+//                    for (Taxon taxon : taxa) {
+//                        int index = treeModel.getTaxonIndex(taxon);
+//                        if (index == -1) {
+//                            throw new XMLParseException("taxon " + taxon.getId() + " not found for leafHeight element in treeModel element");
+//                        }
+//                        NodeRef node = treeModel.getExternalNode(index);
+//
+//                        Parameter newParameter = treeModel.getLeafHeightParameter(node);
+//
+//                        leafHeights.addParameter(newParameter);
+//
+//                        setPrecisionBounds(newParameter, taxon);
+//                    }
+//
+//                    ParameterParser.replaceParameter(cxo, leafHeights);
+
+                } else if (cxo.getName().equals(NODE_HEIGHTS)) {
+
+                    boolean rootNode = cxo.getAttribute(ROOT_NODE, false);
+                    boolean internalNodes = cxo.getAttribute(INTERNAL_NODES, false);
+                    boolean leafNodes = cxo.getAttribute(LEAF_NODES, false);
+
+                    if (!rootNode && !internalNodes && !leafNodes) {
+                        throw new XMLParseException("one or more of root, internal or leaf nodes must be selected for the nodeHeights element");
+                    }
+
+//                    ParameterParser.replaceParameter(cxo, treeModel.createNodeHeightsParameter(rootNode, internalNodes, leafNodes));
+
+                } else if (cxo.getName().equals(NODE_RATES)) {
+
+                    boolean rootNode = cxo.getAttribute(ROOT_NODE, false);
+                    boolean internalNodes = cxo.getAttribute(INTERNAL_NODES, false);
+                    boolean leafNodes = cxo.getAttribute(LEAF_NODES, false);
+                    double[] initialValues = null;
+
+                    if (cxo.hasAttribute(INITIAL_VALUE)) {
+                        initialValues = cxo.getDoubleArrayAttribute(INITIAL_VALUE);
+                    }
+
+                    if (!rootNode && !internalNodes && !leafNodes) {
+                        throw new XMLParseException("one or more of root, internal or leaf nodes must be selected for the nodeRates element");
+                    }
+
+//                    ParameterParser.replaceParameter(cxo, treeModel.createNodeRatesParameter(initialValues, rootNode, internalNodes, leafNodes));
+
+                } else if (cxo.getName().equals(NODE_TRAITS)) {
+
+                    boolean rootNode = cxo.getAttribute(ROOT_NODE, false);
+                    boolean internalNodes = cxo.getAttribute(INTERNAL_NODES, false);
+                    boolean leafNodes = cxo.getAttribute(LEAF_NODES, false);
+                    boolean fireTreeEvents = cxo.getAttribute(FIRE_TREE_EVENTS, false);
+                    String name = cxo.getAttribute(NAME, "trait");
+                    int dim = cxo.getAttribute(MULTIVARIATE_TRAIT, 1);
+
+                    double[] initialValues = null;
+                    if (cxo.hasAttribute(INITIAL_VALUE)) {
+                        initialValues = cxo.getDoubleArrayAttribute(INITIAL_VALUE);
+                    }
+
+                    if (!rootNode && !internalNodes && !leafNodes) {
+                        throw new XMLParseException("one or more of root, internal or leaf nodes must be selected for the nodeTraits element");
+                    }
+
+//                    ParameterParser.replaceParameter(cxo, treeModel.createNodeTraitsParameter(name, dim, initialValues, rootNode, internalNodes, leafNodes, fireTreeEvents));
+
+                } else if (cxo.getName().equals(LEAF_TRAIT)) {
+
+                    String name = cxo.getAttribute(NAME, "trait");
+
+                    String taxonName;
+                    if (cxo.hasAttribute(TAXON)) {
+                        taxonName = cxo.getStringAttribute(TAXON);
+                    } else {
+                        throw new XMLParseException("taxa element missing from leafTrait element in treeModel element");
+                    }
+
+//                    int index = treeModel.getTaxonIndex(taxonName);
+//                    if (index == -1) {
+//                        throw new XMLParseException("taxon '" + taxonName + "' not found for leafTrait element in treeModel element");
+//                    }
+//                    NodeRef node = treeModel.getExternalNode(index);
+//
+//                    Parameter parameter = treeModel.getNodeTraitParameter(node, name);
+//
+//                    if (parameter == null)
+//                        throw new XMLParseException("trait '" + name + "' not found for leafTrait (taxon, " + taxonName + ") element in treeModel element");
+//
+//                    ParameterParser.replaceParameter(cxo, parameter);
+
+                } else {
+                    throw new XMLParseException("illegal child element in " + getParserName() + ": " + cxo.getName());
+                }
+
+            } else if (xo.getChild(i) instanceof Tree) {
+                // do nothing - already handled
+            } else {
+                throw new XMLParseException("illegal child element in  " + getParserName() + ": " + xo.getChildName(i) + " " + xo.getChild(i));
+            }
+        }
+
+        // AR this is doubling up the number of bounds on each node.
+//        treeModel.setupHeightBounds();
+        //System.err.println("done constructing treeModel");
+
+        Logger.getLogger("dr.evomodel").info("  initial tree topology = " + tree.getRoot().toNewick());
+        Logger.getLogger("dr.evomodel").info("  tree height = " + tree.getRoot().getHeight());
+
+		return tree;
 		/*
 
         Tree tree = (Tree) xo.getChild(Tree.class);

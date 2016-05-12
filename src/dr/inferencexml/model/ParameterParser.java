@@ -25,6 +25,7 @@
 
 package dr.inferencexml.model;
 
+import beast.core.parameter.Parameter;
 import beast.core.parameter.RealParameter;
 
 import dr.xml.*;
@@ -84,10 +85,7 @@ public class ParameterParser extends AbstractXMLObjectParser {
             } else {
                 // parameter dimension will get set correctly by TreeModel presumably.
                 if (!xo.hasChildNamed(RANDOMIZE)) {
-                    System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-                    return null;
-
-//                    return new Parameter.Default(1);
+                    return new RealParameter("1.0");
                 }
                 values = new double[1];
                 values[0] = 1.0;
@@ -340,53 +338,53 @@ public class ParameterParser extends AbstractXMLObjectParser {
         return RealParameter.class;
     }
 
-//    static public void replaceParameter(XMLObject xo, Parameter newParam) throws XMLParseException {
-//
-//        for (int i = 0; i < xo.getChildCount(); i++) {
-//
-//            if (xo.getChild(i) instanceof Parameter) {
-//
-//                XMLObject rxo;
-//                Object obj = xo.getRawChild(i);
-//
-//                if (obj instanceof Reference ) {
-//                    rxo = ((Reference) obj).getReferenceObject();
-//                } else if (obj instanceof XMLObject) {
-//                    rxo = (XMLObject) obj;
-//                } else {
-//                    throw new XMLParseException("object reference not available");
-//                }
-//
-//                if (rxo.getChildCount() > 0) {
-//                    throw new XMLParseException("No child elements allowed in parameter element.");
-//                }
-//
-//                if (rxo.hasAttribute(XMLParser.IDREF)) {
-//                    throw new XMLParseException("References to " + xo.getName() + " parameters are not allowed in treeModel.");
-//                }
-//
-//                if (rxo.hasAttribute(VALUE)) {
-//                    throw new XMLParseException("Parameters in " + xo.getName() + " have values set automatically.");
-//                }
-//
-//                if (rxo.hasAttribute(UPPER)) {
-//                    throw new XMLParseException("Parameters in " + xo.getName() + " have bounds set automatically.");
-//                }
-//
-//                if (rxo.hasAttribute(LOWER)) {
-//                    throw new XMLParseException("Parameters in " + xo.getName() + " have bounds set automatically.");
-//                }
-//
-//                if (rxo.hasAttribute(XMLParser.ID)) {
-//                    newParam.setId(rxo.getStringAttribute(XMLParser.ID));
-//                }
-//
-//                rxo.setNativeObject(newParam);
-//
-//                return;
-//            }
-//        }
-//    }
+/*    static public void replaceParameter(XMLObject xo, Parameter.Base newParam) throws XMLParseException {
+
+        for (int i = 0; i < xo.getChildCount(); i++) {
+
+            if (xo.getChild(i) instanceof Parameter.Base) {
+
+                XMLObject rxo;
+                Object obj = xo.getRawChild(i);
+
+                if (obj instanceof Reference ) {
+                    rxo = ((Reference) obj).getReferenceObject();
+                } else if (obj instanceof XMLObject) {
+                    rxo = (XMLObject) obj;
+                } else {
+                    throw new XMLParseException("object reference not available");
+                }
+
+                if (rxo.getChildCount() > 0) {
+                    throw new XMLParseException("No child elements allowed in parameter element.");
+                }
+
+                if (rxo.hasAttribute(XMLParser.IDREF)) {
+                    throw new XMLParseException("References to " + xo.getName() + " parameters are not allowed in treeModel.");
+                }
+
+                if (rxo.hasAttribute(VALUE)) {
+                    throw new XMLParseException("Parameters in " + xo.getName() + " have values set automatically.");
+                }
+
+                if (rxo.hasAttribute(UPPER)) {
+                    throw new XMLParseException("Parameters in " + xo.getName() + " have bounds set automatically.");
+                }
+
+                if (rxo.hasAttribute(LOWER)) {
+                    throw new XMLParseException("Parameters in " + xo.getName() + " have bounds set automatically.");
+                }
+
+                if (rxo.hasAttribute(XMLParser.ID)) {
+                    newParam.setID(rxo.getStringAttribute(XMLParser.ID));
+                }
+
+                rxo.setNativeObject(newParam);
+
+                return;
+            }
+        }
+    }*/
 
 //    static public Parameter getParameter(XMLObject xo) throws XMLParseException {
 //

@@ -25,12 +25,11 @@
 
 package dr.evomodelxml.treelikelihood;
 
-import dr.evolution.alignment.PatternList;
-import dr.evomodel.branchratemodel.BranchRateModel;
-import dr.evomodel.sitemodel.SiteModel;
-import dr.evomodel.tree.TreeModel;
-import dr.evomodel.treelikelihood.TipStatesModel;
-import dr.evomodel.treelikelihood.TreeLikelihood;
+import beast.evolution.alignment.Alignment;
+import beast.evolution.branchratemodel.BranchRateModel;
+import beast.evolution.likelihood.TreeLikelihood;
+import beast.evolution.sitemodel.SiteModelInterface;
+import beast.evolution.tree.TreeInterface;
 import dr.xml.*;
 
 /**
@@ -53,8 +52,36 @@ public class TreeLikelihoodParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
+        boolean useAmbiguities = xo.getAttribute(USE_AMBIGUITIES, false);
+//        boolean allowMissingTaxa = xo.getAttribute(ALLOW_MISSING_TAXA, false);
+//        boolean storePartials = xo.getAttribute(STORE_PARTIALS, true);
+//        boolean forceJavaCore = xo.getAttribute(FORCE_JAVA_CORE, false);
+//
+//        if (Boolean.valueOf(System.getProperty("java.only"))) {
+//            forceJavaCore = true;
+//        }
+
+        Alignment patternList = (Alignment) xo.getChild(Alignment.class);
+        TreeInterface treeModel = (TreeInterface) xo.getChild(TreeInterface.class);
+        SiteModelInterface siteModel = (SiteModelInterface) xo.getChild(SiteModelInterface.class);
+
+        BranchRateModel.Base branchRateModel = (BranchRateModel.Base) xo.getChild(BranchRateModel.Base.class);
+
+//        TipStatesModel tipStatesModel = (TipStatesModel) xo.getChild(TipStatesModel.class);
+//        if (tipStatesModel != null && tipStatesModel.getPatternList() != null) {
+//            throw new XMLParseException("The same sequence error model cannot be used for multiple partitions");
+//        }
+//        if (tipStatesModel != null && tipStatesModel.getModelType() == TipStatesModel.Type.STATES) {
+//            throw new XMLParseException("The state emitting TipStateModel requires BEAGLE");
+//        }
+
+//        boolean forceRescaling = xo.getAttribute(FORCE_RESCALING, false);
+
+        TreeLikelihood treeLikelihood = new TreeLikelihood();
+        treeLikelihood.initByName("data", patternList, "tree", treeModel, "siteModel", siteModel,
+                "branchRateModel", branchRateModel, "useAmbiguities", useAmbiguities);
+
+		return treeLikelihood;
 		/*
 
         boolean useAmbiguities = xo.getAttribute(USE_AMBIGUITIES, false);
@@ -111,14 +138,14 @@ public class TreeLikelihoodParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newBooleanRule(USE_AMBIGUITIES, true),
-            AttributeRule.newBooleanRule(ALLOW_MISSING_TAXA, true),
-            AttributeRule.newBooleanRule(STORE_PARTIALS, true),
-            AttributeRule.newBooleanRule(FORCE_JAVA_CORE, true),
-            AttributeRule.newBooleanRule(FORCE_RESCALING, true),
-            new ElementRule(PatternList.class),
-            new ElementRule(TreeModel.class),
-            new ElementRule(SiteModel.class),
-            new ElementRule(BranchRateModel.class, true),
-            new ElementRule(TipStatesModel.class, true)
+//            AttributeRule.newBooleanRule(ALLOW_MISSING_TAXA, true),
+//            AttributeRule.newBooleanRule(STORE_PARTIALS, true),
+//            AttributeRule.newBooleanRule(FORCE_JAVA_CORE, true),
+//            AttributeRule.newBooleanRule(FORCE_RESCALING, true),
+            new ElementRule(Alignment.class),
+            new ElementRule(TreeInterface.class),
+            new ElementRule(SiteModelInterface.class),
+            new ElementRule(BranchRateModel.Base.class, true)
+//            new ElementRule(TipStatesModel.class, true)
     };
 }
