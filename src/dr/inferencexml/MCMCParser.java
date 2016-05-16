@@ -25,30 +25,61 @@
 
 package dr.inferencexml;
 
-import dr.inference.loggers.Logger;
-import dr.inference.markovchain.MarkovChain;
-import dr.inference.markovchain.MarkovChainDelegate;
-import dr.inference.mcmc.MCMC;
-import dr.inference.mcmc.MCMCOptions;
-import dr.inference.model.CompoundLikelihood;
-import dr.inference.model.Likelihood;
-import dr.inference.operators.OperatorSchedule;
+import beast.core.Distribution;
+import beast.core.Logger;
+import beast.core.OperatorSchedule;
+import beast.core.MCMC;
+import beast.core.util.Log;
 import dr.xml.*;
 
 import java.util.ArrayList;
 
 public class MCMCParser extends AbstractXMLObjectParser {
 
+    public static final String COERCION = "autoOptimize";
+    public static final String NAME = "name";
+    public static final String PRE_BURNIN = "preBurnin";
+    public static final String COERCION_DELAY = "autoOptimizeDelay";
+    public static final String MCMC_ = "mcmc";
+    public static final String CHAIN_LENGTH = "chainLength";
+    public static final String FULL_EVALUATION = "fullEvaluation";
+    public static final String EVALUATION_THRESHOLD  = "evaluationThreshold";
+    public static final String MIN_OPS_EVALUATIONS = "minOpsFullEvaluations";
+    public static final String WEIGHT = "weight";
+    public static final String TEMPERATURE = "temperature";
+    public static final String SPAWN = "spawn";
+    public static final String OPERATOR_ANALYSIS = "operatorAnalysis";
     public String getParserName() {
-        return MCMC;
+        return MCMC_;
     }
 
     /**
      * @return an mcmc object based on the XML element it was passed.
      */
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
+        MCMC mcmc = new MCMC();
+        long chainLength = xo.getLongIntegerAttribute(CHAIN_LENGTH);
+        mcmc.chainLengthInput.setValue((int) chainLength, mcmc);
+
+        long storeEvery = Math.round(chainLength/100);
+        mcmc.storeEveryInput.setValue((int) storeEvery, mcmc);
+        Log.warning.println("Warning: set BEAST 2 only parameter storeEvery = " + storeEvery);
+
+        if (xo.hasAttribute(PRE_BURNIN)) {
+            int burnin = xo.getIntegerAttribute(PRE_BURNIN);
+            mcmc.burnInInput.setValue(burnin, mcmc);
+        }
+
+        if ( xo.hasAttribute(COERCION_DELAY) || xo.hasAttribute(SPAWN) ||
+                xo.hasAttribute(WEIGHT) || xo.hasAttribute(TEMPERATURE) ||
+                xo.hasAttribute(EVALUATION_THRESHOLD) ||
+                xo.hasAttribute(FULL_EVALUATION)  ) {
+            throw new UnsupportedOperationException(getParserName() + " attribute " + beast1to2.Beast1to2Converter.NIY);
+        }
+
+        mcmc.initAndValidate();
+
+        return mcmc;
 		/*
 
         MCMC mcmc = new MCMC(xo.getAttribute(NAME, "mcmc1"));
@@ -190,24 +221,9 @@ public class MCMCParser extends AbstractXMLObjectParser {
             AttributeRule.newStringRule(NAME, true),
             AttributeRule.newStringRule(OPERATOR_ANALYSIS, true),
             new ElementRule(OperatorSchedule.class),
-            new ElementRule(Likelihood.class),
-            new ElementRule(Logger.class, 1, Integer.MAX_VALUE),
-            new ElementRule(MarkovChainDelegate.class, 0, Integer.MAX_VALUE)
+            new ElementRule(Distribution.class),
+            new ElementRule(Logger.class, 1, Integer.MAX_VALUE)
+//            new ElementRule(MarkovChainDelegate.class, 0, Integer.MAX_VALUE)
     };
-
-    public static final String COERCION = "autoOptimize";
-    public static final String NAME = "name";
-    public static final String PRE_BURNIN = "preBurnin";
-    public static final String COERCION_DELAY = "autoOptimizeDelay";
-    public static final String MCMC = "mcmc";
-    public static final String CHAIN_LENGTH = "chainLength";
-    public static final String FULL_EVALUATION = "fullEvaluation";
-    public static final String EVALUATION_THRESHOLD  = "evaluationThreshold";
-    public static final String MIN_OPS_EVALUATIONS = "minOpsFullEvaluations";
-    public static final String WEIGHT = "weight";
-    public static final String TEMPERATURE = "temperature";
-    public static final String SPAWN = "spawn";
-    public static final String OPERATOR_ANALYSIS = "operatorAnalysis";
-
 
 }
