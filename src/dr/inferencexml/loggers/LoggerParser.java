@@ -25,18 +25,13 @@
 
 package dr.inferencexml.loggers;
 
-import dr.app.beast.BeastVersion;
-import dr.inference.loggers.*;
-import dr.math.MathUtils;
-import dr.math.matrixAlgebra.SymmetricMatrix;
-import dr.util.FileHelpers;
-import dr.util.Identifiable;
-import dr.util.Property;
+
+import beast.core.BEASTObject;
+import beast.core.Logger;
 import dr.xml.*;
 
-import java.io.File;
 import java.io.PrintWriter;
-import java.util.Date;
+import java.util.List;
 
 /**
  * @author Alexei Drummond
@@ -49,7 +44,7 @@ public class LoggerParser extends AbstractXMLObjectParser {
     public static final String ECHO_EVERY = "echoEvery";
     public static final String TITLE = "title";
     public static final String HEADER = "header";
-    public static final String FILE_NAME = FileHelpers.FILE_NAME;
+    public static final String FILE_NAME = "fileName";
     public static final String FORMAT = "format";
     public static final String TAB = "tab";
     public static final String HTML = "html";
@@ -72,9 +67,43 @@ public class LoggerParser extends AbstractXMLObjectParser {
      * @return an object based on the XML element it was passed.
      */
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
+        // You must say how often you want to log
+        final int logEvery = xo.getIntegerAttribute(LOG_EVERY);
+
+        Logger logger = new Logger();
+
+        if (xo.hasAttribute(FILE_NAME)) {
+            logger.fileNameInput.setValue(xo.getAttribute(FILE_NAME), logger);
+        }
+
+        if (xo.hasAttribute(TITLE) || xo.hasAttribute(HEADER)) {
+            throw new UnsupportedOperationException(getParserName() + " " + TITLE +
+                    " and " + HEADER + " " + beast1to2.Beast1to2Converter.NIY);
+        }
+
+        for (int i = 0; i < xo.getChildCount(); i++) {
+
+            final Object child = xo.getChild(i);
+
+            // Logger used as Columns
+            if (child instanceof Logger) {
+
+                List<BEASTObject> logList = ((Logger) child).loggersInput.get();
+                logger.loggersInput.setValue(logList, logger);
+
+            } else if (child instanceof BEASTObject) {
+
+                logger.loggersInput.setValue(child, logger);
+
+            } else {
+                System.err.println(child + " not loggable !");
+            }
+        }
+
+        logger.initAndValidate();
+
+        return logger;
+        /*
 
         // You must say how often you want to log
         final int logEvery = xo.getIntegerAttribute(LOG_EVERY);
@@ -144,7 +173,7 @@ public class LoggerParser extends AbstractXMLObjectParser {
 
         return logger;
     */
-		}
+    }
 
     public static PrintWriter getLogFile(XMLObject xo, String parserName) throws XMLParseException {
         return XMLParser.getFilePrintWriter(xo, parserName);
@@ -170,9 +199,9 @@ public class LoggerParser extends AbstractXMLObjectParser {
                     "The subtitle of the log", true),
             new OrRule(
                     new XMLSyntaxRule[]{
-                            new ElementRule(Columns.class, 1, Integer.MAX_VALUE),
-                            new ElementRule(Loggable.class, 1, Integer.MAX_VALUE),
-                            new ElementRule(Object.class, 1, Integer.MAX_VALUE)
+                            new ElementRule(Logger.class, 1, Integer.MAX_VALUE),
+//                            new ElementRule(Loggable.class, 1, Integer.MAX_VALUE),
+                            new ElementRule(BEASTObject.class, 1, Integer.MAX_VALUE)
                     }
             )
     };
@@ -182,7 +211,7 @@ public class LoggerParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return MLLogger.class;
+        return Logger.class;
     }
 }
 

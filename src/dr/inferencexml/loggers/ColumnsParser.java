@@ -25,8 +25,8 @@
 
 package dr.inferencexml.loggers;
 
-import dr.inference.loggers.*;
-import dr.util.Identifiable;
+import beast.core.BEASTObject;
+import beast.core.Logger;
 import dr.xml.*;
 
 import java.util.ArrayList;
@@ -49,8 +49,22 @@ public class ColumnsParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
+        //only used for screen logger
+        Logger logger = new Logger();
+
+        for (int i = 0; i < xo.getChildCount(); i++) {
+
+            final Object child = xo.getChild(i);
+
+            if (child instanceof BEASTObject) {
+                logger.loggersInput.setValue(child, logger);
+            } else {
+                System.err.println(child + " not loggable !");
+            }
+
+        }
+
+        return logger;
 		/*
 
         String label = xo.getAttribute(LABEL, "");
@@ -132,7 +146,7 @@ public class ColumnsParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return Columns.class;
+        return Logger.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -140,16 +154,16 @@ public class ColumnsParser extends AbstractXMLObjectParser {
     }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
-            new StringAttributeRule(LABEL,
-                    "The label of the column. " +
-                            "If this is specified and more than one statistic is in this column, " +
-                            "then the label will be appended by the index of the statistic to create individual column names", true),
-            AttributeRule.newIntegerRule(SIGNIFICANT_FIGURES, true),
-            AttributeRule.newIntegerRule(DECIMAL_PLACES, true),
-            AttributeRule.newIntegerRule(WIDTH, true),
-            AttributeRule.newStringRule(FORMAT, true),
-            // Anything goes???
-            new ElementRule(Object.class, 1, Integer.MAX_VALUE),
+//            new StringAttributeRule(LABEL,
+//                    "The label of the column. " +
+//                            "If this is specified and more than one statistic is in this column, " +
+//                            "then the label will be appended by the index of the statistic to create individual column names", true),
+//            AttributeRule.newIntegerRule(SIGNIFICANT_FIGURES, true),
+//            AttributeRule.newIntegerRule(DECIMAL_PLACES, true),
+//            AttributeRule.newIntegerRule(WIDTH, true),
+//            AttributeRule.newStringRule(FORMAT, true),
+//            // Anything goes???
+            new ElementRule(BEASTObject.class, 1, Integer.MAX_VALUE),
     };
 
 }

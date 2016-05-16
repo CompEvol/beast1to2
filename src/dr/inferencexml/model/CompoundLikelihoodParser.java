@@ -25,9 +25,10 @@
 
 package dr.inferencexml.model;
 
-import dr.app.beagle.evomodel.branchmodel.lineagespecific.BeagleBranchLikelihood;
-import dr.inference.model.CompoundLikelihood;
-import dr.inference.model.Likelihood;
+
+import beast.core.Distribution;
+import beast.core.util.CompoundDistribution;
+import beast.evolution.likelihood.TreeLikelihood;
 import dr.xml.*;
 
 import java.util.ArrayList;
@@ -55,8 +56,56 @@ public class CompoundLikelihoodParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
+        // the default is -1 threads (automatic thread pool size) but an XML attribute can override it
+        int threads = xo.getAttribute(THREADS, -1);
+
+        // both the XML attribute and a system property can override it
+        if (System.getProperty("thread.count") != null) {
+
+            threads = Integer.parseInt(System.getProperty("thread.count"));
+            if (threads < -1 || threads > 1000) {
+                // put an upper limit here - may be unnecessary?
+                threads = -1;
+            }
+        }
+
+        List<Distribution> likelihoods = new ArrayList<Distribution>();
+        for (int i = 0; i < xo.getChildCount(); i++) {
+            final Object child = xo.getChild(i);
+            if (child instanceof Distribution) {
+
+                likelihoods.add((Distribution) child);
+
+//            } else if (child instanceof BeagleBranchLikelihoods){
+
+            } else {
+                throw new XMLParseException("An element (" + child + ") which is not a likelihood has been added to a "
+                        + COMPOUND_LIKELIHOOD + " element");
+            }
+        }
+
+        CompoundDistribution compoundLikelihood = new CompoundDistribution();
+
+        if (xo.getName().equalsIgnoreCase(LIKELIHOOD)) {
+            compoundLikelihood.maxNrOfThreadsInput.setValue(threads, compoundLikelihood);
+            switch (threads) {
+                case -1:
+                    Logger.getLogger("dr.evomodel").info("Likelihood computation is using an auto sizing thread pool.");
+                    break;
+                case 0:
+                    Logger.getLogger("dr.evomodel").info("Likelihood computation is using a single thread.");
+                    break;
+                default:
+                    Logger.getLogger("dr.evomodel").info("Likelihood computation is using a pool of " + threads + " threads.");
+                    break;
+            }
+        }
+        compoundLikelihood.initAndValidate();
+
+        return compoundLikelihood;
+
+
+
 		/*
 
         // the default is -1 threads (automatic thread pool size) but an XML attribute can override it
@@ -131,10 +180,10 @@ public class CompoundLikelihoodParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newIntegerRule(THREADS, true),
-            new ElementRule(Likelihood.class, -1, Integer.MAX_VALUE)
+            new ElementRule(TreeLikelihood.class, -1, Integer.MAX_VALUE) //TODO should be CompoundDistribution?
     };
 
     public Class getReturnType() {
-        return CompoundLikelihood.class;
+        return CompoundDistribution.class;
     }
 }

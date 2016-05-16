@@ -25,17 +25,12 @@
 
 package dr.evomodelxml.tree;
 
-import dr.evolution.colouring.TreeColouringProvider;
-import dr.evolution.tree.*;
-import dr.evomodel.tree.TreeLogger;
-import dr.inference.loggers.LogFormatter;
-import dr.inference.loggers.Loggable;
-import dr.inference.loggers.TabDelimitedFormatter;
-import dr.inference.model.Likelihood;
-import dr.inference.model.Model;
-import dr.inference.model.Parameter;
+
+
+import beast.core.BEASTObject;
+import beast.core.Logger;
+import beast.evolution.tree.Tree;
 import dr.inferencexml.loggers.LoggerParser;
-import dr.util.Identifiable;
 import dr.xml.*;
 
 import java.io.PrintWriter;
@@ -70,9 +65,9 @@ public class TreeLoggerParser extends LoggerParser {
         return LOG_TREE;
     }
 
-    protected void parseXMLParameters(XMLObject xo) throws XMLParseException
-    {
-        // reset this every time...
+    protected void parseXMLParameters(XMLObject xo) throws XMLParseException {
+        throw new UnsupportedOperationException(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
+/*        // reset this every time...
         branchRates = null;
 
         tree = (Tree) xo.getChild(Tree.class);
@@ -338,14 +333,16 @@ public class TreeLoggerParser extends LoggerParser {
         mapNames = xo.getAttribute(MAP_NAMES, true);
 
         condition = logEvery == 0 ? (TreeLogger.LogUpon) xo.getChild(TreeLogger.LogUpon.class) : null;
+        */
     }
 
     /**
      * @return an object based on the XML element it was passed.
      */
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
+
+        return super.parseXMLObject(xo);
+
 		/*
         parseXMLParameters(xo);
 
@@ -362,18 +359,18 @@ public class TreeLoggerParser extends LoggerParser {
     */
 		}
 
-    protected Tree tree;
-    protected String title;
-    protected boolean nexusFormat;
-    protected boolean sortTranslationTable;
-    protected BranchRates branchRates;
-    protected NumberFormat format = null;
-    protected TreeLogger.LogUpon condition;
-    protected boolean mapNames;
-    protected LogFormatter formatter;
-    protected TreeAttributeProvider[] treeAttributeProviders;
-    protected TreeTraitProvider[] treeTraitProviders;
-    protected int logEvery;
+//    protected Tree tree;
+//    protected String title;
+//    protected boolean nexusFormat;
+//    protected boolean sortTranslationTable;
+//    protected BranchRates branchRates;
+//    protected NumberFormat format = null;
+//    protected TreeLogger.LogUpon condition;
+//    protected boolean mapNames;
+//    protected LogFormatter formatter;
+//    protected TreeAttributeProvider[] treeAttributeProviders;
+//    protected TreeTraitProvider[] treeTraitProviders;
+//    protected int logEvery;
 
     //************************************************************************
     // AbstractXMLObjectParser implementation
@@ -384,37 +381,37 @@ public class TreeLoggerParser extends LoggerParser {
 
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newIntegerRule(LOG_EVERY, true),
-            AttributeRule.newBooleanRule(ALLOW_OVERWRITE_LOG, true),
+//            AttributeRule.newBooleanRule(ALLOW_OVERWRITE_LOG, true),
             new StringAttributeRule(FILE_NAME,
                     "The name of the file to send log output to. " +
                             "If no file name is specified then log is sent to standard output", true),
-            new StringAttributeRule(TITLE, "The title of the log", true),
-            AttributeRule.newBooleanRule(NEXUS_FORMAT, true,
-                    "Whether to use the NEXUS format for the tree log"),
-            AttributeRule.newBooleanRule(SORT_TRANSLATION_TABLE, true,
-                    "Whether the translation table is sorted."),
-            /*AttributeRule.newDoubleRule(NORMALISE_MEAN_RATE_TO, true,
-                    "Value to normalise the mean rate to."),*/
-            new StringAttributeRule(BRANCH_LENGTHS, "What units should the branch lengths be in",
-                    new String[]{TIME, SUBSTITUTIONS}, true),
-            AttributeRule.newStringRule(FILTER_TRAITS, true),
-            AttributeRule.newBooleanRule(MAP_NAMES, true),
-            AttributeRule.newIntegerRule(DECIMAL_PLACES, true),
+//            new StringAttributeRule(TITLE, "The title of the log", true),
+//            AttributeRule.newBooleanRule(NEXUS_FORMAT, true,
+//                    "Whether to use the NEXUS format for the tree log"),
+//            AttributeRule.newBooleanRule(SORT_TRANSLATION_TABLE, true,
+//                    "Whether the translation table is sorted."),
+//            /*AttributeRule.newDoubleRule(NORMALISE_MEAN_RATE_TO, true,
+//                    "Value to normalise the mean rate to."),*/
+//            new StringAttributeRule(BRANCH_LENGTHS, "What units should the branch lengths be in",
+//                    new String[]{TIME, SUBSTITUTIONS}, true),
+//            AttributeRule.newStringRule(FILTER_TRAITS, true),
+//            AttributeRule.newBooleanRule(MAP_NAMES, true),
+//            AttributeRule.newIntegerRule(DECIMAL_PLACES, true),
 
-            new ElementRule(Tree.class, "The tree which is to be logged"),
+            new ElementRule(Tree.class, "The tree which is to be logged")
 //            new ElementRule(BranchRates.class, true),
 //            new ElementRule(TreeColouringProvider.class, true),
-            new ElementRule(TREE_TRAIT,
-                    new XMLSyntaxRule[] {
-                            AttributeRule.newStringRule(NAME, false, "The name of the trait"),
-                            AttributeRule.newStringRule(TAG, true, "The label of the trait to be used in the tree"),
-                            new ElementRule(TreeAttributeProvider.class, "The trait provider")
-                    }, 0, Integer.MAX_VALUE),
-            new ElementRule(Likelihood.class, true),
-            new ElementRule(Loggable.class, 0, Integer.MAX_VALUE),
-            new ElementRule(TreeAttributeProvider.class, 0, Integer.MAX_VALUE),
-            new ElementRule(TreeTraitProvider.class, 0, Integer.MAX_VALUE),
-            new ElementRule(TreeLogger.LogUpon.class, true)
+//            new ElementRule(TREE_TRAIT,
+//                    new XMLSyntaxRule[] {
+//                            AttributeRule.newStringRule(NAME, false, "The name of the trait"),
+//                            AttributeRule.newStringRule(TAG, true, "The label of the trait to be used in the tree"),
+//                            new ElementRule(TreeAttributeProvider.class, "The trait provider")
+//                    }, 0, Integer.MAX_VALUE),
+//            new ElementRule(Likelihood.class, true),
+//            new ElementRule(Loggable.class, 0, Integer.MAX_VALUE),
+//            new ElementRule(TreeAttributeProvider.class, 0, Integer.MAX_VALUE),
+//            new ElementRule(TreeTraitProvider.class, 0, Integer.MAX_VALUE),
+//            new ElementRule(TreeLogger.LogUpon.class, true)
     };
 
     public String getParserDescription() {
@@ -432,6 +429,6 @@ public class TreeLoggerParser extends LoggerParser {
     }
 
     public Class getReturnType() {
-        return TreeLogger.class;
+        return Logger.class;
     }
 }

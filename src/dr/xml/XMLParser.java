@@ -324,7 +324,6 @@ public class XMLParser {
                     ((BEASTInterface) obj).setID(id);
                 }
 
-                //TODO Remco check
                 if (obj instanceof Distribution) {
                     //TODO MarkovChain for (Likelihood l : Likelihood.FULL_LIKELIHOOD_SET) {
 //                    Likelihood.FULL_LIKELIHOOD_SET.add((Likelihood) obj);
