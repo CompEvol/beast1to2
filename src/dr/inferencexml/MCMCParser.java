@@ -29,6 +29,7 @@ import beast.core.Distribution;
 import beast.core.Logger;
 import beast.core.OperatorSchedule;
 import beast.core.MCMC;
+import beast.core.util.CompoundDistribution;
 import beast.core.util.Log;
 import dr.xml.*;
 
@@ -76,6 +77,12 @@ public class MCMCParser extends AbstractXMLObjectParser {
                 xo.hasAttribute(FULL_EVALUATION)  ) {
             throw new UnsupportedOperationException(getParserName() + " attribute " + beast1to2.Beast1to2Converter.NIY);
         }
+
+        OperatorSchedule opsched = (OperatorSchedule) xo.getChild(OperatorSchedule.class);
+        mcmc.operatorScheduleInput.setValue(opsched, mcmc);
+
+        CompoundDistribution posterior = (CompoundDistribution) xo.getChild(CompoundDistribution.class);
+        mcmc.posteriorInput.setValue(posterior, mcmc);
 
         mcmc.initAndValidate();
 
