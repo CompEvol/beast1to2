@@ -47,12 +47,12 @@ public class Beast1to2Converter extends Runnable {
 	public void run() throws Exception {
 		File inputFile = xmlFileInput.get();
 		BEASTInterface beast2Object = convert(inputFile);
-		
+
 		XMLProducer producer = new XMLProducer();
 		String xml = producer.toXML(beast2Object);
 		
 		if (xml == null) {
-			System.err.println("Conversion failed");
+			System.err.println("Conversion to BEAST 2 failed");
 			return;
 		}
 		File outputFile = outFileInput.get();
@@ -77,7 +77,12 @@ public class Beast1to2Converter extends Runnable {
         XMLParser parser = new BeastParser(new String[]{fileName}, additionalParsers, verbose, parserWarning, strictXML);
 
         parser.parse(fileReader, false);
-        BEASTInterface beast2Object = (BEASTInterface) parser.getRoot().getNativeObject();
+        BEASTInterface beast2Object = parser.getMCMC();
+
+		if (beast2Object == null) {
+			throw new XMLParseException("Parsing BEAST 1 xml failed");
+		}
+
 		return beast2Object;
 	}
 	

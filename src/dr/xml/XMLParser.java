@@ -206,6 +206,15 @@ public class XMLParser {
         return root;
     }
 
+    public BEASTInterface getMCMC() {
+        for (int i=0; i < root.getChildCount(); i++) {
+            BEASTInterface child = (BEASTInterface) root.getChild(i);
+            if (child.getID().equalsIgnoreCase("mcmc"))
+                return child;
+        }
+        return null;
+    }
+
     private Object convert(Element e, Class target, boolean run, boolean doParse) throws XMLParseException {
 
         int index = -1;
