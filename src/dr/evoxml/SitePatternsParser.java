@@ -113,7 +113,7 @@ public class SitePatternsParser extends AbstractXMLObjectParser {
 
         FilteredAlignment patterns = new FilteredAlignment();
         patterns.initByName("data", alignment, 
-        		"taxonset", taxa, 
+//        		"taxonset", taxa, 
         		"filter", from+":" + (to >= 0 ? to : alignment.getSiteCount()) +":" + every, 
         		"strip", strip,  
         		"constantSiteWeights", constantPatternCounts);

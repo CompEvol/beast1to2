@@ -35,9 +35,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+
+import beast.core.parameter.Parameter;
+import beast.evolution.tree.Tree;
 
 /**
  * @author Alexei Drummond
@@ -51,9 +56,14 @@ public class BeastParser extends XMLParser {
     public static final String DEV = "development";
     public static final String PARSER_PROPERTIES_SUFFIX ="_parsers.properties";
     public String parsers;
+    
+    public static Map<Parameter<?>, Tree> rootParamToTreeMap = new HashMap<>();
+    public static Map<Parameter<?>, Tree> leafParamToTreeMap = new HashMap<>();
+    public static Map<Parameter<?>, Tree> internalParamToTreeMap = new HashMap<>();
+    public static Map<Parameter<?>, Tree> allInternalParamToTreeMap = new HashMap<>();
 
     public BeastParser(String[] args, List<String> additionalParsers, boolean verbose, boolean parserWarnings, boolean strictXML) {
-        super(parserWarnings, strictXML);
+        super(true, parserWarnings, strictXML);
 
         setup(args);
 

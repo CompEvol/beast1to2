@@ -85,6 +85,7 @@ public class CompoundLikelihoodParser extends AbstractXMLObjectParser {
         }
 
         CompoundDistribution compoundLikelihood = new CompoundDistribution();
+        compoundLikelihood.pDistributions.get().addAll(likelihoods);
 
         if (xo.getName().equalsIgnoreCase(LIKELIHOOD)) {
             compoundLikelihood.maxNrOfThreadsInput.setValue(threads, compoundLikelihood);

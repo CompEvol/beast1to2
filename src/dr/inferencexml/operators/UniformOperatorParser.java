@@ -25,8 +25,12 @@
 
 package dr.inferencexml.operators;
 
+import beast.core.Operator;
 import beast.core.parameter.RealParameter;
+import beast.evolution.operators.Uniform;
 import beast.evolution.operators.UniformOperator;
+import beast.evolution.tree.Tree;
+import beast1to2.BeastParser;
 import dr.xml.*;
 
 
@@ -52,10 +56,16 @@ public class UniformOperatorParser extends AbstractXMLObjectParser {
                     LOWER + " and " + UPPER + " " + beast1to2.Beast1to2Converter.NIY);
         }
 
-        UniformOperator uniformOperator = new UniformOperator();
-        uniformOperator.initByName(ScaleOperatorParser.WEIGHT, weight, "parameter", parameter);
-
-        return uniformOperator;
+        if (BeastParser.internalParamToTreeMap.containsKey(parameter)) {
+        	Tree tree = BeastParser.internalParamToTreeMap.get(parameter);
+        	Uniform uniform = new Uniform();
+        	uniform.initByName(ScaleOperatorParser.WEIGHT, weight, "tree", tree);
+        	return uniform;
+        } else {
+	        UniformOperator uniformOperator = new UniformOperator();
+	        uniformOperator.initByName(ScaleOperatorParser.WEIGHT, weight, "parameter", parameter);
+	        return uniformOperator;
+        }
 
 		/*
 
@@ -90,7 +100,7 @@ public class UniformOperatorParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return UniformOperator.class;
+        return Operator.class;
     }
 
 

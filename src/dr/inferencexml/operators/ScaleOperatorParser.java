@@ -27,6 +27,8 @@ package dr.inferencexml.operators;
 
 import beast.core.parameter.RealParameter;
 import beast.evolution.operators.ScaleOperator;
+import beast.evolution.tree.Tree;
+import beast1to2.BeastParser;
 import dr.inference.operators.CoercableMCMCOperator;
 import dr.xml.*;
 
@@ -68,6 +70,22 @@ public class ScaleOperatorParser extends AbstractXMLObjectParser {
                     INDICATORS + " " + beast1to2.Beast1to2Converter.NIY);
         }
 
+        // deal with parameters defined on tree parameters
+        if (BeastParser.rootParamToTreeMap.containsKey(parameter) || 
+        		BeastParser.allInternalParamToTreeMap.containsKey(parameter)) {
+        	Tree tree = BeastParser.rootParamToTreeMap.get(parameter);
+        	if (tree == null) {
+        		tree = BeastParser.allInternalParamToTreeMap.get(parameter);
+        	}
+            ScaleOperator operator = new ScaleOperator();
+            operator.initByName(WEIGHT, weight, "tree", tree, "scaleFactor", scaleFactor, 
+            		"rootOnly", BeastParser.rootParamToTreeMap.containsKey(parameter),
+                    "scaleAll", scaleAll, "scaleAllIndependently", scaleAllInd,
+                    "degreesOfFreedom", degreesOfFreedom, "optimise", optimise);
+        	return operator;
+        }
+
+        // create standard parameter scaler
         ScaleOperator operator = new ScaleOperator();
         operator.initByName(WEIGHT, weight, "parameter", parameter, "scaleFactor", scaleFactor,
                 "scaleAll", scaleAll, "scaleAllIndependently", scaleAllInd,

@@ -28,12 +28,18 @@ package dr.inferencexml;
 import beast.core.Distribution;
 import beast.core.Logger;
 import beast.core.OperatorSchedule;
+import beast.core.State;
+import beast.core.StateNode;
+import beast.core.StateNodeInitialiser;
 import beast.core.MCMC;
+import beast.core.Operator;
 import beast.core.util.CompoundDistribution;
 import beast.core.util.Log;
 import dr.xml.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class MCMCParser extends AbstractXMLObjectParser {
 
@@ -50,6 +56,9 @@ public class MCMCParser extends AbstractXMLObjectParser {
     public static final String TEMPERATURE = "temperature";
     public static final String SPAWN = "spawn";
     public static final String OPERATOR_ANALYSIS = "operatorAnalysis";
+    
+	public static List<StateNodeInitialiser> initialisers = new ArrayList<>();
+	
     public String getParserName() {
         return MCMC_;
     }
@@ -59,6 +68,7 @@ public class MCMCParser extends AbstractXMLObjectParser {
      */
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         MCMC mcmc = new MCMC();
+        mcmc.initialisersInput.get().addAll(initialisers);
         long chainLength = xo.getLongIntegerAttribute(CHAIN_LENGTH);
         mcmc.chainLengthInput.setValue((int) chainLength, mcmc);
 
@@ -80,10 +90,32 @@ public class MCMCParser extends AbstractXMLObjectParser {
 
         OperatorSchedule opsched = (OperatorSchedule) xo.getChild(OperatorSchedule.class);
         mcmc.operatorScheduleInput.setValue(opsched, mcmc);
+        mcmc.operatorsInput.get().addAll(opsched.operators);
 
         CompoundDistribution posterior = (CompoundDistribution) xo.getChild(CompoundDistribution.class);
         mcmc.posteriorInput.setValue(posterior, mcmc);
+        
+        State state = new State();
+        // State initialisation
+        final HashSet<StateNode> operatorStateNodes = new HashSet<>();
+        for (final Operator op : mcmc.operatorsInput.get()) {
+            for (final StateNode stateNode : op.listStateNodes()) {
+                operatorStateNodes.add(stateNode);
+            }
+        }
+        for (final StateNode stateNode : operatorStateNodes) {
+            state.stateNodeInput.setValue(stateNode, state);
+        }
+        state.m_storeEvery.setValue(mcmc.storeEveryInput.get(), state);
+        mcmc.startStateInput.setValue(state, mcmc);
 
+        
+        for (int i = 0; i < xo.getChildCount(); i++) {
+        	Object o = xo.getChild(i);
+        	if (o instanceof Logger) {
+                mcmc.loggersInput.get().add((Logger) o);
+        	}
+        }
         mcmc.initAndValidate();
 
         return mcmc;

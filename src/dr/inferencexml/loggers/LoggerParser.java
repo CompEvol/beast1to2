@@ -28,6 +28,10 @@ package dr.inferencexml.loggers;
 
 import beast.core.BEASTObject;
 import beast.core.Logger;
+import beast.core.parameter.Parameter;
+import beast.evolution.tree.Tree;
+import beast.evolution.tree.TreeHeightLogger;
+import beast1to2.BeastParser;
 import dr.xml.*;
 
 import java.io.PrintWriter;
@@ -71,6 +75,7 @@ public class LoggerParser extends AbstractXMLObjectParser {
         final int logEvery = xo.getIntegerAttribute(LOG_EVERY);
 
         Logger logger = new Logger();
+        logger.everyInput.setValue(logEvery, logger);
 
         if (xo.hasAttribute(FILE_NAME)) {
             logger.fileNameInput.setValue(xo.getAttribute(FILE_NAME), logger);
@@ -89,12 +94,12 @@ public class LoggerParser extends AbstractXMLObjectParser {
             if (child instanceof Logger) {
 
                 List<BEASTObject> logList = ((Logger) child).loggersInput.get();
-                logger.loggersInput.setValue(logList, logger);
+                for (BEASTObject o : logList) {
+                	addLogger(logger, o);
+                }
 
             } else if (child instanceof BEASTObject) {
-
-                logger.loggersInput.setValue(child, logger);
-
+            	addLogger(logger, child);
             } else {
                 System.err.println(child + " not loggable !");
             }
@@ -175,7 +180,21 @@ public class LoggerParser extends AbstractXMLObjectParser {
     */
     }
 
-    public static PrintWriter getLogFile(XMLObject xo, String parserName) throws XMLParseException {
+    private void addLogger(Logger logger, Object child) {
+    	if (child instanceof Parameter) {
+    		if (BeastParser.rootParamToTreeMap.containsKey(child)) {
+    			Tree tree = BeastParser.rootParamToTreeMap.get(child);
+    			TreeHeightLogger heightLogger = new TreeHeightLogger();
+    			heightLogger.treeInput.setValue(tree, heightLogger);
+                logger.loggersInput.setValue(heightLogger, logger);
+    		}
+    	 } else {
+    		 logger.loggersInput.setValue(child, logger);
+    	 }
+		
+	}
+
+	public static PrintWriter getLogFile(XMLObject xo, String parserName) throws XMLParseException {
         return XMLParser.getFilePrintWriter(xo, parserName);
     }
 

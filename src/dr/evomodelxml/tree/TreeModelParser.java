@@ -27,9 +27,14 @@ package dr.evomodelxml.tree;
 
 
 
+import beast.core.StateNodeInitialiser;
+import beast.core.parameter.Parameter;
 import beast.core.parameter.RealParameter;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.tree.Tree;
+import beast1to2.BeastParser;
+import dr.inferencexml.MCMCParser;
+import dr.inferencexml.model.ParameterParser;
 import dr.xml.*;
 
 import java.util.logging.Logger;
@@ -118,7 +123,13 @@ public class TreeModelParser extends AbstractXMLObjectParser {
      * @return a tree object based on the XML element it was passed.
      */
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-        Tree tree = (Tree) xo.getChild(Tree.class);
+    	Tree tree = new Tree();
+        Tree initialTree = (Tree) xo.getChild(Tree.class);
+        if (initialTree != null) {
+        	initialTree.m_initial.setValue(tree, initialTree);
+        	tree.m_taxonset.setValue(initialTree.m_taxonset.get(), tree);
+        	MCMCParser.initialisers.add((StateNodeInitialiser) initialTree);
+        }
         boolean fixHeights = xo.getAttribute(FIX_HEIGHTS, false);
 
         Logger.getLogger("dr.evomodel").info("Creating the tree model, '" + xo.getId() + "'");
@@ -129,8 +140,9 @@ public class TreeModelParser extends AbstractXMLObjectParser {
                 XMLObject cxo = (XMLObject) xo.getChild(i);
 
                 if (cxo.getName().equals(ROOT_HEIGHT)) {
-
-//                    ParameterParser.replaceParameter(cxo, treeModel.getRootHeightParameter());
+                	Parameter<?> p = ParameterParser.getParameter(cxo);
+                	BeastParser.rootParamToTreeMap.put(p, tree);
+                    // ParameterParser.replaceParameter(cxo, treeModel.getRootHeightParameter());
 
                 } else if (cxo.getName().equals(LEAF_HEIGHT)) {
 
@@ -140,6 +152,8 @@ public class TreeModelParser extends AbstractXMLObjectParser {
                     } else {
                         throw new XMLParseException("taxa element missing from leafHeight element in treeModel element");
                     }
+                	Parameter<?> p = ParameterParser.getParameter(cxo);
+                	BeastParser.leafParamToTreeMap.put(p, tree);
 
 //                    int index = treeModel.getTaxonIndex(taxonName);
 //                    if (index == -1) {
@@ -189,6 +203,18 @@ public class TreeModelParser extends AbstractXMLObjectParser {
                     }
 
 //                    ParameterParser.replaceParameter(cxo, treeModel.createNodeHeightsParameter(rootNode, internalNodes, leafNodes));
+                	Parameter<?> p = ParameterParser.getParameter(cxo);
+                	if (rootNode && internalNodes) {
+                		BeastParser.allInternalParamToTreeMap.put(p, tree);
+                	} else if (rootNode) {
+                		BeastParser.rootParamToTreeMap.put(p, tree);
+                	} else if (internalNodes) {
+                		BeastParser.internalParamToTreeMap.put(p, tree);
+                	} else {
+                		throw new XMLParseException("Cannot process rootNode=" + rootNode
+                				+ " internalNodes=" + internalNodes
+                				+ " leafNodes=" + leafNodes);
+                	}
 
                 } else if (cxo.getName().equals(NODE_RATES)) {
 
@@ -266,8 +292,9 @@ public class TreeModelParser extends AbstractXMLObjectParser {
 //        treeModel.setupHeightBounds();
         //System.err.println("done constructing treeModel");
 
-        Logger.getLogger("dr.evomodel").info("  initial tree topology = " + tree.getRoot().toNewick());
-        Logger.getLogger("dr.evomodel").info("  tree height = " + tree.getRoot().getHeight());
+        tree.initAndValidate();
+        Logger.getLogger("dr.evomodel").info("  initial tree topology = " + initialTree.getRoot().toNewick());
+        Logger.getLogger("dr.evomodel").info("  tree height = " + initialTree.getRoot().getHeight());
 
 		return tree;
 		/*
