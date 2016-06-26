@@ -42,9 +42,6 @@ public class LocationParser extends AbstractXMLObjectParser {
     public String getParserName() { return Location.LOCATION; }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         if (xo.getChildCount() > 0) {
             throw new XMLParseException("No child elements allowed in location element.");
@@ -56,7 +53,6 @@ public class LocationParser extends AbstractXMLObjectParser {
         double latitude = parseLongLat(xo.getAttribute(LATITUDE, ""));
 
         return Location.newLocation(xo.getId(), description, longitude, latitude);
-    */
 		}
 
     private double parseLongLat(final String value) throws XMLParseException {

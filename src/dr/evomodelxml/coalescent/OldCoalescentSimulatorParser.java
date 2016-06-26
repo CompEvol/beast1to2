@@ -30,6 +30,7 @@ import beast.evolution.alignment.Alignment;
 import beast.evolution.alignment.TaxonSet;
 import beast.evolution.tree.Node;
 import beast.evolution.tree.RandomTree;
+import beast.evolution.tree.TraitSet;
 import beast.evolution.tree.Tree;
 import beast.evolution.tree.TreeDistribution;
 import beast.evolution.tree.coalescent.ConstantPopulation;
@@ -37,6 +38,7 @@ import beast.evolution.tree.coalescent.PopulationFunction;
 import beast.math.distributions.MRCAPrior;
 import dr.evomodel.coalescent.CoalescentSimulator;
 import dr.evomodelxml.tree.TreeModelParser;
+import dr.evoxml.TaxonParser;
 import dr.xml.*;
 
 import java.util.ArrayList;
@@ -85,6 +87,9 @@ public class OldCoalescentSimulatorParser extends AbstractXMLObjectParser {
 //                subtrees.add((Tree) child);
             } else if (child instanceof TaxonSet) {
                 taxonLists.add((TaxonSet) child);
+                for (TraitSet t : TaxonParser.traits.values()) {
+                	randomTree.m_traitList.get().add(t);
+                }
             } else if (xo.getChildName(i).equals(CONSTRAINED_TAXA)) {
                 throw new UnsupportedOperationException(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
                 /*

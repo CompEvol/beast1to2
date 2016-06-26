@@ -36,9 +36,6 @@ public class AttributeParser extends AbstractXMLObjectParser {
 	public String getParserName() { return ATTRIBUTE; }
 		
 	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         final String name = xo.getStringAttribute(NAME);
         if( xo.hasAttribute(VALUE) ) {
@@ -47,7 +44,6 @@ public class AttributeParser extends AbstractXMLObjectParser {
         final Object value = xo.getChild(0);
 
         return new Attribute.Default<Object>(name, value);
-	*/
 		}
 	
 	//************************************************************************

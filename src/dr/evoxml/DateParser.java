@@ -57,10 +57,6 @@ public class DateParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
-
         java.text.DateFormat dateFormat = java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT, java.util.Locale.UK);
         dateFormat.setLenient(true);
 
@@ -136,7 +132,6 @@ public class DateParser extends AbstractXMLObjectParser {
 
 
         return date;
-    */
 		}
 
     public String getParserDescription() {

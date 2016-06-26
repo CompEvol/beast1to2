@@ -128,6 +128,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
         if (initialTree != null) {
         	initialTree.m_initial.setValue(tree, initialTree);
         	tree.m_taxonset.setValue(initialTree.m_taxonset.get(), tree);
+        	tree.m_traitList.get().addAll(initialTree.m_traitList.get());
         	MCMCParser.initialisers.add((StateNodeInitialiser) initialTree);
         }
         boolean fixHeights = xo.getAttribute(FIX_HEIGHTS, false);

@@ -25,10 +25,12 @@
 
 package dr.evoxml;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import beast.evolution.alignment.Taxon;
 import beast.evolution.tree.TraitSet;
+import beast.evolution.tree.TraitSet.Units;
 import beast1to2.Beast1to2Converter;
 import dr.evolution.util.Date;
 import dr.evolution.util.Location;
@@ -43,7 +45,7 @@ import dr.xml.*;
 public class TaxonParser extends AbstractXMLObjectParser {
 
 	// traits are stored here, to be used later once the tree is parsed
-	public static Map<String, TraitSet> traits;
+	public static Map<String, TraitSet> traits = new LinkedHashMap<>();
 
 	public final static String TAXON = "taxon";
 
@@ -85,7 +87,17 @@ public class TaxonParser extends AbstractXMLObjectParser {
 					if (traits.get("date-forward") == null) {
 						TraitSet trait = new TraitSet();
 						trait.traitNameInput.setValue("date-forward", trait);
-						trait.unitsInput.setValue(date.getUnits().name(), trait);
+						switch (date.getUnits().name()) {
+						case "YEARS":
+							trait.unitsInput.setValue("year", trait);
+							break;
+						case "DAYS":
+							trait.unitsInput.setValue("day", trait);
+							break;
+						case "MONTHS":
+							trait.unitsInput.setValue("month", trait);
+							break;
+						}
 						trait.traitsInput.setValue(taxon.getID() + "=" +date.toString(), trait);
 						traits.put("date-forward", trait);
 					} else {
