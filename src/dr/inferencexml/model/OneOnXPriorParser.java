@@ -25,6 +25,9 @@
 
 package dr.inferencexml.model;
 
+import beast.core.Function;
+import beast.math.distributions.OneOnX;
+import beast.math.distributions.Prior;
 import dr.inference.model.OneOnXPrior;
 import dr.inference.model.Statistic;
 import dr.xml.*;
@@ -47,26 +50,21 @@ public class OneOnXPriorParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
-        OneOnXPrior likelihood = new OneOnXPrior();
+        OneOnX distr = new OneOnX();
 
-        XMLObject cxo = xo;
-
-        if (xo.hasChildNamed(DATA)) {
-            cxo = xo.getChild(DATA);
-        }
-
-        for (int i = 0; i < cxo.getChildCount(); i++) {
-            if (cxo.getChild(i) instanceof Statistic) {
-                likelihood.addData((Statistic) cxo.getChild(i));
+        Function x = null;
+        for (int j = 0; j < xo.getChildCount(); j++) {
+            if (xo.getChild(j) instanceof Function) {
+            	x = (Function) xo.getChild(j);
+            } else {
+                throw new XMLParseException("illegal element in " + xo.getName() + " element");
             }
         }
 
-        return likelihood;
-    */
+        Prior prior = new Prior();
+        prior.initByName("distr", distr, "x", x);
+        return prior;
 		}
 
     //************************************************************************
@@ -79,7 +77,7 @@ public class OneOnXPriorParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             new XORRule(
-                    new ElementRule(Statistic.class, 1, Integer.MAX_VALUE),
+                    new ElementRule(Function.class, 1, Integer.MAX_VALUE),
                     new ElementRule(DATA, new XMLSyntaxRule[]{new ElementRule(Statistic.class, 1, Integer.MAX_VALUE)})
             )
     };

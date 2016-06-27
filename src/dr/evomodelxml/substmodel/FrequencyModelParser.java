@@ -58,29 +58,32 @@ public class FrequencyModelParser extends AbstractXMLObjectParser {
 
         Frequencies freqs = new Frequencies();
         RealParameter freqsParam = (RealParameter) xo.getElementFirstChild(FREQUENCIES);
+        if (freqsParam != null) {
+        	freqs.frequenciesInput.setValue(freqsParam, freqs);
+        }
 
         for (int i = 0; i < xo.getChildCount(); i++) {
             Object obj = xo.getChild(i);
             if (obj instanceof Alignment) {
-                freqs.initByName("data", (Alignment) obj);
+            	freqs.dataInput.setValue(obj, freqs);
                 break;
             }
         }
-
+        
         StringBuilder sb = new StringBuilder("Creating state frequencies model '" + freqsParam.getID() + "': ");
-        if (freqs.getFreqs() != null) {
+        if (freqs.dataInput.get() != null) {
             if (freqsParam.getDimension() != freqs.getFreqs().length) {
                 throw new XMLParseException("dimension of frequency parameter and number of sequence states don't match!");
             }
             sb.append("Using empirical frequencies from data ");
         } else {
-            freqs.initByName("frequencies", freqsParam);
             sb.append("Initial frequencies ");
         }
         sb.append("= {");
+        freqs.initAndValidate();
 
         double sum = 0;
-        for (int j = 0; j < freqsParam.getDimension(); j++) {
+        for (int j = 0; j < freqs.getFreqs().length; j++) {
             sum += freqs.getFreqs()[j];
         }
 

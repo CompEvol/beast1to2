@@ -56,7 +56,7 @@ public class CoalescentLikelihoodParser extends AbstractXMLObjectParser {
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         XMLObject cxo = xo.getChild(MODEL);
-        PopulationFunction populationFunction = (PopulationFunction) xo.getChild(PopulationFunction.class);
+        PopulationFunction populationFunction = (PopulationFunction) cxo.getChild(PopulationFunction.class);
 
         List<TreeInterface> trees = new ArrayList<TreeInterface>();
         for (int k = 0; k < xo.getChildCount(); ++k) {

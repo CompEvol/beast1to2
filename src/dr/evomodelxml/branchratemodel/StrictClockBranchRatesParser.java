@@ -31,6 +31,9 @@ import dr.xml.*;
 
 import java.util.logging.Logger;
 
+import beast.core.parameter.RealParameter;
+import beast.evolution.branchratemodel.StrictClockModel;
+
 /**
  */
 public class StrictClockBranchRatesParser extends AbstractXMLObjectParser {
@@ -43,17 +46,17 @@ public class StrictClockBranchRatesParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
-        Parameter rateParameter = (Parameter) xo.getElementFirstChild(RATE);
+        RealParameter rateParameter = (RealParameter) xo.getElementFirstChild(RATE);
 
         Logger.getLogger("dr.evomodel").info("Using strict molecular clock model.");
 
-        return new StrictClockBranchRates(rateParameter);
-    */
-		}
+        StrictClockModel strictClock = new StrictClockModel();
+        strictClock.meanRateInput.setValue(rateParameter, strictClock);
+
+        strictClock.initAndValidate();
+        return strictClock;
+	}
 
     //************************************************************************
     // AbstractXMLObjectParser implementation
@@ -66,7 +69,7 @@ public class StrictClockBranchRatesParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return StrictClockBranchRates.class;
+        return StrictClockModel.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -74,6 +77,6 @@ public class StrictClockBranchRatesParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(RATE, Parameter.class, "The molecular evolutionary rate parameter", false),
+            new ElementRule(RATE, RealParameter.class, "The molecular evolutionary rate parameter", false),
     };
 }

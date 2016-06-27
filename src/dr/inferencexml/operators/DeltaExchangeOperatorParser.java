@@ -25,10 +25,11 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.IntegerParameter;
+import beast.core.parameter.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.evolution.operators.DeltaExchangeOperator;
 import dr.inference.operators.CoercableMCMCOperator;
-import dr.inference.operators.CoercionMode;
-import dr.inference.operators.DeltaExchangeOperator;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
 
@@ -46,9 +47,6 @@ public class DeltaExchangeOperatorParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         CoercionMode mode = CoercionMode.parseMode(xo);
 
@@ -61,11 +59,12 @@ public class DeltaExchangeOperatorParser extends AbstractXMLObjectParser {
             throw new XMLParseException("delta must be greater than 0.0");
         }
 
-        Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+        Parameter<?> parameter = (Parameter<?>) xo.getChild(Parameter.class);
 
 
-        int[] parameterWeights;
+        Integer[] weights = null;
         if (xo.hasAttribute(PARAMETER_WEIGHTS)) {
+            int[] parameterWeights;
             parameterWeights = xo.getIntegerArrayAttribute(PARAMETER_WEIGHTS);
             System.out.print("Parameter weights for delta exchange are: ");
             for (int parameterWeight : parameterWeights) {
@@ -73,21 +72,29 @@ public class DeltaExchangeOperatorParser extends AbstractXMLObjectParser {
             }
             System.out.println();
 
-        } else {
-            parameterWeights = new int[parameter.getDimension()];
-            for (int i = 0; i < parameterWeights.length; i++) {
-                parameterWeights[i] = 1;
+            if (parameterWeights.length != parameter.getDimension()) {
+                throw new XMLParseException("parameter weights have the same length as parameter");
+            }
+//        } else {
+//            parameterWeights = new int[parameter.getDimension()];
+//            for (int i = 0; i < parameterWeights.length; i++) {
+//                parameterWeights[i] = 1;
+//            }
+            weights = new Integer[parameterWeights.length];
+            for (int i  = 0; i < weights.length; i++) {
+            	weights[i] = parameterWeights[i];
             }
         }
 
-        if (parameterWeights.length != parameter.getDimension()) {
-            throw new XMLParseException("parameter weights have the same length as parameter");
-        }
+        DeltaExchangeOperator operator = new DeltaExchangeOperator();
+        operator.initByName("weight", weight,
+        		"parameter", parameter,
+        		"weightvector", (weights == null ? null : new IntegerParameter(weights)),
+        		"delta", delta,
+        		"autoOptimize", mode.equals(CoercionMode.COERCION_ON));
 
-
-        return new DeltaExchangeOperator(parameter, parameterWeights, delta, weight, isIntegerOperator, mode);
-    */
-		}
+        return operator;
+  	}
 
     //************************************************************************
     // AbstractXMLObjectParser implementation
@@ -98,7 +105,7 @@ public class DeltaExchangeOperatorParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return MCMCOperator.class;
+        return beast.evolution.operators.DeltaExchangeOperator.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -111,6 +118,6 @@ public class DeltaExchangeOperatorParser extends AbstractXMLObjectParser {
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
             AttributeRule.newBooleanRule(CoercableMCMCOperator.AUTO_OPTIMIZE, true),
             AttributeRule.newBooleanRule(INTEGER_OPERATOR, true),
-            new ElementRule(Parameter.class)
+            new ElementRule(RealParameter.class)
     };
 }
