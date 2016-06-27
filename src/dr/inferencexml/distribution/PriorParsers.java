@@ -27,10 +27,17 @@ package dr.inferencexml.distribution;
 
 import beast.core.Function;
 import beast.core.parameter.Parameter;
+import beast.core.parameter.RealParameter;
 import beast.core.util.Log;
+import beast.math.distributions.Dirichlet;
+import beast.math.distributions.Exponential;
 import beast.math.distributions.Gamma;
+import beast.math.distributions.InverseGamma;
+import beast.math.distributions.LaplaceDistribution;
 import beast.math.distributions.LogNormalDistributionModel;
+import beast.math.distributions.Normal;
 import beast.math.distributions.ParametricDistribution;
+import beast.math.distributions.Poisson;
 import beast.math.distributions.Prior;
 import beast.math.distributions.Uniform;
 import beast1to2.BeastParser;
@@ -145,9 +152,6 @@ public class PriorParsers {
         }
 
         public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
             double scale;
 
@@ -158,39 +162,9 @@ public class PriorParsers {
             }
             final double offset = xo.hasAttribute(OFFSET) ? xo.getDoubleAttribute(OFFSET) : 0.0;
 
-            DistributionLikelihood likelihood = new DistributionLikelihood(new ExponentialDistribution(1.0 / scale), offset);
-            if (DEBUG) {
-                System.out.println("Exponential prior: " + xo.getChildCount());
-            }
-            for (int j = 0; j < xo.getChildCount(); j++) {
-                if (DEBUG) {
-                    System.out.println(xo.getChild(j));
-                }
-                if (xo.getChild(j) instanceof Statistic) {
-                    if (DEBUG) {
-                    	System.out.println("scale: " + scale);
-                    	System.out.println("offset: " + offset);
-                        //System.out.println((Statistic) xo.getChild(j));
-                        Statistic test = (Statistic) xo.getChild(j);
-                        System.out.println(test.getDimension());
-                        for (int i = 0; i < test.getDimension(); i++) {
-                            System.out.println("  " + test.getDimensionName(i) + " - " + test.getStatisticValue(i));
-                        }
-                        System.out.println(test.getClass());
-                    }
-                    likelihood.addData((Statistic) xo.getChild(j));
-                    if (DEBUG) {
-                    	likelihood.makeDirty();
-                    	likelihood.calculateLogLikelihood();
-                    	System.out.println("likelihood: " + likelihood.getLogLikelihood());
-                    }
-                } else {
-                    throw new XMLParseException("illegal element in " + xo.getName() + " element");
-                }
-            }
-
-            return likelihood;
-        */
+            Exponential exp = new Exponential();
+            exp.initByName("mean", scale + "", "offset", offset);
+            return prior(xo, exp);
 		}
 
         public XMLSyntaxRule[] getSyntaxRules() {
@@ -225,24 +199,12 @@ public class PriorParsers {
         }
 
         public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
             double mean = xo.getDoubleAttribute(MEAN);
             double offset = xo.getDoubleAttribute(OFFSET);
-
-            DistributionLikelihood likelihood = new DistributionLikelihood(new PoissonDistribution(mean), offset);
-            for (int j = 0; j < xo.getChildCount(); j++) {
-                if (xo.getChild(j) instanceof Statistic) {
-                    likelihood.addData((Statistic) xo.getChild(j));
-                } else {
-                    throw new XMLParseException("illegal element in " + xo.getName() + " element");
-                }
-            }
-
-            return likelihood;
-        */
+            Poisson poisson = new Poisson();
+            poisson.initByName("lambda", mean, "offset", offset);
+            return prior(xo, poisson);
 		}
 
         public XMLSyntaxRule[] getSyntaxRules() {
@@ -323,24 +285,13 @@ public class PriorParsers {
         }
 
         public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
             double upper = xo.getDoubleAttribute(UPPER);
             double lower = xo.getDoubleAttribute(LOWER);
+            Uniform uniform = new Uniform();
+            uniform.initByName("lower", lower, "upper", upper);
 
-            DistributionLikelihood likelihood = new DistributionLikelihood(new DiscreteUniformDistribution(lower, upper));
-            for (int j = 0; j < xo.getChildCount(); j++) {
-                if (xo.getChild(j) instanceof Statistic) {
-                    likelihood.addData((Statistic) xo.getChild(j));
-                } else {
-                    throw new XMLParseException("illegal element in " + xo.getName() + " element");
-                }
-            }
-
-            return likelihood;
-        */
+            return prior(xo, uniform);
 		}
 
         public XMLSyntaxRule[] getSyntaxRules() {
@@ -423,24 +374,12 @@ public class PriorParsers {
         }
 
         public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
-
             double mean = xo.getDoubleAttribute(MEAN);
             double stdev = xo.getDoubleAttribute(STDEV);
+            Normal normal = new Normal();
+            normal.initByName("mean", mean + "", "sigma", stdev + "");
 
-            DistributionLikelihood likelihood = new DistributionLikelihood(new NormalDistribution(mean, stdev));
-            for (int j = 0; j < xo.getChildCount(); j++) {
-                if (xo.getChild(j) instanceof Statistic) {
-                    likelihood.addData((Statistic) xo.getChild(j));
-                } else {
-                    throw new XMLParseException("illegal element in " + xo.getName() + " element");
-                }
-            }
-
-            return likelihood;
-        */
+            return prior(xo, normal);
 		}
 
         public XMLSyntaxRule[] getSyntaxRules() {
@@ -535,25 +474,15 @@ public class PriorParsers {
         }
 
         public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
+
 
             final double shape = xo.getDoubleAttribute(SHAPE);
             final double scale = xo.getDoubleAttribute(SCALE);
             final double offset = xo.getAttribute(OFFSET, 0.0);
 
-            DistributionLikelihood likelihood = new DistributionLikelihood(new GammaDistribution(shape, scale), offset);
-            for (int j = 0; j < xo.getChildCount(); j++) {
-                if (xo.getChild(j) instanceof Statistic) {
-                    likelihood.addData((Statistic) xo.getChild(j));
-                } else {
-                    throw new XMLParseException("illegal element in " + xo.getName() + " element");
-                }
-            }
-
-            return likelihood;
-        */
+            Gamma gamma = new Gamma();
+            gamma.initByName("alpha", shape +"", "beta", scale +"", "offset", offset);
+            return prior(xo, gamma);
 		}
 
         public XMLSyntaxRule[] getSyntaxRules() {
@@ -591,26 +520,13 @@ public class PriorParsers {
         }
 
         public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
             final double shape = xo.getDoubleAttribute(SHAPE);
             final double scale = xo.getDoubleAttribute(SCALE);
             final double offset = xo.getAttribute(OFFSET, 0.0);
-
-            DistributionLikelihood likelihood = new DistributionLikelihood(new InverseGammaDistribution(shape, scale), offset);
-
-            for (int j = 0; j < xo.getChildCount(); j++) {
-                if (xo.getChild(j) instanceof Statistic) {
-                    likelihood.addData((Statistic) xo.getChild(j));
-                } else {
-                    throw new XMLParseException("illegal element in " + xo.getName() + " element");
-                }
-            }
-
-            return likelihood;
-        */
+            InverseGamma invgamma = new InverseGamma();
+            invgamma.initByName("shape", shape+"", "scale", scale +"", "offset", offset);
+            return prior(xo, invgamma);
 		}
 
         public XMLSyntaxRule[] getSyntaxRules() {
@@ -640,24 +556,13 @@ public class PriorParsers {
         }
 
         public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
             double mean = xo.getDoubleAttribute(MEAN);
             double scale = xo.getDoubleAttribute(SCALE);
 
-            DistributionLikelihood likelihood = new DistributionLikelihood(new LaplaceDistribution(mean, scale));
-            for (int j = 0; j < xo.getChildCount(); j++) {
-                if (xo.getChild(j) instanceof Statistic) {
-                    likelihood.addData((Statistic) xo.getChild(j));
-                } else {
-                    throw new XMLParseException("illegal element in " + xo.getName() + " element");
-                }
-            }
-
-            return likelihood;
-        */
+            LaplaceDistribution laplace = new LaplaceDistribution();
+            laplace.initByName("mean", mean +"", "scale", scale+"");
+            return prior(xo, laplace);
 		}
 
         public XMLSyntaxRule[] getSyntaxRules() {
@@ -730,23 +635,16 @@ public class PriorParsers {
         }
 
         public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
             double[] counts = xo.getDoubleArrayAttribute(COUNTS);
-
-            MultivariateDistributionLikelihood likelihood = new MultivariateDistributionLikelihood(new DirichletDistribution(counts, false));
-            for (int j = 0; j < xo.getChildCount(); j++) {
-                if (xo.getChild(j) instanceof Statistic) {
-                    likelihood.addData((Statistic) xo.getChild(j));
-                } else {
-                    throw new XMLParseException("illegal element in " + xo.getName() + " element");
-                }
+            Double [] alpha = new Double[counts.length];
+            for (int i = 0; i < counts.length; i++) {
+            	alpha[i] = counts[i];
             }
 
-            return likelihood;
-        */
+			Dirichlet dirichlet = new Dirichlet();
+			dirichlet.initByName("alpha", new RealParameter(alpha));
+			return prior(xo, dirichlet);
 		}
 
         public XMLSyntaxRule[] getSyntaxRules() {
