@@ -26,8 +26,13 @@
 package dr.evomodelxml.coalescent;
 
 import beast.evolution.alignment.TaxonSet;
+import beast.evolution.tree.RandomTree;
+import beast.evolution.tree.TraitSet;
 import beast.evolution.tree.Tree;
 import beast.evolution.tree.coalescent.ConstantPopulation;
+import beast.evolution.tree.coalescent.PopulationFunction;
+import beast.util.ClusterTree;
+import dr.evoxml.TaxonParser;
 import dr.xml.*;
 
 import java.util.ArrayList;
@@ -48,8 +53,70 @@ public class CoalescentSimulatorParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
+        RandomTree randomTree = new RandomTree();
+
+        PopulationFunction populationFunction = (PopulationFunction) xo.getChild(PopulationFunction.class);
+        List<TaxonSet> taxonLists = new ArrayList<TaxonSet>();
+        List<Tree> subtrees = new ArrayList<Tree>();
+
+        double height = xo.getAttribute(HEIGHT, Double.NaN);
+        // should have one child that is node
+        for (int i = 0; i < xo.getChildCount(); i++) {
+            final Object child = xo.getChild(i);
+
+            // AER - swapped the order of these round because Trees are TaxonLists...
+            if (child instanceof Tree) {
+                throw new UnsupportedOperationException(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
+//                subtrees.add((Tree) child);
+            } else if (child instanceof TaxonSet) {
+                taxonLists.add((TaxonSet) child);
+                for (TraitSet t : TaxonParser.traits.values()) {
+                    randomTree.m_traitList.get().add(t);
+                }
+            }
+        }
+
+        if (taxonLists.size() == 0) {
+            if (subtrees.size() == 1) {
+                return subtrees.get(0);
+            }
+            throw new XMLParseException("Expected at least one taxonList or two subtrees in "
+                    + getParserName() + " element.");
+        }
+
+
+        if (taxonLists.size() > 1)
+            throw new UnsupportedOperationException(getParserName() + " multi-taxonset " + beast1to2.Beast1to2Converter.NIY);
+
+        try {
+            if (TaxonParser.traits.size() > 0) {
+                if (TaxonParser.traits.containsKey(TraitSet.DATE_TRAIT)) {
+                    ClusterTree clusterTree = new ClusterTree();
+                    //TODO: how to build tree?
+                    clusterTree.initByName("clusterType", "upgma", "trait", TaxonParser.traits.get(TraitSet.DATE_TRAIT));
+                    return clusterTree;
+                } else if (TaxonParser.traits.containsKey(TraitSet.DATE_FORWARD_TRAIT)) {
+                    ClusterTree clusterTree = new ClusterTree();
+                    clusterTree.initByName("clusterType", "upgma", "trait", TaxonParser.traits.get(TraitSet.DATE_FORWARD_TRAIT));
+                    return clusterTree;
+                } else if (TaxonParser.traits.containsKey(TraitSet.DATE_BACKWARD_TRAIT)) {
+                    ClusterTree clusterTree = new ClusterTree();
+                    clusterTree.initByName("clusterType", "upgma", "trait", TaxonParser.traits.get(TraitSet.DATE_BACKWARD_TRAIT));
+                    return clusterTree;
+                } else if (TaxonParser.traits.containsKey("location")) {
+                    throw new UnsupportedOperationException(getParserName() + " traits location " + beast1to2.Beast1to2Converter.NIY);
+                } else {
+                    throw new UnsupportedOperationException(getParserName() + " traits " + beast1to2.Beast1to2Converter.NIY);
+                }
+
+            } else {
+                randomTree.initByName("taxonset", taxonLists.get(0), "populationModel", populationFunction, "rootHeight", height);
+
+                return randomTree;
+            }
+        } catch (Exception iae) {
+            throw new XMLParseException(iae.getMessage());
+        }
 		/*
 
         CoalescentSimulator simulator = new CoalescentSimulator();

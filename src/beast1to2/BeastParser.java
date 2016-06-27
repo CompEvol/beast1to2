@@ -56,7 +56,7 @@ public class BeastParser extends XMLParser {
     public static final String DEV = "development";
     public static final String PARSER_PROPERTIES_SUFFIX ="_parsers.properties";
     public String parsers;
-    
+
     public static Map<Parameter<?>, Tree> rootParamToTreeMap = new HashMap<>();
     public static Map<Parameter<?>, Tree> leafParamToTreeMap = new HashMap<>();
     public static Map<Parameter<?>, Tree> internalParamToTreeMap = new HashMap<>();

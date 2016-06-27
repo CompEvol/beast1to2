@@ -26,17 +26,12 @@
 package dr.evomodelxml.coalescent;
 
 
-import beast.evolution.alignment.Alignment;
 import beast.evolution.alignment.TaxonSet;
-import beast.evolution.tree.Node;
 import beast.evolution.tree.RandomTree;
 import beast.evolution.tree.TraitSet;
 import beast.evolution.tree.Tree;
-import beast.evolution.tree.TreeDistribution;
 import beast.evolution.tree.coalescent.ConstantPopulation;
 import beast.evolution.tree.coalescent.PopulationFunction;
-import beast.math.distributions.MRCAPrior;
-import dr.evomodel.coalescent.CoalescentSimulator;
 import dr.evomodelxml.tree.TreeModelParser;
 import dr.evoxml.TaxonParser;
 import dr.xml.*;
