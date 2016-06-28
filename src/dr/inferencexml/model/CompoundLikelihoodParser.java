@@ -26,8 +26,10 @@
 package dr.inferencexml.model;
 
 
+import beast.core.BEASTObject;
 import beast.core.Distribution;
 import beast.core.util.CompoundDistribution;
+import beast.evolution.branchratemodel.UCRelaxedClockModel;
 import beast.evolution.likelihood.TreeLikelihood;
 import dr.xml.*;
 
@@ -77,7 +79,8 @@ public class CompoundLikelihoodParser extends AbstractXMLObjectParser {
                 likelihoods.add((Distribution) child);
 
 //            } else if (child instanceof BeagleBranchLikelihoods){
-
+            } else if (child instanceof UCRelaxedClockModel) {
+            	// ignore
             } else {
                 throw new XMLParseException("An element (" + child + ") which is not a likelihood has been added to a "
                         + COMPOUND_LIKELIHOOD + " element");
@@ -181,7 +184,7 @@ public class CompoundLikelihoodParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newIntegerRule(THREADS, true),
-            new ElementRule(TreeLikelihood.class, -1, Integer.MAX_VALUE) //TODO should be CompoundDistribution?
+            new ElementRule(BEASTObject.class, -1, Integer.MAX_VALUE) 
     };
 
     public Class getReturnType() {

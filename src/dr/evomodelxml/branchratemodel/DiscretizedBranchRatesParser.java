@@ -30,6 +30,7 @@ import dr.xml.*;
 
 import java.util.logging.Logger;
 
+import beast.core.parameter.IntegerParameter;
 import beast.core.parameter.Parameter;
 import beast.core.util.Log;
 import beast.evolution.branchratemodel.UCRelaxedClockModel;
@@ -74,14 +75,29 @@ public class DiscretizedBranchRatesParser extends AbstractXMLObjectParser {
 //		}
         //final double normalizeBranchRateTo = xo.getDoubleAttribute(NORMALIZE_BRANCH_RATE_TO);
         final double normalizeBranchRateTo = xo.getAttribute(NORMALIZE_BRANCH_RATE_TO, Double.NaN);
-        if (normalizeBranchRateTo != 1) {
+        if (!Double.isNaN(normalizeBranchRateTo)) {
         	Log.warning.println(Beast1to2Converter.NIY + " " + NORMALIZE_BRANCH_RATE_TO + "  attribute is ignored");
         }
 
         Tree tree = (Tree) xo.getChild(Tree.class);
         ParametricDistribution distributionModel = (ParametricDistribution) xo.getElementFirstChild(DISTRIBUTION);
 
-        Parameter<?> rateCategoryParameter = (Parameter<?>) xo.getElementFirstChild(RATE_CATEGORIES);
+        
+        Parameter rateCategoryParameter0 = (Parameter<?>) xo.getElementFirstChild(RATE_CATEGORIES);
+        IntegerParameter rateCategoryParameter = null;
+        for (int i = 0; i < xo.getChildCount(); i++) {
+        	Object o = xo.getRawChild(i); 
+        	if (o instanceof XMLObject) {
+        		XMLObject xco = (XMLObject) o;
+        		if (xco.getName().equals(RATE_CATEGORIES)) {
+        			o = xco.getRawChild(0);
+        			rateCategoryParameter = new IntegerParameter();
+        			rateCategoryParameter.initByName("dimension", Math.max(2, rateCategoryParameter0.getDimension()),
+        					"value", "0");
+        			((XMLObject)o).setNativeObject(rateCategoryParameter);
+        		}
+        	}
+        }
 
 //        Logger.getLogger("dr.evomodel").info("Using discretized relaxed clock model.");
 //        Logger.getLogger("dr.evomodel").info("  over sampling = " + overSampling);
@@ -106,7 +122,7 @@ public class DiscretizedBranchRatesParser extends AbstractXMLObjectParser {
         }
 
         final boolean cachedRates = xo.getAttribute(CACHED_RATES, false);
-        if (!cachedRates) {
+        if (cachedRates) {
         	Log.warning.println(Beast1to2Converter.NIY + " " + CACHED_RATES + "  attribute is ignored");
         }
 

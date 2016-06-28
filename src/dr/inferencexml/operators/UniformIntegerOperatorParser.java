@@ -25,10 +25,14 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
-import dr.inference.model.Variable;
+import beast.core.BEASTObject;
+import beast.core.Function;
+import beast.core.parameter.IntegerParameter;
+import beast.core.parameter.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.evolution.operators.Uniform;
+import beast.evolution.operators.UniformOperator;
 import dr.inference.operators.MCMCOperator;
-import dr.inference.operators.UniformIntegerOperator;
 import dr.xml.*;
 
 /**
@@ -42,35 +46,37 @@ public class UniformIntegerOperatorParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
 
-        Variable parameter = (Variable) xo.getChild(Variable.class);
+        Parameter parameter = (Parameter) xo.getChild(Parameter.class);
 
         int count = 1;
         if (xo.hasAttribute("count")) count = xo.getIntegerAttribute("count");
 
-        if (parameter instanceof Parameter) {
-            int lower = (int) (double) ((Parameter) parameter).getBounds().getLowerLimit(0);
+        if (parameter instanceof IntegerParameter) {
+            int lower = (int) (double) ((IntegerParameter) parameter).getLower();
             if (xo.hasAttribute("lower")) lower = xo.getIntegerAttribute("lower");
 
-            int upper = (int) (double) ((Parameter) parameter).getBounds().getUpperLimit(0);
+            int upper = (int) (double) ((IntegerParameter) parameter).getUpper();
             if (xo.hasAttribute("upper")) upper = xo.getIntegerAttribute("upper");
 
             if (upper == lower || lower == (int) Double.NEGATIVE_INFINITY || upper == (int) Double.POSITIVE_INFINITY) {
                 throw new XMLParseException(this.getParserName() + " boundaries not found in parameter "
-                        + parameter.getId() + " Use operator lower and upper !");
+                        + ((parameter.getID() + " Use operator lower and upper !")));
             }
-
-            return new UniformIntegerOperator((Parameter) parameter, lower, upper, weight, count);
+            ((IntegerParameter) parameter).lowerValueInput.setValue(lower, (BEASTObject) parameter);
+            ((IntegerParameter) parameter).upperValueInput.setValue(upper, (BEASTObject) parameter);
+            
+            UniformOperator operator = new UniformOperator();
+            operator.initByName("weight", weight, "howMany", count, "parameter", parameter);
+            return operator;
         } else { // Variable<Integer>, Bounds.Staircase
-            return new UniformIntegerOperator(parameter, weight, count);
+            UniformOperator operator = new UniformOperator();
+            operator.initByName("weight", weight, "howMany", count, "parameter", parameter);
+            return operator;
         }
-    */
-		}
+	}
 
     //************************************************************************
     // AbstractXMLObjectParser implementation
@@ -81,7 +87,7 @@ public class UniformIntegerOperatorParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return UniformIntegerOperator.class;
+        return UniformOperator.class;
     }
 
 
@@ -94,6 +100,6 @@ public class UniformIntegerOperatorParser extends AbstractXMLObjectParser {
             AttributeRule.newDoubleRule("upper", true),
             AttributeRule.newDoubleRule("lower", true),
             AttributeRule.newDoubleRule("count", true),
-            new ElementRule(Variable.class)
+            new ElementRule(Parameter.class)
     };
 }

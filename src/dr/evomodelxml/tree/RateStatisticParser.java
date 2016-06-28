@@ -25,10 +25,9 @@
 
 package dr.evomodelxml.tree;
 
-import dr.evolution.tree.Tree;
-import dr.evomodel.branchratemodel.BranchRateModel;
-import dr.evomodel.tree.RateStatistic;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.branchratemodel.BranchRateModel;
+import beast.evolution.branchratemodel.RateStatistic;
+import beast.evolution.tree.Tree;
 import dr.inference.model.Statistic;
 import dr.xml.*;
 
@@ -47,9 +46,6 @@ public class RateStatisticParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         final String name = xo.getAttribute(Statistic.NAME, xo.getId());
         final Tree tree = (Tree) xo.getChild(Tree.class);
@@ -63,10 +59,10 @@ public class RateStatisticParser extends AbstractXMLObjectParser {
         }
 
         final String mode = xo.getStringAttribute(MODE);
-
-        return new RateStatistic(name, tree, branchRateModel, external, internal, mode);
-    */
-		}
+        RateStatistic stat = new RateStatistic();
+        stat.initByName("tree", tree, "branchratemodel", branchRateModel);
+        return stat;
+        }
 
     //************************************************************************
     // AbstractXMLObjectParser implementation
@@ -85,7 +81,7 @@ public class RateStatisticParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             new ElementRule(BranchRateModel.class),
             AttributeRule.newBooleanRule("internal"),
             AttributeRule.newBooleanRule("external"),

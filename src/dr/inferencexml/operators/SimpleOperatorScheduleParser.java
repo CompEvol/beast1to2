@@ -28,6 +28,7 @@ package dr.inferencexml.operators;
 
 import beast.core.Operator;
 import beast.core.OperatorSchedule;
+import beast.core.util.Log;
 import dr.xml.*;
 
 import java.util.logging.Logger;
@@ -53,8 +54,10 @@ public class SimpleOperatorScheduleParser extends AbstractXMLObjectParser {
                     SEQUENTIAL + " " + beast1to2.Beast1to2Converter.NIY);
         }
         if (xo.hasAttribute(OPTIMIZATION_SCHEDULE)) {
-            throw new UnsupportedOperationException(getParserName() + " " +
+        	if (!xo.getAttribute(OPTIMIZATION_SCHEDULE).equals("default")) {
+        		Log.warning.println(getParserName() + " " +
                     OPTIMIZATION_SCHEDULE + " " + beast1to2.Beast1to2Converter.NIY);
+        	}
         }
 
         // BEAST 2 default to autoOptimise

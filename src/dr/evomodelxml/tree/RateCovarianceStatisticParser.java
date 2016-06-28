@@ -25,11 +25,9 @@
 
 package dr.evomodelxml.tree;
 
-import dr.evolution.tree.Tree;
-import dr.evomodel.branchratemodel.BranchRateModel;
-import dr.evomodel.tree.RateCovarianceStatistic;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Statistic;
+import beast.evolution.branchratemodel.BranchRateModel;
+import beast.evolution.branchratemodel.RateStatistic;
+import beast.evolution.tree.Tree;
 import dr.xml.*;
 
 /**
@@ -43,17 +41,18 @@ public class RateCovarianceStatisticParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
 		/*
 
         String name = xo.getAttribute(Statistic.NAME, xo.getId());
-        Tree tree = (Tree) xo.getChild(Tree.class);
-        BranchRateModel branchRateModel = (BranchRateModel) xo.getChild(BranchRateModel.class);
 
         return new RateCovarianceStatistic(name, tree, branchRateModel);
     */
-		}
+        Tree tree = (Tree) xo.getChild(Tree.class);
+        BranchRateModel branchRateModel = (BranchRateModel) xo.getChild(BranchRateModel.class);
+	       RateStatistic stat = new RateStatistic();
+	        stat.initByName("tree", tree, "branchratemodel", branchRateModel);
+	        return stat;
+	 		}
 
     //************************************************************************
     // AbstractXMLObjectParser implementation
@@ -64,7 +63,7 @@ public class RateCovarianceStatisticParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return RateCovarianceStatistic.class;
+        return RateStatistic.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -72,7 +71,7 @@ public class RateCovarianceStatisticParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             new ElementRule(BranchRateModel.class),
             new StringAttributeRule("name", "A name for this statistic primarily for the purposes of logging", true),
     };

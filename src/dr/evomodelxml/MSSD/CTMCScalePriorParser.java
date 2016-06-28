@@ -27,11 +27,15 @@ package dr.evomodelxml.MSSD;
 
 import dr.app.beagle.evomodel.substmodel.SubstitutionModel;
 import dr.evomodel.MSSD.CTMCScalePrior;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+
 import dr.xml.*;
 
 import java.util.logging.Logger;
+
+import beast.core.parameter.Parameter;
+import beast.evolution.tree.Tree;
+import beast.math.distributions.Prior;
+import beast.math.distributions.Uniform;
 
 /**
  *
@@ -48,7 +52,15 @@ public class CTMCScalePriorParser extends AbstractXMLObjectParser {
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
+		
+		// TODO: this is not a proper implementation
+		// it just produces a dummy uniform prior that has no effect on the posterior
+        Parameter<?> ctmcScale = (Parameter<?>) xo.getElementFirstChild(SCALEPARAMETER);
+		Prior prior = new Prior();
+		Uniform distr = new Uniform();
+		distr.initByName("lower", Double.NEGATIVE_INFINITY, "upper", Double.POSITIVE_INFINITY);
+		prior.initByName("distr", distr, "x", ctmcScale);
+		return prior;
 		/*
 
         TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
@@ -74,7 +86,7 @@ public class CTMCScalePriorParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return CTMCScalePrior.class;
+        return Prior.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -82,7 +94,7 @@ public class CTMCScalePriorParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             new ElementRule(SCALEPARAMETER, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
             AttributeRule.newBooleanRule(RECIPROCAL, true),
             new ElementRule(SubstitutionModel.class, true),

@@ -26,9 +26,13 @@
 package dr.inferencexml.loggers;
 
 
+import beast.core.BEASTInterface;
 import beast.core.BEASTObject;
+import beast.core.Loggable;
 import beast.core.Logger;
 import beast.core.parameter.Parameter;
+import beast.core.util.Log;
+import beast.evolution.branchratemodel.UCRelaxedClockModel;
 import beast.evolution.tree.Tree;
 import beast.evolution.tree.TreeHeightLogger;
 import beast1to2.BeastParser;
@@ -75,6 +79,7 @@ public class LoggerParser extends AbstractXMLObjectParser {
         final int logEvery = xo.getIntegerAttribute(LOG_EVERY);
 
         Logger logger = new Logger();
+        logger.setID(xo.getStringAttribute("id"));
         logger.everyInput.setValue(logEvery, logger);
 
         if (xo.hasAttribute(FILE_NAME)) {
@@ -188,6 +193,9 @@ public class LoggerParser extends AbstractXMLObjectParser {
     			heightLogger.treeInput.setValue(tree, heightLogger);
                 logger.loggersInput.setValue(heightLogger, logger);
     		}
+    	 } else if (!(child instanceof Loggable)) {
+    		 // ignore
+    		 Log.warning.println("Not logging " + ((BEASTInterface) child).getID() + " in log " + logger.getID());
     	 } else {
     		 logger.loggersInput.setValue(child, logger);
     	 }

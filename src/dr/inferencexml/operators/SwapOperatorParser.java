@@ -25,8 +25,9 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
-import dr.inference.operators.SwapOperator;
+import beast.core.parameter.IntegerParameter;
+import beast.core.parameter.Parameter;
+import beast.evolution.operators.SwapOperator;
 import dr.xml.*;
 
 /**
@@ -40,24 +41,23 @@ public class SwapOperatorParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
-        Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+        Parameter<?> parameter = (Parameter<?>) xo.getChild(Parameter.class);
         double weight = xo.getDoubleAttribute("weight");
         int size = xo.getIntegerAttribute("size");
 
         boolean autoOptimize = xo.getBooleanAttribute("autoOptimize");
         if (autoOptimize) throw new XMLParseException("swapOperator can't be optimized!");
 
-        System.out.println("Creating swap operator for parameter " + parameter.getParameterName() + " (weight=" + weight + ")");
+//        System.out.println("Creating swap operator for parameter " + parameter.getParameterName() + " (weight=" + weight + ")");
 
-        SwapOperator so = new SwapOperator(parameter, size);
-        so.setWeight(weight);
-
+        SwapOperator so = new SwapOperator();
+        if (parameter instanceof IntegerParameter) {
+            so.initByName("weight", weight, "intparameter", parameter, "howMany", size);
+        } else {
+        	so.initByName("weight", weight, "parameter", parameter, "howMany", size);
+        }
         return so;
-    */
 		}
 
     //************************************************************************
