@@ -25,8 +25,9 @@
 
 package dr.inferencexml.distribution;
 
-import dr.inference.distribution.LogNormalDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.math.distributions.LogNormalDistributionModel;
 import dr.xml.*;
 
 /**
@@ -47,10 +48,7 @@ public class LogNormalDistributionModelParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
-        Parameter meanParam;
+        Parameter<?> meanParam;
 
         final double offset = xo.getAttribute(OFFSET, 0.0);
 
@@ -66,34 +64,39 @@ public class LogNormalDistributionModelParser extends AbstractXMLObjectParser {
             if (cxo.getChild(0) instanceof Parameter) {
                 meanParam = (Parameter) cxo.getChild(Parameter.class);
             } else {
-                meanParam = new Parameter.Default(cxo.getDoubleChild(0));
+            	throw new XMLParseException(beast1to2.Beast1to2Converter.NIY);
+                //meanParam = new RealParameter.Default(cxo.getDoubleChild(0));
             }
         }
 
         {
             final XMLObject cxo = xo.getChild(PRECISION);
+            
             if (cxo != null) {
-                Parameter precParam;
-                if (cxo.getChild(0) instanceof Parameter) {
-                    precParam = (Parameter) cxo.getChild(Parameter.class);
-                } else {
-                    precParam = new Parameter.Default(cxo.getDoubleChild(0));
-                }
-                return new LogNormalDistributionModel(meanParam, precParam, offset, meanInRealSpace,stdevInRealSpace, false);
+            	throw new XMLParseException(beast1to2.Beast1to2Converter.NIY);
+//                Parameter precParam;
+//                if (cxo.getChild(0) instanceof Parameter) {
+//                    precParam = (Parameter) cxo.getChild(Parameter.class);
+//                } else {
+//                    precParam = new Parameter.Default(cxo.getDoubleChild(0));
+//                }
+//                return new LogNormalDistributionModel(meanParam, precParam, offset, meanInRealSpace,stdevInRealSpace, false);
             }
         }
         {
             final XMLObject cxo = xo.getChild(STDEV);
             Parameter stdevParam;
-            if (cxo.getChild(0) instanceof Parameter) {
-                stdevParam = (Parameter) cxo.getChild(Parameter.class);
+            if (cxo.getChild(0) instanceof RealParameter) {
+                stdevParam = (RealParameter) cxo.getChild(Parameter.class);
             } else {
-                stdevParam = new Parameter.Default(cxo.getDoubleChild(0));
+            	throw new XMLParseException(beast1to2.Beast1to2Converter.NIY);
+                // stdevParam = new Parameter.Default(cxo.getDoubleChild(0));
             }
 
-            return new LogNormalDistributionModel(meanParam, stdevParam, offset, meanInRealSpace, stdevInRealSpace);
+            LogNormalDistributionModel distr = new LogNormalDistributionModel();
+            distr.initByName("M", meanParam, "S", stdevParam, "offset", offset, "meanInRealSpace", meanInRealSpace);
+            return distr;
         }
-    */
 		}
 
     //************************************************************************

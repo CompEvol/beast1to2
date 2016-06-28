@@ -25,13 +25,17 @@
 
 package dr.evomodelxml.branchratemodel;
 
-import dr.evomodel.branchratemodel.DiscretizedBranchRates;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.distribution.ParametricDistributionModel;
-import dr.inference.model.Parameter;
+
 import dr.xml.*;
 
 import java.util.logging.Logger;
+
+import beast.core.parameter.Parameter;
+import beast.core.util.Log;
+import beast.evolution.branchratemodel.UCRelaxedClockModel;
+import beast.evolution.tree.Tree;
+import beast.math.distributions.ParametricDistribution;
+import beast1to2.Beast1to2Converter;
 
 /**
  * @author Alexei Drummond
@@ -57,30 +61,32 @@ public class DiscretizedBranchRatesParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         final int overSampling = xo.getAttribute(OVERSAMPLING, 1);
+        if (overSampling != 1) {
+        	Log.warning.println(Beast1to2Converter.NIY + " oversampling attribute is ignored");
+        }
 
         //final boolean normalize = xo.getBooleanAttribute(NORMALIZE, false);
         final boolean normalize = xo.getAttribute(NORMALIZE, false);
-        /*if(xo.hasAttribute(NORMALIZE))
-            normalize = xo.getBooleanAttribute(NORMALIZE);
-        * /
-		}* /
+//        if(xo.hasAttribute(NORMALIZE))
+//            normalize = xo.getBooleanAttribute(NORMALIZE);
+//		}
         //final double normalizeBranchRateTo = xo.getDoubleAttribute(NORMALIZE_BRANCH_RATE_TO);
         final double normalizeBranchRateTo = xo.getAttribute(NORMALIZE_BRANCH_RATE_TO, Double.NaN);
+        if (normalizeBranchRateTo != 1) {
+        	Log.warning.println(Beast1to2Converter.NIY + " " + NORMALIZE_BRANCH_RATE_TO + "  attribute is ignored");
+        }
 
-        TreeModel tree = (TreeModel) xo.getChild(TreeModel.class);
-        ParametricDistributionModel distributionModel = (ParametricDistributionModel) xo.getElementFirstChild(DISTRIBUTION);
+        Tree tree = (Tree) xo.getChild(Tree.class);
+        ParametricDistribution distributionModel = (ParametricDistribution) xo.getElementFirstChild(DISTRIBUTION);
 
-        Parameter rateCategoryParameter = (Parameter) xo.getElementFirstChild(RATE_CATEGORIES);
+        Parameter<?> rateCategoryParameter = (Parameter<?>) xo.getElementFirstChild(RATE_CATEGORIES);
 
-        Logger.getLogger("dr.evomodel").info("Using discretized relaxed clock model.");
-        Logger.getLogger("dr.evomodel").info("  over sampling = " + overSampling);
-        Logger.getLogger("dr.evomodel").info("  parametric model = " + distributionModel.getModelName());
-        Logger.getLogger("dr.evomodel").info("   rate categories = " + rateCategoryParameter.getDimension());
+//        Logger.getLogger("dr.evomodel").info("Using discretized relaxed clock model.");
+//        Logger.getLogger("dr.evomodel").info("  over sampling = " + overSampling);
+//        Logger.getLogger("dr.evomodel").info("  parametric model = " + distributionModel.getModelName());
+//        Logger.getLogger("dr.evomodel").info("   rate categories = " + rateCategoryParameter.getDimension());
         if(normalize) {
             Logger.getLogger("dr.evomodel").info("   mean rate is normalized to " + normalizeBranchRateTo);
         }
@@ -91,20 +97,30 @@ public class DiscretizedBranchRatesParser extends AbstractXMLObjectParser {
         }
 
         final boolean randomizeRates = xo.getAttribute(RANDOMIZE_RATES, true);
+        if (!randomizeRates) {
+        	Log.warning.println(Beast1to2Converter.NIY + " " + RANDOMIZE_RATES + "  attribute is ignored");
+        }
         final boolean keepRates = xo.getAttribute(KEEP_RATES, false);
+        if (keepRates) {
+        	Log.warning.println(Beast1to2Converter.NIY + " " + KEEP_RATES + "  attribute is ignored");
+        }
 
         final boolean cachedRates = xo.getAttribute(CACHED_RATES, false);
+        if (!cachedRates) {
+        	Log.warning.println(Beast1to2Converter.NIY + " " + CACHED_RATES + "  attribute is ignored");
+        }
 
         if (randomizeRates && keepRates) {
             throw new XMLParseException("Unable to both randomize and keep current rate categories");
         }
 
-        /* if (xo.hasAttribute(NORMALIZED_MEAN)) {
-            dbr.setNormalizedMean(xo.getDoubleAttribute(NORMALIZED_MEAN));
-        }* /
+//         if (xo.hasAttribute(NORMALIZED_MEAN)) {
+//            dbr.setNormalizedMean(xo.getDoubleAttribute(NORMALIZED_MEAN));
+//        }
 
-        return new DiscretizedBranchRates(tree, rateCategoryParameter, distributionModel, overSampling, normalize,
-                normalizeBranchRateTo, randomizeRates, keepRates, cachedRates);*/
+        UCRelaxedClockModel clockmodel = new UCRelaxedClockModel();
+        clockmodel.initByName("tree", tree, "distr", distributionModel, "normalize", normalize, "rateCategories", rateCategoryParameter);
+        return clockmodel;
     }
 
     //************************************************************************
@@ -118,7 +134,7 @@ public class DiscretizedBranchRatesParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return DiscretizedBranchRates.class;
+        return UCRelaxedClockModel.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -134,8 +150,8 @@ public class DiscretizedBranchRatesParser extends AbstractXMLObjectParser {
             AttributeRule.newBooleanRule(RANDOMIZE_RATES, true, "Randomize initial categories"),
             AttributeRule.newBooleanRule(KEEP_RATES, true, "Keep current rate category specification"),
             AttributeRule.newBooleanRule(CACHED_RATES, true, "Cache rates between steps (default off)"),
-            new ElementRule(TreeModel.class),
-            new ElementRule(DISTRIBUTION, ParametricDistributionModel.class, "The distribution model for rates among branches", false),
+            new ElementRule(Tree.class),
+            new ElementRule(DISTRIBUTION, ParametricDistribution.class, "The distribution model for rates among branches", false),
             new ElementRule(RATE_CATEGORIES, Parameter.class, "The rate categories parameter", false),
     };
 }
