@@ -25,6 +25,7 @@
 
 package dr.evomodelxml.coalescent;
 
+import beast.core.util.Log;
 import beast.evolution.alignment.TaxonSet;
 import beast.evolution.tree.RandomTree;
 import beast.evolution.tree.TraitSet;
@@ -32,6 +33,7 @@ import beast.evolution.tree.Tree;
 import beast.evolution.tree.coalescent.ConstantPopulation;
 import beast.evolution.tree.coalescent.PopulationFunction;
 import beast.util.ClusterTree;
+import beast1to2.Beast1to2Converter;
 import dr.evoxml.TaxonParser;
 import dr.xml.*;
 
@@ -60,6 +62,9 @@ public class CoalescentSimulatorParser extends AbstractXMLObjectParser {
         List<Tree> subtrees = new ArrayList<Tree>();
 
         double height = xo.getAttribute(HEIGHT, Double.NaN);
+        if (!Double.isNaN(height)) {
+        	Log.warning.println(Beast1to2Converter.NIY + " height attribute is ignored");
+        }
         // should have one child that is node
         for (int i = 0; i < xo.getChildCount(); i++) {
             final Object child = xo.getChild(i);
@@ -89,34 +94,35 @@ public class CoalescentSimulatorParser extends AbstractXMLObjectParser {
             throw new UnsupportedOperationException(getParserName() + " multi-taxonset " + beast1to2.Beast1to2Converter.NIY);
 
         try {
-            if (TaxonParser.traits.size() > 0) {
-                if (TaxonParser.traits.containsKey(TraitSet.DATE_TRAIT)) {
-                    ClusterTree clusterTree = new ClusterTree();
-                    //TODO: how to build tree?
-                    clusterTree.initByName("clusterType", "upgma", "trait", TaxonParser.traits.get(TraitSet.DATE_TRAIT));
-                    return clusterTree;
-                } else if (TaxonParser.traits.containsKey(TraitSet.DATE_FORWARD_TRAIT)) {
-                    ClusterTree clusterTree = new ClusterTree();
-                    clusterTree.initByName("clusterType", "upgma", "trait", TaxonParser.traits.get(TraitSet.DATE_FORWARD_TRAIT));
-                    return clusterTree;
-                } else if (TaxonParser.traits.containsKey(TraitSet.DATE_BACKWARD_TRAIT)) {
-                    ClusterTree clusterTree = new ClusterTree();
-                    clusterTree.initByName("clusterType", "upgma", "trait", TaxonParser.traits.get(TraitSet.DATE_BACKWARD_TRAIT));
-                    return clusterTree;
-                } else if (TaxonParser.traits.containsKey("location")) {
-                    throw new UnsupportedOperationException(getParserName() + " traits location " + beast1to2.Beast1to2Converter.NIY);
-                } else {
-                    throw new UnsupportedOperationException(getParserName() + " traits " + beast1to2.Beast1to2Converter.NIY);
-                }
-
-            } else {
-                randomTree.initByName("taxonset", taxonLists.get(0), "populationModel", populationFunction, "rootHeight", height);
-
-                return randomTree;
-            }
+//            if (TaxonParser.traits.size() > 0) {
+//                if (TaxonParser.traits.containsKey(TraitSet.DATE_TRAIT)) {
+//                    randomTree.initByName("taxonset", taxonLists.get(0), "populationModel", populationFunction, 
+//                    		"rootHeight", height, "trait", TaxonParser.traits.get(TraitSet.DATE_TRAIT));
+//                } else if (TaxonParser.traits.containsKey(TraitSet.DATE_FORWARD_TRAIT)) {
+//                    ClusterTree clusterTree = new ClusterTree();
+//                    clusterTree.initByName("clusterType", "upgma", "trait", TaxonParser.traits.get(TraitSet.DATE_FORWARD_TRAIT));
+//                    return clusterTree;
+//                } else if (TaxonParser.traits.containsKey(TraitSet.DATE_BACKWARD_TRAIT)) {
+//                    ClusterTree clusterTree = new ClusterTree();
+//                    clusterTree.initByName("clusterType", "upgma", "trait", TaxonParser.traits.get(TraitSet.DATE_BACKWARD_TRAIT));
+//                    return clusterTree;
+//                } else if (TaxonParser.traits.containsKey("location")) {
+//                    throw new UnsupportedOperationException(getParserName() + " traits location " + beast1to2.Beast1to2Converter.NIY);
+//                } else {
+//                    throw new UnsupportedOperationException(getParserName() + " traits " + beast1to2.Beast1to2Converter.NIY);
+//                }
+//
+//            } else {
+//                randomTree.initByName("taxonset", taxonLists.get(0), "populationModel", populationFunction, "rootHeight", height);
+//
+//                return randomTree;
+//            }
+            randomTree.initByName("taxonset", taxonLists.get(0), "populationModel", populationFunction);
         } catch (Exception iae) {
             throw new XMLParseException(iae.getMessage());
         }
+        return randomTree;
+        
 		/*
 
         CoalescentSimulator simulator = new CoalescentSimulator();
