@@ -26,11 +26,12 @@
 package dr.evoxml;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import beast.evolution.alignment.Taxon;
 import beast.evolution.tree.TraitSet;
-import beast.evolution.tree.TraitSet.Units;
 import beast1to2.Beast1to2Converter;
 import dr.evolution.util.Date;
 import dr.evolution.util.Location;
@@ -43,6 +44,15 @@ import dr.xml.*;
  * @version $Id: TaxonParser.java,v 1.2 2005/05/24 20:25:59 rambaut Exp $
  */
 public class TaxonParser extends AbstractXMLObjectParser {
+	static Map<String, Taxon> taxonSet = new LinkedHashMap<>();
+	static public Taxon newTaxon(String name) {
+		if (taxonSet.containsKey(name)) {
+			return taxonSet.get(name);
+		}
+		Taxon taxon = new Taxon(name);
+		taxonSet.put(name, taxon);
+		return taxon;
+	}
 
 	// traits are stored here, to be used later once the tree is parsed
 	public static Map<String, TraitSet> traits = new LinkedHashMap<>();
@@ -62,7 +72,7 @@ public class TaxonParser extends AbstractXMLObjectParser {
 			throw new XMLParseException("Illegal taxon name, " + dr.xml.XMLParser.ID + ", - contains both single and double quotes");
 		}
 
-		beast.evolution.alignment.Taxon taxon = new beast.evolution.alignment.Taxon(xo.getStringAttribute(dr.xml.XMLParser.ID));
+		beast.evolution.alignment.Taxon taxon = newTaxon(xo.getStringAttribute(dr.xml.XMLParser.ID));
 
 		for (int i = 0; i < xo.getChildCount(); i++) {
 			Object child = xo.getChild(i);
@@ -74,13 +84,13 @@ public class TaxonParser extends AbstractXMLObjectParser {
 						TraitSet trait = new TraitSet();
 						trait.traitNameInput.setValue("date", trait);
 						trait.unitsInput.setValue(date.getUnits().name(), trait);
-						trait.traitsInput.setValue(taxon.getID() + "=" +date.toString(), trait);
+						trait.traitsInput.setValue(taxon.getID() + "=" +date.getTimeValue(), trait);
 						traits.put("date", trait);
 					} else {
 						TraitSet trait = traits.get("date");
 						trait.traitsInput.setValue(
 								trait.traitsInput.get() +",\n" +
-										taxon.getID() + "=" +date.toString(), trait);
+										taxon.getID() + "=" +date.getTimeValue(), trait);
 
 					}
 				} else {
@@ -98,13 +108,13 @@ public class TaxonParser extends AbstractXMLObjectParser {
 							trait.unitsInput.setValue("month", trait);
 							break;
 						}
-						trait.traitsInput.setValue(taxon.getID() + "=" +date.toString(), trait);
+						trait.traitsInput.setValue(taxon.getID() + "=" +date.getTimeValue(), trait);
 						traits.put("date-forward", trait);
 					} else {
 						TraitSet trait = traits.get("date-forward");
 						trait.traitsInput.setValue(
 								trait.traitsInput.get() +",\n" +
-										taxon.getID() + "=" +date.toString(), trait);
+										taxon.getID() + "=" +date.getTimeValue(), trait);
 
 					}
 				}

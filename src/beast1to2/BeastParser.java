@@ -42,6 +42,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import beast.core.parameter.Parameter;
+import beast.evolution.alignment.TaxonSet;
 import beast.evolution.tree.Tree;
 
 /**
@@ -61,6 +62,7 @@ public class BeastParser extends XMLParser {
     public static Map<Parameter<?>, Tree> leafParamToTreeMap = new HashMap<>();
     public static Map<Parameter<?>, Tree> internalParamToTreeMap = new HashMap<>();
     public static Map<Parameter<?>, Tree> allInternalParamToTreeMap = new HashMap<>();
+    public static Map<Parameter<?>, TaxonSet> leafParamToTaxonSetMap = new HashMap<>();
 
     public BeastParser(String[] args, List<String> additionalParsers, boolean verbose, boolean parserWarnings, boolean strictXML) {
         super(true, parserWarnings, strictXML);

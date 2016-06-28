@@ -25,7 +25,16 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
+import beast.core.Operator;
+import beast.core.parameter.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.core.util.Log;
+import beast.evolution.alignment.*;
+import beast.evolution.operators.IntRandomWalkOperator;
+import beast.evolution.operators.RealRandomWalkOperator;
+import beast.evolution.operators.TipDatesRandomWalker;
+import beast1to2.Beast1to2Converter;
+import beast1to2.BeastParser;
 import dr.inference.operators.CoercableMCMCOperator;
 import dr.inference.operators.CoercionMode;
 import dr.inference.operators.MCMCOperator;
@@ -49,15 +58,12 @@ public class RandomWalkOperatorParser extends AbstractXMLObjectParser {
         }
 
         public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
             CoercionMode mode = CoercionMode.parseMode(xo);
 
             double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
             double windowSize = xo.getDoubleAttribute(WINDOW_SIZE);
-            Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+            Parameter<?> parameter = (Parameter<?>) xo.getChild(Parameter.class);
 
             Double lower = null;
             Double upper = null;
@@ -72,19 +78,41 @@ public class RandomWalkOperatorParser extends AbstractXMLObjectParser {
 
             RandomWalkOperator.BoundaryCondition condition = RandomWalkOperator.BoundaryCondition.valueOf(
                     xo.getAttribute(BOUNDARY_CONDITION, RandomWalkOperator.BoundaryCondition.reflecting.name()));
-
+            if (condition == RandomWalkOperator.BoundaryCondition.absorbing) {
+            	Log.warning.println(Beast1to2Converter.NIY + " Attribute " + BOUNDARY_CONDITION + " is ignored");
+            }
+            
+            Operator operator = null;
+            if (BeastParser.leafParamToTreeMap.containsKey(parameter)) {
+            	operator = new TipDatesRandomWalker();
+            	TaxonSet taxonset = BeastParser.leafParamToTaxonSetMap.get(parameter);
+                operator.initByName("weight", weight, "windowSize", windowSize,
+                		"taxonset", taxonset,
+                		"tree", BeastParser.leafParamToTreeMap.get(parameter));
+                return operator;
+            } else if (parameter instanceof RealParameter) {
+	            operator = new RealRandomWalkOperator();
+	            operator.initByName("weight", weight, "windowSize", windowSize,
+	            		"parameter", parameter);
+            } else {
+	            operator = new IntRandomWalkOperator();
+	            operator.initByName("weight", weight, "windowSize", windowSize,
+	            		"parameter", parameter);
+            	
+            }
+            
             if (xo.hasChildNamed(UPDATE_INDEX)) {
-                XMLObject cxo = xo.getChild(UPDATE_INDEX);
-                Parameter updateIndex = (Parameter) cxo.getChild(Parameter.class);
-                if (updateIndex.getDimension() != parameter.getDimension())
-                    throw new RuntimeException("Parameter to update and missing indices must have the same dimension");
-                return new RandomWalkOperator(parameter, updateIndex, windowSize, condition,
-                        weight, mode, lower, upper);
+            	Log.warning.println(Beast1to2Converter.NIY + " Attribute " + UPDATE_INDEX + " is ignored");
+//                XMLObject cxo = xo.getChild(UPDATE_INDEX);
+//                Parameter updateIndex = (Parameter) cxo.getChild(Parameter.class);
+//                if (updateIndex.getDimension() != parameter.getDimension())
+//                    throw new RuntimeException("Parameter to update and missing indices must have the same dimension");
+//                return new RandomWalkOperator(parameter, updateIndex, windowSize, condition,
+//                        weight, mode, lower, upper);
             }
 
-            return new RandomWalkOperator(parameter, null, windowSize, condition, weight, mode, lower, upper);
-        */
-		}
+            return operator;
+        }
 
         //************************************************************************
         // AbstractXMLObjectParser implementation
@@ -95,7 +123,7 @@ public class RandomWalkOperatorParser extends AbstractXMLObjectParser {
         }
 
         public Class getReturnType() {
-            return MCMCOperator.class;
+            return Operator.class;
         }
 
         public XMLSyntaxRule[] getSyntaxRules() {

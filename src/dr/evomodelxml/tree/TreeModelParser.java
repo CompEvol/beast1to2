@@ -31,8 +31,11 @@ import beast.core.StateNodeInitialiser;
 import beast.core.parameter.Parameter;
 import beast.core.parameter.RealParameter;
 import beast.evolution.alignment.Alignment;
+import beast.evolution.alignment.Taxon;
+import beast.evolution.alignment.TaxonSet;
 import beast.evolution.tree.Tree;
 import beast1to2.BeastParser;
+import dr.evoxml.TaxonParser;
 import dr.inferencexml.MCMCParser;
 import dr.inferencexml.model.ParameterParser;
 import dr.xml.*;
@@ -147,7 +150,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
 
                 } else if (cxo.getName().equals(LEAF_HEIGHT)) {
 
-                    String taxonName;
+                    String taxonName = null;
                     if (cxo.hasAttribute(TAXON)) {
                         taxonName = cxo.getStringAttribute(TAXON);
                     } else {
@@ -155,6 +158,11 @@ public class TreeModelParser extends AbstractXMLObjectParser {
                     }
                 	Parameter<?> p = ParameterParser.getParameter(cxo);
                 	BeastParser.leafParamToTreeMap.put(p, tree);
+                	Taxon taxon = TaxonParser.newTaxon(taxonName);
+                	TaxonSet taxonset = new TaxonSet();
+                	taxonset.initByName("taxon", taxon);
+                	taxonset.setID(taxonName +".leaf");
+                	BeastParser.leafParamToTaxonSetMap.put(p, taxonset);
 
 //                    int index = treeModel.getTaxonIndex(taxonName);
 //                    if (index == -1) {
