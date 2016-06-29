@@ -26,16 +26,16 @@
 package dr.evomodelxml.MSSD;
 
 import dr.app.beagle.evomodel.substmodel.SubstitutionModel;
-import dr.evomodel.MSSD.CTMCScalePrior;
 
 import dr.xml.*;
 
 import java.util.logging.Logger;
 
 import beast.core.parameter.Parameter;
+import beast.core.parameter.RealParameter;
 import beast.evolution.tree.Tree;
+import beast.math.distributions.CTMCScalePrior;
 import beast.math.distributions.Prior;
-import beast.math.distributions.Uniform;
 
 /**
  *
@@ -51,20 +51,9 @@ public class CTMCScalePriorParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		
-		// TODO: this is not a proper implementation
-		// it just produces a dummy uniform prior that has no effect on the posterior
-        Parameter<?> ctmcScale = (Parameter<?>) xo.getElementFirstChild(SCALEPARAMETER);
-		Prior prior = new Prior();
-		Uniform distr = new Uniform();
-		distr.initByName("lower", Double.NEGATIVE_INFINITY, "upper", Double.POSITIVE_INFINITY);
-		prior.initByName("distr", distr, "x", ctmcScale);
-		return prior;
-		/*
 
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
-        Parameter ctmcScale = (Parameter) xo.getElementFirstChild(SCALEPARAMETER);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
+        RealParameter ctmcScale = (RealParameter) xo.getElementFirstChild(SCALEPARAMETER);
         boolean reciprocal = xo.getAttribute(RECIPROCAL, false);
         boolean trial = xo.getAttribute(TRIAL, false);
         SubstitutionModel substitutionModel = (SubstitutionModel) xo.getChild(SubstitutionModel.class);
@@ -73,8 +62,9 @@ public class CTMCScalePriorParser extends AbstractXMLObjectParser {
         Logger.getLogger("dr.evolution").info("\tIf you publish results using this prior, please reference:");
         Logger.getLogger("dr.evolution").info("\t\t 1. Ferreira and Suchard (2008) for the conditional reference prior on CTMC scale parameter prior;");
 
-        return new CTMCScalePrior(MODEL_NAME, ctmcScale, treeModel, reciprocal, substitutionModel, trial);
-    */
+        CTMCScalePrior prior = new CTMCScalePrior();
+        prior.initByName(SCALEPARAMETER, ctmcScale, "tree", treeModel, RECIPROCAL, reciprocal, TRIAL, trial, "substModel", substitutionModel);
+		return prior;
 		}
 
     //************************************************************************

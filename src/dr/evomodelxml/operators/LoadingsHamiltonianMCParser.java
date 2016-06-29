@@ -1,6 +1,6 @@
 package dr.evomodelxml.operators;
 
-import dr.evomodel.operators.LoadingsHamiltonianMC;
+//import dr.evomodel.operators.LoadingsHamiltonianMC;
 import dr.inference.distribution.MomentDistributionModel;
 import dr.inference.model.LatentFactorModel;
 import dr.inference.model.MatrixParameter;
@@ -59,7 +59,7 @@ public class LoadingsHamiltonianMCParser extends AbstractXMLObjectParser {
 
     @Override
     public Class getReturnType() {
-        return LoadingsHamiltonianMC.class;
+        return Object.class;
     }
 
     @Override

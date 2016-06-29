@@ -25,10 +25,10 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
-import dr.inference.model.Variable;
+import beast.core.Function;
+import beast.core.Operator;
+import beast.evolution.operators.IntRandomWalkOperator;
 import dr.inference.operators.MCMCOperator;
-import dr.inference.operators.RandomWalkIntegerOperator;
 import dr.xml.*;
 
 /**
@@ -45,10 +45,6 @@ public class RandomWalkIntegerOperatorParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
-
         double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
 
         double d = xo.getDoubleAttribute(WINDOW_SIZE);
@@ -57,11 +53,12 @@ public class RandomWalkIntegerOperatorParser extends AbstractXMLObjectParser {
         }
 
         int windowSize = (int)d;
-        Variable parameter = (Variable) xo.getChild(Variable.class);
-
-        return new RandomWalkIntegerOperator(parameter, windowSize, weight);
-    */
-		}
+        Function parameter = (Function) xo.getChild(Function.class);
+        IntRandomWalkOperator operator = new IntRandomWalkOperator();
+        operator.initByName(WINDOW_SIZE, windowSize, MCMCOperator.WEIGHT, weight, "parameter", parameter);
+        
+        return operator;
+	}
 
     //************************************************************************
     // AbstractXMLObjectParser implementation
@@ -72,7 +69,7 @@ public class RandomWalkIntegerOperatorParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return RandomWalkIntegerOperator.class;
+        return Operator.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -82,7 +79,7 @@ public class RandomWalkIntegerOperatorParser extends AbstractXMLObjectParser {
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             AttributeRule.newDoubleRule(WINDOW_SIZE),
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
-            new ElementRule(Variable.class)
+            new ElementRule(Function.class)
     };
 
 }

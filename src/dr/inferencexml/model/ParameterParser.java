@@ -104,6 +104,7 @@ public class ParameterParser extends AbstractXMLObjectParser {
             values2[i] = new Double(values[i]);
         }
         final RealParameter param = new RealParameter(values2);
+        param.dimensionInput.setValue(values2.length, param);
 
         uppers = new double[values.length];
 //        for(int i = 0; i < values.length; i++) {
@@ -118,7 +119,7 @@ public class ParameterParser extends AbstractXMLObjectParser {
         if( xo.hasAttribute(UPPER) ) {
             double[] v = xo.getDoubleArrayAttribute(UPPER);
             if( v.length == 1 ) {
-                param.setUpper(v[0]);
+                param.upperValueInput.setValue(v[0], param);
             } else if( v.length == uppers.length ) {
                 System.out.println(getParserName() + " multi-dimension bounds " + beast1to2.Beast1to2Converter.NIY);
                 return null;
@@ -130,7 +131,7 @@ public class ParameterParser extends AbstractXMLObjectParser {
         if( xo.hasAttribute(LOWER) ) {
             double[] v = xo.getDoubleArrayAttribute(LOWER);
             if( v.length == 1 ) {
-                param.setLower(v[0]);
+                param.lowerValueInput.setValue(v[0], param);
             } else if( v.length == lowers.length ) {
                 System.out.println(getParserName() + " multi-dimension bounds " + beast1to2.Beast1to2Converter.NIY);
                 return null;

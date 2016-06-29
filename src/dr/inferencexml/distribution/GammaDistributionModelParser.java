@@ -78,29 +78,24 @@ public class GammaDistributionModelParser extends AbstractXMLObjectParser {
         Parameter shapeParameter = getParameterOrValue(SHAPE, xo);
 
         Parameter parameter2;
-        GammaDistributionModel.GammaParameterizationType parameterization;
+        Gamma.mode parameterization;
 
         if (xo.hasChildNamed(SCALE)) {
             parameter2 = getParameterOrValue(SCALE, xo);
-            parameterization = GammaDistributionModel.GammaParameterizationType.ShapeScale;
-            Gamma distr = new Gamma();
-            distr.initByName("alpha", shapeParameter, "beta", parameter2);
-            return distr;
+            parameterization = Gamma.mode.ShapeScale;
         } else if (xo.hasChildNamed(RATE)) {
             parameter2 = getParameterOrValue(RATE, xo);
-            parameterization = GammaDistributionModel.GammaParameterizationType.ShapeRate;
-            throw new XMLParseException(Beast1to2Converter.NIY + " for the ShapeRate paramterisation");
+            parameterization = Gamma.mode.ShapeRate;
         } else if (xo.hasChildNamed(MEAN)) {
             parameter2 = getParameterOrValue(MEAN, xo);
-            parameterization = GammaDistributionModel.GammaParameterizationType.ShapeMean;
-            throw new XMLParseException(Beast1to2Converter.NIY + " for the ShapeMean paramterisation");
+            parameterization = Gamma.mode.ShapeMean;
         } else {
             parameter2 = null;
-            parameterization = GammaDistributionModel.GammaParameterizationType.OneParameter;
-            GammaOneP distr = new GammaOneP();
-            distr.initByName("shape", shapeParameter);
-            return distr;
+            parameterization = Gamma.mode.OneParameter;
         }
+        Gamma distr = new Gamma();
+        distr.initByName("alpha", shapeParameter, "beta", parameter2, "mode", parameterization);
+        return distr;
 
         
 		}

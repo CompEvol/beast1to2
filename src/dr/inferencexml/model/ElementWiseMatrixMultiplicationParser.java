@@ -1,7 +1,7 @@
 package dr.inferencexml.model;
 
 
-import dr.inference.model.ElementWiseMatrixMultiplicationParameter;
+//import dr.inference.model.ElementWiseMatrixMultiplicationParameter;
 import dr.inference.model.MatrixParameter;
 import dr.xml.AbstractXMLObjectParser;
 import dr.xml.XMLObject;
@@ -42,7 +42,7 @@ public class ElementWiseMatrixMultiplicationParser extends AbstractXMLObjectPars
 
     @Override
     public Class getReturnType() {
-        return ElementWiseMatrixMultiplicationParameter.class;
+        return Object.class;
     }
 
     @Override
