@@ -25,6 +25,10 @@
 
 package dr.inferencexml.model;
 
+import beast.core.Function;
+import beast.core.util.Log;
+import beast.core.util.Sum;
+import beast1to2.Beast1to2Converter;
 import dr.inference.model.Statistic;
 import dr.inference.model.SumStatistic;
 import dr.xml.*;
@@ -47,12 +51,15 @@ public class SumStatisticParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         boolean elementwise = xo.getAttribute(ELEMENTWISE, false);
+        if (elementwise) {
+        	Log.warning.println(Beast1to2Converter.NIY + " " + ELEMENTWISE +" attribute");
+        }
         boolean absolute = xo.getAttribute(ABSOLUTE, false);
+        if (absolute) {
+        	Log.warning.println(Beast1to2Converter.NIY + " " + ABSOLUTE +" attribute");
+        }
 
         String name = SUM_STATISTIC;
         if (xo.hasAttribute(Statistic.NAME)) {
@@ -61,20 +68,19 @@ public class SumStatisticParser extends AbstractXMLObjectParser {
             name = xo.getAttribute(XMLParser.ID, xo.getId());
         }
 
-        final SumStatistic sumStatistic = new SumStatistic(name, elementwise, absolute);
+        final Sum sumStatistic = new Sum();
 
         for (int i = 0; i < xo.getChildCount(); i++) {
-            final Statistic statistic = (Statistic) xo.getChild(i);
+            final Function statistic = (Function) xo.getChild(i);
 
             try {
-                sumStatistic.addStatistic(statistic);
+                sumStatistic.initByName("arg", statistic);
             } catch (IllegalArgumentException iae) {
                 throw new XMLParseException("Statistic added to " + getParserName() + " element is not of the same dimension");
             }
         }
-
+        sumStatistic.initAndValidate();
         return sumStatistic;
-    */
 		}
 
     //************************************************************************
@@ -96,6 +102,6 @@ public class SumStatisticParser extends AbstractXMLObjectParser {
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newBooleanRule(ELEMENTWISE, true),
             AttributeRule.newStringRule(Statistic.NAME, true),
-            new ElementRule(Statistic.class, 1, Integer.MAX_VALUE)
+            new ElementRule(Function.class, 1, Integer.MAX_VALUE)
     };
 }

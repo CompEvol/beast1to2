@@ -25,12 +25,17 @@
 
 package dr.evomodelxml.branchratemodel;
 
-import dr.evomodel.branchratemodel.RandomLocalClockModel;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+
 import dr.xml.*;
 
 import java.util.logging.Logger;
+
+import beast.core.parameter.BooleanParameter;
+import beast.core.parameter.IntegerParameter;
+import beast.core.parameter.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.evolution.branchratemodel.RandomLocalClockModel;
+import beast.evolution.tree.Tree;
 
 /**
  */
@@ -47,18 +52,33 @@ public class RandomLocalClockModelParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
-        TreeModel tree = (TreeModel) xo.getChild(TreeModel.class);
+        Tree tree = (Tree) xo.getChild(Tree.class);
 
-        Parameter rateIndicatorParameter = (Parameter) xo.getElementFirstChild(RATE_INDICATORS);
-        Parameter ratesParameter = (Parameter) xo.getElementFirstChild(RATES);
-        Parameter meanRateParameter = null;
+        
+        Parameter<?> rateIndicatorParameter0 = (Parameter<?>) xo.getElementFirstChild(RATE_INDICATORS);
+        BooleanParameter rateIndicatorParameter = null;
+        for (int i = 0; i < xo.getChildCount(); i++) {
+        	Object o = xo.getRawChild(i); 
+        	if (o instanceof XMLObject) {
+        		XMLObject xco = (XMLObject) o;
+        		if (xco.getName().equals(RATE_INDICATORS)) {
+        			o = xco.getRawChild(0);
+        			rateIndicatorParameter = new BooleanParameter();
+        			rateIndicatorParameter.initByName("dimension", Math.max(2, rateIndicatorParameter0.getDimension()),
+        					"value", "0");
+        			((XMLObject)o).setNativeObject(rateIndicatorParameter);
+        		}
+        	}
+        }
+
+        RealParameter ratesParameter = (RealParameter) xo.getElementFirstChild(RATES);
+        RealParameter meanRateParameter = null;
 
         if (xo.hasChildNamed(CLOCK_RATE)) {
-            meanRateParameter = (Parameter) xo.getElementFirstChild(CLOCK_RATE);
+            meanRateParameter = (RealParameter) xo.getElementFirstChild(CLOCK_RATE);
+        } else {
+        	meanRateParameter = new RealParameter("0.0");
         }
 
         boolean ratesAreMultipliers = xo.getAttribute(RATES_ARE_MULTIPLIERS, false);
@@ -67,9 +87,11 @@ public class RandomLocalClockModelParser extends AbstractXMLObjectParser {
         Logger.getLogger("dr.evomodel").info("  rates at change points are parameterized to be " +
                 (ratesAreMultipliers ? " relative to parent rates." : "independent of parent rates."));
 
-        return new RandomLocalClockModel(tree, meanRateParameter, rateIndicatorParameter,
-                ratesParameter, ratesAreMultipliers);
-    */
+        RandomLocalClockModel clockmodel = new RandomLocalClockModel();
+        clockmodel.initByName("tree", tree, "indicators", rateIndicatorParameter, "rates", ratesParameter,
+        		"ratesAreMultipliers", ratesAreMultipliers, "clock.rate", meanRateParameter);
+        
+        return clockmodel;
 		}
 
     //************************************************************************
@@ -93,7 +115,7 @@ public class RandomLocalClockModelParser extends AbstractXMLObjectParser {
     }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             new ElementRule(RATE_INDICATORS, Parameter.class, "The rate change indicators parameter", false),
             new ElementRule(RATES, Parameter.class, "The rates parameter", false),
             new ElementRule(CLOCK_RATE, Parameter.class, "The mean rate across all local clocks", true),

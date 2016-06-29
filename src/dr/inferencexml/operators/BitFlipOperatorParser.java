@@ -25,9 +25,12 @@
 
 package dr.inferencexml.operators;
 
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
-import dr.inference.operators.BitFlipOperator;
+
+import beast.core.parameter.BooleanParameter;
+import beast.core.util.Log;
+import beast.evolution.operators.BitFlipOperator;
+import beast.evolution.tree.Tree;
+import beast1to2.Beast1to2Converter;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
 
@@ -46,23 +49,23 @@ public class BitFlipOperatorParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
 
-        Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+        BooleanParameter parameter = (BooleanParameter) xo.getChild(BooleanParameter.class);
 
         boolean usesPriorOnSum = xo.getAttribute(USES_SUM_PRIOR, true);
 
         // boolean forDrift = xo.getAttribute(FOR_DRIFT,false);
 
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
+        if (treeModel != null) {
+        	Log.warning.println(Beast1to2Converter.NIY + " tree is ignored");
+        }
+        BitFlipOperator operator = new BitFlipOperator();
+        operator.initByName(MCMCOperator.WEIGHT, weight, "parameter", parameter, "uniform", usesPriorOnSum);
 
-
-        return new BitFlipOperator(parameter, weight, usesPriorOnSum, treeModel);
-    */
+        return operator;
 		}
 
     //************************************************************************
@@ -86,8 +89,8 @@ public class BitFlipOperatorParser extends AbstractXMLObjectParser {
 //                AttributeRule.newIntegerRule(BITS,true),
             AttributeRule.newBooleanRule(USES_SUM_PRIOR, true),
             //  AttributeRule.newBooleanRule(FOR_DRIFT,true),
-            new ElementRule(TreeModel.class, true),
-            new ElementRule(Parameter.class)
+            new ElementRule(Tree.class, true),
+            new ElementRule(BooleanParameter.class)
     };
 
 }
