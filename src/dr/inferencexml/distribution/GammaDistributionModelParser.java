@@ -25,8 +25,13 @@
 
 package dr.inferencexml.distribution;
 
+import beast.core.Distribution;
+import beast.core.parameter.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.math.distributions.Gamma;
+import beast.math.distributions.GammaOneP;
+import beast1to2.Beast1to2Converter;
 import dr.inference.distribution.GammaDistributionModel;
-import dr.inference.model.Parameter;
 import dr.xml.*;
 
 public class GammaDistributionModelParser extends AbstractXMLObjectParser {
@@ -41,7 +46,7 @@ public class GammaDistributionModelParser extends AbstractXMLObjectParser {
         return GammaDistributionModel.GAMMA_DISTRIBUTION_MODEL;
     }
 
-    private Parameter getParameterOrValue(String name, XMLObject xo) throws XMLParseException {
+    private Parameter<?> getParameterOrValue(String name, XMLObject xo) throws XMLParseException {
         Parameter parameter;
         if (xo.hasChildNamed(name)) {
             XMLObject cxo = xo.getChild(name);
@@ -53,7 +58,7 @@ public class GammaDistributionModelParser extends AbstractXMLObjectParser {
                 }
                 try {
                     double value = cxo.getDoubleChild(0);
-                    parameter = new Parameter.Default(value);
+                    parameter = new RealParameter(value+"");
                 } catch (XMLParseException xpe) {
                     throw new XMLParseException("Distribution parameter, " + name + ", has bad value: " + xpe.getMessage());
                 }
@@ -67,9 +72,6 @@ public class GammaDistributionModelParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         double offset = xo.getAttribute(OFFSET, 0.0);
 
@@ -81,19 +83,26 @@ public class GammaDistributionModelParser extends AbstractXMLObjectParser {
         if (xo.hasChildNamed(SCALE)) {
             parameter2 = getParameterOrValue(SCALE, xo);
             parameterization = GammaDistributionModel.GammaParameterizationType.ShapeScale;
+            Gamma distr = new Gamma();
+            distr.initByName("alpha", shapeParameter, "beta", parameter2);
+            return distr;
         } else if (xo.hasChildNamed(RATE)) {
             parameter2 = getParameterOrValue(RATE, xo);
             parameterization = GammaDistributionModel.GammaParameterizationType.ShapeRate;
+            throw new XMLParseException(Beast1to2Converter.NIY + " for the ShapeRate paramterisation");
         } else if (xo.hasChildNamed(MEAN)) {
             parameter2 = getParameterOrValue(MEAN, xo);
             parameterization = GammaDistributionModel.GammaParameterizationType.ShapeMean;
+            throw new XMLParseException(Beast1to2Converter.NIY + " for the ShapeMean paramterisation");
         } else {
             parameter2 = null;
             parameterization = GammaDistributionModel.GammaParameterizationType.OneParameter;
+            GammaOneP distr = new GammaOneP();
+            distr.initByName("shape", shapeParameter);
+            return distr;
         }
 
-        return new GammaDistributionModel(parameterization, shapeParameter, parameter2, offset);
-    */
+        
 		}
 
     //************************************************************************
@@ -117,6 +126,6 @@ public class GammaDistributionModelParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return GammaDistributionModel.class;
+        return Distribution.class;
     }
 }

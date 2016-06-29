@@ -525,7 +525,7 @@ public class PriorParsers {
             final double scale = xo.getDoubleAttribute(SCALE);
             final double offset = xo.getAttribute(OFFSET, 0.0);
             InverseGamma invgamma = new InverseGamma();
-            invgamma.initByName("shape", shape+"", "scale", scale +"", "offset", offset);
+            invgamma.initByName("alpha", shape+"", "beta", scale +"", "offset", offset);
             return prior(xo, invgamma);
 		}
 
