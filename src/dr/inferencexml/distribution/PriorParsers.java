@@ -561,7 +561,7 @@ public class PriorParsers {
             double scale = xo.getDoubleAttribute(SCALE);
 
             LaplaceDistribution laplace = new LaplaceDistribution();
-            laplace.initByName("mean", mean +"", "scale", scale+"");
+            laplace.initByName("mu", mean +"", "scale", scale+"");
             return prior(xo, laplace);
 		}
 
