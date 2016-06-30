@@ -103,7 +103,7 @@ public class LoggerParser extends AbstractXMLObjectParser {
                 	addLogger(logger, o);
                 }
 
-            } else if (child instanceof BEASTObject) {
+            } else if (child instanceof Loggable) {
             	addLogger(logger, child);
             } else {
                 System.err.println(child + " not loggable !");
@@ -192,6 +192,8 @@ public class LoggerParser extends AbstractXMLObjectParser {
     			TreeHeightLogger heightLogger = new TreeHeightLogger();
     			heightLogger.treeInput.setValue(tree, heightLogger);
                 logger.loggersInput.setValue(heightLogger, logger);
+    		} else {
+    			logger.loggersInput.setValue(child, logger);
     		}
     	 } else if (!(child instanceof Loggable)) {
     		 // ignore

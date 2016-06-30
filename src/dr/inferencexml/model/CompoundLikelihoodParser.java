@@ -26,11 +26,12 @@
 package dr.inferencexml.model;
 
 
+import beast.core.BEASTInterface;
 import beast.core.BEASTObject;
 import beast.core.Distribution;
 import beast.core.util.CompoundDistribution;
-import beast.evolution.branchratemodel.UCRelaxedClockModel;
-import beast.evolution.likelihood.TreeLikelihood;
+import beast.core.util.Log;
+import beast.evolution.branchratemodel.BranchRateModel;
 import dr.xml.*;
 
 import java.util.ArrayList;
@@ -79,8 +80,9 @@ public class CompoundLikelihoodParser extends AbstractXMLObjectParser {
                 likelihoods.add((Distribution) child);
 
 //            } else if (child instanceof BeagleBranchLikelihoods){
-            } else if (child instanceof UCRelaxedClockModel) {
+            } else if (child instanceof BranchRateModel) {
             	// ignore
+            	Log.warning.println("Clock model " + ((BEASTInterface)child).getID() + " was removed from the prior");
             } else {
                 throw new XMLParseException("An element (" + child + ") which is not a likelihood has been added to a "
                         + COMPOUND_LIKELIHOOD + " element");
