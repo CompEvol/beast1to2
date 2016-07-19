@@ -30,11 +30,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
 
-import jebl.math.Binomial;
-
-import org.apache.commons.math.MathException;
-import org.apache.commons.math.analysis.interpolation.LoessInterpolator;
-
 import dr.evolution.io.Importer.ImportException;
 import dr.evolution.io.TreeTrace;
 import dr.evomodel.coalescent.CoalescentConstantLikelihood;

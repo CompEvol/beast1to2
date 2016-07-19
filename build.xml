@@ -39,7 +39,7 @@
 		<fileset dir="${libBeast2}" includes="beagle.jar"/>
 		<pathelement path="${beast2classpath}"/>
 		<pathelement path="${beastLabsPath}"/>
-		<!--pathelement path="${beast_classic_path}"/-->
+		<pathelement path="${beast_classic_path}"/>
 	</path>
 
 	<!-- start -->
