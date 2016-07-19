@@ -20,16 +20,18 @@
 	<property name="beast2classpath" location="${beast2path}/build" />
 	<property name="beastLabsPath" location="../BEASTLabs/build" />
 	<property name="Add_on_dir" value="${release_dir}/add-on" />
-        <property name="version" value="0.0.1" />
+    <property name="version" value="0.0.1" />
 
     <import file="${beast2path}/build.xml" />
+    <import file="../BEASTLabs/build.xml" />
+    <import file="../beast-classic/build.xml" />
 
-	<property name="main_class_BEAST" value="beast.app.BeastMCMC" />
+	<property name="main_class_BEAST1to2" value="beast1to2.Beast1to2Converter" />
 	<property name="report" value="${buildBEAST1to2}/junitreport"/>
 
 	<path id="classpath">
    		<pathelement path="${buildBEAST1to2}"/>
-		<fileset dir="${libBEAST1to2}" includes="beast1.jar"/>
+		<fileset dir="${libBEAST1to2}" includes="beast1.8.3.jar"/>
 		<fileset dir="${libBeast2}" includes="junit-4.8.2.jar"/>
 		<fileset dir="${libBeast2}" includes="fest.jar"/>
 		<fileset dir="${libBeast2}" includes="jam.jar"/>
@@ -68,8 +70,8 @@
 	</target>
 
 	<!-- compile Java source code -->
-	<target name="compile-allBEAST1to2" depends="initBEAST1to2,compile-all">
-
+	<target name="compile-allBEAST1to2"
+            depends="initBEAST1to2,compile-all,compile-allBEASTlabs,compile-allBEAST_CLASSIC">
 
 	    <!-- Capture the path as a delimited property using the refid attribute -->
 	    <property name="myclasspath" refid="classpath"/>
@@ -79,11 +81,11 @@
 		<mkdir dir="${buildBEAST1to2}" />
 
 		<!-- Compile the java code from ${srcBEAST1to2} into ${buildBEAST1to2} /bin -->
-		<javac srcdir="${srcBEAST1to2}" destdir="${buildBEAST1to2}" classpathref="classpath" 
-		       fork="true"
-		       memoryinitialsize="256m"
-		       memorymaximumsize="256m">
-			<include name="**/**" />
+		<javac srcdir="${srcBEAST1to2}" destdir="${buildBEAST1to2}" classpathref="classpath"
+		       fork="true" source="1.8" target="1.8"
+               memoryinitialsize="256m" memorymaximumsize="1024m">
+            <include name="beast/**/**" />
+            <include name="dr/**/**" />
 			<!-- compile JUnit test classes -->
 			<include name="test/beast/**" />
 		</javac>
@@ -103,7 +105,7 @@
 		<jar jarfile="${distBEAST1to2}/BEAST1to2.jar">
 			<manifest>
 				<attribute name="Built-By" value="${user.name}" />
-				<attribute name="Main-Class" value="${main_class_BEAST}" />
+				<attribute name="Main-Class" value="${main_class_BEAST1to2}" />
 			</manifest>
 			<fileset dir="${buildBEAST1to2}">
 				<include name="**/*.class" />
