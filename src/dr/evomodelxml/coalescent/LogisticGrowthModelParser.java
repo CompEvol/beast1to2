@@ -25,10 +25,11 @@
 
 package dr.evomodelxml.coalescent;
 
+import beast.core.parameter.RealParameter;
+import beast.evolution.tree.coalescent.LogisticGrowth;
+import beast1to2.Beast1to2Converter;
 import dr.evolution.util.Units;
-import dr.evomodel.coalescent.LogisticGrowthModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
 import dr.xml.*;
 
 /**
@@ -49,31 +50,31 @@ public class LogisticGrowthModelParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
         XMLObject cxo = xo.getChild(POPULATION_SIZE);
-        Parameter N0Param = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter N0Param = (RealParameter) cxo.getChild(RealParameter.class);
 
         boolean usingGrowthRate = true;
-        Parameter rParam;
+        RealParameter rParam;
         if (xo.getChild(GROWTH_RATE) != null) {
             cxo = xo.getChild(GROWTH_RATE);
-            rParam = (Parameter) cxo.getChild(Parameter.class);
+            rParam = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
             cxo = xo.getChild(DOUBLING_TIME);
-            rParam = (Parameter) cxo.getChild(Parameter.class);
+            rParam = (RealParameter) cxo.getChild(RealParameter.class);
             usingGrowthRate = false;
+            throw new XMLParseException(Beast1to2Converter.NIY + " " + DOUBLING_TIME + " in " + LOGISTIC_GROWTH_MODEL);
         }
 
         cxo = xo.getChild(TIME_50);
-        Parameter cParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter cParam = (RealParameter) cxo.getChild(RealParameter.class);
 
-        return new LogisticGrowthModel(N0Param, rParam, cParam, 0.5, units, usingGrowthRate);
-    */
+        LogisticGrowth popfunction = new LogisticGrowth();
+        popfunction.initByName("popSize", N0Param, "growthRate", rParam, "shape", cParam);
+        return popfunction; // new LogisticGrowthModel(N0Param, rParam, cParam, 0.5, units, usingGrowthRate);
+
 		}
 
     //************************************************************************
@@ -85,7 +86,7 @@ public class LogisticGrowthModelParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return LogisticGrowthModel.class;
+        return LogisticGrowth.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -95,20 +96,20 @@ public class LogisticGrowthModelParser extends AbstractXMLObjectParser {
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             XMLUnits.SYNTAX_RULES[0],
             new ElementRule(POPULATION_SIZE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                     "This parameter represents the population size at time 0 (the time of the last tip of the tree)"),
             new XORRule(
 
                     new ElementRule(GROWTH_RATE,
-                            new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                            new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                             "This parameter determines the rate of growth during the exponential phase. See " +
                                     "exponentialGrowth for details."),
                     new ElementRule(DOUBLING_TIME,
-                            new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                            new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                             "This parameter determines the doubling time at peak growth rate.")
             ),
             new ElementRule(TIME_50,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                     "This parameter represents the time in the past when the population was half of that which it is" +
                             "at time zero (not half it's carrying capacity). It is therefore a positive number with " +
                             "the same units as divergence times. A scale operator is recommended with a starting value " +
