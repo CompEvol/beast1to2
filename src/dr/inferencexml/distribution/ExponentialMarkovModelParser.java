@@ -25,8 +25,8 @@
 
 package dr.inferencexml.distribution;
 
-import dr.inference.distribution.ExponentialMarkovModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.math.distributions.MarkovChainDistribution;
 import dr.xml.*;
 
 /**
@@ -40,20 +40,17 @@ public class ExponentialMarkovModelParser extends AbstractXMLObjectParser {
 
 
     public String getParserName() {
-        return ExponentialMarkovModel.EXPONENTIAL_MARKOV_MODEL;
+        return "exponentialMarkovLikelihood";
     }
 
     /**
      * Reads a gamma distribution model from a DOM Document element.
      */
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         XMLObject object = xo.getChild(CHAIN_PARAMETER);
 
-        Parameter chainParameter = (Parameter) object.getChild(0);
+        RealParameter chainParameter = (RealParameter) object.getChild(0);
 
         boolean jeffreys = xo.getAttribute(JEFFREYS, false);
         boolean reverse = xo.getAttribute(REVERSE, false);
@@ -65,16 +62,17 @@ public class ExponentialMarkovModelParser extends AbstractXMLObjectParser {
 
         if (shape == 1.0) {
             System.out.println("Exponential markov model on parameter " +
-                    chainParameter.getParameterName() + " (jeffreys=" + jeffreys + ", reverse=" +
+                    chainParameter.getID() + " (jeffreys=" + jeffreys + ", reverse=" +
                     reverse + ")");
         } else {
             System.out.println("Gamma markov model on parameter " +
-                    chainParameter.getParameterName() + " (jeffreys=" + jeffreys + ", reverse=" +
+                    chainParameter.getID() + " (jeffreys=" + jeffreys + ", reverse=" +
                     reverse + " shape=" + shape + ")");
         }
 
-        return new ExponentialMarkovModel(chainParameter, jeffreys, reverse, shape);
-    */
+        MarkovChainDistribution distr = new MarkovChainDistribution();
+        distr.initByName("parameter", chainParameter, "jeffreys", jeffreys, "reverse", reverse, "shape", shape);
+        return distr;
 		}
 
     public String getParserDescription() {
@@ -83,7 +81,7 @@ public class ExponentialMarkovModelParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return ExponentialMarkovModel.class;
+        return MarkovChainDistribution.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -93,6 +91,6 @@ public class ExponentialMarkovModelParser extends AbstractXMLObjectParser {
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newBooleanRule(JEFFREYS, true),
             AttributeRule.newBooleanRule(REVERSE, true),
-            new ElementRule(CHAIN_PARAMETER, Parameter.class)
+            new ElementRule(CHAIN_PARAMETER, RealParameter.class)
     };
 }

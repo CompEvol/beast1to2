@@ -88,10 +88,11 @@ public class DeltaExchangeOperatorParser extends AbstractXMLObjectParser {
 
         DeltaExchangeOperator operator = new DeltaExchangeOperator();
         operator.initByName("weight", weight,
-        		"parameter", parameter,
+        		(parameter instanceof RealParameter ? "parameter" : "intparameter"), parameter,
         		"weightvector", (weights == null ? null : new IntegerParameter(weights)),
         		"delta", delta,
-        		"autoOptimize", mode.equals(CoercionMode.COERCION_ON));
+        		"autoOptimize", mode.equals(CoercionMode.COERCION_ON),
+        		"integer", isIntegerOperator);
 
         return operator;
   	}
@@ -118,6 +119,6 @@ public class DeltaExchangeOperatorParser extends AbstractXMLObjectParser {
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
             AttributeRule.newBooleanRule(CoercableMCMCOperator.AUTO_OPTIMIZE, true),
             AttributeRule.newBooleanRule(INTEGER_OPERATOR, true),
-            new ElementRule(RealParameter.class)
+            new ElementRule(Parameter.class)
     };
 }

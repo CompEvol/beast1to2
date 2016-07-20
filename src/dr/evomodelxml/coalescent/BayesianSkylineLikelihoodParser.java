@@ -25,12 +25,18 @@
 
 package dr.evomodelxml.coalescent;
 
-import dr.evomodel.coalescent.BayesianSkylineLikelihood;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
 import dr.xml.*;
 
 import java.util.logging.Logger;
+
+import beast.core.parameter.BooleanParameter;
+import beast.core.parameter.IntegerParameter;
+import beast.core.parameter.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.core.util.Log;
+import beast.evolution.tree.Tree;
+import beast.evolution.tree.coalescent.BayesianSkyline;
+import beast.evolution.tree.coalescent.TreeIntervals;
 
 /**
  */
@@ -50,49 +56,69 @@ public class BayesianSkylineLikelihoodParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         XMLObject cxo = xo.getChild(POPULATION_SIZES);
-        Parameter param = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter param = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(GROUP_SIZES);
-        Parameter param2 = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter param2x = (RealParameter) cxo.getChild(RealParameter.class);
+        // convert to IntegerParameter
+        IntegerParameter groupSizes = null;
+        for (int i = 0; i < xo.getChildCount(); i++) {
+        	Object o = xo.getRawChild(i); 
+        	if (o instanceof XMLObject) {
+        		XMLObject xco = (XMLObject) o;
+        		if (xco.getName().equals(GROUP_SIZES)) {
+        			o = xco.getRawChild(0);
+        			groupSizes = new IntegerParameter();
+        			groupSizes.initByName("dimension", param2x.getDimension(), "value", "1");
+        			((XMLObject)o).setNativeObject(groupSizes);
+        		}
+        	}
+        }
+
 
         cxo = xo.getChild(CoalescentLikelihoodParser.POPULATION_TREE);
-        TreeModel treeModel = (TreeModel) cxo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) cxo.getChild(Tree.class);
 
-        int type = BayesianSkylineLikelihood.LINEAR_TYPE;
+        //int type = BayesianSkyline.LINEAR_TYPE;
         String typeName = LINEAR;
         if (xo.hasAttribute(LINEAR) && !xo.getBooleanAttribute(LINEAR)) {
-            type = BayesianSkylineLikelihood.STEPWISE_TYPE;
+            //type = BayesianSkyline.STEPWISE_TYPE;
             typeName = STEPWISE;
         }
 
         if (xo.hasAttribute(TYPE)) {
             if (xo.getStringAttribute(TYPE).equalsIgnoreCase(STEPWISE)) {
-                type = BayesianSkylineLikelihood.STEPWISE_TYPE;
+                //type = BayesianSkyline.STEPWISE_TYPE;
                 typeName = STEPWISE;
             } else if (xo.getStringAttribute(TYPE).equalsIgnoreCase(LINEAR)) {
-                type = BayesianSkylineLikelihood.LINEAR_TYPE;
+                //type = BayesianSkyline.LINEAR_TYPE;
                 typeName = LINEAR;
             } else if (xo.getStringAttribute(TYPE).equalsIgnoreCase(EXPONENTIAL)) {
-                type = BayesianSkylineLikelihood.EXPONENTIAL_TYPE;
+                //type = BayesianSkyline.EXPONENTIAL_TYPE;
                 typeName = EXPONENTIAL;
             } else throw new XMLParseException("Unknown Bayesian Skyline type: " + xo.getStringAttribute(TYPE));
         }
+        
+        if (!typeName.equals(STEPWISE)) {
+        	Log.warning.println("BayesianSkyline only supports stepwise, not " + typeName);
+        	Log.warning.println("Changing type to stepwise");
+        }
 
-        if (param2.getDimension() > (treeModel.getExternalNodeCount()-1)) {
-            throw new XMLParseException("There are more groups (" + param2.getDimension()
-                    + ") than coalescent nodes in the tree (" + (treeModel.getExternalNodeCount()-1) + ").");
+        if (groupSizes.getDimension() > (treeModel.getLeafNodeCount()-1)) {
+            throw new XMLParseException("There are more groups (" + groupSizes.getDimension()
+                    + ") than coalescent nodes in the tree (" + (treeModel.getLeafNodeCount()-1) + ").");
         }
 
         Logger.getLogger("dr.evomodel").info("Bayesian skyline plot: " + param.getDimension() + " " + typeName + " control points");
+        
+        TreeIntervals intervals = new TreeIntervals(treeModel);
+        BayesianSkyline likelihood = new BayesianSkyline();
+        likelihood.initByName("treeIntervals", intervals, "popSizes", param, "groupSizes", groupSizes);
 
-        return new BayesianSkylineLikelihood(treeModel, param, param2, type);
-    */
-		}
+        return likelihood;
+	}
 
     //************************************************************************
     // AbstractXMLObjectParser implementation
@@ -103,7 +129,7 @@ public class BayesianSkylineLikelihoodParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return BayesianSkylineLikelihood.class;
+        return BayesianSkyline.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -117,13 +143,13 @@ public class BayesianSkylineLikelihoodParser extends AbstractXMLObjectParser {
                         AttributeRule.newStringRule(TYPE)
                 ),
                 new ElementRule(POPULATION_SIZES, new XMLSyntaxRule[]{
-                        new ElementRule(Parameter.class)
+                        new ElementRule(RealParameter.class)
                 }),
                 new ElementRule(GROUP_SIZES, new XMLSyntaxRule[]{
-                        new ElementRule(Parameter.class)
+                        new ElementRule(RealParameter.class)
                 }),
                 new ElementRule(CoalescentLikelihoodParser.POPULATION_TREE, new XMLSyntaxRule[]{
-                        new ElementRule(TreeModel.class)
+                        new ElementRule(Tree.class)
                 }),
         };
     }
