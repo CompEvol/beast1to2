@@ -25,20 +25,22 @@
 
 package dr.inferencexml.distribution;
 
-import dr.inference.distribution.ExponentialDistributionModel;
-import dr.inference.distribution.ParametricDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.math.distributions.Exponential;
+import beast.math.distributions.ParametricDistribution;
 
 /**
  */
 public class ExponentialDistributionModelParser extends DistributionModelParser {
 
     public String getParserName() {
-        return ExponentialDistributionModel.EXPONENTIAL_DISTRIBUTION_MODEL;
+        return "exponentialDistributionModel";
     }
 
-    ParametricDistributionModel parseDistributionModel(Parameter[] parameters, double offset) {
-        return new ExponentialDistributionModel(parameters[0], offset);
+    ParametricDistribution parseDistributionModel(RealParameter[] parameters, double offset) {
+        Exponential exp = new Exponential();
+        exp.initByName("mean", parameters[0], "offset", offset);
+        return exp;
     }
 
     public String[] getParameterNames() {
@@ -54,6 +56,6 @@ public class ExponentialDistributionModelParser extends DistributionModelParser 
     }
 
     public Class getReturnType() {
-        return ExponentialDistributionModel.class;
+        return Exponential.class;
     }
 }

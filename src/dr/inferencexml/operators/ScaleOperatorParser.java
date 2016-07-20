@@ -25,6 +25,7 @@
 
 package dr.inferencexml.operators;
 
+import beast.core.parameter.BooleanParameter;
 import beast.core.parameter.RealParameter;
 import beast.evolution.operators.ScaleOperator;
 import beast.evolution.tree.Tree;
@@ -63,11 +64,17 @@ public class ScaleOperatorParser extends AbstractXMLObjectParser {
         }
         final RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
 
-//        Parameter indicator = null; // TODO BooleanParameter
+        BooleanParameter indicator = null;
+        double indicatorOnProb = 1.0;
         final XMLObject inds = xo.getChild(INDICATORS);
         if (inds != null) {
-            throw new UnsupportedOperationException(getParserName() + " " +
-                    INDICATORS + " " + beast1to2.Beast1to2Converter.NIY);
+            indicator = (BooleanParameter) inds.getChild(BooleanParameter.class);
+            if (inds.hasAttribute(PICKONEPROB)) {
+                indicatorOnProb = inds.getDoubleAttribute(PICKONEPROB);
+                if (!(0 <= indicatorOnProb && indicatorOnProb <= 1)) {
+                    throw new XMLParseException("pickoneprob must be between 0.0 and 1.0");
+                }
+            }
         }
 
         // deal with parameters defined on tree parameters
@@ -89,7 +96,8 @@ public class ScaleOperatorParser extends AbstractXMLObjectParser {
         ScaleOperator operator = new ScaleOperator();
         operator.initByName(WEIGHT, weight, "parameter", parameter, "scaleFactor", scaleFactor,
                 "scaleAll", scaleAll, "scaleAllIndependently", scaleAllInd,
-                "degreesOfFreedom", degreesOfFreedom, "optimise", optimise);
+                "degreesOfFreedom", degreesOfFreedom, "optimise", optimise,
+                "indicator", indicator);
 
         return operator;
 

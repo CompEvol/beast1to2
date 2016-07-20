@@ -25,9 +25,9 @@
 
 package dr.inferencexml.distribution;
 
-import dr.inference.distribution.MixedDistributionLikelihood;
-import dr.inference.distribution.ParametricDistributionModel;
-import dr.inference.model.Statistic;
+import beast.core.Function;
+import beast.math.distributions.ParametricDistribution;
+import beast.math.distributions.Prior;
 import dr.xml.*;
 
 /**
@@ -46,26 +46,25 @@ public class MixedDistributionLikelihoodParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         XMLObject cxo0 = xo.getChild(DISTRIBUTION0);
-        ParametricDistributionModel model0 = (ParametricDistributionModel) cxo0.getChild(ParametricDistributionModel.class);
+        ParametricDistribution model0 = (ParametricDistribution) cxo0.getChild(ParametricDistribution.class);
 
         XMLObject cxo1 = xo.getChild(DISTRIBUTION1);
-        ParametricDistributionModel model1 = (ParametricDistributionModel) cxo1.getChild(ParametricDistributionModel.class);
+        ParametricDistribution model1 = (ParametricDistribution) cxo1.getChild(ParametricDistribution.class);
 
-        Statistic data = (Statistic) ((XMLObject) xo.getChild(DATA)).getChild(Statistic.class);
-        Statistic indicators = (Statistic) ((XMLObject) xo.getChild(INDICATORS)).getChild(Statistic.class);
+        Function data = (Function) ((XMLObject) xo.getChild(DATA)).getChild(Function.class);
+        // indicators will be ignored
+        Function indicators = (Function) ((XMLObject) xo.getChild(INDICATORS)).getChild(Function.class);
 
-        ParametricDistributionModel[] models = {model0, model1};
+        ParametricDistribution[] models = {model0, model1};
         try {
-          return new MixedDistributionLikelihood(models, data, indicators);
+        	Prior distr = new Prior();
+        	distr.initByName("x", data, "distr", model0);
+          return distr; //new MixedDistributionLikelihood(models, data, indicators);
         } catch( Exception e) {
             throw new XMLParseException(e.getMessage());
         }
-    */
 		}
 
     //************************************************************************
@@ -78,11 +77,11 @@ public class MixedDistributionLikelihoodParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             new ElementRule(DISTRIBUTION0,
-                    new XMLSyntaxRule[]{new ElementRule(ParametricDistributionModel.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(ParametricDistribution.class)}),
             new ElementRule(DISTRIBUTION1,
-                    new XMLSyntaxRule[]{new ElementRule(ParametricDistributionModel.class)}),
-            new ElementRule(DATA, new XMLSyntaxRule[]{new ElementRule(Statistic.class)}),
-            new ElementRule(INDICATORS, new XMLSyntaxRule[]{new ElementRule(Statistic.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(ParametricDistribution.class)}),
+            new ElementRule(DATA, new XMLSyntaxRule[]{new ElementRule(Function.class)}),
+            new ElementRule(INDICATORS, new XMLSyntaxRule[]{new ElementRule(Function.class)}),
     };
 
     public String getParserDescription() {
@@ -90,7 +89,7 @@ public class MixedDistributionLikelihoodParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return MixedDistributionLikelihood.class;
+        return Prior.class;
     }
 
 }

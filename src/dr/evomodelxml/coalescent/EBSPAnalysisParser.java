@@ -36,6 +36,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
+import beast.core.parameter.RealParameter;
+
 /**
  */
 public class EBSPAnalysisParser extends AbstractXMLObjectParser {
@@ -70,7 +72,7 @@ public class EBSPAnalysisParser extends AbstractXMLObjectParser {
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
+		return new RealParameter("1.0");
 		/*
 
         try {
@@ -141,7 +143,7 @@ public class EBSPAnalysisParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return EBSPAnalysis.class;
+        return RealParameter.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {

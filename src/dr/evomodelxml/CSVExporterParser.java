@@ -192,20 +192,20 @@ public class CSVExporterParser extends AbstractXMLObjectParser {
 
     public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
-                new StringAttributeRule(FILE_NAME,
-                        "The name of a BEAST log file (can not include trees, which should be logged separately"),
-                new StringAttributeRule(SEPARATOR, "Values separator (default is tab)", true),
-                new ElementRule(COLUMNS, new XMLSyntaxRule[]{
-                        AttributeRule.newBooleanRule(ALL_COLUMNS, true,
-                                "Dump all columns. default is TRUE when no columns are specified, FALSE otherwise"),
-                        AttributeRule.newBooleanRule(AS_ROWS, true,
-                                "Write data in rows (default is columns)"),
-                        new ElementRule(TabularData.class),
-                        new ElementRule(COLUMN, new XMLSyntaxRule[]{
-                                AttributeRule.newStringArrayRule(COLUMN_NAME),
-                                new ElementRule(Parameter.class)
-                        }, "column name", 0, Integer.MAX_VALUE)
-                }, "A subset of columns from one source", 1, Integer.MAX_VALUE)
+//                new StringAttributeRule(FILE_NAME,
+//                        "The name of a BEAST log file (can not include trees, which should be logged separately"),
+//                new StringAttributeRule(SEPARATOR, "Values separator (default is tab)", true),
+//                new ElementRule(COLUMNS, new XMLSyntaxRule[]{
+//                        AttributeRule.newBooleanRule(ALL_COLUMNS, true,
+//                                "Dump all columns. default is TRUE when no columns are specified, FALSE otherwise"),
+//                        AttributeRule.newBooleanRule(AS_ROWS, true,
+//                                "Write data in rows (default is columns)"),
+//                        new ElementRule(TabularData.class),
+//                        new ElementRule(COLUMN, new XMLSyntaxRule[]{
+//                                AttributeRule.newStringArrayRule(COLUMN_NAME),
+//                                new ElementRule(Parameter.class)
+//                        }, "column name", 0, Integer.MAX_VALUE)
+//                }, "A subset of columns from one source", 1, Integer.MAX_VALUE)
         };
     }
 

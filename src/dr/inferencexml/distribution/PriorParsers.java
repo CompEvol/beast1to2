@@ -203,7 +203,7 @@ public class PriorParsers {
             double mean = xo.getDoubleAttribute(MEAN);
             double offset = xo.getDoubleAttribute(OFFSET);
             Poisson poisson = new Poisson();
-            poisson.initByName("lambda", mean, "offset", offset);
+            poisson.initByName("lambda", mean + "", "offset", offset);
             return prior(xo, poisson);
 		}
 

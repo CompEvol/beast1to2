@@ -25,21 +25,22 @@
 
 package dr.inferencexml.distribution;
 
-import dr.inference.distribution.GammaDistributionModel;
-import dr.inference.distribution.InverseGammaDistributionModel;
-import dr.inference.distribution.ParametricDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.math.distributions.InverseGamma;
+import beast.math.distributions.ParametricDistribution;
 
 /**
  */
 public class InverseGammaDistributionModelParser extends DistributionModelParser {
 
     public String getParserName() {
-        return InverseGammaDistributionModel.INVERSE_GAMMA_DISTRIBUTION_MODEL;
+        return "inverseGammaDistributionModel";
     }
 
-    ParametricDistributionModel parseDistributionModel(Parameter[] parameters, double offset) {
-        return new InverseGammaDistributionModel(parameters[0], parameters[1]);
+    ParametricDistribution parseDistributionModel(RealParameter[] parameters, double offset) {
+        InverseGamma igamma = new InverseGamma();
+        igamma.initByName("shape", parameters[0], "scale", parameters[1]);
+        return igamma;
     }
 
     public String[] getParameterNames() {
@@ -55,6 +56,6 @@ public class InverseGammaDistributionModelParser extends DistributionModelParser
     }
 
     public Class getReturnType() {
-        return InverseGammaDistributionModel.class;
+        return InverseGamma.class;
     }
 }

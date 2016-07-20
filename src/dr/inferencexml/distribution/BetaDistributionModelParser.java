@@ -25,9 +25,9 @@
 
 package dr.inferencexml.distribution;
 
-import dr.inference.distribution.BetaDistributionModel;
-import dr.inference.distribution.ParametricDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.math.distributions.Beta;
+import beast.math.distributions.ParametricDistribution;
 
 /**
  */
@@ -37,11 +37,13 @@ public class BetaDistributionModelParser extends DistributionModelParser {
     public static final String BETA = "beta";
 
     public String getParserName() {
-        return BetaDistributionModel.BETA_DISTRIBUTION_MODEL;
+        return "betaDistributionModel";
     }
 
-    ParametricDistributionModel parseDistributionModel(Parameter[] parameters, double offset) {
-        return new BetaDistributionModel(parameters[0], parameters[1]);
+    ParametricDistribution parseDistributionModel(RealParameter[] parameters, double offset) {
+        Beta beta = new Beta();
+        beta.initByName("alpha", parameters[0], "beta", parameters[1]);
+        return beta;
     }
 
     public String[] getParameterNames() {
@@ -57,6 +59,6 @@ public class BetaDistributionModelParser extends DistributionModelParser {
     }
 
     public Class getReturnType() {
-        return BetaDistributionModel.class;
+        return Beta.class;
     }
 }

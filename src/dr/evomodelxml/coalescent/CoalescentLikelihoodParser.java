@@ -26,11 +26,15 @@
 package dr.evomodelxml.coalescent;
 
 
+import beast.core.BEASTInterface;
+import beast.core.BEASTObject;
 import beast.evolution.alignment.TaxonSet;
 import beast.evolution.tree.Tree;
 import beast.evolution.tree.TreeInterface;
 import beast.evolution.tree.coalescent.Coalescent;
+import beast.evolution.tree.coalescent.CompoundPopulationFunction;
 import beast.evolution.tree.coalescent.PopulationFunction;
+import beast.evolution.tree.coalescent.ScaledPopulationFunction;
 import beast.evolution.tree.coalescent.TreeIntervals;
 import dr.xml.*;
 
@@ -74,19 +78,26 @@ public class CoalescentLikelihoodParser extends AbstractXMLObjectParser {
         }
 
         TreeInterface treeModel = null;
+        TreeIntervals treeIntervals = null;
         if (trees.size() == 1) { //&& popFactors.get(0) == 1.0) {
             treeModel = trees.get(0);
         } else if (trees.size() > 1) {
             throw new UnsupportedOperationException(getParserName() + " multiple loci " + beast1to2.Beast1to2Converter.NIY);
 //            treesSet = new MultiLociTreeSet.Default(trees, popFactors);
         } else {//if (!(trees.size() == 0 && treesSet != null)) {
-            throw new XMLParseException("Incorrectly constructed likelihood element");
+        	
+        	treeIntervals = anyPredecssingIntervals((BEASTInterface) populationFunction);
+        	if (treeIntervals == null) {
+        		throw new XMLParseException("Incorrectly constructed likelihood element");
+        	}           
         }
 
-        if (treeModel != null) {
+        if (treeModel != null || treeIntervals != null) {
             Coalescent coal = new Coalescent();
-            TreeIntervals treeIntervals = new TreeIntervals();
-            treeIntervals.initByName("tree", treeModel);
+            if (treeIntervals == null) {
+            	treeIntervals = new TreeIntervals();
+            	treeIntervals.initByName("tree", treeModel);
+            }
             coal.initByName("treeIntervals", treeIntervals, "populationModel", populationFunction);
 
             return coal;
@@ -168,7 +179,20 @@ public class CoalescentLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    private TreeIntervals anyPredecssingIntervals(BEASTInterface o) {
+    	if (o instanceof TreeIntervals) {
+    		return (TreeIntervals) o;
+    	}
+    	for (BEASTInterface i : o.listActiveBEASTObjects()) {
+    		TreeIntervals o2 = anyPredecssingIntervals(i);
+    		if (o2 != null) {
+    			return o2;
+    		}
+    	}
+		return null;
+	}
+
+	public String getParserDescription() {
         return "This element represents the likelihood of the tree given the demographic function.";
     }
 

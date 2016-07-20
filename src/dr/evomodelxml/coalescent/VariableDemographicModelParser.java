@@ -25,13 +25,23 @@
 
 package dr.evomodelxml.coalescent;
 
-import dr.evomodel.coalescent.VariableDemographicModel;
-import dr.evomodel.tree.TreeModel;
-import dr.evomodelxml.speciation.SpeciesBindingsParser;
-import dr.inference.model.Parameter;
 import dr.xml.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
+
+import beast.core.parameter.BooleanParameter;
+import beast.core.parameter.IntegerParameter;
+import beast.core.parameter.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.evolution.tree.Tree;
+import beast.evolution.tree.coalescent.Coalescent;
+import beast.evolution.tree.coalescent.CompoundPopulationFunction;
+import beast.evolution.tree.coalescent.PopulationFunction;
+import beast.evolution.tree.coalescent.ScaledPopulationFunction;
+import beast.evolution.tree.coalescent.TreeIntervals;
+import beast1to2.Beast1to2Converter;
 
 /**
  */
@@ -40,7 +50,7 @@ public class VariableDemographicModelParser extends AbstractXMLObjectParser {
     public static final String POPULATION_SIZES = "populationSizes";
     public static final String INDICATOR_PARAMETER = "indicators";
     public static final String POPULATION_TREES = "trees";
-    private static final String PLOIDY = SpeciesBindingsParser.PLOIDY;
+    private static final String PLOIDY = "ploidy";
     public static final String POP_TREE = "ptree";
 
     public static final String LOG_SPACE = "logUnits";
@@ -58,54 +68,84 @@ public class VariableDemographicModelParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         XMLObject cxo = xo.getChild(POPULATION_SIZES);
-        Parameter popParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter popParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(INDICATOR_PARAMETER);
-        Parameter indicatorParam = (Parameter) cxo.getChild(Parameter.class);
+        Parameter indicatorParamX = (Parameter) cxo.getChild(Parameter.class);
+        // convert to BooleanParameter
+        BooleanParameter indicatorParam = null;
+        for (int i = 0; i < xo.getChildCount(); i++) {
+        	Object o = xo.getRawChild(i); 
+        	if (o instanceof XMLObject) {
+        		XMLObject xco = (XMLObject) o;
+        		if (xco.getName().equals(INDICATOR_PARAMETER)) {
+        			o = xco.getRawChild(0);
+        			indicatorParam = new BooleanParameter();
+        			indicatorParam.initByName("dimension", indicatorParamX.getDimension(), "value", "1");
+        			((XMLObject)o).setNativeObject(indicatorParam);
+        		}
+        	}
+        }
 
         cxo = xo.getChild(POPULATION_TREES);
 
         final int nc = cxo.getChildCount();
-        TreeModel[] treeModels = new TreeModel[nc];
-        double[] populationFactor = new double[nc];
+        Tree[] treeModels = new Tree[nc];
+        Double[] populationFactor = new Double[nc];
 
         for (int k = 0; k < treeModels.length; ++k) {
             final XMLObject child = (XMLObject) cxo.getChild(k);
             populationFactor[k] = child.hasAttribute(PLOIDY) ? child.getDoubleAttribute(PLOIDY) : 1.0;
 
-            treeModels[k] = (TreeModel) child.getChild(TreeModel.class);
+            treeModels[k] = (Tree) child.getChild(Tree.class);
         }
 
-        VariableDemographicModel.Type type = VariableDemographicModel.Type.STEPWISE;
+        CompoundPopulationFunction.Type type = CompoundPopulationFunction.Type.STEPWISE;
 
         if (xo.hasAttribute(TYPE)) {
             final String s = xo.getStringAttribute(TYPE);
-            if (s.equalsIgnoreCase(VariableDemographicModel.Type.STEPWISE.toString())) {
-                type = VariableDemographicModel.Type.STEPWISE;
-            } else if (s.equalsIgnoreCase(VariableDemographicModel.Type.LINEAR.toString())) {
-                type = VariableDemographicModel.Type.LINEAR;
-            } else if (s.equalsIgnoreCase(VariableDemographicModel.Type.EXPONENTIAL.toString())) {
-                type = VariableDemographicModel.Type.EXPONENTIAL;
+            if (s.equalsIgnoreCase(CompoundPopulationFunction.Type.STEPWISE.toString())) {
+                type = CompoundPopulationFunction.Type.STEPWISE;
+            } else if (s.equalsIgnoreCase(CompoundPopulationFunction.Type.LINEAR.toString())) {
+                type = CompoundPopulationFunction.Type.LINEAR;
+//            } else if (s.equalsIgnoreCase(CompoundPopulationFunction.Type.EXPONENTIAL.toString())) {
+//                type = CompoundPopulationFunction.Type.EXPONENTIAL;
             } else {
                 throw new XMLParseException("Unknown Bayesian Skyline type: " + s);
             }
         }
 
-        final boolean logSpace = xo.getAttribute(LOG_SPACE, false) || type == VariableDemographicModel.Type.EXPONENTIAL;
+        final boolean logSpace = xo.getAttribute(LOG_SPACE, false);// || type == CompoundPopulationFunction.Type.EXPONENTIAL;
+        if (logSpace == true) {
+        	throw new XMLParseException(Beast1to2Converter.NIY + " variableDemographic/" + LOG_SPACE + " is not supported");
+        }
         final boolean useMid = xo.getAttribute(USE_MIDPOINTS, false);
 
         Logger.getLogger("dr.evomodel").info("Variable demographic: " + type.toString() + " control points");
+        
+        List<TreeIntervals> intervals = new ArrayList<>();
+        for (Tree tree : treeModels) {
+        	intervals.add(new TreeIntervals(tree));
+        }
+        
+        RealParameter factor = new RealParameter(populationFactor);
+        
+        CompoundPopulationFunction popFun = new CompoundPopulationFunction();
+        popFun.setID("demographic.alltrees");
+        popFun.initByName("itree", intervals, "populationIndicators", indicatorParam, "populationSizes", popParam, 
+        		"type", type.toString(), "useIntervalsMiddle", useMid);
 
-        return new VariableDemographicModel(treeModels, populationFactor, popParam, indicatorParam, type,
-                logSpace, useMid);
-
-    */
-		}
+        ScaledPopulationFunction scaledPopFun = new ScaledPopulationFunction();
+        scaledPopFun.setID("scaled.demographic.alltrees");
+        scaledPopFun.initByName("population", popFun, "factor", factor);
+        return scaledPopFun;
+        
+//        Coalescent likelihood = new Coalescent();
+//        likelihood.initByName("treeIntervals", intervals.get(0), "populationModel", scaledPopFun);
+//        return likelihood;
+ 	}
 
     //************************************************************************
     // AbstractXMLObjectParser implementation
@@ -116,7 +156,7 @@ public class VariableDemographicModelParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return VariableDemographicModel.class;
+        return PopulationFunction.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -129,7 +169,7 @@ public class VariableDemographicModelParser extends AbstractXMLObjectParser {
             AttributeRule.newBooleanRule(USE_MIDPOINTS, true),
 
             new ElementRule(POPULATION_SIZES, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }),
             new ElementRule(INDICATOR_PARAMETER, new XMLSyntaxRule[]{
                     new ElementRule(Parameter.class)
@@ -137,7 +177,7 @@ public class VariableDemographicModelParser extends AbstractXMLObjectParser {
             new ElementRule(POPULATION_TREES, new XMLSyntaxRule[]{
                     new ElementRule(POP_TREE, new XMLSyntaxRule[]{
                             AttributeRule.newDoubleRule(PLOIDY, true),
-                            new ElementRule(TreeModel.class),
+                            new ElementRule(Tree.class),
                     }, 1, Integer.MAX_VALUE)
             })
     };

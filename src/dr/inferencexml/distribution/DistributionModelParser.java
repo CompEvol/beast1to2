@@ -25,8 +25,8 @@
 
 package dr.inferencexml.distribution;
 
-import dr.inference.distribution.ParametricDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.math.distributions.ParametricDistribution;
 import dr.xml.*;
 
 /**
@@ -44,7 +44,7 @@ public abstract class DistributionModelParser extends AbstractXMLObjectParser {
      * @param offset     the parsed offset
      * @return a distribution model constructed from provided parameters and offset
      */
-    abstract ParametricDistributionModel parseDistributionModel(Parameter[] parameters, double offset);
+    abstract ParametricDistribution parseDistributionModel(RealParameter[] parameters, double offset);
 
     /**
      * @return a list of xml element names for parameters of this distribution.
@@ -54,26 +54,22 @@ public abstract class DistributionModelParser extends AbstractXMLObjectParser {
     abstract boolean allowOffset();
 
     public final Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         double offset = xo.getAttribute(OFFSET, 0.0);
 
         String[] names = getParameterNames();
-        Parameter[] parameters = new Parameter[names.length];
+        RealParameter[] parameters = new RealParameter[names.length];
         for (int i = 0; i < names.length; i++) {
             parameters[i] = getParameter(xo, names[i]);
         }
 
         return parseDistributionModel(parameters, offset);
-    */
 		}
 
-    private Parameter getParameter(XMLObject xo, String parameterName) throws XMLParseException {
+    private RealParameter getParameter(XMLObject xo, String parameterName) throws XMLParseException {
         final XMLObject cxo = xo.getChild(parameterName);
-        return cxo.getChild(0) instanceof Parameter ?
-                (Parameter) cxo.getChild(Parameter.class) : new Parameter.Default(cxo.getDoubleChild(0));
+        return cxo.getChild(0) instanceof RealParameter ?
+                (RealParameter) cxo.getChild(RealParameter.class) : new RealParameter(cxo.getDoubleChild(0) +"");
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -84,7 +80,7 @@ public abstract class DistributionModelParser extends AbstractXMLObjectParser {
         for (int i = 0; i < names.length; i++) {
             rules[i] = new XORRule(
                     new ElementRule(names[i], Double.class),
-                    new ElementRule(names[i], Parameter.class)
+                    new ElementRule(names[i], RealParameter.class)
             );
         }
         if (allowOffset()) {

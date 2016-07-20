@@ -25,10 +25,8 @@
 
 package dr.inferencexml.distribution;
 
-
-import dr.inference.distribution.ParametricDistributionModel;
-import dr.inference.distribution.SkewNormalDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.math.distributions.ParametricDistribution;
 
 /**
  * @author Marc A. Suchard
@@ -40,11 +38,11 @@ public class SkewNormalDistributionModelParser extends DistributionModelParser {
     public static final String SHAPE = "shape";
 
     public String getParserName() {
-        return SkewNormalDistributionModel.SKEW_NORMAL_DISTRIBUTION_MODEL;
+        return "skewNormalDistributionModel";
     }
 
-    ParametricDistributionModel parseDistributionModel(Parameter[] parameters, double offset) {
-        return new SkewNormalDistributionModel(parameters[0], parameters[1], parameters[2]);
+    ParametricDistribution parseDistributionModel(RealParameter[] parameters, double offset) {
+        return null; //new SkewNormalDistributionModel(parameters[0], parameters[1], parameters[2]);
     }
 
     public String[] getParameterNames() {
@@ -60,6 +58,6 @@ public class SkewNormalDistributionModelParser extends DistributionModelParser {
     }
 
     public Class getReturnType() {
-        return SkewNormalDistributionModel.class;
+        return ParametricDistribution.class;
     }
 }
