@@ -25,20 +25,8 @@
 
 package dr.inferencexml.distribution;
 
-import dr.inference.distribution.AbstractDistributionLikelihood;
-import dr.inference.distribution.CachedDistributionLikelihood;
-import dr.inference.distribution.DistributionLikelihood;
-import dr.inference.distribution.MultivariateDistributionLikelihood;
-import dr.inference.model.Likelihood;
-import dr.inference.model.Variable;
-import dr.math.distributions.CompoundGaussianProcess;
 import dr.math.distributions.GaussianProcessRandomGenerator;
-import dr.util.Attribute;
 import dr.xml.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * @author Marc Suchard
@@ -47,11 +35,13 @@ public class CompoundGaussianProcessParser extends AbstractXMLObjectParser {
 
     public static final String NAME = "compoundGaussianProcess";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return NAME;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -112,7 +102,8 @@ public class CompoundGaussianProcessParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -120,11 +111,13 @@ public class CompoundGaussianProcessParser extends AbstractXMLObjectParser {
             new ElementRule(GaussianProcessRandomGenerator.class, 1, Integer.MAX_VALUE),
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Returned a Gaussian process formed from an ordered list of independent Gaussian processes";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return GaussianProcessRandomGenerator.class;
     }
 }

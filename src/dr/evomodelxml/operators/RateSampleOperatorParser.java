@@ -38,11 +38,13 @@ public class RateSampleOperatorParser extends AbstractXMLObjectParser {
     public static final String SAMPLE_OPERATOR = "rateSampleOperator";
     public static final String SAMPLE_ALL = "sampleAll";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SAMPLE_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -66,15 +68,18 @@ public class RateSampleOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a rateSample operator on a given parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return RateSampleOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

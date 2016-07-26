@@ -26,12 +26,8 @@
 package dr.evoxml;
 
 import dr.evolution.alignment.PatternList;
-import dr.evolution.alignment.Patterns;
 import dr.evolution.alignment.SiteList;
-import dr.evolution.alignment.SitePatterns;
 import dr.xml.*;
-
-import java.util.logging.Logger;
 
 /**
  * @author Andrew Rambaut
@@ -44,12 +40,14 @@ public class MaskedPatternsParser extends AbstractXMLObjectParser {
     public static final String MASK = "mask";
     public static final String NEGATIVE = "negative";
 
-    public String getParserName() { return MASKED_PATTERNS; }
+    @Override
+	public String getParserName() { return MASKED_PATTERNS; }
 
     /**
      * Parses a patterns element and returns a patterns object.
      */
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -91,7 +89,8 @@ public class MaskedPatternsParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newBooleanRule(NEGATIVE, true),
@@ -99,10 +98,12 @@ public class MaskedPatternsParser extends AbstractXMLObjectParser {
             new ElementRule(MASK, String.class, "A parameter of 1s and 0s that represent included and excluded sites")
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A weighted list of the unique site patterns (unique columns) in an alignment.";
     }
 
-    public Class getReturnType() { return PatternList.class; }
+    @Override
+	public Class getReturnType() { return PatternList.class; }
 
 }

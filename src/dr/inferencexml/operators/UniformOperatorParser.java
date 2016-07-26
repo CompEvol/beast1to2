@@ -39,11 +39,13 @@ public class UniformOperatorParser extends AbstractXMLObjectParser {
     public static final String LOWER = "lower";
     public static final String UPPER = "upper";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return UNIFORM_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         double weight = xo.getDoubleAttribute(ScaleOperatorParser.WEIGHT);
         RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
 
@@ -95,16 +97,19 @@ public class UniformOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "An operator that picks new parameter values uniformly at random.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Operator.class;
     }
 
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

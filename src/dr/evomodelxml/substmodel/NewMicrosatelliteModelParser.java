@@ -38,13 +38,15 @@ import dr.xml.*;
 public class NewMicrosatelliteModelParser extends AbstractXMLObjectParser{
     public static final String NEW_MSAT_MODEL = "newMsatModel";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return NEW_MSAT_MODEL;
     }
 
 
     //AbstractXMLObjectParser implementation
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -64,11 +66,13 @@ public class NewMicrosatelliteModelParser extends AbstractXMLObjectParser{
 		}
 
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents an instance of the stepwise mutation model of microsatellite evolution.";
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -77,7 +81,8 @@ public class NewMicrosatelliteModelParser extends AbstractXMLObjectParser{
             new ElementRule(FrequencyModel.class,true)
     };
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return NewMicrosatelliteModel.class;
     }
 }

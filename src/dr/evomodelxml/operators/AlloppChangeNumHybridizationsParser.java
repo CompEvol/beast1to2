@@ -42,7 +42,8 @@ public class AlloppChangeNumHybridizationsParser extends AbstractXMLObjectParser
     public static final String CHANGE_NUM_HYBRIDIZATIONS = "changeNumHybridizations";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return CHANGE_NUM_HYBRIDIZATIONS;
     }
 

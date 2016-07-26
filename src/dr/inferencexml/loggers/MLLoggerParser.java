@@ -27,10 +27,7 @@ package dr.inferencexml.loggers;
 
 import dr.inference.loggers.*;
 import dr.inference.model.Likelihood;
-import dr.util.Identifiable;
 import dr.xml.*;
-
-import java.io.PrintWriter;
 
 /**
  *
@@ -40,11 +37,13 @@ public class MLLoggerParser extends LoggerParser {
     public static final String LOG_ML = "logML";
     public static final String LIKELIHOOD = "ml";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return LOG_ML;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -93,7 +92,8 @@ public class MLLoggerParser extends LoggerParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -107,11 +107,13 @@ public class MLLoggerParser extends LoggerParser {
             )
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Logs one or more items every time the given likelihood improves";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return MLLogger.class;
     }
 }

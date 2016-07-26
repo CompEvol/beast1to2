@@ -36,15 +36,18 @@ public class ExponentialStatisticParser extends AbstractXMLObjectParser {
     public static String EXPONENTIAL_STATISTIC = "exponentialStatistic";
     public static String EXP = "exp";
 
-    public String[] getParserNames() {
+    @Override
+	public String[] getParserNames() {
         return new String[]{getParserName(), EXP};
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return EXPONENTIAL_STATISTIC;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -66,15 +69,18 @@ public class ExponentialStatisticParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a statistic that is the element-wise exponentiation of the child statistic.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ExponentialStatistic.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

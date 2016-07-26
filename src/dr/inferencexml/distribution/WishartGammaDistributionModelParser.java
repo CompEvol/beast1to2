@@ -40,11 +40,13 @@ public class WishartGammaDistributionModelParser extends AbstractXMLObjectParser
     public static final String SCALE_PARAMETER = "scale";
     public static final String FIX_MIXING = "fixMixing";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return WISHART_GAMMA_DISTRIBUTION_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -74,7 +76,8 @@ public class WishartGammaDistributionModelParser extends AbstractXMLObjectParser
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -88,11 +91,13 @@ public class WishartGammaDistributionModelParser extends AbstractXMLObjectParser
             AttributeRule.newBooleanRule(FIX_MIXING, true),
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "more magic";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return WishartGammalDistributionModel.class;
     }
 

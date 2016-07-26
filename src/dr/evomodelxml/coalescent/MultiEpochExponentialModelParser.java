@@ -25,9 +25,7 @@
 
 package dr.evomodelxml.coalescent;
 
-import dr.evolution.util.Units;
 import dr.evomodel.coalescent.ExponentialExponentialModel;
-import dr.evomodel.coalescent.MultiEpochExponentialModel;
 import dr.evoxml.util.XMLUnits;
 import dr.inference.model.Parameter;
 import dr.xml.*;
@@ -43,11 +41,13 @@ public class MultiEpochExponentialModelParser extends AbstractXMLObjectParser {
     public static final String TRANSITION_TIME = "transitionTime";
     public static final String GROWTH_RATE = "growthRate";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MULTI_EPOCH_EXPONENTIAL_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -71,15 +71,18 @@ public class MultiEpochExponentialModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A demographic model of multi-phae exponential growth.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ExponentialExponentialModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

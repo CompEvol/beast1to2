@@ -26,20 +26,13 @@
 package dr.evomodelxml.MSSD;
 
 import dr.evolution.alignment.PatternList;
-import dr.evolution.util.Taxon;
 import dr.evomodel.MSSD.ALSTreeLikelihood;
-import dr.evomodel.MSSD.AbstractObservationProcess;
-import dr.evomodel.MSSD.AnyTipObservationProcess;
-import dr.evomodel.MSSD.SingleTipObservationProcess;
 import dr.evomodel.branchratemodel.BranchRateModel;
 import dr.evomodel.sitemodel.SiteModel;
-import dr.evomodel.substmodel.MutationDeathModel;
 import dr.evomodel.tree.TreeModel;
 import dr.evomodelxml.treelikelihood.TreeLikelihoodParser;
 import dr.inference.model.Parameter;
 import dr.xml.*;
-
-import java.util.logging.Logger;
 
 /**
  *
@@ -54,11 +47,13 @@ public class ALSTreeLikelihoodParser extends AbstractXMLObjectParser {
     public final static String IMMIGRATION_RATE = "immigrationRate";
     public static final String FORCE_RESCALING = TreeLikelihoodParser.FORCE_RESCALING;
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return LIKE_NAME;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -124,15 +119,18 @@ public class ALSTreeLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents the likelihood of a patternlist on a tree given the site model.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ALSTreeLikelihood.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

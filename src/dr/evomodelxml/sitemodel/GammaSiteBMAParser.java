@@ -47,11 +47,13 @@ public class GammaSiteBMAParser extends AbstractXMLObjectParser {
     public static final String MODEL_CHOOSE = "modelChoose";
     public static final String GAMMA_SITE_BMA = "gammaSiteBMA";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return GAMMA_SITE_BMA;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -72,15 +74,18 @@ public class GammaSiteBMAParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A SiteModel that does BMA for a gamma distributed rates across sites";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return GammaSiteBMA.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

@@ -34,11 +34,13 @@ import dr.xml.*;
 public class SpeciesBindingsSPinfoParser extends AbstractXMLObjectParser {
     public static final String SP = "sp";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SP;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -50,17 +52,20 @@ public class SpeciesBindingsSPinfoParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
                 new ElementRule(Taxon.class, 1, Integer.MAX_VALUE)
         };
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Taxon in a species tree";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return SpeciesBindings.SPinfo.class;
     }
 }

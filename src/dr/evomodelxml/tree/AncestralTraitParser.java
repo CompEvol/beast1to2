@@ -25,11 +25,8 @@
 
 package dr.evomodelxml.tree;
 
-import dr.evolution.tree.Tree;
-import dr.evolution.tree.TreeTrait;
 import dr.evolution.tree.TreeTraitProvider;
 import dr.evolution.util.Taxa;
-import dr.evolution.util.TaxonList;
 import dr.evomodel.tree.AncestralTrait;
 import dr.evomodel.tree.TreeModel;
 import dr.xml.*;
@@ -45,18 +42,21 @@ public class AncestralTraitParser extends AbstractXMLObjectParser {
     public static final String TRAIT_NAME = "traitName";
     public static final String STATES = "states";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return ANCESTRAL_TRAIT;
     }
 
-    public String[] getParserNames() {
+    @Override
+	public String[] getParserNames() {
         // provide a synonym to maintain backwards compatibility
         return new String[]{
                 getParserName(), ANCESTRAL_STATE
         };
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -87,15 +87,18 @@ public class AncestralTraitParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A statistic that has as its value the height of the most recent common ancestor of a set of taxa in a given tree";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return AncestralTrait.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

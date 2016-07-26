@@ -37,11 +37,13 @@ public class SetOperatorParser extends AbstractXMLObjectParser {
     public static final String SET_OPERATOR = "setOperator";
     public static final String SET = "set";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SET_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -69,15 +71,18 @@ public class SetOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents an operator on a set.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return SetOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

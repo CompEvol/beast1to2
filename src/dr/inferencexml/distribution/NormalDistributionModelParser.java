@@ -39,11 +39,13 @@ public class NormalDistributionModelParser extends AbstractXMLObjectParser {
     public static final String STDEV = "stdev";
     public static final String PREC = "precision";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return NORMAL_DISTRIBUTION_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         RealParameter meanParam;
         RealParameter stdevParam;
@@ -89,7 +91,8 @@ public class NormalDistributionModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -119,12 +122,14 @@ public class NormalDistributionModelParser extends AbstractXMLObjectParser {
             )
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Describes a normal distribution with a given mean and standard deviation " +
                 "that can be used in a distributionLikelihood element";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Normal.class;
     }
 

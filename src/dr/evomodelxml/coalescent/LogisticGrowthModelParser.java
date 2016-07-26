@@ -45,11 +45,13 @@ public class LogisticGrowthModelParser extends AbstractXMLObjectParser {
     public static String TIME_50 = "t50";
     public static String ALPHA = "alpha";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return LOGISTIC_GROWTH_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
@@ -81,15 +83,18 @@ public class LogisticGrowthModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Logistic growth demographic model.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return LogisticGrowth.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

@@ -57,7 +57,8 @@ public class BlockDiagonalMatrixParameter extends MatrixParameter {
 //        dimensionsEstablished = true;
 //    }
 
-    public double getParameterValue(int row, int col) {
+    @Override
+	public double getParameterValue(int row, int col) {
 
         return 0; // TODO
     }
@@ -101,11 +102,13 @@ public class BlockDiagonalMatrixParameter extends MatrixParameter {
 //        }
 //    }
 
-    public int getColumnDimension() {
+    @Override
+	public int getColumnDimension() {
         return columnDimension;
     }
 
-    public int getRowDimension() {
+    @Override
+	public int getRowDimension() {
         return rowDimension;
     }
 
@@ -167,11 +170,13 @@ public class BlockDiagonalMatrixParameter extends MatrixParameter {
 
     public static XMLObjectParser PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return BLOCK_DIAGONAL_MATRIX_PARAMETER;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
             System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
             return null;
 
@@ -192,11 +197,13 @@ public class BlockDiagonalMatrixParameter extends MatrixParameter {
         // AbstractXMLObjectParser implementation
         //************************************************************************
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "A matrix parameter constructed from its component parameters.";
         }
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -204,7 +211,8 @@ public class BlockDiagonalMatrixParameter extends MatrixParameter {
                 new ElementRule(MatrixParameter.class, 0, Integer.MAX_VALUE),
         };
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return BlockDiagonalMatrixParameter.class;
         }
     };

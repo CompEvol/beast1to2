@@ -41,11 +41,13 @@ public class BranchingLikelihoodParser extends AbstractXMLObjectParser {
     public static final String MODEL = "model";
     public static final String TREE = "branchingTree";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return BRANCHING_LIKELIHOOD;
     }
 
-    public Object parseXMLObject(XMLObject xo) {
+    @Override
+	public Object parseXMLObject(XMLObject xo) {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -64,15 +66,18 @@ public class BranchingLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents the likelihood of the tree given the demographic function.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return BranchingLikelihood.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

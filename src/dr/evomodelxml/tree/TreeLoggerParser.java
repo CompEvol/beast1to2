@@ -27,17 +27,10 @@ package dr.evomodelxml.tree;
 
 
 
-import beast.core.BEASTObject;
 import beast.core.Logger;
 import beast.evolution.tree.Tree;
 import dr.inferencexml.loggers.LoggerParser;
 import dr.xml.*;
-
-import java.io.PrintWriter;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * @author Alexei Drummond
@@ -61,7 +54,8 @@ public class TreeLoggerParser extends LoggerParser {
     public static final String NAME = "name";
     public static final String TAG = "tag";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return LOG_TREE;
     }
 
@@ -339,7 +333,8 @@ public class TreeLoggerParser extends LoggerParser {
     /**
      * @return an object based on the XML element it was passed.
      */
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         return super.parseXMLObject(xo);
 
@@ -375,7 +370,8 @@ public class TreeLoggerParser extends LoggerParser {
     //************************************************************************
     // AbstractXMLObjectParser implementation
     //************************************************************************
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -414,11 +410,13 @@ public class TreeLoggerParser extends LoggerParser {
 //            new ElementRule(TreeLogger.LogUpon.class, true)
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Logs a tree to a file";
     }
 
-    public String getExample() {
+    @Override
+	public String getExample() {
         final String name = getParserName();
         return
                 "<!-- The " + name + " element takes a treeModel to be logged -->\n" +
@@ -428,7 +426,8 @@ public class TreeLoggerParser extends LoggerParser {
                         "</" + name + ">\n";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Logger.class;
     }
 }

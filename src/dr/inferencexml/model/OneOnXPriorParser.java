@@ -41,15 +41,18 @@ public class OneOnXPriorParser extends AbstractXMLObjectParser {
     public static final String JEFFREYS_PRIOR = "jeffreysPrior";
     public static final String DATA = "data";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return ONE_ONE_X_PRIOR;
     }
 
-    public String[] getParserNames() {
+    @Override
+	public String[] getParserNames() {
         return new String[]{getParserName(), JEFFREYS_PRIOR};
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         OneOnX distr = new OneOnX();
 
@@ -71,7 +74,8 @@ public class OneOnXPriorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -82,11 +86,13 @@ public class OneOnXPriorParser extends AbstractXMLObjectParser {
             )
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Calculates the (improper) prior proportional to Prod_i (1/x_i) for the given statistic x.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return OneOnXPrior.class;
     }
 }

@@ -26,16 +26,9 @@
 package dr.evoxml;
 
 import dr.evolution.alignment.PatternList;
-import dr.evolution.alignment.Patterns;
-import dr.evolution.alignment.SimpleSiteList;
-import dr.evolution.alignment.SitePatterns;
 import dr.evolution.datatype.DataType;
-import dr.evolution.util.Taxon;
 import dr.evolution.util.TaxonList;
-import dr.evoxml.util.DataTypeUtils;
 import dr.xml.*;
-
-import java.util.logging.Logger;
 
 /**
  * @author Alexei Drummond
@@ -51,9 +44,11 @@ public class AttributePatternsParser extends AbstractXMLObjectParser {
     public static final String PATTERNS = "Patterns";
     public static final String ATTRIBUTE_PATTERNS = ATTRIBUTE + PATTERNS;
 
-    public String getParserName() { return ATTRIBUTE_PATTERNS; }
+    @Override
+	public String getParserName() { return ATTRIBUTE_PATTERNS; }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -128,7 +123,8 @@ public class AttributePatternsParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {
             new XORRule(
@@ -143,10 +139,12 @@ public class AttributePatternsParser extends AbstractXMLObjectParser {
             new ElementRule(TaxonList.class, "The taxon set")
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A site pattern defined by an attribute in a set of taxa.";
     }
 
-    public Class getReturnType() { return PatternList.class; }
+    @Override
+	public Class getReturnType() { return PatternList.class; }
 
 }

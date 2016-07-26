@@ -33,29 +33,35 @@ import beast.math.distributions.ParametricDistribution;
  */
 public class ExponentialDistributionModelParser extends DistributionModelParser {
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return "exponentialDistributionModel";
     }
 
-    ParametricDistribution parseDistributionModel(RealParameter[] parameters, double offset) {
+    @Override
+	ParametricDistribution parseDistributionModel(RealParameter[] parameters, double offset) {
         Exponential exp = new Exponential();
         exp.initByName("mean", parameters[0], "offset", offset);
         return exp;
     }
 
-    public String[] getParameterNames() {
+    @Override
+	public String[] getParameterNames() {
         return new String[]{MEAN};
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A model of an exponential distribution.";
     }
 
-    public boolean allowOffset() {
+    @Override
+	public boolean allowOffset() {
         return true;
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Exponential.class;
     }
 }

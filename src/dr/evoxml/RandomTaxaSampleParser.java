@@ -26,16 +26,7 @@
 package dr.evoxml;
 
 import dr.evolution.util.Taxa;
-import dr.evolution.util.Taxon;
-import dr.math.MathUtils;
 import dr.xml.*;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.logging.Logger;
 
 public class RandomTaxaSampleParser extends AbstractXMLObjectParser {
 
@@ -44,15 +35,18 @@ public class RandomTaxaSampleParser extends AbstractXMLObjectParser {
     public static final String PRINT_TAXA = "printTaxa";
     public static final String FILE_NAME = "fileName";
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Randomly samples n taxa from a collection of N taxa";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return RandomTaxaSampleParser.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -61,7 +55,8 @@ public class RandomTaxaSampleParser extends AbstractXMLObjectParser {
             new ElementRule(Taxa.class),
     };
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -142,7 +137,8 @@ public class RandomTaxaSampleParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return RANDOM_TAXA_SAMPLE;
     }
 

@@ -47,9 +47,11 @@ public class BooleanLikelihoodParser extends AbstractXMLObjectParser {
 
     public static final String DATA = "data";
 
-    public String getParserName() { return BOOLEAN_LIKELIHOOD; }
+    @Override
+	public String getParserName() { return BOOLEAN_LIKELIHOOD; }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
 //        BooleanLikelihood likelihood = new BooleanLikelihood();
 
@@ -73,14 +75,17 @@ public class BooleanLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A function that log likelihood of a set of boolean statistics. "+
                 "If all the statistics are true then it returns 0.0 otherwise -infinity.";
     }
 
-    public Class getReturnType() { return Distribution.class; }
+    @Override
+	public Class getReturnType() { return Distribution.class; }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private final XMLSyntaxRule[] rules = {
         new ElementRule(Distribution.class, 1, Integer.MAX_VALUE )

@@ -38,7 +38,8 @@ public class TransformedParameterParser extends AbstractXMLObjectParser {
     public static final String TRANSFORMED_PARAMETER = "transformedParameter";
     public static final String INVERSE = "inverse";
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -52,7 +53,8 @@ public class TransformedParameterParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -63,15 +65,18 @@ public class TransformedParameterParser extends AbstractXMLObjectParser {
 
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A transformed parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TransformedParameter.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return TRANSFORMED_PARAMETER;
     }
 }

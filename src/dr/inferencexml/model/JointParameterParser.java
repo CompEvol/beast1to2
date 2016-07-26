@@ -25,7 +25,6 @@
 
 package dr.inferencexml.model;
 
-import dr.inference.model.CompoundParameter;
 import dr.inference.model.JointParameter;
 import dr.inference.model.Parameter;
 import dr.xml.*;
@@ -37,11 +36,13 @@ public class JointParameterParser extends AbstractXMLObjectParser {
 
     public static final String COMPOUND_PARAMETER = "jointParameter";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return COMPOUND_PARAMETER;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -60,11 +61,13 @@ public class JointParameterParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A parameter that synchronises its component parameters.";
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -74,7 +77,8 @@ public class JointParameterParser extends AbstractXMLObjectParser {
         };
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return JointParameter.class;
     }
 }

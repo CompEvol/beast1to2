@@ -43,11 +43,13 @@ public class SubtreeSlideOperatorParser extends AbstractXMLObjectParser {
 
     public static final String TRAIT = "trait";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SUBTREE_SLIDE;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 //        boolean swapRates = xo.getAttribute(SWAP_RATES, false);
 //        boolean swapTraits = xo.getAttribute(SWAP_TRAITS, false);
 //        boolean scaledDirichletBranches = xo.getAttribute(DIRICHLET_BRANCHES, false);
@@ -110,15 +112,18 @@ public class SubtreeSlideOperatorParser extends AbstractXMLObjectParser {
         return operator;*/
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "An operator that slides a subtree.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return SubtreeSlide.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

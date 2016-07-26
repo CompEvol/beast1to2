@@ -25,16 +25,9 @@
 
 package dr.evomodelxml;
 
-import dr.util.FileHelpers;
 import dr.xml.*;
-import dr.evolution.io.NexusImporter;
-import dr.evolution.io.Importer;
-import dr.evolution.tree.Tree;
 import dr.evolution.util.TaxonList;
 import dr.evomodel.tree.EmpiricalTreeDistributionModel;
-
-import java.io.*;
-import java.util.logging.Logger;
 
 /**
  * @author Andrew Rambaut
@@ -46,15 +39,18 @@ public class EmpiricalTreeDistributionModelParser extends AbstractXMLObjectParse
     public static final String RATE_ATTRIBUTE_NAME = "rateAttribute";
     public static final String STARTING_TREE = "startingTree";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return EmpiricalTreeDistributionModel.EMPIRICAL_TREE_DISTRIBUTION_MODEL;
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Read a list of trees from a NEXUS file.";
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -95,7 +91,8 @@ public class EmpiricalTreeDistributionModelParser extends AbstractXMLObjectParse
     public static final String FILE_NAME = "fileName";
 //    public static final String BURNIN = "burnin";
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
                 AttributeRule.newIntegerRule(STARTING_TREE, true),
                 new StringAttributeRule(FILE_NAME,
@@ -107,7 +104,8 @@ public class EmpiricalTreeDistributionModelParser extends AbstractXMLObjectParse
     }
 
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return EmpiricalTreeDistributionModel.class;
     }
 }

@@ -26,11 +26,8 @@
 package dr.evomodelxml.operators;
 
 import dr.evomodel.operators.AlloppNetworkNodeSlide;
-import dr.evomodel.operators.TreeNodeSlide;
 import dr.evomodel.speciation.AlloppSpeciesBindings;
 import dr.evomodel.speciation.AlloppSpeciesNetworkModel;
-import dr.evomodel.speciation.SpeciesBindings;
-import dr.evomodel.speciation.SpeciesTreeModel;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.AbstractXMLObjectParser;
 import dr.xml.AttributeRule;
@@ -58,6 +55,7 @@ public class AlloppNetworkNodeSlideParser extends AbstractXMLObjectParser {
 	public static final String NETWORK_NODE_REHEIGHT = "networkNodeReHeight";
 
 
+	@Override
 	public String getParserName() {
 		return NETWORK_NODE_REHEIGHT;
 	}

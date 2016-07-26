@@ -25,7 +25,6 @@
 
 package dr.evomodelxml.coalescent;
 
-import dr.evolution.util.Units;
 import dr.evomodel.coalescent.ExponentialSawtoothModel;
 import dr.evoxml.util.XMLUnits;
 import dr.inference.model.Parameter;
@@ -43,11 +42,13 @@ public class ExponentialSawtoothModelParser extends AbstractXMLObjectParser {
 
     public static final String EXPONENTIAL_SAWTOOTH = "exponentialSawtooth";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return EXPONENTIAL_SAWTOOTH;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -74,15 +75,18 @@ public class ExponentialSawtoothModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A demographic model of succesive exponential growth and periodic population crashes.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ExponentialSawtoothModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

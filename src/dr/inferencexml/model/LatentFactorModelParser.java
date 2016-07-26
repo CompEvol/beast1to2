@@ -49,11 +49,13 @@ public class LatentFactorModelParser extends AbstractXMLObjectParser {
     public static final String RECOMPUTE_LOADINGS="recomputeLoadings";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return LATENT_FACTOR_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -123,7 +125,8 @@ public class LatentFactorModelParser extends AbstractXMLObjectParser {
 //    </latentFactorModel>
 
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

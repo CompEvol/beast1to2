@@ -37,11 +37,13 @@ public class CompatibilityStatisticParser extends AbstractXMLObjectParser {
     public static final String COMPATIBILITY_STATISTIC = "compatibilityStatistic";
     public static final String COMPATIBLE_WITH = "compatibleWith";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return COMPATIBILITY_STATISTIC;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -65,15 +67,18 @@ public class CompatibilityStatisticParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A statistic that returns true if a pair of trees are compatible";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return CompatibilityStatistic.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

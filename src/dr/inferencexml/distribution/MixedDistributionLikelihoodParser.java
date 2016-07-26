@@ -41,11 +41,13 @@ public class MixedDistributionLikelihoodParser extends AbstractXMLObjectParser {
     public static final String DATA = "data";
     public static final String INDICATORS = "indicators";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return DISTRIBUTION_LIKELIHOOD;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         XMLObject cxo0 = xo.getChild(DISTRIBUTION0);
         ParametricDistribution model0 = (ParametricDistribution) cxo0.getChild(ParametricDistribution.class);
@@ -53,9 +55,9 @@ public class MixedDistributionLikelihoodParser extends AbstractXMLObjectParser {
         XMLObject cxo1 = xo.getChild(DISTRIBUTION1);
         ParametricDistribution model1 = (ParametricDistribution) cxo1.getChild(ParametricDistribution.class);
 
-        Function data = (Function) ((XMLObject) xo.getChild(DATA)).getChild(Function.class);
+        Function data = (Function) xo.getChild(DATA).getChild(Function.class);
         // indicators will be ignored
-        Function indicators = (Function) ((XMLObject) xo.getChild(INDICATORS)).getChild(Function.class);
+        Function indicators = (Function) xo.getChild(INDICATORS).getChild(Function.class);
 
         ParametricDistribution[] models = {model0, model1};
         try {
@@ -71,7 +73,8 @@ public class MixedDistributionLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -84,11 +87,13 @@ public class MixedDistributionLikelihoodParser extends AbstractXMLObjectParser {
             new ElementRule(INDICATORS, new XMLSyntaxRule[]{new ElementRule(Function.class)}),
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Calculates the likelihood of some data given some mix of parametric distributions.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Prior.class;
     }
 

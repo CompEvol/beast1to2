@@ -52,18 +52,21 @@ public class GMRFSkyrideBlockUpdateOperatorParser extends AbstractXMLObjectParse
     public static final String KEEP_LOG_RECORD = "keepLogRecord";
     public static final String OLD_SKYRIDE = "oldSkyride";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return BLOCK_UPDATE_OPERATOR;
     }
 
-    public String[] getParserNames() {
+    @Override
+	public String[] getParserNames() {
         return new String[]{
                 getParserName(),
                 GRID_BLOCK_UPDATE_OPERATOR,
         };
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         boolean logRecord = xo.getAttribute(KEEP_LOG_RECORD, false);
 
@@ -82,7 +85,8 @@ public class GMRFSkyrideBlockUpdateOperatorParser extends AbstractXMLObjectParse
             gmrfHandler.setLevel(Level.FINE);
 
             gmrfHandler.setFormatter(new XMLFormatter() {
-                public String format(LogRecord record) {
+                @Override
+				public String format(LogRecord record) {
                     return "<record>\n \t<message>\n\t" + record.getMessage()
                             + "\n\t</message>\n<record>\n";
                 }
@@ -135,15 +139,18 @@ public class GMRFSkyrideBlockUpdateOperatorParser extends AbstractXMLObjectParse
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a GMRF block-update operator for the joint distribution of the population sizes and precision parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return MCMCOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

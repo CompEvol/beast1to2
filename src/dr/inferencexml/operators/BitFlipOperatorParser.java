@@ -44,11 +44,13 @@ public class BitFlipOperatorParser extends AbstractXMLObjectParser {
     public static final String USES_SUM_PRIOR = "usesPriorOnSum";
     // public static final String FOR_DRIFT = "forDrift";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return BIT_FLIP_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
 
@@ -72,15 +74,18 @@ public class BitFlipOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a bit-flip operator on a given parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return BitFlipOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

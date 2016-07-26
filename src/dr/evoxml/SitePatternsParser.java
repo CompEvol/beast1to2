@@ -53,11 +53,13 @@ public class SitePatternsParser extends AbstractXMLObjectParser {
     public static final String CONSTANT_PATTERNS = "constantPatterns";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return PATTERNS;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
     	Alignment alignment = (Alignment) xo.getChild(Alignment.class);
         TaxonSet taxa = null;
@@ -142,7 +144,8 @@ public class SitePatternsParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -159,11 +162,13 @@ public class SitePatternsParser extends AbstractXMLObjectParser {
             AttributeRule.newBooleanRule(UNIQUE, true, "Return a weight list of unique patterns"),
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A weighted list of the unique site patterns (unique columns) in an alignment.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return FilteredAlignment.class;
     }
 

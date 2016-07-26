@@ -36,7 +36,8 @@ public class WanderingTaxonLoggerParser extends AbstractXMLObjectParser {
 
     public static final String NAME = "name";
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 /*
@@ -52,7 +53,8 @@ public class WanderingTaxonLoggerParser extends AbstractXMLObjectParser {
         return new WanderingTaxonLogger(name,taxon,relative);*/
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[] {
                 AttributeRule.newStringRule(NAME,true),
                 AttributeRule.newStringRule(WanderingTaxonLogger.RELATIVE,true),
@@ -60,15 +62,18 @@ public class WanderingTaxonLoggerParser extends AbstractXMLObjectParser {
         };
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return null;
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return WanderingTaxonLogger.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return WanderingTaxonLogger.WANDERER;
     }
 }

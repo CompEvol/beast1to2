@@ -25,15 +25,9 @@
 
 package dr.evoxml;
 
-import dr.evolution.io.Importer;
-import dr.evolution.io.NewickImporter;
 import dr.evolution.tree.*;
-import dr.evolution.util.Taxon;
 import dr.evolution.util.Units;
-import dr.evoxml.util.XMLUnits;
 import dr.xml.*;
-
-import java.io.IOException;
 
 /**
  * @author Alexei Drummond
@@ -60,11 +54,13 @@ public class NewickParser extends AbstractXMLObjectParser {
         };
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return NEWICK;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -233,21 +229,25 @@ public class NewickParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Constructs a tree from a NEWICK format tree description";
     }
 
-    public String getExample() {
+    @Override
+	public String getExample() {
         return "<" + getParserName() + " " + UNITS + "=\"" + Units.Utils.getDefaultUnitName(Units.Type.YEARS) + "\">" + " ((A:1.0, B:1.0):1.0,(C:2.0, D:2.0):1.0); </" + getParserName() + ">";
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
     private final XMLSyntaxRule[] rules;
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Tree.class;
     }
 }

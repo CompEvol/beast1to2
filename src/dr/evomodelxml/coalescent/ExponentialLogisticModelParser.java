@@ -25,8 +25,6 @@
 
 package dr.evomodelxml.coalescent;
 
-import dr.evolution.util.Units;
-import dr.evomodel.coalescent.ConstantLogisticModel;
 import dr.evomodel.coalescent.ExponentialLogisticModel;
 import dr.evoxml.util.XMLUnits;
 import dr.inference.model.Parameter;
@@ -47,11 +45,13 @@ public class ExponentialLogisticModelParser extends AbstractXMLObjectParser {
 
     public static final String ALPHA = "alpha";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return EXPONENTIAL_LOGISTIC_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -83,15 +83,18 @@ public class ExponentialLogisticModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A demographic model of exponential growth followed by logistic growth.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ExponentialLogisticModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

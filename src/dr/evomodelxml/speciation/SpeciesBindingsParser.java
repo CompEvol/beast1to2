@@ -29,9 +29,6 @@ import dr.evomodel.speciation.SpeciesBindings;
 import dr.evomodel.tree.TreeModel;
 import dr.xml.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  */
 public class SpeciesBindingsParser extends AbstractXMLObjectParser {
@@ -41,11 +38,13 @@ public class SpeciesBindingsParser extends AbstractXMLObjectParser {
     public static final String PLOIDY = "ploidy";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SPECIES;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -90,7 +89,8 @@ public class SpeciesBindingsParser extends AbstractXMLObjectParser {
                     new ElementRule(TreeModel.class)}, 0, Integer.MAX_VALUE);
     //XMLSyntaxRule[] someTree = {new OrRule(new ElementRule(TreeModel.class), treeWithPloidy)};
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
                 new ElementRule(SpeciesBindings.SPinfo.class, 2, Integer.MAX_VALUE),
                 // new ElementRule(GENE_TREES, someTree,  1, Integer.MAX_VALUE )
@@ -103,11 +103,13 @@ public class SpeciesBindingsParser extends AbstractXMLObjectParser {
         };
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Binds taxa in gene trees with species information.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return SpeciesBindings.class;
     }
 

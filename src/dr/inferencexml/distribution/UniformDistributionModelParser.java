@@ -38,11 +38,13 @@ public class UniformDistributionModelParser extends AbstractXMLObjectParser {
     public static final String LOWER = "lower";
     public static final String UPPER = "upper";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return UNIFORM_DISTRIBUTION_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -72,7 +74,8 @@ public class UniformDistributionModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -93,11 +96,13 @@ public class UniformDistributionModelParser extends AbstractXMLObjectParser {
             )
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Describes a uniform distribution with a given lower and upper bounds ";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return UniformDistributionModel.class;
     }
 }

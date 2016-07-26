@@ -26,10 +26,7 @@
 package dr.evomodelxml.substmodel;
 
 import dr.evomodel.substmodel.FrequencyModel;
-import dr.evomodel.substmodel.GeneralF81Model;
 import dr.xml.*;
-
-import java.util.logging.Logger;
 
 /**
  * Parses a GeneralF81Model
@@ -39,11 +36,13 @@ public class GeneralF81ModelParser extends AbstractXMLObjectParser {
     public static final String GENERAL_F81_MODEL = "generalF81Model";
     public static final String FREQUENCIES = "frequencies";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return GENERAL_F81_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -62,15 +61,18 @@ public class GeneralF81ModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A general F81 model for an arbitrary number of states.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return GeneralF81ModelParser.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

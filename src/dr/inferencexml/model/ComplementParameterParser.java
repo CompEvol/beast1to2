@@ -25,13 +25,8 @@
 
 package dr.inferencexml.model;
 
-import dr.inference.model.ComplementParameter;
 import dr.inference.model.Parameter;
-import dr.inference.model.SumParameter;
 import dr.xml.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  */
@@ -39,7 +34,8 @@ public class ComplementParameterParser extends AbstractXMLObjectParser {
 
     public static final String COMPLEMENT_PARAMETER = "complementParameter";
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -49,7 +45,8 @@ public class ComplementParameterParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -57,15 +54,18 @@ public class ComplementParameterParser extends AbstractXMLObjectParser {
             new ElementRule(Parameter.class),
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A element-wise complement of parameters.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Parameter.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return COMPLEMENT_PARAMETER;
     }
 }

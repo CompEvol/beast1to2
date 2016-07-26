@@ -25,16 +25,10 @@
 
 package dr.evomodelxml.branchratemodel;
 
-import dr.evomodel.branchratemodel.ContinuousEpochBranchRateModel;
 import dr.evomodel.branchratemodel.RateEpochBranchRateModel;
 import dr.evomodelxml.tree.TreeModelParser;
 import dr.inference.model.Parameter;
 import dr.xml.*;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.logging.Logger;
 
 /**
  */
@@ -46,11 +40,13 @@ public class RateEpochBranchRateModelParser extends AbstractXMLObjectParser {
     public static final String TRANSITION_TIME = "transitionTime";
     public static final String CONTINUOUS_NORMALIZATION = "continuousNormalization";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return RATE_EPOCH_BRANCH_RATES;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -114,7 +110,8 @@ public class RateEpochBranchRateModelParser extends AbstractXMLObjectParser {
             this.timeParameter = timeParameter;
         }
 
-        public int compareTo(Object o) {
+        @Override
+		public int compareTo(Object o) {
             return Double.compare(transitionTime, ((Epoch) o).transitionTime);
         }
 
@@ -123,7 +120,8 @@ public class RateEpochBranchRateModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element provides a multiple epoch molecular clock model. " +
                         "All branches (or portions of them) have the same rate of molecular " +
                         "evolution within a given epoch. If parameters are used to sample " +
@@ -131,11 +129,13 @@ public class RateEpochBranchRateModelParser extends AbstractXMLObjectParser {
                         "use of bounds or priors.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return RateEpochBranchRateModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

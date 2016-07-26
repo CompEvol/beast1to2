@@ -27,11 +27,7 @@ package dr.evoxml;
 
 import dr.evolution.util.Taxa;
 import dr.evolution.util.Taxon;
-import dr.evolution.util.TaxonList;
-import dr.math.MathUtils;
 import dr.xml.*;
-
-import java.util.List;
 
 /**
  * @author Marc A. Suchard
@@ -43,10 +39,12 @@ public class RandomSubsetTaxaParser extends AbstractXMLObjectParser {
     public static final String COUNT = "total";
     public static final String WITH_REPLACEMENT = "withReplacement";
 
-    public String getParserName() { return RANDOM_SUBSET_TAXA; }
+    @Override
+	public String getParserName() { return RANDOM_SUBSET_TAXA; }
 
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -92,7 +90,8 @@ public class RandomSubsetTaxaParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private final XMLSyntaxRule[] rules = {
         new OrRule(
@@ -103,9 +102,11 @@ public class RandomSubsetTaxaParser extends AbstractXMLObjectParser {
             AttributeRule.newBooleanRule(WITH_REPLACEMENT),
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Defines a set of taxon objects.";
     }
 
-    public Class getReturnType() { return Taxa.class; }
+    @Override
+	public Class getReturnType() { return Taxa.class; }
 }

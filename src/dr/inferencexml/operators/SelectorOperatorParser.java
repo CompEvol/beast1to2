@@ -36,11 +36,13 @@ import dr.xml.*;
 public class SelectorOperatorParser extends AbstractXMLObjectParser {
     public static String SELECTOR_OPERATOR = "selectorOperator";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SELECTOR_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -56,15 +58,18 @@ public class SelectorOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return ".";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return SelectorOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
                 AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
                 new ElementRule(Parameter.class),

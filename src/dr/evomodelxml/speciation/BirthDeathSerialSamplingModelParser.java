@@ -54,11 +54,13 @@ public class BirthDeathSerialSamplingModelParser extends AbstractXMLObjectParser
     public static final String BDSS = "bdss";
     public static final String HAS_FINAL_SAMPLE = "hasFinalSample";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return BIRTH_DEATH_SERIAL_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         final String modelName = xo.getId();
         final Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
         
@@ -122,15 +124,18 @@ public class BirthDeathSerialSamplingModelParser extends AbstractXMLObjectParser
                 "Mol.Biol.Evol., doi: 10.1093/molbev/msr217, 2011";
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Stadler et al (2010) model of speciation.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return BirthDeathSerialSampling.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

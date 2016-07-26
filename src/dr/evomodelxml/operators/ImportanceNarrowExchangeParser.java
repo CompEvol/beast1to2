@@ -38,11 +38,13 @@ public class ImportanceNarrowExchangeParser extends AbstractXMLObjectParser {
     public static final String INS = "ImportanceNarrowExchange";
     public static final String EPSILON = "epsilon";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return INS;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -65,16 +67,19 @@ public class ImportanceNarrowExchangeParser extends AbstractXMLObjectParser {
     // implementation
     // ************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents a swap operator. "
                 + "This operator swaps a random subtree with its uncle.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ImportanceNarrowExchange.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

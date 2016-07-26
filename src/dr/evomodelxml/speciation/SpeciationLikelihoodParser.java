@@ -65,11 +65,13 @@ public class SpeciationLikelihoodParser extends AbstractXMLObjectParser {
 
     public static final String PARENT = dr.evomodelxml.tree.TMRCAStatisticParser.PARENT;
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SPECIATION_LIKELIHOOD;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         XMLObject cxo = xo.getChild(MODEL);
         TreeDistribution specModel = (TreeDistribution) cxo.getChild(TreeDistribution.class);
@@ -227,7 +229,8 @@ public class SpeciationLikelihoodParser extends AbstractXMLObjectParser {
             this.name = name;
         }
 
-        public String toString() {
+        @Override
+		public String toString() {
             return name;
         }
 
@@ -238,15 +241,18 @@ public class SpeciationLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents the likelihood of the tree given the speciation.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TreeDistribution.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

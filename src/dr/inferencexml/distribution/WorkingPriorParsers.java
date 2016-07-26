@@ -25,18 +25,9 @@
 
 package dr.inferencexml.distribution;
 
-import dr.inference.distribution.DistributionLikelihood;
-import dr.inference.distribution.MultivariateDistributionLikelihood;
 import dr.inference.model.Likelihood;
 import dr.inference.model.Statistic;
-import dr.inference.trace.LogFileTraces;
-import dr.inference.trace.TraceException;
-import dr.math.distributions.*;
-import dr.util.FileHelpers;
 import dr.xml.*;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 
 /**
  * @author Guy Baele
@@ -61,15 +52,18 @@ public class WorkingPriorParsers {
      */
     public static XMLObjectParser GAMMA_REFERENCE_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return GAMMA_REFERENCE_PRIOR;
         }
 
-        public String[] getParserNames() {
+        @Override
+		public String[] getParserNames() {
             return new String[]{getParserName(), GAMMA_WORKING_PRIOR};
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -191,7 +185,8 @@ public class WorkingPriorParsers {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -202,11 +197,13 @@ public class WorkingPriorParsers {
                 new ElementRule(Statistic.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the reference prior probability of some data under a given normal distribution.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
     };
@@ -216,15 +213,18 @@ public class WorkingPriorParsers {
      */
     public static XMLObjectParser LOG_TRANSFORMED_NORMAL_REFERENCE_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return LOG_TRANSFORMED_NORMAL_REFERENCE_PRIOR;
         }
 
-        public String[] getParserNames() {
+        @Override
+		public String[] getParserNames() {
             return new String[]{getParserName(), LOG_TRANSFORMED_NORMAL_WORKING_PRIOR};
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -352,7 +352,8 @@ public class WorkingPriorParsers {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -363,11 +364,13 @@ public class WorkingPriorParsers {
                 new ElementRule(Statistic.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the reference prior probability of some data under log transformed normal distribution.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
 
@@ -378,15 +381,18 @@ public class WorkingPriorParsers {
      */
     public static XMLObjectParser LOGIT_TRANSFORMED_NORMAL_REFERENCE_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return LOGIT_TRANSFORMED_NORMAL_REFERENCE_PRIOR;
         }
 
-        public String[] getParserNames() {
+        @Override
+		public String[] getParserNames() {
             return new String[]{getParserName(), LOGIT_TRANSFORMED_NORMAL_WORKING_PRIOR};
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -515,7 +521,8 @@ public class WorkingPriorParsers {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -528,11 +535,13 @@ public class WorkingPriorParsers {
                 new ElementRule(Statistic.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the reference prior probability of some data under logit transformed normal distribution.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
 
@@ -543,15 +552,18 @@ public class WorkingPriorParsers {
      */
     public static XMLObjectParser NORMAL_REFERENCE_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return NORMAL_REFERENCE_PRIOR;
         }
 
-        public String[] getParserNames() {
+        @Override
+		public String[] getParserNames() {
             return new String[]{getParserName(), NORMAL_WORKING_PRIOR};
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -673,7 +685,8 @@ public class WorkingPriorParsers {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -684,11 +697,13 @@ public class WorkingPriorParsers {
                 new ElementRule(Statistic.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the reference prior probability of some data under a given normal distribution.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
     };

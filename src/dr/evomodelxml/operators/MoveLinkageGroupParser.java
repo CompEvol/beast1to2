@@ -25,11 +25,8 @@
 
 package dr.evomodelxml.operators;
 
-import dr.evolution.MetagenomeData;
 import dr.evomodel.operators.MoveLinkageGroup;
-import dr.evomodel.operators.WilsonBalding;
 import dr.evomodel.tree.HiddenLinkageModel;
-import dr.evomodel.tree.TreeModel;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.AbstractXMLObjectParser;
 import dr.xml.ElementRule;
@@ -45,18 +42,22 @@ import dr.xml.XMLSyntaxRule;
 public class MoveLinkageGroupParser extends AbstractXMLObjectParser {
     public static final String MOVE_LINKAGE_GROUP = "moveLinkageGroup";
 
+	@Override
 	public String getParserDescription() {
 		return "Operator to reassign metagenomic reads from one linkage group to another";
 	}
 
+	@Override
 	public Class getReturnType() {
 		return MoveLinkageGroup.class;
 	}
 
+	@Override
 	public XMLSyntaxRule[] getSyntaxRules() {
 		return rules;
 	}
 
+	@Override
 	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
@@ -67,6 +68,7 @@ public class MoveLinkageGroupParser extends AbstractXMLObjectParser {
 	*/
 		}
 
+	@Override
 	public String getParserName() {
 		return MOVE_LINKAGE_GROUP;
 	}

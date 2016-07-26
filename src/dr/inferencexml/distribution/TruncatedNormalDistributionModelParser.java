@@ -41,11 +41,13 @@ public class TruncatedNormalDistributionModelParser extends AbstractXMLObjectPar
     public static final String MAXIMUM = "maximum";
     public static final String PREC = "precision";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return TRUNCATED_NORMAL_DISTRIBUTION_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -111,7 +113,8 @@ public class TruncatedNormalDistributionModelParser extends AbstractXMLObjectPar
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -158,12 +161,14 @@ public class TruncatedNormalDistributionModelParser extends AbstractXMLObjectPar
             )
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Describes a truncated normal distribution with a given mean, standard deviation and minimum or" +
                 "maximum (or both) values that can be used in a distributionLikelihood element";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TruncatedNormalDistributionModel.class;
     }
 

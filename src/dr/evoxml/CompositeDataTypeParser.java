@@ -26,12 +26,7 @@
 package dr.evoxml;
 
 import dr.evolution.datatype.DataType;
-import dr.evolution.datatype.GeneralDataType;
-import dr.util.Identifiable;
 import dr.xml.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Andrew Rambaut
@@ -49,9 +44,11 @@ public class CompositeDataTypeParser extends AbstractXMLObjectParser {
     public static final String COMPOSITE_STATE_SEPARATOR = "-";
 
 
-    public String getParserName() { return COMPOSITE_DATA_TYPE; }
+    @Override
+	public String getParserName() { return COMPOSITE_DATA_TYPE; }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -101,13 +98,16 @@ public class CompositeDataTypeParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Defines a composite DataType consisting of multiple data types";
     }
 
-    public Class getReturnType() { return DataType.class; }
+    @Override
+	public Class getReturnType() { return DataType.class; }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {
             new ElementRule(DataType.class, 2, 2),

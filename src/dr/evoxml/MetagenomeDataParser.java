@@ -30,7 +30,6 @@ import dr.evolution.MetagenomeData;
 import dr.evolution.alignment.Alignment;
 import dr.evolution.tree.Tree;
 import dr.evolution.util.Taxa;
-import dr.evolution.util.TaxonList;
 import dr.xml.*;
 
 /**
@@ -77,6 +76,7 @@ public class MetagenomeDataParser extends AbstractXMLObjectParser {
 		}
 
 	
+	@Override
 	public String getParserName() {
 		return "MetagenomeData";
 	}

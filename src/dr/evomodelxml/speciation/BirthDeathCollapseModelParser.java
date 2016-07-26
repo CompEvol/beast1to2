@@ -32,7 +32,6 @@ package dr.evomodelxml.speciation;
 
 
 import dr.evolution.tree.Tree;
-import dr.evolution.util.Units;
 import dr.evomodel.speciation.BirthDeathCollapseModel;
 import dr.evoxml.util.XMLUnits;
 import dr.inference.model.Parameter;
@@ -57,12 +56,14 @@ public class BirthDeathCollapseModelParser extends AbstractXMLObjectParser {
 
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return BIRTH_DEATH_COLLAPSE_MODEL;
     }
 
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -90,16 +91,19 @@ public class BirthDeathCollapseModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return BirthDeathCollapseModel.class;
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A speciation model aimed at species delimitation, mixing birth-death model with spike near zero for node heights.";
     }
 
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

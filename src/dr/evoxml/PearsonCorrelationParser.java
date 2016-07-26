@@ -38,9 +38,11 @@ public class PearsonCorrelationParser extends AbstractXMLObjectParser {
     public static final String PEARSON_CORRELATION = "pearsonCorrelation";
     public static final String LOG = "log";
 
-    public String getParserName() { return PEARSON_CORRELATION; }
+    @Override
+	public String getParserName() { return PEARSON_CORRELATION; }
                                              
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -60,20 +62,24 @@ public class PearsonCorrelationParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A Pearson Correlation between two Parameters";
     }
 
-    public String getExample() {
+    @Override
+	public String getExample() {
         return "<pearsonCorrelation id=\"r\" log=\"true\">\n"+
                "	<parameter idref=\"param1\"/>\n"+
                "    <parameter idref=\"param2\"/>\n"+
                "</pearsonCorrelation>\n";
     }
 
-    public Class getReturnType() { return PearsonCorrelation.class; }
+    @Override
+	public Class getReturnType() { return PearsonCorrelation.class; }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private final XMLSyntaxRule[] rules = {
         // There should be two and only two Parameters (X & Y)

@@ -60,6 +60,7 @@ public class AlloppSpeciesBindingsApSpInfoParser extends
 	public static final String APSP = "apsp";
 	public static final String PLOIDYLEVEL = "ploidylevel";
 
+	@Override
 	public String getParserName() {
 		return APSP;
 	}

@@ -26,10 +26,7 @@
 package dr.evoxml;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Set;
-
 import beast.evolution.alignment.Taxon;
 import beast.evolution.tree.TraitSet;
 import beast1to2.Beast1to2Converter;
@@ -59,10 +56,12 @@ public class TaxonParser extends AbstractXMLObjectParser {
 
 	public final static String TAXON = "taxon";
 
+	@Override
 	public String getParserName() {
 		return TAXON;
 	}
 
+	@Override
 	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.PI);
 
@@ -159,14 +158,17 @@ public class TaxonParser extends AbstractXMLObjectParser {
 		return taxon;
 	}
 
+	@Override
 	public String getParserDescription() {
 		return "";
 	}
 
+	@Override
 	public Class getReturnType() {
 		return Taxon.class;
 	}
 
+	@Override
 	public XMLSyntaxRule[] getSyntaxRules() {
 		return rules;
 	}

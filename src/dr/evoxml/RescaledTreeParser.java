@@ -45,9 +45,11 @@ public class RescaledTreeParser extends AbstractXMLObjectParser {
     public final static String CLADE = "clade";
     public final static String HEIGHT = "height";
 
-    public String getParserName() { return RESCALED_TREE; }
+    @Override
+	public String getParserName() { return RESCALED_TREE; }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         Tree tree = (Tree)xo.getChild(Tree.class);
 		return tree;
 		/* TODO: implement more detail
@@ -137,13 +139,16 @@ public class RescaledTreeParser extends AbstractXMLObjectParser {
     }
     */
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element rescales a given tree with a set of clade heights.";
     }
 
-    public Class getReturnType() { return Tree.class; }
+    @Override
+	public Class getReturnType() { return Tree.class; }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {
             AttributeRule.newDoubleRule(HEIGHT, true),

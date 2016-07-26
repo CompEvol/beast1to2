@@ -33,8 +33,10 @@ public class UserInput {
 
 	public static AbstractXMLObjectParser STRING_PARSER = new AbstractXMLObjectParser() {
 
+		@Override
 		public String getParserName() { return "string"; }
 			
+		@Override
 		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
@@ -55,13 +57,16 @@ public class UserInput {
 		// AbstractXMLObjectParser implementation
 		//************************************************************************
 		
+		@Override
 		public String getParserDescription() {
 			return "returns a String. If a prompt attribute exists then the user is prompted for input, otherwise the character contents of the element are returned.";
 		}
 		
+		@Override
 		public Class getReturnType() { return String.class; }
 		
 		
+		@Override
 		public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 		
 		private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {  
@@ -76,8 +81,10 @@ public class UserInput {
 	
 	public static AbstractXMLObjectParser DOUBLE_PARSER = new AbstractXMLObjectParser() {
 
+		@Override
 		public String getParserName() { return "double"; }
 			
+		@Override
 		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
@@ -98,12 +105,15 @@ public class UserInput {
 		// AbstractXMLObjectParser implementation
 		//************************************************************************
 		
+		@Override
 		public String getParserDescription() {
 			return "returns a Double. If a prompt attribute exists then the user is prompted for input, otherwise the character contents of the element are returned as a Double.";
 		}
 		
+		@Override
 		public Class getReturnType() { return Double.class; }
 		
+		@Override
 		public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 		
 		private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {  
@@ -118,8 +128,10 @@ public class UserInput {
 	
 	public static AbstractXMLObjectParser INTEGER_PARSER = new AbstractXMLObjectParser() {
 
+		@Override
 		public String getParserName() { return "integer"; }
 			
+		@Override
 		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
@@ -140,12 +152,15 @@ public class UserInput {
 		// AbstractXMLObjectParser implementation
 		//************************************************************************
 		
+		@Override
 		public String getParserDescription() {
 			return "returns an Integer. If a prompt attribute exists then the user is prompted for input, otherwise the character contents of the element are returned as an Integer.";
 		}
 		
+		@Override
 		public Class getReturnType() { return Integer.class; }
 		
+		@Override
 		public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 		
 		private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {  

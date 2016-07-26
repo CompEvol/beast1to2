@@ -44,11 +44,13 @@ public class TMRCAStatisticParser extends AbstractXMLObjectParser {
     public static final String STEM = "includeStem";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return TMRCA_STATISTIC;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         String name = xo.getAttribute("name", xo.getId());
         Tree tree = (Tree) xo.getChild(Tree.class);
         TaxonSet taxa = (TaxonSet) xo.getElementFirstChild(MRCA);
@@ -79,16 +81,19 @@ public class TMRCAStatisticParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A statistic that has as its value the height of the most recent common ancestor " +
                 "of a set of taxa in a given tree";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return MRCAPrior.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

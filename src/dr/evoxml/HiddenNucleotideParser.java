@@ -36,11 +36,13 @@ public class HiddenNucleotideParser extends AbstractXMLObjectParser {
     public static final String HIDDEN_NUCLEOTIDES = "hiddenNucleotides";
     public static final String HIDDEN_CLASS_COUNT = "classCount";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return HIDDEN_NUCLEOTIDES;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -50,15 +52,18 @@ public class HiddenNucleotideParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A nucleotide data type that allows hidden substitution classes";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return HiddenNucleotides.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{AttributeRule.newIntegerRule(HIDDEN_CLASS_COUNT)};
     }
 }

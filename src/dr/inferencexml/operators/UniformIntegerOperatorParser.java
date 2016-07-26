@@ -26,11 +26,8 @@
 package dr.inferencexml.operators;
 
 import beast.core.BEASTObject;
-import beast.core.Function;
 import beast.core.parameter.IntegerParameter;
 import beast.core.parameter.Parameter;
-import beast.core.parameter.RealParameter;
-import beast.evolution.operators.Uniform;
 import beast.evolution.operators.UniformOperator;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
@@ -41,11 +38,13 @@ public class UniformIntegerOperatorParser extends AbstractXMLObjectParser {
 
     public final static String UNIFORM_INTEGER_OPERATOR = "uniformIntegerOperator";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return UNIFORM_INTEGER_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
 
@@ -55,10 +54,10 @@ public class UniformIntegerOperatorParser extends AbstractXMLObjectParser {
         if (xo.hasAttribute("count")) count = xo.getIntegerAttribute("count");
 
         if (parameter instanceof IntegerParameter) {
-            int lower = (int) (double) ((IntegerParameter) parameter).getLower();
+            int lower = (int) ((IntegerParameter) parameter).getLower();
             if (xo.hasAttribute("lower")) lower = xo.getIntegerAttribute("lower");
 
-            int upper = (int) (double) ((IntegerParameter) parameter).getUpper();
+            int upper = (int) ((IntegerParameter) parameter).getUpper();
             if (xo.hasAttribute("upper")) upper = xo.getIntegerAttribute("upper");
 
             if (upper == lower || lower == (int) Double.NEGATIVE_INFINITY || upper == (int) Double.POSITIVE_INFINITY) {
@@ -82,16 +81,19 @@ public class UniformIntegerOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "An operator that picks new parameter values uniformly at random.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return UniformOperator.class;
     }
 
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

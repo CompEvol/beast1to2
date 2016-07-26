@@ -178,17 +178,20 @@ public class XMLParser {
     }
 
     private class MyErrorHandler extends DefaultHandler {
-        public void warning(SAXParseException e) throws SAXException {
+        @Override
+		public void warning(SAXParseException e) throws SAXException {
             System.out.println("Warning: ");
             printInfo(e);
         }
 
-        public void error(SAXParseException e) throws SAXException {
+        @Override
+		public void error(SAXParseException e) throws SAXException {
             System.out.println("Error: ");
             printInfo(e);
         }
 
-        public void fatalError(SAXParseException e) throws SAXException {
+        @Override
+		public void fatalError(SAXParseException e) throws SAXException {
             System.out.println("Fatal error: ");
             printInfo(e);
         }
@@ -485,11 +488,13 @@ public class XMLParser {
 
     public class ArrayParser extends AbstractXMLObjectParser {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return "array";
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
             List<Object> list = new ArrayList<Object>();
 
@@ -503,15 +508,18 @@ public class XMLParser {
         // AbstractXMLObjectParser implementation
         //************************************************************************
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "This element returns an array of the objects it contains.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Object[].class;
         }
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
 
             return new XMLSyntaxRule[]{new ElementRule(Object.class, "Objects to be put in an array", 1, Integer.MAX_VALUE)};
         }
@@ -531,27 +539,32 @@ public class XMLParser {
 
     //anonymous object store class
     private final ObjectStore objectStore = new ObjectStore() {
-        public Object getObjectById(Object uid) throws ObjectNotFoundException {
+        @Override
+		public Object getObjectById(Object uid) throws ObjectNotFoundException {
             XMLObject obj = (XMLObject) store.get(uid);
             if (obj == null) throw new ObjectNotFoundException("Object with uid=" + uid + " not found in ObjectStore");
             if (obj.hasNativeObject()) return obj.getNativeObject();
             return obj;
         }
 
-        public boolean hasObjectId(Object uid) {
+        @Override
+		public boolean hasObjectId(Object uid) {
             Object obj = store.get(uid);
             return (obj != null);
         }
 
-        public Set getIdSet() {
+        @Override
+		public Set getIdSet() {
             return store.keySet();
         }
 
-        public Collection getObjects() {
+        @Override
+		public Collection getObjects() {
             return store.values();
         }
 
-        public void addIdentifiableObject(Identifiable obj, boolean force) {
+        @Override
+		public void addIdentifiableObject(Identifiable obj, boolean force) {
 
             String id = obj.getId();
             if (id == null) throw new IllegalArgumentException("Object must have a non-null identifier.");
@@ -604,7 +617,8 @@ public class XMLParser {
     }
 
     class ParserComparator implements Comparator<String> {
-        public int compare(String o1, String o2) {
+        @Override
+		public int compare(String o1, String o2) {
             String name1 = o1.toUpperCase();
             String name2 = o2.toUpperCase();
 

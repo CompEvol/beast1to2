@@ -39,11 +39,13 @@ public class ExchangeOperatorParser {
     public static final String INTERMEDIATE_EXCHANGE = "intermediateExchange";
 
     public static XMLObjectParser NARROW_EXCHANGE_OPERATOR_PARSER = new AbstractXMLObjectParser() {
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return NARROW_EXCHANGE;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		    final Tree treeModel = (Tree) xo.getChild(Tree.class);
             final double weight = xo.getDoubleAttribute(ScaleOperatorParser.WEIGHT);
 
@@ -56,16 +58,19 @@ public class ExchangeOperatorParser {
         // AbstractXMLObjectParser implementation
         // ************************************************************************
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "This element represents a narrow exchange operator. "
                     + "This operator swaps a random subtree with its uncle.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Exchange.class;
         }
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -76,11 +81,13 @@ public class ExchangeOperatorParser {
     };
 
     public static XMLObjectParser INTERMEDIATE_EXCHANGE_OPERATOR_PARSER = new AbstractXMLObjectParser() {
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return INTERMEDIATE_EXCHANGE;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -95,16 +102,19 @@ public class ExchangeOperatorParser {
         // AbstractXMLObjectParser implementation
         // ************************************************************************
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "This element represents an intermediate exchange operator. "
                     + "This operator swaps two subtree random subtrees with a bias towards nearby subtrees.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Exchange.class;
         }
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -116,11 +126,13 @@ public class ExchangeOperatorParser {
 
 
     public static XMLObjectParser WIDE_EXCHANGE_OPERATOR_PARSER = new AbstractXMLObjectParser() {
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return WIDE_EXCHANGE;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
             final Tree treeModel = (Tree) xo.getChild(Tree.class);
             if (treeModel.getLeafNodeCount() <= 2) {
                 throw new XMLParseException("Tree with fewer than 3 taxa");
@@ -136,16 +148,19 @@ public class ExchangeOperatorParser {
         // AbstractXMLObjectParser implementation
         // ************************************************************************
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "This element represents a wide exchange operator. "
                     + "This operator swaps two random subtrees.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Exchange.class;
         }
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 

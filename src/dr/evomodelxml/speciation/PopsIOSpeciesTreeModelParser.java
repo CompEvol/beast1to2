@@ -107,7 +107,8 @@ public class PopsIOSpeciesTreeModelParser extends AbstractXMLObjectParser {
         return PopsIOSpeciesTreeModel.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return PIO_SPECIES_TREE;
     }
 }

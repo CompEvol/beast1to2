@@ -27,7 +27,6 @@ package dr.inferencexml.operators;
 
 import dr.inference.model.Parameter;
 import dr.inference.operators.CoercableMCMCOperator;
-import dr.inference.operators.CoercionMode;
 import dr.inference.operators.LogRandomWalkOperator;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
@@ -42,11 +41,13 @@ public class LogRandomWalkOperatorParser extends AbstractXMLObjectParser {
     public static final String SCALE_ALL_IND = ScaleOperatorParser.SCALE_ALL_IND;
     public static final String WINDOW_SIZE = "window";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return LOGRANDOMWALK_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -72,15 +73,18 @@ public class LogRandomWalkOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a scale operator on a given parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return LogRandomWalkOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

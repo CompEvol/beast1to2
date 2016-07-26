@@ -28,13 +28,9 @@ package dr.inferencexml.distribution;
 import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.linalg.SingularValueDecomposition;
 import dr.inference.distribution.GeneralizedLinearModel;
-import dr.inference.distribution.LinearRegression;
-import dr.inference.distribution.LogLinearModel;
-import dr.inference.distribution.LogisticRegression;
 import dr.inference.model.DesignMatrix;
 import dr.inference.model.Likelihood;
 import dr.inference.model.Parameter;
-import dr.math.matrixAlgebra.Matrix;
 import dr.xml.*;
 
 /**
@@ -59,11 +55,13 @@ public class GeneralizedLinearModelParser extends AbstractXMLObjectParser {
     public static final String CHECK_IDENTIFIABILITY = "checkIdentifiability";
     public static final String CHECK_FULL_RANK = "checkFullRank";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return GLM_LIKELIHOOD;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -232,7 +230,8 @@ public class GeneralizedLinearModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -257,11 +256,13 @@ public class GeneralizedLinearModelParser extends AbstractXMLObjectParser {
 //						new XMLSyntaxRule[]{new ElementRule(DesignMatrix.class)})
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Calculates the generalized linear model likelihood of the dependent parameters given one or more blocks of independent parameters and their design matrix.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Likelihood.class;
     }
 }

@@ -25,15 +25,15 @@
 
 package dr.xml;
 
-import dr.util.Property;
-
 public class PropertyParser extends AbstractXMLObjectParser {
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return "property";
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -64,15 +64,18 @@ public class PropertyParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns an object representing the named property of the given child object.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Object.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

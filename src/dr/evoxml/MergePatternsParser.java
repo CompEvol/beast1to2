@@ -28,8 +28,6 @@ package dr.evoxml;
 import dr.evolution.alignment.*;
 import dr.xml.*;
 
-import java.util.logging.Logger;
-
 /**
  * @author Alexei Drummond
  * @author Andrew Rambaut
@@ -40,12 +38,14 @@ public class MergePatternsParser extends AbstractXMLObjectParser {
 
     public static final String MERGE_PATTERNS = "mergePatterns";
 
-    public String getParserName() { return MERGE_PATTERNS; }
+    @Override
+	public String getParserName() { return MERGE_PATTERNS; }
 
     /**
      * Parses a patterns element and returns a patterns object.
      */
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -66,16 +66,19 @@ public class MergePatternsParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private final XMLSyntaxRule[] rules = {
         new ElementRule(PatternList.class, 1, Integer.MAX_VALUE)
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A weighted list of the unique site patterns (unique columns) in an alignment.";
     }
 
-    public Class getReturnType() { return PatternList.class; }
+    @Override
+	public Class getReturnType() { return PatternList.class; }
 
 }

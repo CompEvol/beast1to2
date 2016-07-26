@@ -28,7 +28,6 @@ package dr.inferencexml.operators;
 import dr.inference.distribution.DistributionLikelihood;
 import dr.inference.distribution.MomentDistributionModel;
 import dr.inference.model.LatentFactorModel;
-import dr.inference.model.MatrixParameterInterface;
 import dr.inference.operators.LoadingsGibbsOperator;
 //import dr.inference.operators.LoadingsGibbsTruncatedOperator;
 import dr.xml.*;

@@ -25,10 +25,8 @@
 
 package dr.evomodelxml.substmodel;
 
-import dr.evolution.datatype.DataType;
 import dr.evomodel.substmodel.FrequencyModel;
 import dr.evomodel.substmodel.GeneralSubstitutionModel;
-import dr.inference.model.Parameter;
 import dr.xml.*;
 
 import java.util.Stack;
@@ -54,7 +52,8 @@ public class LewisMkSubstitutionModelParser extends AbstractXMLObjectParser {
 
     //public static XMLObjectParser PARSER=new LewisMkSubstitutionModelParser();
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -125,7 +124,8 @@ public class LewisMkSubstitutionModelParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -166,15 +166,18 @@ public class LewisMkSubstitutionModelParser extends AbstractXMLObjectParser {
                             AttributeRule.newStringRule(ADJACENT, false)}, 0, Integer.MAX_VALUE)
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A parser for Lewis' Mk model";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return GeneralSubstitutionModel.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return LEWIS_MK_MODEL;
     }
 }

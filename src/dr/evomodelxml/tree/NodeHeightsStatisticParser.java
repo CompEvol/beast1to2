@@ -25,7 +25,6 @@
 
 package dr.evomodelxml.tree;
 
-import dr.evolution.tree.Tree;
 import dr.evomodel.tree.NodeHeightsStatistic;
 import dr.evomodel.tree.TreeModel;
 import dr.inference.model.Parameter;
@@ -38,11 +37,13 @@ public class NodeHeightsStatisticParser extends AbstractXMLObjectParser {
 
     public static final String NODE_HEIGHTS_STATISTIC = "nodeHeightsStatistic";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return NODE_HEIGHTS_STATISTIC;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -60,15 +61,18 @@ public class NodeHeightsStatisticParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A statistic that returns the heights of each internal node in increasing order (or groups them by a group size parameter)";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return NodeHeightsStatistic.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

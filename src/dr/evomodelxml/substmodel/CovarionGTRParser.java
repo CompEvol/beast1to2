@@ -25,7 +25,6 @@
 
 package dr.evomodelxml.substmodel;
 
-import dr.evolution.datatype.HiddenNucleotides;
 import dr.evomodel.substmodel.AbstractCovarionDNAModel;
 import dr.evomodel.substmodel.CovarionGTR;
 import dr.evomodel.substmodel.FrequencyModel;
@@ -38,11 +37,13 @@ import dr.xml.*;
 public class CovarionGTRParser extends AbstractXMLObjectParser {
     public static final String GTR_COVARION_MODEL = "gtrCovarionModel";    
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return GTR_COVARION_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -103,15 +104,18 @@ public class CovarionGTRParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A covarion substitution model of langauge evolution with binary data and a hidden rate state with two rates.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return CovarionGTR.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

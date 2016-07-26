@@ -42,7 +42,8 @@ public class MicrosatUpDownOperatorParser extends AbstractXMLObjectParser {
 
     public static final String SCALE_FACTOR = ScaleOperatorParser.SCALE_FACTOR;
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MICROSAT_UP_DOWN_OPERATOR;
     }
 
@@ -58,7 +59,8 @@ public class MicrosatUpDownOperatorParser extends AbstractXMLObjectParser {
         return args;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -76,17 +78,20 @@ public class MicrosatUpDownOperatorParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents an operator that scales two parameters in different directions. " +
                 "Each operation involves selecting a scale uniformly at random between scaleFactor and 1/scaleFactor. " +
                 "The up parameter is multipled by this scale and the down parameter is divided by this scale.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return MicrosatUpDownOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

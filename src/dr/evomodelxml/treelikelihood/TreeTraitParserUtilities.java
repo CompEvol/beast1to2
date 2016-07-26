@@ -130,7 +130,8 @@ public class TreeTraitParserUtilities {
             return index;
         }
 
-        public int compareTo(Object o) {
+        @Override
+		public int compareTo(Object o) {
             double[] x = ((DoubleArray) o).getValues();
             for (int i = 0; i < value.length; i++) {
                 if (value[i] > x[i]) {

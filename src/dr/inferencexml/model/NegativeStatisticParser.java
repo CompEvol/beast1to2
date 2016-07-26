@@ -37,10 +37,13 @@ public class NegativeStatisticParser extends AbstractXMLObjectParser {
     public static String NEGATE = "negate";
     public static String NEGATIVE = "negative";
 
-    public String[] getParserNames() { return new String[] { getParserName(), NEGATIVE,  NEGATE}; }
-    public String getParserName() { return NEGATE_STATISTIC; }
+    @Override
+	public String[] getParserNames() { return new String[] { getParserName(), NEGATIVE,  NEGATE}; }
+    @Override
+	public String getParserName() { return NEGATE_STATISTIC; }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -62,13 +65,16 @@ public class NegativeStatisticParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a statistic that is the element-wise negation of the child statistic.";
     }
 
-    public Class getReturnType() { return NegativeStatistic.class; }
+    @Override
+	public Class getReturnType() { return NegativeStatistic.class; }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {
         new ElementRule(Statistic.class, 1, 1 )

@@ -44,11 +44,13 @@ public class TN93Parser extends AbstractXMLObjectParser {
     public static final String KAPPA2 = "kappa2";
     public static final String FREQUENCIES = "frequencies";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return TN93_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         RealParameter kappa1Param = (RealParameter) xo.getElementFirstChild(KAPPA1);
         RealParameter kappa2Param = (RealParameter) xo.getElementFirstChild(KAPPA2);
@@ -66,15 +68,18 @@ public class TN93Parser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents an instance of the TN93 (Tamura and Nei 1993) model of nucleotide evolution.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TN93.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

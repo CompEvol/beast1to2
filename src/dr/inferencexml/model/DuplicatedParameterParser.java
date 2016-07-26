@@ -25,7 +25,6 @@
 
 package dr.inferencexml.model;
 
-import dr.inference.model.DuplicatedParameter;
 import dr.inference.model.Parameter;
 import dr.xml.*;
 
@@ -36,7 +35,8 @@ public class DuplicatedParameterParser extends AbstractXMLObjectParser {
     public static final String DUPLICATED_PARAMETER = "duplicatedParameter";
     public static final String COPIES = "copies";
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -52,7 +52,8 @@ public class DuplicatedParameterParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -64,15 +65,18 @@ public class DuplicatedParameterParser extends AbstractXMLObjectParser {
                     }),
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A duplicated parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Parameter.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return DUPLICATED_PARAMETER;
     }
 }

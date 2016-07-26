@@ -26,13 +26,9 @@
 package dr.evoxml;
 
 import dr.evolution.alignment.Alignment;
-import dr.evolution.alignment.AscertainedSitePatterns;
 import dr.evolution.alignment.PatternList;
 import dr.evolution.util.TaxonList;
 import dr.xml.*;
-import dr.util.Citable;
-
-import java.util.logging.Logger;
 
 /**
  * Package: AscertainedSitePatternsParser
@@ -54,11 +50,13 @@ public class AscertainedSitePatternsParser extends AbstractXMLObjectParser {
     public static final String INCLUDE = "includePatterns";
     public static final String EXCLUDE = "excludePatterns";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return APATTERNS;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -154,7 +152,8 @@ public class AscertainedSitePatternsParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -169,11 +168,13 @@ public class AscertainedSitePatternsParser extends AbstractXMLObjectParser {
             new ContentRule("<excludePatterns from=\"Z\" to=\"X\"/>")
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A weighted list of the unique site patterns (unique columns) in an alignment.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return PatternList.class;
     }
 

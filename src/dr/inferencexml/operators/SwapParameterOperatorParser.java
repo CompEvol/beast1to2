@@ -26,12 +26,8 @@
 package dr.inferencexml.operators;
 
 import dr.inference.model.Parameter;
-import dr.inference.operators.SwapParameterGibbsOperator;
 import dr.inference.operators.SwapParameterOperator;
 import dr.xml.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  */
@@ -41,11 +37,13 @@ public class SwapParameterOperatorParser extends AbstractXMLObjectParser {
     public static final String FORCE_GIBBS = "forceGibbs";
     public static final String WEIGHT = "weight";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SWAP_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -72,15 +70,18 @@ public class SwapParameterOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents an operator that swaps values in a multi-dimensional parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return SwapParameterOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

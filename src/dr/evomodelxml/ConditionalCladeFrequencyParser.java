@@ -28,16 +28,8 @@
  */
 package dr.evomodelxml;
 
-import dr.evolution.io.Importer;
-import dr.evolution.io.NewickImporter;
-import dr.evolution.tree.Tree;
 import dr.evomodel.tree.ConditionalCladeFrequency;
 import dr.xml.*;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
 
 /**
  * @author Sebastian Hoehna
@@ -55,11 +47,13 @@ public class ConditionalCladeFrequencyParser extends AbstractXMLObjectParser {
 
     public final static String REFERENCE_TREE = "referenceTree";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return CONDITIONAL_CLADE_PROBABILITY_ANALYSIS;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -138,15 +132,18 @@ public class ConditionalCladeFrequencyParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Calculates posterior of a tree on a trace consisting of trees.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ConditionalCladeFrequency.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

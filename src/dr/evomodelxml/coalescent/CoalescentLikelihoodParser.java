@@ -27,14 +27,10 @@ package dr.evomodelxml.coalescent;
 
 
 import beast.core.BEASTInterface;
-import beast.core.BEASTObject;
 import beast.evolution.alignment.TaxonSet;
-import beast.evolution.tree.Tree;
 import beast.evolution.tree.TreeInterface;
 import beast.evolution.tree.coalescent.Coalescent;
-import beast.evolution.tree.coalescent.CompoundPopulationFunction;
 import beast.evolution.tree.coalescent.PopulationFunction;
-import beast.evolution.tree.coalescent.ScaledPopulationFunction;
 import beast.evolution.tree.coalescent.TreeIntervals;
 import dr.xml.*;
 
@@ -53,11 +49,13 @@ public class CoalescentLikelihoodParser extends AbstractXMLObjectParser {
     public static final String INCLUDE = "include";
     public static final String EXCLUDE = "exclude";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return COALESCENT_LIKELIHOOD;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         XMLObject cxo = xo.getChild(MODEL);
         PopulationFunction populationFunction = (PopulationFunction) cxo.getChild(PopulationFunction.class);
@@ -192,15 +190,18 @@ public class CoalescentLikelihoodParser extends AbstractXMLObjectParser {
 		return null;
 	}
 
+	@Override
 	public String getParserDescription() {
         return "This element represents the likelihood of the tree given the demographic function.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Coalescent.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

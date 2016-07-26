@@ -43,11 +43,13 @@ public class LogNormalDistributionModelParser extends AbstractXMLObjectParser {
     public static final String MEAN_IN_REAL_SPACE = "meanInRealSpace";
     public static final String STDEV_IN_REAL_SPACE = "stdevInRealSpace";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return LOGNORMAL_DISTRIBUTION_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         Parameter<?> meanParam;
 
         final double offset = xo.getAttribute(OFFSET, 0.0);
@@ -103,7 +105,8 @@ public class LogNormalDistributionModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -136,12 +139,14 @@ public class LogNormalDistributionModelParser extends AbstractXMLObjectParser {
                     ))
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Describes a normal distribution with a given mean and standard deviation " +
                 "that can be used in a distributionLikelihood element";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return LogNormalDistributionModel.class;
     }
 }

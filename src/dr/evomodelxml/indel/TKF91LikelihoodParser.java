@@ -41,11 +41,13 @@ public class TKF91LikelihoodParser extends AbstractXMLObjectParser {
     public static final String TKF91_DEATH = "deathRate";
     //public static final String MU = "mutationRate";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return TKF91_LIKELIHOOD;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -62,17 +64,20 @@ public class TKF91LikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Returns the total likelihood of a single alignment under the TKF91 model, for a given tree. " +
                 "In particular all possible ancestral histories of insertions and deletions leading to the " +
                 "alignment of sequences at the tips are taken into account.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TKF91Likelihood.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

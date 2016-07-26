@@ -25,12 +25,8 @@
 
 package dr.evoxml;
 
-import dr.evolution.tree.MutableTree;
 import dr.evolution.tree.SimpleNode;
-import dr.evolution.tree.SimpleTree;
 import dr.evolution.tree.Tree;
-import dr.evolution.util.TimeScale;
-import dr.evolution.util.Units;
 import dr.evoxml.util.XMLUnits;
 import dr.xml.*;
 
@@ -49,11 +45,13 @@ public class SimpleTreeParser extends AbstractXMLObjectParser {
     public static final String USING_DATES = "usingDates";
     public static final String DATE = "date";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SIMPLE_TREE;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -134,15 +132,18 @@ public class SimpleTreeParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents a rooted binary tree and associated attributes.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Tree.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

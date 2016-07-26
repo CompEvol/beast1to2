@@ -36,11 +36,13 @@ public class RLTVLoggerOnTreeParser extends AbstractXMLObjectParser {
 
     private static final String RANDOM_LOCAL_LOGGER = "randomLocalLoggerOnTree";
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return RANDOM_LOCAL_LOGGER;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -54,15 +56,18 @@ public class RLTVLoggerOnTreeParser extends AbstractXMLObjectParser {
         // AbstractXMLObjectParser implementation
         //************************************************************************
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "A parser to log changed == 0 : 1 in a tree log";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return RLTVLoggerOnTree.class;
         }
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 

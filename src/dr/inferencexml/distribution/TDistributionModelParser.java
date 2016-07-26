@@ -39,11 +39,13 @@ public class TDistributionModelParser extends AbstractXMLObjectParser {
     public static final String SCALE = "scale";
     public static final String DF = "df";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return T_DISTRIBUTION_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -81,7 +83,8 @@ public class TDistributionModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -109,12 +112,14 @@ public class TDistributionModelParser extends AbstractXMLObjectParser {
             )
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Describes a normal distribution with a given mean and standard deviation " +
                 "that can be used in a distributionLikelihood element";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TDistributionModel.class;
     }
 

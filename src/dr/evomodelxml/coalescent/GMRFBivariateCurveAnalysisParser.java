@@ -29,8 +29,6 @@ import dr.evomodel.coalescent.GMRFBivariateCurveAnalysis;
 import dr.inferencexml.trace.TraceAnalysisParser;
 import dr.xml.*;
 
-import java.io.File;
-
 /**
  *
  */
@@ -41,19 +39,23 @@ public class GMRFBivariateCurveAnalysisParser extends AbstractXMLObjectParser {
     private static final String FILE_NAME_ONE = "fileName1";
     private static final String FILE_NAME_TWO = "fileName2";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return GMRF_BIVARIATE_CURVE_ANALYSIS;
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Integrates two curves";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return GMRFBivariateCurveAnalysis.class;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -97,7 +99,8 @@ public class GMRFBivariateCurveAnalysisParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
                 AttributeRule.newStringRule(FILE_NAME_ONE, false),
                 AttributeRule.newStringRule(FILE_NAME_TWO, false),

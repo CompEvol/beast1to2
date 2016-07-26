@@ -37,19 +37,23 @@ public class SpeciesTreeSimplePriorParser extends AbstractXMLObjectParser {
     private static final String STPRIOR = "speciesTreePopulationPrior";
     public static final String TIPS = "tipsDistribution";
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return SpeciesTreeSimplePrior.class;
         }
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return STPRIOR;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -65,7 +69,8 @@ public class SpeciesTreeSimplePriorParser extends AbstractXMLObjectParser {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return new XMLSyntaxRule[]{
                     new ElementRule(SpeciesTreeModel.class),
                     new ElementRule(TIPS,

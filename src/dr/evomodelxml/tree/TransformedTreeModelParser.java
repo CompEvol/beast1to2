@@ -29,8 +29,6 @@ import dr.evomodel.tree.*;
 import dr.inference.model.Parameter;
 import dr.xml.*;
 
-import java.util.logging.Logger;
-
 /**
  * @author Marc Suchard
  */
@@ -39,14 +37,16 @@ public class TransformedTreeModelParser extends AbstractXMLObjectParser {
     public static final String TRANSFORMED_TREE_MODEL = "transformedTreeModel";
     public static final String VERSION = "version";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return TRANSFORMED_TREE_MODEL;
     }
 
     /**
      * @return a tree object based on the XML element it was passed.
      */
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -85,15 +85,18 @@ public class TransformedTreeModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents a transformed model of the tree.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TransformedTreeModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

@@ -25,10 +25,7 @@
 
 package dr.evomodelxml.coalescent;
 
-import dr.evolution.util.Units;
-import dr.evomodel.coalescent.AsymptoticGrowthModel;
 import dr.evomodel.coalescent.LogisticGrowthModel;
-import dr.evomodel.coalescent.PeakAndDeclineModel;
 import dr.evoxml.util.XMLUnits;
 import dr.inference.model.Parameter;
 import dr.xml.*;
@@ -43,11 +40,13 @@ public class AsymptoticGrowthModelParser extends AbstractXMLObjectParser {
 
     public static String SHAPE = "shape";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return ASYMPTOTIC_GROWTH_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -72,15 +71,18 @@ public class AsymptoticGrowthModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Logistic growth demographic model.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return LogisticGrowthModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

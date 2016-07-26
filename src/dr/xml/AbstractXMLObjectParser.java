@@ -35,7 +35,8 @@ import java.util.List;
 
 public abstract class AbstractXMLObjectParser implements XMLObjectParser {
 
-    public final Object parseXMLObject(XMLObject xo, String id, ObjectStore store, boolean strictXML)
+    @Override
+	public final Object parseXMLObject(XMLObject xo, String id, ObjectStore store, boolean strictXML)
             throws XMLParseException {
 
         this.store = store;
@@ -125,7 +126,8 @@ public abstract class AbstractXMLObjectParser implements XMLObjectParser {
         }
     }
 
-    public String[] getParserNames() {
+    @Override
+	public String[] getParserNames() {
         return new String[]{getParserName()};
     }
 
@@ -139,7 +141,8 @@ public abstract class AbstractXMLObjectParser implements XMLObjectParser {
      * @return an array of syntax rules required by this element.
      *         Order is not important.
      */
-    public abstract XMLSyntaxRule[] getSyntaxRules();
+    @Override
+	public abstract XMLSyntaxRule[] getSyntaxRules();
 
     /**
      * Allowed if any of the rules allows that element
@@ -147,7 +150,8 @@ public abstract class AbstractXMLObjectParser implements XMLObjectParser {
      * @param elementName String
      * @return boolean isAllowed
      */
-    public final boolean isAllowed(String elementName) {
+    @Override
+	public final boolean isAllowed(String elementName) {
         final XMLSyntaxRule[] rules = getSyntaxRules();
         if (rules != null && rules.length > 0) {
             for (XMLSyntaxRule rule : rules) {
@@ -186,15 +190,19 @@ public abstract class AbstractXMLObjectParser implements XMLObjectParser {
         return un;
     }
 
-    public abstract String getParserDescription();
+    @Override
+	public abstract String getParserDescription();
 
-    public abstract Class getReturnType();
+    @Override
+	public abstract Class getReturnType();
 
-    public final boolean hasExample() {
+    @Override
+	public final boolean hasExample() {
         return getExample() != null;
     }
 
-    public String getExample() {
+    @Override
+	public String getExample() {
         return null;
     }
 
@@ -205,7 +213,8 @@ public abstract class AbstractXMLObjectParser implements XMLObjectParser {
     /**
      * @return a description of this parser as a string.
      */
-    public final String toHTML(XMLDocumentationHandler handler) {
+    @Override
+	public final String toHTML(XMLDocumentationHandler handler) {
         StringBuffer buffer = new StringBuffer();
         buffer.append("<div id=\"").append(getParserName()).append("\" class=\"element\">\n");
         buffer.append("  <div class=\"elementheader\">\n");
@@ -241,7 +250,8 @@ public abstract class AbstractXMLObjectParser implements XMLObjectParser {
     /**
      * @return a description of this parser as a string.
      */
-    public final String toWiki(XMLDocumentationHandler handler) {
+    @Override
+	public final String toWiki(XMLDocumentationHandler handler) {
         StringBuffer buffer = new StringBuffer();
         buffer.append("===<code>&lt;").append(getParserName()).append("&gt;</code> element===\n\n");
         buffer.append(getParserDescription()).append("\n\n");
@@ -288,7 +298,8 @@ public abstract class AbstractXMLObjectParser implements XMLObjectParser {
     /**
      * @return a description of this parser as a string.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer buffer = new StringBuffer();
         buffer.append("\nELEMENT ").append(getParserName()).append("\n");
 
@@ -305,7 +316,8 @@ public abstract class AbstractXMLObjectParser implements XMLObjectParser {
     // private methods
     //************************************************************************
 
-    public final boolean hasSyntaxRules() {
+    @Override
+	public final boolean hasSyntaxRules() {
         XMLSyntaxRule[] rules = getSyntaxRules();
         return (rules != null && rules.length > 0);
     }

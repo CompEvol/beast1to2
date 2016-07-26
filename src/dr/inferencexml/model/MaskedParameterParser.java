@@ -25,7 +25,6 @@
 
 package dr.inferencexml.model;
 
-import dr.inference.model.MaskedParameter;
 import dr.inference.model.Parameter;
 import dr.xml.*;
 
@@ -41,7 +40,8 @@ public class MaskedParameterParser extends AbstractXMLObjectParser {
     public static final String TO = "to";
     public static final String EVERY = "every";
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -81,7 +81,8 @@ public class MaskedParameterParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -97,15 +98,18 @@ public class MaskedParameterParser extends AbstractXMLObjectParser {
             AttributeRule.newIntegerRule(EVERY, true),
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A masked parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Parameter.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MASKED_PARAMETER;
     }
 }

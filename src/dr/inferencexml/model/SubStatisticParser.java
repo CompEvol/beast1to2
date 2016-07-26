@@ -36,11 +36,13 @@ public class SubStatisticParser extends AbstractXMLObjectParser {
     public static final String SUB_STATISTIC = "subStatistic";
     public static final String DIMENSION = "dimension";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SUB_STATISTIC;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -75,15 +77,18 @@ public class SubStatisticParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Allows you to choose specific dimensions of a given statistic";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return SubStatistic.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
                 AttributeRule.newIntegerArrayRule(DIMENSION, false),
                 new ElementRule(Statistic.class),

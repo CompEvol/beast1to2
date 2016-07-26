@@ -35,11 +35,13 @@ public class WilsonBaldingParser extends AbstractXMLObjectParser {
     public static final String WILSON_BALDING = "wilsonBalding";
     public static final String DEMOGRAPHIC_MODEL = "demographicModel";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return WILSON_BALDING;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         final double weight = xo.getDoubleAttribute(ScaleOperatorParser.WEIGHT);
 
@@ -55,7 +57,8 @@ public class WilsonBaldingParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -64,11 +67,13 @@ public class WilsonBaldingParser extends AbstractXMLObjectParser {
             new ElementRule(Tree.class)
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "An operator which performs the Wilson-Balding move on a tree";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return WilsonBalding.class;
     }
 }

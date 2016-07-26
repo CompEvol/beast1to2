@@ -27,15 +27,8 @@ package dr.evomodelxml.substmodel;
 
 import dr.evolution.datatype.DataType;
 import dr.evomodel.substmodel.FrequencyModel;
-import dr.evomodel.substmodel.GeneralSubstitutionModel;
-import dr.evomodel.substmodel.SVSComplexSubstitutionModel;
-import dr.evomodel.substmodel.SVSGeneralSubstitutionModel;
-import dr.evoxml.util.DataTypeUtils;
-import dr.inference.model.BayesianStochasticSearchVariableSelection;
 import dr.inference.model.Parameter;
 import dr.xml.*;
-
-import java.util.logging.Logger;
 
 /**
  * Parses a GeneralSubstitutionModel or one of its more specific descendants.
@@ -52,15 +45,18 @@ public class GeneralSubstitutionModelParser extends AbstractXMLObjectParser {
     public static final String SVS_GENERAL_SUBSTITUTION_MODEL = "svsGeneralSubstitutionModel";
     public static final String SVS_COMPLEX_SUBSTITUTION_MODEL = "svsComplexSubstitutionModel";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return GENERAL_SUBSTITUTION_MODEL;
     }
 
-    public String[] getParserNames() {
+    @Override
+	public String[] getParserNames() {
         return new String[]{getParserName(), SVS_GENERAL_SUBSTITUTION_MODEL, SVS_COMPLEX_SUBSTITUTION_MODEL};
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -190,15 +186,18 @@ public class GeneralSubstitutionModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A general reversible model of sequence substitution for any data type.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return GeneralSubstitutionModelParser.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

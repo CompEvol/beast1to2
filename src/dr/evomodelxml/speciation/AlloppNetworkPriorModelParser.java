@@ -25,7 +25,6 @@
 
 package dr.evomodelxml.speciation;
 
-import dr.evolution.util.Units;
 import dr.evomodel.speciation.AlloppNetworkPriorModel;
 import dr.evoxml.util.XMLUnits;
 import dr.inference.model.Parameter;
@@ -93,6 +92,7 @@ public class AlloppNetworkPriorModelParser extends AbstractXMLObjectParser {
     public static final String HYBRID_POPULATION_DISTRIBUTION = "hybridPopulationDistribution";
 
 
+	@Override
 	public String getParserName() {
 		return ALLOPPNETWORKPRIORMODEL;
 	}

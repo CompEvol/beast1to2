@@ -25,7 +25,6 @@
 
 package dr.evomodelxml.substmodel;
 
-import dr.evolution.datatype.TwoStateCovarion;
 import dr.evomodel.substmodel.BinaryCovarionModel;
 import dr.inference.model.Parameter;
 import dr.xml.*;
@@ -42,11 +41,13 @@ public class BinaryCovarionModelParser extends AbstractXMLObjectParser {
     public static final String VERSION = "version";
     public static final BinaryCovarionModel.Version DEFAULT_VERSION = BinaryCovarionModel.Version.VERSION1;
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return COVARION_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -89,15 +90,18 @@ public class BinaryCovarionModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A covarion substitution model on binary data and a hidden rate state with two rates.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return BinaryCovarionModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

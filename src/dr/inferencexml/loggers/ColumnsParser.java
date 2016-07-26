@@ -29,8 +29,6 @@ import beast.core.BEASTObject;
 import beast.core.Logger;
 import dr.xml.*;
 
-import java.util.ArrayList;
-
 /**
  *
  */
@@ -44,11 +42,13 @@ public class ColumnsParser extends AbstractXMLObjectParser {
     public static final String PERCENT = "percent";
     public static final String BOOL = "boolean";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return COLUMN;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         //only used for screen logger
         Logger logger = new Logger();
 
@@ -141,15 +141,18 @@ public class ColumnsParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Specifies formating options for one or more columns in a log file.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Logger.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

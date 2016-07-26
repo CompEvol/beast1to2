@@ -39,11 +39,13 @@ public class TreeMetricStatisticParser extends AbstractXMLObjectParser {
     public static final String REFERENCE = "reference";
     public static final String METHOD = "method";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return TREE_METRIC_STATISTIC;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -67,17 +69,20 @@ public class TreeMetricStatisticParser extends AbstractXMLObjectParser {
     // implementation
     // ************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A statistic that returns the distance between two trees. "
                 + " with method=\"topology\", return a 0 for identity and a 1 for difference. "
                 + "With other methods return the distance metric associated with that method.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TreeMetricStatistic.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

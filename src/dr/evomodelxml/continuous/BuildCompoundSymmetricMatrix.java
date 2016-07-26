@@ -29,7 +29,6 @@ import dr.inference.model.MatrixParameter;
 import dr.xml.AbstractXMLObjectParser;
 import dr.xml.XMLObject;
 import dr.xml.XMLParseException;
-import dr.inference.model.Parameter;
 import dr.xml.XMLSyntaxRule;
 
 /**

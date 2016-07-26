@@ -25,11 +25,8 @@
 
 package dr.inferencexml.distribution;
 
-import dr.inference.distribution.DistributionLikelihood;
 import dr.inference.distribution.TwoPartsDistributionLikelihood;
-import dr.inference.model.Parameter;
 import dr.xml.*;
-import dr.math.distributions.Distribution;
 
 /**
  * @author Chieh-Hsi Wu
@@ -45,11 +42,13 @@ public class TwoPartsDistributionLikelihoodParser extends AbstractXMLObjectParse
     public static final String SELECTED_VARIABLE = "selectedVariable";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return TWO_PART_DISTRIBUTION_LIKELIHOOD;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -79,7 +78,8 @@ public class TwoPartsDistributionLikelihoodParser extends AbstractXMLObjectParse
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -87,11 +87,13 @@ public class TwoPartsDistributionLikelihoodParser extends AbstractXMLObjectParse
 
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Calculates the likelihood of some data given some parametric or empirical distribution.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TwoPartsDistributionLikelihood.class;
     }
 }

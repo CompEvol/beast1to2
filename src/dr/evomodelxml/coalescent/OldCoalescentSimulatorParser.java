@@ -46,6 +46,7 @@ import java.util.List;
  *
  * @deprecated
  */
+@Deprecated
 public class OldCoalescentSimulatorParser extends AbstractXMLObjectParser {
 
     public static final String COALESCENT_TREE = "coalescentTree";
@@ -55,11 +56,13 @@ public class OldCoalescentSimulatorParser extends AbstractXMLObjectParser {
     public static final String TMRCA_CONSTRAINT = "tmrca";
     public static final String IS_MONOPHYLETIC = "monophyletic";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return COALESCENT_TREE;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         RandomTree randomTree = new RandomTree();
 
         PopulationFunction populationFunction = (PopulationFunction) xo.getChild(PopulationFunction.class);
@@ -383,15 +386,18 @@ public class OldCoalescentSimulatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a simulated tree under the given demographic model.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Tree.class; //Object.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

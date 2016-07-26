@@ -37,7 +37,8 @@ public class ParameterChooserParser extends AbstractXMLObjectParser {
     public static String VARIABLE_SELECTOR = "variableSelector";
     public static String INDEX = "index";
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
         return null;
 
@@ -52,22 +53,26 @@ public class ParameterChooserParser extends AbstractXMLObjectParser {
 //        return new ParameterChooser(name, pool, which);
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[] {
                 new ElementRule(ValuesPool.class,1,1),
                 AttributeRule.newIntegerArrayRule(INDEX, false),
         };
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ParameterChooser.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return VARIABLE_SELECTOR;
     }
 }

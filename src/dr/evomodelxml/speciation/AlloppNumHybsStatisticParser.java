@@ -38,7 +38,8 @@ public class AlloppNumHybsStatisticParser  extends AbstractXMLObjectParser {
     public static final String NUMHYBS_STATISTIC = "alloppNumHybsStatistic";
     public static final String APSPNETWORK = "apspNetwork";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return NUMHYBS_STATISTIC;
     }
 

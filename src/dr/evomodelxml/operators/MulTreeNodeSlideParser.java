@@ -40,11 +40,13 @@ import dr.xml.*;
 public class MulTreeNodeSlideParser extends AbstractXMLObjectParser {
     public static final String MULTREE_NODE_REHEIGHT = "mulTreeNodeReHeight";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MULTREE_NODE_REHEIGHT;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -61,15 +63,18 @@ public class MulTreeNodeSlideParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Specialized Species tree operator, transform tree without breaking embedding of gene trees.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return MulTreeNodeSlide.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
                 AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
                // AttributeRule.newDoubleRule("range", true),

@@ -26,13 +26,10 @@
 package dr.inferencexml.operators;
 
 import dr.inference.distribution.MultivariateDistributionLikelihood;
-import dr.inference.distribution.MultivariateNormalDistributionModel;
-import dr.inference.model.CompoundParameter;
 import dr.inference.model.Parameter;
 import dr.inference.operators.EllipticalSliceOperator;
 import dr.inference.operators.MCMCOperator;
 import dr.math.distributions.GaussianProcessRandomGenerator;
-import dr.math.distributions.MultivariateNormalDistribution;
 import dr.xml.*;
 
 /**
@@ -47,11 +44,13 @@ public class EllipticalSliceOperatorParser extends AbstractXMLObjectParser {
 
     public static final String DRAW_BY_ROW = "drawByRow";  // TODO What is this?
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return ELLIPTICAL_SLICE_SAMPLER;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -103,15 +102,18 @@ public class EllipticalSliceOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "An elliptical slice sampler for parameters with Gaussian priors.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return EllipticalSliceOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

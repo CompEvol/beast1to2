@@ -36,11 +36,13 @@ public class SwapOperatorParser extends AbstractXMLObjectParser {
 
     public final static String SWAP_OPERATOR = "swapOperator";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SWAP_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         Parameter<?> parameter = (Parameter<?>) xo.getChild(Parameter.class);
         double weight = xo.getDoubleAttribute("weight");
@@ -64,15 +66,18 @@ public class SwapOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents an operator that swaps values in a multi-dimensional parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return SwapOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

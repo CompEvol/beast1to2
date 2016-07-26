@@ -39,7 +39,8 @@ public class UpDownOperatorParser extends AbstractXMLObjectParser {
 
     public static final String SCALE_FACTOR = ScaleOperatorParser.SCALE_FACTOR;
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return UP_DOWN_OPERATOR;
     }
 
@@ -59,11 +60,13 @@ public class UpDownOperatorParser extends AbstractXMLObjectParser {
                     final Scalable s = (Scalable) xo.getChild(Scalable.class);
                     args[k] = new Scalable() {
 
-                        public int scale(double factor, int nDims) throws OperatorFailedException {
+                        @Override
+						public int scale(double factor, int nDims) throws OperatorFailedException {
                             return s.scale(factor, count);
                         }
 
-                        public String getName() {
+                        @Override
+						public String getName() {
                             return s.getName() + "(" + count + ")";
                         }
                     };
@@ -73,12 +76,14 @@ public class UpDownOperatorParser extends AbstractXMLObjectParser {
                     final Scalable s = (Scalable) xo.getChild(Scalable.class);
                     args[k] = new Scalable() {
 
-                        public int scale(double factor, int nDims) throws OperatorFailedException {
+                        @Override
+						public int scale(double factor, int nDims) throws OperatorFailedException {
                             s.scale(factor, -1);
                             return df;
                         }
 
-                        public String getName() {
+                        @Override
+						public String getName() {
                             return s.getName() + "[df=" + df + "]";
                         }
                     };
@@ -89,7 +94,8 @@ public class UpDownOperatorParser extends AbstractXMLObjectParser {
         return args;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -107,17 +113,20 @@ public class UpDownOperatorParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents an operator that scales two parameters in different directions. " +
                 "Each operation involves selecting a scale uniformly at random between scaleFactor and 1/scaleFactor. " +
                 "The up parameter is multipled by this scale and the down parameter is divided by this scale.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return UpDownOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

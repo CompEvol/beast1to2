@@ -94,11 +94,13 @@ public class Report {
 
     public static XMLObjectParser PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return REPORT;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -134,11 +136,13 @@ public class Report {
         // AbstractXMLObjectParser implementation
         //************************************************************************
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Generates a report using the given text and elements";
         }
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -149,7 +153,8 @@ public class Report {
                 AttributeRule.newStringRule(FILENAME, true),
         };
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Report.class;
         }
     };

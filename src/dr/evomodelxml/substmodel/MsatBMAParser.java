@@ -30,7 +30,6 @@ import dr.evolution.datatype.Microsatellite;
 import dr.inference.model.Parameter;
 import dr.evomodel.substmodel.MsatBMA;
 
-import java.util.HashMap;
 import java.util.ArrayList;
 
 /**
@@ -68,12 +67,14 @@ public class MsatBMAParser extends AbstractXMLObjectParser{
 
 
 
-    public String getParserName(){
+    @Override
+	public String getParserName(){
         return MSAT_BMA;
     }
 
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -211,7 +212,8 @@ public class MsatBMAParser extends AbstractXMLObjectParser{
 
 
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -321,11 +323,13 @@ public class MsatBMAParser extends AbstractXMLObjectParser{
 
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents an instance of the Microsatellite Averaging Model of microsatellite evolution.";
     }
 
-    public Class getReturnType(){
+    @Override
+	public Class getReturnType(){
         return MsatBMA.class;
     }
 }

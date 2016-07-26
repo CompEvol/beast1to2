@@ -40,11 +40,13 @@ public class CopyParameterValuesParser extends AbstractXMLObjectParser {
     public static final String SOURCE = "source";
     public static final String DESTINATION = "destination";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return RESET_PARAMETER;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
         return null;
 
@@ -65,7 +67,8 @@ public class CopyParameterValuesParser extends AbstractXMLObjectParser {
 //        return destination;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -79,11 +82,13 @@ public class CopyParameterValuesParser extends AbstractXMLObjectParser {
     };
 
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Copy parameter values from source to destination";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Parameter.class;
     }
 

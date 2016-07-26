@@ -25,12 +25,8 @@
 
 package dr.evomodelxml.tree;
 
-import java.io.PrintWriter;
-
 import dr.evomodel.tree.HiddenLinkageLogger;
 import dr.evomodel.tree.HiddenLinkageModel;
-import dr.inference.loggers.LogFormatter;
-import dr.inference.loggers.TabDelimitedFormatter;
 import dr.inferencexml.loggers.LoggerParser;
 import dr.xml.AttributeRule;
 import dr.xml.ElementRule;
@@ -45,14 +41,16 @@ import dr.xml.XMLSyntaxRule;
 public class HiddenLinkageLoggerParser extends LoggerParser {
     public static final String LOG_HIDDEN_LINKAGE = "logHiddenLinkage";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return LOG_HIDDEN_LINKAGE;
     }
 
     /**
      * @return an object based on the XML element it was passed.
      */
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -66,15 +64,18 @@ public class HiddenLinkageLoggerParser extends LoggerParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Logs a linkage groups for metagenomic reads to a file";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return HiddenLinkageLogger.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
     private final XMLSyntaxRule[] rules = {

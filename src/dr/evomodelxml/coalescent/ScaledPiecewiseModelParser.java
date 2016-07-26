@@ -25,9 +25,7 @@
 
 package dr.evomodelxml.coalescent;
 
-import dr.evolution.util.Units;
 import dr.evomodel.coalescent.PiecewisePopulationModel;
-import dr.evomodel.coalescent.ScaledPiecewiseModel;
 import dr.evomodel.tree.TreeModel;
 import dr.evoxml.util.XMLUnits;
 import dr.inference.model.Parameter;
@@ -42,11 +40,13 @@ public class ScaledPiecewiseModelParser extends AbstractXMLObjectParser {
     public static final String EPOCH_SIZES = "populationSizes";
     public static final String TREE_MODEL = "populationTree";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return PIECEWISE_POPULATION;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -70,15 +70,18 @@ public class ScaledPiecewiseModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents a piecewise population model";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return PiecewisePopulationModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

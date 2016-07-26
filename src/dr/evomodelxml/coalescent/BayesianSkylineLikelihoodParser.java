@@ -29,9 +29,7 @@ import dr.xml.*;
 
 import java.util.logging.Logger;
 
-import beast.core.parameter.BooleanParameter;
 import beast.core.parameter.IntegerParameter;
-import beast.core.parameter.Parameter;
 import beast.core.parameter.RealParameter;
 import beast.core.util.Log;
 import beast.evolution.tree.Tree;
@@ -51,11 +49,13 @@ public class BayesianSkylineLikelihoodParser extends AbstractXMLObjectParser {
     public static final String LINEAR = "linear";
     public static final String EXPONENTIAL = "exponential";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SKYLINE_LIKELIHOOD;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         XMLObject cxo = xo.getChild(POPULATION_SIZES);
         RealParameter param = (RealParameter) cxo.getChild(RealParameter.class);
@@ -124,15 +124,18 @@ public class BayesianSkylineLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents the likelihood of the tree given the population size vector.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return BayesianSkyline.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

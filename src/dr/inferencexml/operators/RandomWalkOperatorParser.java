@@ -53,11 +53,13 @@ public class RandomWalkOperatorParser extends AbstractXMLObjectParser {
 
     public static final String BOUNDARY_CONDITION = "boundaryCondition";
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return RANDOM_WALK_OPERATOR;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
             CoercionMode mode = CoercionMode.parseMode(xo);
 
@@ -118,15 +120,18 @@ public class RandomWalkOperatorParser extends AbstractXMLObjectParser {
         // AbstractXMLObjectParser implementation
         //************************************************************************
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "This element returns a random walk operator on a given parameter.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Operator.class;
         }
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 

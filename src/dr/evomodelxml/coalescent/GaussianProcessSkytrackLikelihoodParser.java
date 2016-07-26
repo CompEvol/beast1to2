@@ -25,18 +25,11 @@
 
 package dr.evomodelxml.coalescent;
 
-import dr.evolution.tree.Tree;
-//import dr.evomodel.coalescent.GMRFSkyrideLikelihood;
-import dr.evomodel.coalescent.GaussianProcessMultilocusSkytrackLikelihood;
 import dr.evomodel.coalescent.GaussianProcessSkytrackLikelihood;
 import dr.evomodel.tree.TreeModel;
 //import dr.inference.model.MatrixParameter;
 import dr.inference.model.Parameter;
 import dr.xml.*;
-
-import java.util.ArrayList;
-import java.util.List;
-//import java.util.logging.Logger;
 
 /**
  *
@@ -75,13 +68,15 @@ public class GaussianProcessSkytrackLikelihoodParser extends AbstractXMLObjectPa
 //    public static final String LATENT_PARAMETER = "latentPointParameter";
     
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
        return SKYTRACK_LIKELIHOOD;
     }
 
 
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -313,15 +308,18 @@ public class GaussianProcessSkytrackLikelihoodParser extends AbstractXMLObjectPa
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents the likelihood of the tree given the population size vector.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return GaussianProcessSkytrackLikelihood.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

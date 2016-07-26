@@ -27,7 +27,6 @@ package dr.evomodelxml.substmodel;
 
 import java.util.logging.Logger;
 
-import dr.evolution.datatype.Codons;
 import dr.evolution.datatype.DataType;
 import dr.evolution.datatype.GeneticCode;
 import dr.evomodel.substmodel.*;
@@ -48,9 +47,11 @@ public class EmpiricalCodonModelParser extends AbstractXMLObjectParser {
     public static final String OMEGA = "omega";
     public static final String KAPPATSTV = "kappaTsTv";
     public static final String MULTI_NT_CHANGE = "multiNtChange";
-    public String getParserName() { return EMPIRICAL_CODON_MODEL; }
+    @Override
+	public String getParserName() { return EMPIRICAL_CODON_MODEL; }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -145,13 +146,16 @@ public class EmpiricalCodonModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents the empirical model of codon evolution.";
     }
 
-    public Class getReturnType() { return EmpiricalCodonModel.class; }
+    @Override
+	public Class getReturnType() { return EmpiricalCodonModel.class; }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {
         new StringAttributeRule(GeneticCode.GENETIC_CODE,

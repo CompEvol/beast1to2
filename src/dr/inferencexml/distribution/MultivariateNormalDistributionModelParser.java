@@ -38,11 +38,13 @@ public class MultivariateNormalDistributionModelParser extends AbstractXMLObject
 
     public static final String NORMAL_DISTRIBUTION_MODEL = "multivariateNormalDistributionModel";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return NORMAL_DISTRIBUTION_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -65,7 +67,8 @@ public class MultivariateNormalDistributionModelParser extends AbstractXMLObject
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -76,12 +79,14 @@ public class MultivariateNormalDistributionModelParser extends AbstractXMLObject
                     new XMLSyntaxRule[]{new ElementRule(MatrixParameter.class)}),
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Describes a normal distribution with a given mean and precision " +
                 "that can be used in a distributionLikelihood element";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return MultivariateNormalDistributionModel.class;
     }
 

@@ -25,19 +25,10 @@
 
 package dr.evomodelxml;
 
-import dr.util.FileHelpers;
 import dr.xml.*;
-import dr.evolution.io.NexusImporter;
-import dr.evolution.io.Importer;
-import dr.evolution.tree.Tree;
-import dr.evolution.util.TaxonList;
 import dr.evomodel.tree.EmpiricalTreeDistributionModel;
-import dr.evomodel.tree.TreeModel;
-import dr.evomodel.operators.WilsonBalding;
 import dr.evomodel.operators.EmpiricalTreeDistributionOperator;
 import dr.inference.operators.MCMCOperator;
-
-import java.io.*;
 
 /**
  * @author Andrew Rambaut
@@ -46,11 +37,13 @@ import java.io.*;
  */
 public class EmpiricalTreeDistributionOperatorParser extends AbstractXMLObjectParser {
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return EmpiricalTreeDistributionOperator.EMPIRICAL_TREE_DISTRIBUTION_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -72,7 +65,8 @@ public class EmpiricalTreeDistributionOperatorParser extends AbstractXMLObjectPa
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -82,11 +76,13 @@ public class EmpiricalTreeDistributionOperatorParser extends AbstractXMLObjectPa
             new ElementRule(EmpiricalTreeDistributionModel.class)
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Operator which switches between trees in an empirical distribution.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return EmpiricalTreeDistributionOperator.class;
     }
 }

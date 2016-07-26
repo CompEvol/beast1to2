@@ -27,12 +27,9 @@ package dr.evomodelxml.substmodel;
 
 import dr.evolution.datatype.MutationDeathType;
 import dr.evomodel.substmodel.AbstractSubstitutionModel;
-import dr.evomodel.substmodel.FrequencyModel;
 import dr.evomodel.substmodel.MutationDeathModel;
 import dr.inference.model.Parameter;
 import dr.xml.*;
-
-import java.util.logging.Logger;
 
 /**
  *
@@ -42,11 +39,13 @@ public class MutationDeathModelParser extends AbstractXMLObjectParser {
     public static final String MD_MODEL = "mutationDeathModel";
     public static final String MUTATION_RATE = "mutationRate";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MD_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -90,15 +89,18 @@ public class MutationDeathModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents an instance of the MutationDeath model of CTMC evolution with deletions.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return MutationDeathModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

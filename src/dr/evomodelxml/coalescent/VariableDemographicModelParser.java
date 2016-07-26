@@ -32,11 +32,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import beast.core.parameter.BooleanParameter;
-import beast.core.parameter.IntegerParameter;
 import beast.core.parameter.Parameter;
 import beast.core.parameter.RealParameter;
 import beast.evolution.tree.Tree;
-import beast.evolution.tree.coalescent.Coalescent;
 import beast.evolution.tree.coalescent.CompoundPopulationFunction;
 import beast.evolution.tree.coalescent.PopulationFunction;
 import beast.evolution.tree.coalescent.ScaledPopulationFunction;
@@ -63,11 +61,13 @@ public class VariableDemographicModelParser extends AbstractXMLObjectParser {
 
     public static final String demoElementName = "demographic";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MODEL_NAME;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         XMLObject cxo = xo.getChild(POPULATION_SIZES);
         RealParameter popParam = (RealParameter) cxo.getChild(RealParameter.class);
@@ -151,15 +151,18 @@ public class VariableDemographicModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents the likelihood of the tree given the population size vector.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return PopulationFunction.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

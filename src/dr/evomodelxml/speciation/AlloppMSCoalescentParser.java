@@ -45,14 +45,16 @@ public class AlloppMSCoalescentParser extends AbstractXMLObjectParser {
     public static final String ALLOPPMSCOALESCENT = "apspCoalescent";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
 	    return ALLOPPMSCOALESCENT;
 	}
 
 
 
 	
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -63,7 +65,8 @@ public class AlloppMSCoalescentParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
                 new ElementRule(AlloppSpeciesBindings.class),
                 new ElementRule(AlloppSpeciesNetworkModel.class),

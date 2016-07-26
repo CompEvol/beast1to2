@@ -41,6 +41,7 @@ public class MulSpeciesTreePriorParser extends AbstractXMLObjectParser {
 	public static final String MUL_SPECIES_TREE = "mulTree";
 
 
+	@Override
 	public String getParserName() {
 		return MUL_SPECIES_TREE_PRIOR;
 	}

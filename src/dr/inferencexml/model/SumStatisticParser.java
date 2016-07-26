@@ -42,15 +42,18 @@ public class SumStatisticParser extends AbstractXMLObjectParser {
     public static String ELEMENTWISE = "elementwise";
     public static String ABSOLUTE = "absolute";
 
-    public String[] getParserNames() {
+    @Override
+	public String[] getParserNames() {
         return new String[]{getParserName(), SUM};
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SUM_STATISTIC;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         boolean elementwise = xo.getAttribute(ELEMENTWISE, false);
         if (elementwise) {
@@ -87,15 +90,18 @@ public class SumStatisticParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a statistic that is the element-wise sum of the child statistics.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return SumStatistic.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

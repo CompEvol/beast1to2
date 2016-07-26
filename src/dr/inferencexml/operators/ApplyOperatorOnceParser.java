@@ -25,7 +25,6 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.operators.OperatorFailedException;
 import dr.inference.operators.SimpleMCMCOperator;
 import dr.xml.*;
 
@@ -72,7 +71,8 @@ public class ApplyOperatorOnceParser extends AbstractXMLObjectParser {
         return ApplyOperatorOnceParser.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return APPLY;
     }
 }

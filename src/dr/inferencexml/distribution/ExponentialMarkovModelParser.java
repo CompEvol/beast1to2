@@ -39,14 +39,16 @@ public class ExponentialMarkovModelParser extends AbstractXMLObjectParser {
     public static final String SHAPE = "shape";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return "exponentialMarkovLikelihood";
     }
 
     /**
      * Reads a gamma distribution model from a DOM Document element.
      */
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         XMLObject object = xo.getChild(CHAIN_PARAMETER);
 
@@ -75,16 +77,19 @@ public class ExponentialMarkovModelParser extends AbstractXMLObjectParser {
         return distr;
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A continuous state, discrete time markov chain in which each new state is an " +
                 "exponentially distributed variable with a mean of the previous state.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return MarkovChainDistribution.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

@@ -25,10 +25,7 @@
 
 package dr.evomodelxml.coalescent;
 
-import dr.evolution.util.Units;
-import dr.evomodel.coalescent.ConstantLogisticModel;
 import dr.evomodel.coalescent.ExponentialConstantModel;
-import dr.evomodel.coalescent.ExponentialLogisticModel;
 import dr.evoxml.util.XMLUnits;
 import dr.inference.model.Parameter;
 import dr.xml.*;
@@ -43,11 +40,13 @@ public class ExponentialConstantModelParser extends AbstractXMLObjectParser {
     public static final String TRANSITION_TIME = "transitionTime";
     public static final String GROWTH_RATE = "growthRate";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return EXPONENTIAL_CONSTANT_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -71,15 +70,18 @@ public class ExponentialConstantModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A demographic model of exponential growth followed by constant population size.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ExponentialConstantModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

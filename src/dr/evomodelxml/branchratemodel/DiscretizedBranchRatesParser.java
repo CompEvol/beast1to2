@@ -57,11 +57,13 @@ public class DiscretizedBranchRatesParser extends AbstractXMLObjectParser {
     //public static final String NORMALIZED_MEAN = "normalizedMean";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return DISCRETIZED_BRANCH_RATES;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         final int overSampling = xo.getAttribute(OVERSAMPLING, 1);
         if (overSampling != 1) {
@@ -143,17 +145,20 @@ public class DiscretizedBranchRatesParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return
                 "This element returns an discretized relaxed clock model." +
                         "The branch rates are drawn from a discretized parametric distribution.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return UCRelaxedClockModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

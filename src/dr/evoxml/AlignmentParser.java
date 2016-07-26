@@ -42,11 +42,13 @@ public class AlignmentParser extends AbstractXMLObjectParser {
 
     public static final String ALIGNMENT = "alignment";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return ALIGNMENT;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         final Alignment alignment = new Alignment();
 
@@ -63,7 +65,7 @@ public class AlignmentParser extends AbstractXMLObjectParser {
 
             final Object child = xo.getChild(i);
             if (child instanceof Sequence) {
-                alignment.sequenceInput.setValue((Sequence) child, alignment);
+                alignment.sequenceInput.setValue(child, alignment);
             } else if (child instanceof DataType) {
                 // already dealt with
             } else {
@@ -82,15 +84,18 @@ public class AlignmentParser extends AbstractXMLObjectParser {
     
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents an alignment of molecular sequences.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Alignment.class;
     }
 
-    public String getExample() {
+    @Override
+	public String getExample() {
 
         return
                 "<!-- An alignment of three short DNA sequences -->\n" +
@@ -110,7 +115,8 @@ public class AlignmentParser extends AbstractXMLObjectParser {
                         "</alignment>\n";
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

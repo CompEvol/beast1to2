@@ -51,11 +51,13 @@ public class BirthDeathModelParser extends AbstractXMLObjectParser {
     public static final String MEAN_GROWTH_RATE_PARAM_NAME = BIRTH_DEATH + ".meanGrowthRate";
     public static final String RELATIVE_DEATH_RATE_PARAM_NAME = BIRTH_DEATH + "." + RELATIVE_DEATH_RATE;
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return BIRTH_DEATH_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         final Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
@@ -96,15 +98,18 @@ public class BirthDeathModelParser extends AbstractXMLObjectParser {
         return "Using birth-death model on tree: Gernhard T (2008) J Theor Biol, Volume 253, Issue 4, Pages 769-778 In press";
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Gernhard (2008) model of speciation (equation at bottom of page 19 of draft).";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return BirthDeathGernhard08Model.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

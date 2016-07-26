@@ -25,12 +25,8 @@
 
 package dr.inferencexml.model;
 
-import dr.inference.model.SumParameter;
 import dr.inference.model.Parameter;
 import dr.xml.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  */
@@ -38,7 +34,8 @@ public class SumParameterParser extends AbstractXMLObjectParser {
 
     public static final String SUM_PARAMETER = "sumParameter";
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -61,7 +58,8 @@ public class SumParameterParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -69,15 +67,18 @@ public class SumParameterParser extends AbstractXMLObjectParser {
             new ElementRule(Parameter.class,1,Integer.MAX_VALUE),
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A element-wise sum of parameters.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Parameter.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SUM_PARAMETER;
     }
 }

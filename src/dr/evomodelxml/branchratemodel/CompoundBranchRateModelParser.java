@@ -29,21 +29,19 @@ import dr.evomodel.branchratemodel.BranchRateModel;
 import dr.evomodel.branchratemodel.CompoundBranchRateModel;
 import dr.xml.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
 /**
  */
 public class CompoundBranchRateModelParser extends AbstractXMLObjectParser {
 
     public static final String COMPOUND_BRANCH_RATE_MODEL = "compoundBranchRateModel";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return COMPOUND_BRANCH_RATE_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -72,16 +70,19 @@ public class CompoundBranchRateModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element provides a strict clock model. " +
                 "All branches have the same rate of molecular evolution.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return CompoundBranchRateModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

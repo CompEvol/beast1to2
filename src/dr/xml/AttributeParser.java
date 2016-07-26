@@ -33,8 +33,10 @@ public class AttributeParser extends AbstractXMLObjectParser {
 	public final static String NAME = "name";
 	public final static String VALUE = "value";
 
+	@Override
 	public String getParserName() { return ATTRIBUTE; }
 		
+	@Override
 	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         final String name = xo.getStringAttribute(NAME);
@@ -50,12 +52,15 @@ public class AttributeParser extends AbstractXMLObjectParser {
 	// AbstractXMLObjectParser implementation
 	//************************************************************************
 
+	@Override
 	public String getParserDescription() {
 		return "This element represents a name/value pair.";
 	}
 	
+	@Override
 	public Class getReturnType() { return Attribute.class; }
 
+	@Override
 	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
 	private final XMLSyntaxRule[] rules = {

@@ -40,11 +40,13 @@ public class RandomWalkIntegerOperatorParser extends AbstractXMLObjectParser {
     public static final String WINDOW_SIZE = "windowSize";
     public static final String UPDATE_INDEX = "updateIndex";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return RANDOM_WALK_INTEGER_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
 
         double d = xo.getDoubleAttribute(WINDOW_SIZE);
@@ -64,15 +66,18 @@ public class RandomWalkIntegerOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a random walk operator on a given parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Operator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

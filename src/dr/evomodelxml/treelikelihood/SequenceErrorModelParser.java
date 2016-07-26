@@ -30,8 +30,6 @@ import dr.evomodel.treelikelihood.SequenceErrorModel;
 import dr.inference.model.Parameter;
 import dr.xml.*;
 
-import java.util.logging.Logger;
-
 /**
  */
 public class SequenceErrorModelParser extends AbstractXMLObjectParser {
@@ -46,11 +44,13 @@ public class SequenceErrorModelParser extends AbstractXMLObjectParser {
 
     public static final String TYPE = "type";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SEQUENCE_ERROR_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -111,15 +111,18 @@ public class SequenceErrorModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a model that allows for post-mortem DNA damage.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return SequenceErrorModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

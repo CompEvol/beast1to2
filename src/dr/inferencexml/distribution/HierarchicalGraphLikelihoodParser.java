@@ -27,7 +27,6 @@ package dr.inferencexml.distribution;
 
 import dr.inference.distribution.HierarchicalGraphLikelihood;
 import dr.inference.model.Likelihood;
-import dr.inference.model.MatrixParameter;
 import dr.inference.model.Parameter;
 import dr.xml.*;
 
@@ -44,11 +43,13 @@ public class HierarchicalGraphLikelihoodParser extends AbstractXMLObjectParser {
     public static final String STRATA_INDICATOR = "strataIndicator";
     public static final String PROB = "prob";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return HierarchicalGraphLikelihood.HIERARCHICAL_GRAPH_LIKELIHOOD;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -84,7 +85,8 @@ public class HierarchicalGraphLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -98,11 +100,13 @@ public class HierarchicalGraphLikelihoodParser extends AbstractXMLObjectParser {
                     
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Calculates the likelihood of strata graph given hierarchical graph and p.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Likelihood.class;
     }
 }

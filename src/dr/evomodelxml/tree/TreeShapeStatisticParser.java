@@ -37,11 +37,13 @@ public class TreeShapeStatisticParser extends AbstractXMLObjectParser {
     public static final String TREE_SHAPE_STATISTIC = "treeShapeStatistics";
     public static final String TARGET = "target";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return TREE_SHAPE_STATISTIC;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -57,15 +59,18 @@ public class TreeShapeStatisticParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A statistic that reports a handful of tree shape statistics on the given target tree.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TreeShapeStatistic.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

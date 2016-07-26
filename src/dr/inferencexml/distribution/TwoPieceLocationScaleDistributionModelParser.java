@@ -25,7 +25,6 @@
 
 package dr.inferencexml.distribution;
 
-import dr.inference.distribution.TwoPieceLocationScaleDistributionModel;
 import dr.inference.model.Parameter;
 import dr.math.distributions.Distribution;
 import dr.xml.*;
@@ -41,11 +40,13 @@ public class TwoPieceLocationScaleDistributionModelParser extends AbstractXMLObj
     public static final String GAMMA = "gamma";
     public static final String PARAMETERIZATION = "parameterization";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return DISTRIBUTION_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -94,7 +95,8 @@ public class TwoPieceLocationScaleDistributionModelParser extends AbstractXMLObj
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -124,12 +126,14 @@ public class TwoPieceLocationScaleDistributionModelParser extends AbstractXMLObj
             new ElementRule(Distribution.class),
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Describes a two-piece location-scale distribution with a given location and two scales " +
                 "that can be used in a distributionLikelihood element";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TwoPieceLocationScaleDistributionModelParser.class;
     }
 

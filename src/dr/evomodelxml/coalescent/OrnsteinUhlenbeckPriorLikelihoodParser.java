@@ -27,7 +27,6 @@ package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.OrnsteinUhlenbeckPriorLikelihood;
 import dr.evomodel.coalescent.VariableDemographicModel;
-import dr.inference.distribution.ParametricDistributionModel;
 import dr.inference.model.Parameter;
 import dr.inference.model.Statistic;
 import dr.xml.*;
@@ -47,15 +46,18 @@ public class OrnsteinUhlenbeckPriorLikelihoodParser extends AbstractXMLObjectPar
     public static final String SIGMA = "sigma";
     public static final String LAMBDA = "lambda";
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return OrnsteinUhlenbeckPriorLikelihood.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return OU;
     }
 
@@ -74,7 +76,8 @@ public class OrnsteinUhlenbeckPriorLikelihoodParser extends AbstractXMLObjectPar
         return new Parameter.Default(x);
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -102,7 +105,8 @@ public class OrnsteinUhlenbeckPriorLikelihoodParser extends AbstractXMLObjectPar
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
 
         return new XMLSyntaxRule[]{
                 AttributeRule.newBooleanRule(LOG_SPACE, true),

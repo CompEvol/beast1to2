@@ -44,11 +44,13 @@ import dr.xml.*;
 	    
 	    
 	    
-	    public String getParserName() {
+	    @Override
+		public String getParserName() {
 	        return HIERARCHICAL_BIT_FLIP_OPERATOR;
 	    }
 
-	    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+	    @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -77,15 +79,18 @@ import dr.xml.*;
 	    // AbstractXMLObjectParser implementation
 	    //************************************************************************
 
-	    public String getParserDescription() {
+	    @Override
+		public String getParserDescription() {
 	        return "This element returns a bit-flip operator on a set of hierarchical and strata parameters simulatneously.";
 	    }
 
-	    public Class getReturnType() {
+	    @Override
+		public Class getReturnType() {
 	        return HierarchicalBitFlipOperator.class;
 	    }
 
-	    public XMLSyntaxRule[] getSyntaxRules() {
+	    @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
 	        return rules;
 	    }
 

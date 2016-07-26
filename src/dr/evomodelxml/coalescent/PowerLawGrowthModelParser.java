@@ -25,8 +25,6 @@
 
 package dr.evomodelxml.coalescent;
 
-import dr.evolution.util.Units;
-import dr.evomodel.coalescent.ExponentialGrowthModel;
 import dr.evomodel.coalescent.PowerLawGrowthModel;
 import dr.evoxml.util.XMLUnits;
 import dr.inference.model.Parameter;
@@ -43,11 +41,13 @@ public class PowerLawGrowthModelParser extends AbstractXMLObjectParser {
     public static String POWER = "power";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return POWER_LAW_GROWTH_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -69,15 +69,18 @@ public class PowerLawGrowthModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A demographic model of growth according to a power law.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return PowerLawGrowthModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

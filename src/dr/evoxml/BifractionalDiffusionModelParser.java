@@ -28,7 +28,6 @@ package dr.evoxml;
 import dr.xml.*;
 import dr.inference.model.Parameter;
 import dr.evomodel.continuous.MultivariateDiffusionModel;
-import dr.evomodel.continuous.BifractionalDiffusionModel;
 
 /**
  * @author Marc Suchard
@@ -40,11 +39,13 @@ public class BifractionalDiffusionModelParser extends AbstractXMLObjectParser {
     public static final String ALPHA_PARAMETER = "alpha";
     public static final String BETA_PARAMETER = "beta";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
             return BIFRACTIONAL_DIFFUSION_PROCESS;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -63,11 +64,13 @@ public class BifractionalDiffusionModelParser extends AbstractXMLObjectParser {
         // AbstractXMLObjectParser implementation
         //************************************************************************
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Describes a bivariate diffusion process using a bifractional random walk";
         }
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -78,7 +81,8 @@ public class BifractionalDiffusionModelParser extends AbstractXMLObjectParser {
                         new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
         };
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return MultivariateDiffusionModel.class;
         }
 }

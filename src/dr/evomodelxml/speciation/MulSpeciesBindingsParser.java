@@ -30,9 +30,6 @@ import dr.evomodel.speciation.MulSpeciesBindings;
 import dr.evomodel.tree.TreeModel;
 import dr.xml.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * Parser for list of possibly-allopolyploid species containing individuals
@@ -97,11 +94,13 @@ public class MulSpeciesBindingsParser extends AbstractXMLObjectParser {
     public static final String POPFACTOR = "popfactor";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MUL_SPECIES;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*

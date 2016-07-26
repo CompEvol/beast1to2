@@ -25,15 +25,11 @@
 
 package dr.evomodelxml.tree;
 
-import dr.evolution.tree.NodeRef;
 import dr.evolution.tree.Tree;
 import dr.evomodel.tree.StarTreeModel;
 import dr.evomodel.tree.TreeModel;
 import dr.inference.model.Parameter;
-import dr.inference.model.ParameterParser;
 import dr.xml.*;
-
-import java.util.logging.Logger;
 
 /**
  * @author Marc Suchard
@@ -83,14 +79,16 @@ public class StarTreeModelParser extends AbstractXMLObjectParser {
         };
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return STAR_TREE_MODEL;
     }
 
     /**
      * @return a tree object based on the XML element it was passed.
      */
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -229,12 +227,14 @@ public class StarTreeModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents a model of the tree. The tree model includes and attributes of the nodes " +
                 "including the age (or <i>height</i>) and the rate of evolution at each node in the tree.";
     }
 
-    public String getExample() {
+    @Override
+	public String getExample() {
         return
                 "<!-- the tree model as special sockets for attaching parameters to various aspects of the tree     -->\n" +
                         "<!-- The treeModel below shows the standard setup with a parameter associated with the root height -->\n" +
@@ -257,11 +257,13 @@ public class StarTreeModelParser extends AbstractXMLObjectParser {
 
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return StarTreeModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

@@ -25,7 +25,6 @@
 
 package dr.evomodelxml.speciation;
 
-import dr.evolution.util.Units;
 import dr.evomodel.speciation.RandomLocalYuleModel;
 import dr.evoxml.util.XMLUnits;
 import dr.inference.model.Parameter;
@@ -42,11 +41,13 @@ public class RandomLocalYuleModelParser extends AbstractXMLObjectParser {
     public static String BIRTH_RATE_INDICATORS = "indicators";
     public static String RATES_AS_MULTIPLIERS = "ratesAsMultipliers";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return YULE_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -73,15 +74,18 @@ public class RandomLocalYuleModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A speciation model of a Yule process whose rate can change at random nodes in the tree.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return RandomLocalYuleModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

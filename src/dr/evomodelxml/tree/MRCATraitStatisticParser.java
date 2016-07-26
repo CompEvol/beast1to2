@@ -25,9 +25,7 @@
 
 package dr.evomodelxml.tree;
 
-import dr.evolution.tree.Tree;
 import dr.evolution.util.Taxa;
-import dr.evolution.util.TaxonList;
 import dr.evomodel.tree.MRCATraitStatistic;
 import dr.evomodel.tree.TreeModel;
 import dr.xml.*;
@@ -41,11 +39,13 @@ public class MRCATraitStatisticParser extends AbstractXMLObjectParser {
     public static final String NAME = "name";
     public static final String TRAIT = "trait";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MRCA_TRAIT_STATISTIC;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -68,15 +68,18 @@ public class MRCATraitStatisticParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A statistic that has as its value the height of the most recent common ancestor of a set of taxa in a given tree";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return MRCATraitStatistic.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

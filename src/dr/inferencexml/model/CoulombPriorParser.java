@@ -25,7 +25,6 @@
 
 package dr.inferencexml.model;
 
-import dr.inference.model.CoulombPrior;
 import dr.inference.model.OneOnXPrior;
 import dr.inference.model.Statistic;
 import dr.xml.*;
@@ -39,11 +38,13 @@ public class CoulombPriorParser extends AbstractXMLObjectParser {
     public static final String BETA = "beta";
     public static final String DATA = "data";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return COULOMB_PRIOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -71,7 +72,8 @@ public class CoulombPriorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -83,11 +85,13 @@ public class CoulombPriorParser extends AbstractXMLObjectParser {
             )
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Calculates a prior density based on the force due to electrostatic charge between particles the given distance x.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return OneOnXPrior.class;
     }
 }

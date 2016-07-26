@@ -28,7 +28,6 @@ package dr.evomodelxml.operators;
 import dr.xml.*;
 import dr.inference.model.Parameter;
 import dr.inference.operators.MCMCOperator;
-import dr.evomodel.operators.MsatBitFlipOperator;
 
 /**
  * @author Chieh-Hsi Wu
@@ -40,10 +39,12 @@ public class MsatBitFlipOperatorParser extends AbstractXMLObjectParser{
     public static final String DEPENDENCIES = "dependencies";
     public static final String VARIABLE_INDICES = "variableIndices";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return "msatModelSwitchOperator";
     }
-         public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+         @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -69,14 +70,17 @@ public class MsatBitFlipOperatorParser extends AbstractXMLObjectParser{
          //************************************************************************
     // AbstractXMLObjectParser implementation
     //************************************************************************
-         public String getParserDescription() {
+         @Override
+		public String getParserDescription() {
         return "This element returns a microsatellite averaging operator on a given parameter.";
     }
-         public Class getReturnType() {
+         @Override
+		public Class getReturnType() {
         return MCMCOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

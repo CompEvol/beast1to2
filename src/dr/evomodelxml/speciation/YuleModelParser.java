@@ -43,11 +43,13 @@ public class YuleModelParser extends AbstractXMLObjectParser {
     public static final String YULE = "yule";
     public static final String BIRTH_RATE = "birthRate";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return YULE_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         final Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
@@ -70,15 +72,18 @@ public class YuleModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A speciation model of a simple constant rate Birth-death process.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return BirthDeathGernhard08Model.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

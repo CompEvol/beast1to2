@@ -25,16 +25,7 @@
 
 package dr.evomodelxml.coalescent;
 
-import dr.evolution.io.Importer;
-import dr.evomodel.coalescent.EBSPAnalysis;
-import dr.evomodel.coalescent.VariableDemographicModel;
-import dr.inference.trace.TraceException;
-import dr.util.FileHelpers;
 import dr.xml.*;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 
 import beast.core.parameter.RealParameter;
 
@@ -66,11 +57,13 @@ public class EBSPAnalysisParser extends AbstractXMLObjectParser {
         return xo.getChild(childName).getStringChild(0);
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return VD_ANALYSIS;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return new RealParameter("1.0");
 		/*
@@ -138,15 +131,18 @@ public class EBSPAnalysisParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "reconstruct population graph from EBSP run.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return RealParameter.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

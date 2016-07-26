@@ -27,7 +27,6 @@ package dr.evomodelxml.tree;
 
 import dr.evomodel.tree.HiddenLinkageModel;
 import dr.evomodel.tree.HiddenLinkageTreeLogger;
-import dr.evomodel.tree.TreeLogger;
 import dr.xml.ElementRule;
 import dr.xml.XMLObject;
 import dr.xml.XMLParseException;
@@ -45,23 +44,28 @@ public class HiddenLinkageTreeLoggerParser extends TreeLoggerParser {
 		System.arraycopy(super.getSyntaxRules(), 0, rules, 0, rules.length-1);
 		rules[rules.length-1] = new ElementRule(HiddenLinkageModel.class);
 	}
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return "logHiddenLinkageTree";
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Logs a tree with hidden linkage among metagenomic reads to a file";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return HiddenLinkageTreeLogger.class;
     }
     
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return this.rules;
     }
     
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*

@@ -32,9 +32,6 @@ import dr.evolution.util.Taxa;
 import dr.evolution.datatype.Microsatellite;
 import dr.evomodel.substmodel.MicrosatelliteModel;
 import dr.evomodel.branchratemodel.BranchRateModel;
-import dr.evomodel.branchratemodel.DefaultBranchRateModel;
-import dr.evomodel.sitemodel.GammaSiteModel;
-import dr.app.seqgen.MicrosatelliteSimulator;
 
 /**
  * @author Chieh-Hsi Wu
@@ -45,12 +42,14 @@ import dr.app.seqgen.MicrosatelliteSimulator;
 public class MicrosatelliteSimulatorParser extends AbstractXMLObjectParser {
     public static final String MICROSATELLITE_SIMULATOR = "microsatelliteSimulator";
 
-    public String getParserName(){
+    @Override
+	public String getParserName(){
         return MICROSATELLITE_SIMULATOR;
     }
 
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -85,7 +84,8 @@ public class MicrosatelliteSimulatorParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
                 new ElementRule(Microsatellite.class),
                 new ElementRule(Taxa.class),
@@ -98,12 +98,14 @@ public class MicrosatelliteSimulatorParser extends AbstractXMLObjectParser {
 
 
 
-    public String getParserDescription(){
+    @Override
+	public String getParserDescription(){
         return "This parser facilliates simulation of microsatellites " +
                 "given a tree and infinitesimal rate model";
     }
 
-    public Class getReturnType(){
+    @Override
+	public Class getReturnType(){
         return Patterns.class;
     }
 }

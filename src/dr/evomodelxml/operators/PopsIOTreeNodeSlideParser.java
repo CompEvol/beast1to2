@@ -72,7 +72,8 @@ public class PopsIOTreeNodeSlideParser  extends AbstractXMLObjectParser {
         return PopsIOTreeNodeSlide.class;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return PIOTREE_NODESLIDE;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

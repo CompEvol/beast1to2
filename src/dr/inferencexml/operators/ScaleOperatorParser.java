@@ -30,7 +30,6 @@ import beast.core.parameter.RealParameter;
 import beast.evolution.operators.ScaleOperator;
 import beast.evolution.tree.Tree;
 import beast1to2.BeastParser;
-import dr.inference.operators.CoercableMCMCOperator;
 import dr.xml.*;
 
 /**
@@ -46,11 +45,13 @@ public class ScaleOperatorParser extends AbstractXMLObjectParser {
     public static final String INDICATORS = "indicators";
     public static final String PICKONEPROB = "pickoneprob";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SCALE_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         final boolean optimise = xo.getAttribute(AUTO_OPTIMIZE, true);
         final boolean scaleAll = xo.getAttribute(SCALE_ALL, false);
         final boolean scaleAllInd = xo.getAttribute(SCALE_ALL_IND, false);
@@ -144,15 +145,18 @@ public class ScaleOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a scale operator on a given parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ScaleOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

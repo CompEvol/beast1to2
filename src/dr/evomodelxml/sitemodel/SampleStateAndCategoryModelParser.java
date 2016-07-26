@@ -30,8 +30,6 @@ import dr.evomodel.substmodel.SubstitutionModel;
 import dr.inference.model.Parameter;
 import dr.xml.*;
 
-import java.util.Vector;
-
 /**
  *
  */
@@ -41,11 +39,13 @@ public class SampleStateAndCategoryModelParser extends AbstractXMLObjectParser {
     public static final String MUTATION_RATE = "mutationRate";
     public static final String CATEGORY_PARAMETER = "categoriesParameter";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SAMPLE_STATE_AND_CATEGORY_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -73,16 +73,19 @@ public class SampleStateAndCategoryModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A SiteModel that has a discrete distribution of substitution models over sites, " +
                 "designed for sampling of rate categories and internal states.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return SampleStateAndCategoryModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

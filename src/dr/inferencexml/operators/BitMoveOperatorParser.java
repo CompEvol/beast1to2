@@ -38,11 +38,13 @@ public class BitMoveOperatorParser extends AbstractXMLObjectParser {
     public static final String BIT_MOVE_OPERATOR = "bitMoveOperator";
     public static final String NUM_BITS_TO_MOVE = "numBitsToMove";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return BIT_MOVE_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -68,15 +70,18 @@ public class BitMoveOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a bit-move operator on a given parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return BitMoveOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

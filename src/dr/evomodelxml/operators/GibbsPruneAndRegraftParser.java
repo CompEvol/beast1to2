@@ -36,11 +36,13 @@ public class GibbsPruneAndRegraftParser extends AbstractXMLObjectParser {
 
     public static final String GIBBS_PRUNE_AND_REGRAFT = "GibbsPruneAndRegraft";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return GIBBS_PRUNE_AND_REGRAFT;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -60,16 +62,19 @@ public class GibbsPruneAndRegraftParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     // ************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents a Gibbs sampler implemented through a prune and regraft operator. "
                 + "This operator prunes a random subtree and regrafts it below a node chosen by an importance distribution which is the proportion of the likelihoods of the proposals.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return GibbsPruneAndRegraft.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

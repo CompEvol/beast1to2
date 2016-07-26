@@ -42,11 +42,13 @@ public class DeltaExchangeOperatorParser extends AbstractXMLObjectParser {
     public static final String INTEGER_OPERATOR = "integer";
     public static final String PARAMETER_WEIGHTS = "parameterWeights";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return DELTA_EXCHANGE;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         CoercionMode mode = CoercionMode.parseMode(xo);
 
@@ -101,15 +103,18 @@ public class DeltaExchangeOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a delta exchange operator on a given parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return beast.evolution.operators.DeltaExchangeOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

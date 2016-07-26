@@ -36,11 +36,13 @@ import dr.xml.*;
 public class TreeNodeSlideParser extends AbstractXMLObjectParser {
     public static final String TREE_NODE_REHEIGHT = "nodeReHeight";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return TREE_NODE_REHEIGHT;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -57,15 +59,18 @@ public class TreeNodeSlideParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Specialized Species tree operator, transform tree without breaking embedding of gene trees.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TreeNodeSlide.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
                 AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
                // AttributeRule.newDoubleRule("range", true),

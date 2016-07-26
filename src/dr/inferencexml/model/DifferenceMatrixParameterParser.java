@@ -25,11 +25,6 @@
 
 package dr.inferencexml.model;
 
-/**
- * Created by max on 4/23/15.
- */
-import dr.inference.model.DifferenceMatrixParameter;
-import dr.inference.model.MatrixParameter;
 import dr.inference.model.Parameter;
 import dr.xml.AbstractXMLObjectParser;
 import dr.xml.XMLObject;

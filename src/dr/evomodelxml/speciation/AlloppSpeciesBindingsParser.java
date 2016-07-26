@@ -28,8 +28,6 @@ package dr.evomodelxml.speciation;
 import dr.evomodel.speciation.AlloppSpeciesBindings;
 import dr.evomodel.tree.TreeModel;
 import dr.xml.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Parser for list of possibly-allopolyploid species containing individuals
@@ -89,7 +87,8 @@ public class AlloppSpeciesBindingsParser extends AbstractXMLObjectParser {
     public static final String MIN_GENENODE_HEIGHT = "minGeneNodeHeight";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
 	    return ALLOPPSPECIES;
 	}
 

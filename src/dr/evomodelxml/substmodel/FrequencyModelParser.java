@@ -43,17 +43,20 @@ public class FrequencyModelParser extends AbstractXMLObjectParser {
     public static final String NORMALIZE = "normalize";
 
 
-    public String[] getParserNames() {
+    @Override
+	public String[] getParserNames() {
         return new String[]{
                 getParserName(), "beast_" + getParserName()
         };
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return FREQUENCY_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 //        DataType dataType = DataTypeUtils.getDataType(xo);
 
         Frequencies freqs = new Frequencies();
@@ -183,15 +186,18 @@ public class FrequencyModelParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A model of equilibrium base frequencies.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Frequencies.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

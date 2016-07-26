@@ -25,8 +25,6 @@
 
 package dr.evoxml;
 
-import dr.evolution.tree.LineageCountThroughTime;
-import dr.stats.Variate;
 import dr.xml.*;
 
 /**
@@ -41,11 +39,13 @@ public class LineageCountThroughTimeParser extends AbstractXMLObjectParser {
     public static final String BIN_COUNT = "binCount";
     public static final String SKIP = "skip";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return "lineageCountThroughTime";
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -86,11 +86,13 @@ public class LineageCountThroughTimeParser extends AbstractXMLObjectParser {
 		}
 
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Specifies a location with an optional longitude and latitude";
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -107,7 +109,8 @@ public class LineageCountThroughTimeParser extends AbstractXMLObjectParser {
                     "The max time to compute lineage count to."),
     };
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return String.class;
     }
 }

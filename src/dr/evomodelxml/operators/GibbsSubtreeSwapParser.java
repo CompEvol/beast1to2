@@ -36,11 +36,13 @@ public class GibbsSubtreeSwapParser extends AbstractXMLObjectParser {
 
     public static final String GIBBS_SUBTREE_SWAP = "GibbsSubtreeSwap";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return GIBBS_SUBTREE_SWAP;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -57,16 +59,19 @@ public class GibbsSubtreeSwapParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     // ************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents a Gibbs wide exchange operator. "
                 + "This operator swaps two subtrees chosen to their posterior probaility.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return GibbsSubtreeSwap.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

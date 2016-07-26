@@ -36,29 +36,35 @@ public class BetaDistributionModelParser extends DistributionModelParser {
     public static final String ALPHA = "alpha";
     public static final String BETA = "beta";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return "betaDistributionModel";
     }
 
-    ParametricDistribution parseDistributionModel(RealParameter[] parameters, double offset) {
+    @Override
+	ParametricDistribution parseDistributionModel(RealParameter[] parameters, double offset) {
         Beta beta = new Beta();
         beta.initByName("alpha", parameters[0], "beta", parameters[1]);
         return beta;
     }
 
-    public String[] getParameterNames() {
+    @Override
+	public String[] getParameterNames() {
         return new String[]{ALPHA, BETA};
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A model of a beta distribution.";
     }
 
-    public boolean allowOffset() {
+    @Override
+	public boolean allowOffset() {
         return false;
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Beta.class;
     }
 }

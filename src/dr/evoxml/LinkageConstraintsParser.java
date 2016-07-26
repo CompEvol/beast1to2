@@ -29,29 +29,31 @@ import dr.evolution.LinkageConstraints;
 import dr.evolution.LinkedGroup;
 import dr.xml.*;
 
-import java.util.ArrayList;
-
 /**
  * @author Aaron Darling (koadman)
  */
 public class LinkageConstraintsParser extends AbstractXMLObjectParser {
 
 	
+	@Override
 	public String getParserDescription() {
 		return "Data representing metagenome reads that are linked by mate-pair, strobe, or other information";
 	}
 
 
+	@Override
 	public Class getReturnType() {
 		return LinkageConstraints.class;
 	}
 
 
+	@Override
 	public XMLSyntaxRule[] getSyntaxRules() {
 		return rules;
 	}
 
 
+	@Override
 	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
@@ -69,6 +71,7 @@ public class LinkageConstraintsParser extends AbstractXMLObjectParser {
 		}
 
 
+	@Override
 	public String getParserName() {
 		return "LinkageConstraints";
 	}

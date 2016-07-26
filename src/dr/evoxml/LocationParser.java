@@ -39,9 +39,11 @@ public class LocationParser extends AbstractXMLObjectParser {
     public static final String LONGITUDE = "longitude";
     public static final String LATITUDE = "latitude";
 
-    public String getParserName() { return Location.LOCATION; }
+    @Override
+	public String getParserName() { return Location.LOCATION; }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         if (xo.getChildCount() > 0) {
             throw new XMLParseException("No child elements allowed in location element.");
@@ -69,11 +71,13 @@ public class LocationParser extends AbstractXMLObjectParser {
         return d;
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Specifies a location with an optional longitude and latitude";
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {
             AttributeRule.newStringRule(DESCRIPTION, true,
@@ -84,5 +88,6 @@ public class LocationParser extends AbstractXMLObjectParser {
                     "The latitude in degrees, minutes, seconds or decimal degrees"),
     };
 
-    public Class getReturnType() { return Location.class; }
+    @Override
+	public Class getReturnType() { return Location.class; }
 }

@@ -39,11 +39,13 @@ public class RandomWalkModelParser extends AbstractXMLObjectParser {
     public static final String RANDOM_WALK = "randomWalk";
     public static final String LOG_SCALE = "logScale";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return RANDOM_WALK;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -64,7 +66,8 @@ public class RandomWalkModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -77,11 +80,13 @@ public class RandomWalkModelParser extends AbstractXMLObjectParser {
             )
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Describes a first-order random walk. No prior is assumed on the first data element";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return RandomWalkModel.class;
     }
 

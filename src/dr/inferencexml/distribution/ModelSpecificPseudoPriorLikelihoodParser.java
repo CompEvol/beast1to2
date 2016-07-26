@@ -29,10 +29,7 @@ import dr.xml.AbstractXMLObjectParser;
 import dr.xml.XMLObject;
 import dr.xml.XMLParseException;
 import dr.xml.XMLSyntaxRule;
-import dr.inference.distribution.DistributionLikelihood;
 import dr.inference.distribution.ModelSpecificPseudoPriorLikelihood;
-import dr.inference.model.Parameter;
-import dr.math.distributions.Distribution;
 
 /**
  * @author Chieh-Hsi Wu
@@ -46,11 +43,13 @@ public class ModelSpecificPseudoPriorLikelihoodParser  extends AbstractXMLObject
     public static final String SELECTED_VARIABLE = "selectedVariable";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MODEL_SPECIFIC_PSEUDO_PRIOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -81,7 +80,8 @@ public class ModelSpecificPseudoPriorLikelihoodParser  extends AbstractXMLObject
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -89,11 +89,13 @@ public class ModelSpecificPseudoPriorLikelihoodParser  extends AbstractXMLObject
 
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Calculates the likelihood of some data given some parametric or empirical distribution.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ModelSpecificPseudoPriorLikelihood.class;
     }
 }

@@ -39,11 +39,13 @@ public class UCLikelihoodParser extends AbstractXMLObjectParser {
 
     public static final String VARIANCE = "variance";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return UC_LIKELIHOOD;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -67,19 +69,22 @@ public class UCLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return
                 "This element returns an object that can calculate the likelihood " +
                         "of rates in a tree under the assumption of " +
                         "(log)normally distributed rates. ";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return UCLikelihood.class;
     }
 
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

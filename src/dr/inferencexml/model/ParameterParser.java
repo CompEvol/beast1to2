@@ -51,11 +51,13 @@ public class ParameterParser extends AbstractXMLObjectParser {
 //    public static final String BURNIN = "burnin";
 //    public static final String PARAMETERCOLUMN = "parameterColumn";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return PARAMETER;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         double[] values = null;
         double[] uppers;
         double[] lowers;
@@ -313,7 +315,8 @@ public class ParameterParser extends AbstractXMLObjectParser {
 //        return param;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -331,11 +334,13 @@ public class ParameterParser extends AbstractXMLObjectParser {
     };
 
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A real-valued parameter of one or more dimensions.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return RealParameter.class;
     }
 

@@ -27,10 +27,7 @@ package dr.evoxml;
 
 import dr.evolution.alignment.Alignment;
 import dr.evolution.alignment.HypermutantAlignment;
-import dr.evolution.datatype.*;
 import dr.xml.*;
-
-import java.util.logging.Logger;
 
 /**
  * This converts 'A's that are at specific APOBEC targeted contexts into an A/G ambiguity code for
@@ -44,9 +41,11 @@ public class HypermutantAlignmentParser extends AbstractXMLObjectParser {
     public final static String HYPERMUTANT_ALIGNMENT = "hypermutantAlignment";
     public final static String CONTEXT_TYPE = "type";
 
-    public String getParserName() { return HYPERMUTANT_ALIGNMENT; }
+    @Override
+	public String getParserName() { return HYPERMUTANT_ALIGNMENT; }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -76,13 +75,16 @@ public class HypermutantAlignmentParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Converts an alignment so that 'A's at specific APOBEC targeted contexts are set to an A/G ambiguity code.";
     }
 
-    public Class getReturnType() { return Alignment.class; }
+    @Override
+	public Class getReturnType() { return Alignment.class; }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {
             new ElementRule(Alignment.class),

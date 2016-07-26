@@ -36,11 +36,13 @@ public class RateCovarianceStatisticParser extends AbstractXMLObjectParser {
 
     public static final String RATE_COVARIANCE_STATISTIC = "rateCovarianceStatistic";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return RATE_COVARIANCE_STATISTIC;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		/*
 
         String name = xo.getAttribute(Statistic.NAME, xo.getId());
@@ -58,15 +60,18 @@ public class RateCovarianceStatisticParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A statistic that has as its value the covariance of parent and child branch rates";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return RateStatistic.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

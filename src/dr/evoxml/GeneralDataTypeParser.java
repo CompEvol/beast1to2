@@ -26,13 +26,8 @@
 package dr.evoxml;
 
 import dr.evolution.datatype.DataType;
-import dr.evolution.datatype.GeneralDataType;
 import dr.xml.*;
-import dr.util.Attribute;
 import dr.util.Identifiable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The XML for a nucleotide data type under this scheme would be:
@@ -65,9 +60,11 @@ public class GeneralDataTypeParser extends AbstractXMLObjectParser {
     public static final String AMBIGUITY = "ambiguity";
     public static final String CODE = "code";
 
-    public String getParserName() { return GENERAL_DATA_TYPE; }
+    @Override
+	public String getParserName() { return GENERAL_DATA_TYPE; }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -160,11 +157,13 @@ public class GeneralDataTypeParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Defines a general DataType for any number of states";
     }
 
-    public String getExample() {
+    @Override
+	public String getExample() {
         return "<!-- The XML for a nucleotide data type under this scheme would be -->\n"+
                 "<generalDataType id=\"nucleotides\">\n"+
                 "	<state code=\"A\"/>\n"+
@@ -179,9 +178,11 @@ public class GeneralDataTypeParser extends AbstractXMLObjectParser {
                 "</generalDataType>\n";
     }
 
-    public Class getReturnType() { return DataType.class; }
+    @Override
+	public Class getReturnType() { return DataType.class; }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {
             new ElementRule(Identifiable.class, 0, Integer.MAX_VALUE),

@@ -47,11 +47,13 @@ public class TreeLikelihoodParser extends AbstractXMLObjectParser {
     public static final String FORCE_RESCALING = "forceRescaling";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return TREE_LIKELIHOOD;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         boolean useAmbiguities = xo.getAttribute(USE_AMBIGUITIES, false);
 //        boolean allowMissingTaxa = xo.getAttribute(ALLOW_MISSING_TAXA, false);
 //        boolean storePartials = xo.getAttribute(STORE_PARTIALS, true);
@@ -124,15 +126,18 @@ public class TreeLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents the likelihood of a patternlist on a tree given the site model.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TreeLikelihood.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

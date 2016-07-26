@@ -43,11 +43,13 @@ public class RandomWalkIntegerSetSizeWeightedOperatorParser extends AbstractXMLO
     public static final String WINDOW_SIZE = "windowSize";
     public static final String BASE_SET_SIZE = "baseSetSize";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return RANDOM_WALK_INT_SET_SIZE_WGT_OP;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -69,15 +71,18 @@ public class RandomWalkIntegerSetSizeWeightedOperatorParser extends AbstractXMLO
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a random walk set size weighted operator on a given parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return RandomWalkIntegerSetSizeWeightedOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

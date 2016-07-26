@@ -44,12 +44,14 @@ public class SequenceParser extends AbstractXMLObjectParser {
 
     public static final String SEQUENCE = "sequence";
 
-    public String getParserName() { return SEQUENCE; }
+    @Override
+	public String getParserName() { return SEQUENCE; }
 
     /**
      * @return a sequence object based on the XML element it was passed.
      */
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         Sequence sequence = new Sequence();
 
         Taxon taxon = (Taxon)xo.getChild(Taxon.class);
@@ -101,13 +103,16 @@ public class SequenceParser extends AbstractXMLObjectParser {
         return sequence;
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A biomolecular sequence.";
     }
 
-    public Class getReturnType() { return Sequence.class; }
+    @Override
+	public Class getReturnType() { return Sequence.class; }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {
         new ElementRule(Taxon.class),

@@ -1,12 +1,8 @@
 package dr.evomodelxml.operators;
 
-import dr.evolution.tree.MultivariateTraitTree;
-import dr.evomodel.continuous.AbstractMultivariateTraitLikelihood;
 import dr.evomodel.continuous.FullyConjugateMultivariateTraitLikelihood;
 import dr.evomodel.operators.LatentFactorHamiltonianMC;
-import dr.inference.model.CompoundParameter;
 import dr.inference.model.LatentFactorModel;
-import dr.inference.operators.CoercionMode;
 import dr.xml.*;
 
 /**

@@ -37,11 +37,13 @@ public class DirichletProcessLikelihoodParser extends AbstractXMLObjectParser {
     public static final String ETA = "eta";
     public static final String CHI = "chi";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return DirichletProcessLikelihood.DIRICHLET_PROCESS_LIKELIHOOD;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -61,7 +63,8 @@ public class DirichletProcessLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -72,11 +75,13 @@ public class DirichletProcessLikelihoodParser extends AbstractXMLObjectParser {
                     new XMLSyntaxRule[]{new ElementRule(Parameter.class)}, "Aggregation parameter"),
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Calculates the likelihood of some items distributed into a number of classes under a Dirichlet drocess.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Likelihood.class;
     }
 }

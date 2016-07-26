@@ -30,19 +30,19 @@ import dr.evomodel.tree.TreeModel;
 import dr.inference.model.Parameter;
 import dr.xml.*;
 
-import java.util.logging.Logger;
-
 /**
  */
 public class ScaledTreeLengthRateModelParser extends AbstractXMLObjectParser {
     public static final String MODEL_NAME = "scaledTreeLengthModel";
     public static final String SCALING_FACTOR = "scalingFactor";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MODEL_NAME;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -61,16 +61,19 @@ public class ScaledTreeLengthRateModelParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a branch rate model that scales the total length " +
                 "of the tree to specified valued (default=1.0).";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ScaledTreeLengthRateModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

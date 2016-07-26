@@ -30,8 +30,6 @@ import dr.evomodel.tree.TreeModel;
 import dr.inference.model.Parameter;
 import dr.xml.*;
 
-import java.util.logging.Logger;
-
 /**
  */
 public class ArbitraryBranchRatesParser extends AbstractXMLObjectParser {
@@ -42,11 +40,13 @@ public class ArbitraryBranchRatesParser extends AbstractXMLObjectParser {
     public static final String EXP = "exp";
     public static final String CENTER_AT_ONE = "centerAtOne";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return ARBITRARY_BRANCH_RATES;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -81,16 +81,19 @@ public class ArbitraryBranchRatesParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns an arbitrary rate model." +
                 "The branch rates are drawn from an arbitrary distribution determine by the prior.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ArbitraryBranchRates.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

@@ -31,7 +31,6 @@ import dr.xml.*;
 import java.util.logging.Logger;
 
 import beast.core.parameter.BooleanParameter;
-import beast.core.parameter.IntegerParameter;
 import beast.core.parameter.Parameter;
 import beast.core.parameter.RealParameter;
 import beast.evolution.branchratemodel.RandomLocalClockModel;
@@ -47,11 +46,13 @@ public class RandomLocalClockModelParser extends AbstractXMLObjectParser {
     public static final String CLOCK_RATE = "clockRate";
     public static final String RATES_ARE_MULTIPLIERS = "ratesAreMultipliers";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return LOCAL_BRANCH_RATES;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         Tree tree = (Tree) xo.getChild(Tree.class);
 
@@ -98,7 +99,8 @@ public class RandomLocalClockModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return
                 "This element returns an random local clock (RLC) model." +
                         "Each branch either has a new rate or " +
@@ -106,11 +108,13 @@ public class RandomLocalClockModelParser extends AbstractXMLObjectParser {
                         "which is itself sampled.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return RandomLocalClockModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

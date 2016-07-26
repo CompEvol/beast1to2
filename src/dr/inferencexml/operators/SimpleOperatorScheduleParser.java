@@ -31,8 +31,6 @@ import beast.core.OperatorSchedule;
 import beast.core.util.Log;
 import dr.xml.*;
 
-import java.util.logging.Logger;
-
 /**
  *
  */
@@ -42,11 +40,13 @@ public class SimpleOperatorScheduleParser extends AbstractXMLObjectParser {
     public static final String SEQUENTIAL = "sequential";
     public static final String OPTIMIZATION_SCHEDULE = "optimizationSchedule";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return OPERATOR_SCHEDULE;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         OperatorSchedule schedule = new OperatorSchedule();
 
         if (xo.hasAttribute(SEQUENTIAL)) {
@@ -105,7 +105,8 @@ public class SimpleOperatorScheduleParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -115,11 +116,13 @@ public class SimpleOperatorScheduleParser extends AbstractXMLObjectParser {
             AttributeRule.newStringRule(OPTIMIZATION_SCHEDULE, true)
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A simple operator scheduler";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return OperatorSchedule.class;
     }
     

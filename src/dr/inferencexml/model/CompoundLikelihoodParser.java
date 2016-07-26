@@ -50,15 +50,18 @@ public class CompoundLikelihoodParser extends AbstractXMLObjectParser {
     public static final String REFERENCE_PRIOR = "referencePrior";
     public static final String WORKING_PRIOR = "workingPrior";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return COMPOUND_LIKELIHOOD;
     }
 
-    public String[] getParserNames() {
+    @Override
+	public String[] getParserNames() {
         return new String[]{getParserName(), POSTERIOR, PRIOR, LIKELIHOOD, PSEUDO_PRIOR, REFERENCE_PRIOR, WORKING_PRIOR};
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         // the default is -1 threads (automatic thread pool size) but an XML attribute can override it
         int threads = xo.getAttribute(THREADS, -1);
 
@@ -176,11 +179,13 @@ public class CompoundLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A likelihood function which is simply the product of its component likelihood functions.";
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -189,7 +194,8 @@ public class CompoundLikelihoodParser extends AbstractXMLObjectParser {
             new ElementRule(BEASTObject.class, -1, Integer.MAX_VALUE) 
     };
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return CompoundDistribution.class;
     }
 }

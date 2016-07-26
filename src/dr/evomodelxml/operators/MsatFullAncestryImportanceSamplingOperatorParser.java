@@ -39,11 +39,13 @@ import dr.evomodel.branchratemodel.BranchRateModel;
  * Parser for MsatFullAncestryGibbsOperator
  */
 public class MsatFullAncestryImportanceSamplingOperatorParser extends AbstractXMLObjectParser {
-    public String getParserName(){
+    @Override
+	public String getParserName(){
         return MsatFullAncestryImportanceSamplingOperator.MSAT_FULL_ANCESTRY_IMPORTANCE_SAMPLING_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -57,15 +59,18 @@ public class MsatFullAncestryImportanceSamplingOperatorParser extends AbstractXM
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents an operator that samples the full ancestry given a microsatellite pattern and a tree";
     }
 
-    public Class getReturnType(){
+    @Override
+	public Class getReturnType(){
         return MsatFullAncestryImportanceSamplingOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{

@@ -42,11 +42,13 @@ public class DataFromTreeTipsParser extends AbstractXMLObjectParser {
     public static final String CONTINUOUS = "continuous";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return DATA_FROM_TREE_TIPS;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -73,7 +75,8 @@ public class DataFromTreeTipsParser extends AbstractXMLObjectParser {
             }),
     };
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

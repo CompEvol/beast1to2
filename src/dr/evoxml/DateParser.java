@@ -52,11 +52,13 @@ public class DateParser extends AbstractXMLObjectParser {
 
     public static final String PRECISION = "precision";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return Date.DATE;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         java.text.DateFormat dateFormat = java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT, java.util.Locale.UK);
         dateFormat.setLenient(true);
 
@@ -126,7 +128,7 @@ public class DateParser extends AbstractXMLObjectParser {
         }
 
         if (xo.hasAttribute(PRECISION)) {
-            double precision = (Double)xo.getDoubleAttribute(PRECISION);
+            double precision = xo.getDoubleAttribute(PRECISION);
             date.setPrecision(precision);
         }
 
@@ -134,11 +136,13 @@ public class DateParser extends AbstractXMLObjectParser {
         return date;
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Specifies a date on a given timescale";
     }
 
-    public String getExample() {
+    @Override
+	public String getExample() {
         return
                 "<!-- a date representing 10 years in the past                                 -->\n" +
                         "<date value=\"10.0\" units=\"years\" direction=\"backwards\"/>\n" +
@@ -147,7 +151,8 @@ public class DateParser extends AbstractXMLObjectParser {
                         "<date value=\"300.0\" origin=\"01/01/89\" units=\"days\" direction=\"forwards\"/>\n";
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -161,7 +166,8 @@ public class DateParser extends AbstractXMLObjectParser {
             AttributeRule.newDoubleRule(PRECISION, true, "The precision to which the date is specified"),
     };
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return dr.evolution.util.Date.class;
     }
 }

@@ -31,8 +31,6 @@ import dr.inference.model.Likelihood;
 import dr.inference.operators.OperatorSchedule;
 import dr.xml.*;
 
-import java.util.ArrayList;
-
 /**
  *
  */
@@ -41,9 +39,11 @@ public class MLOptimizerParser extends AbstractXMLObjectParser {
     public static final String CHAIN_LENGTH = "chainLength";
     public static final String OPTIMIZER = "optimizer";    
 
-    public String getParserName() { return OPTIMIZER; }
+    @Override
+	public String getParserName() { return OPTIMIZER; }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -79,13 +79,16 @@ public class MLOptimizerParser extends AbstractXMLObjectParser {
     //************************************************************************
 
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a maximum likelihood heuristic optimizer and runs the optimization as a side effect.";
     }
 
-    public Class getReturnType() { return MLOptimizer.class; }
+    @Override
+	public Class getReturnType() { return MLOptimizer.class; }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private final XMLSyntaxRule[] rules = {
         AttributeRule.newIntegerRule(CHAIN_LENGTH),

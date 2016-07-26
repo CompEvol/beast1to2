@@ -26,7 +26,6 @@
 package dr.evoxml;
 
 import dr.xml.*;
-import dr.evolution.alignment.Patterns;
 import dr.evolution.distance.DistanceMatrix;
 import java.util.ArrayList;
 
@@ -39,11 +38,13 @@ import java.util.ArrayList;
 public class MultiLociDistanceParser extends AbstractXMLObjectParser {
 
     public static final String MULTI_LOCI_DISTANCE = "multiLociDistance";
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MULTI_LOCI_DISTANCE; 
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -79,7 +80,8 @@ public class MultiLociDistanceParser extends AbstractXMLObjectParser {
         System.out.println("overallMean: "+mean);
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -87,9 +89,11 @@ public class MultiLociDistanceParser extends AbstractXMLObjectParser {
         new ElementRule(DistanceMatrix.class, 1, Integer.MAX_VALUE)
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Constructs a distance matrix from a pattern list or alignment";
     }
 
-    public Class getReturnType() { return Double.class; }
+    @Override
+	public Class getReturnType() { return Double.class; }
 }

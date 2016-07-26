@@ -42,12 +42,14 @@ public class OneOnX3PriorParser extends AbstractXMLObjectParser {
     public static final String ONE_ONE_X_3_PRIOR = "oneOnX3Prior";
     public static final String DATA = "data";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return ONE_ONE_X_3_PRIOR;
     }
 
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -74,7 +76,8 @@ public class OneOnX3PriorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -85,11 +88,13 @@ public class OneOnX3PriorParser extends AbstractXMLObjectParser {
             )
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Calculates the (improper) prior proportional to Prod_i (1/x_i^3) for the given statistic x.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return OneOnX3Prior.class;
     }
 }

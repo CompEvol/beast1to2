@@ -33,8 +33,10 @@ public class AttributesParser extends AbstractXMLObjectParser {
 	public final static String NAMES = "names";
 	public final static String VALUES = "values";
 
+	@Override
 	public String getParserName() { return ATTRIBUTES; }
 		
+	@Override
 	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
@@ -60,12 +62,15 @@ public class AttributesParser extends AbstractXMLObjectParser {
 	// AbstractXMLObjectParser implementation
 	//************************************************************************
 
+	@Override
 	public String getParserDescription() {
 		return "This element represents an array of name/value pairs.";
 	}
 	
+	@Override
 	public Class getReturnType() { return Attribute[].class; }
 
+	@Override
 	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
 	private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {

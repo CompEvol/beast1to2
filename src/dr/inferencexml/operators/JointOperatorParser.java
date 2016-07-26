@@ -38,11 +38,13 @@ public class JointOperatorParser extends AbstractXMLObjectParser {
     public static final String WEIGHT = "weight";
     public static final String TARGET_ACCEPTANCE = "targetAcceptance";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return JOINT_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -68,15 +70,18 @@ public class JointOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents an arbitrary list of operators; only the first is optimizable";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return JointOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

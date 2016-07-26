@@ -1,6 +1,5 @@
 package dr.inferencexml.model;
 
-import dr.inference.model.Bounds;
 import dr.inference.model.Parameter;
 import dr.inference.model.Statistic;
 import dr.xml.*;
@@ -12,7 +11,8 @@ public class ImmutableParameterParser extends AbstractXMLObjectParser {
 
     public static final String IMMUTABLE_PARAMETER = "immutableParameter";
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -66,7 +66,8 @@ public class ImmutableParameterParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -74,15 +75,18 @@ public class ImmutableParameterParser extends AbstractXMLObjectParser {
             new ElementRule(Statistic.class),
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "An immutable parameter generated from a statistic.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Parameter.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return IMMUTABLE_PARAMETER;
     }
 

@@ -25,7 +25,6 @@
 
 package dr.evomodelxml.operators;
 
-import dr.evomodel.operators.TreeBitMoveOperator;
 import dr.evomodel.tree.TreeModel;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
@@ -38,11 +37,13 @@ public class TreeBitMoveOperatorParser extends AbstractXMLObjectParser {
     public static final String INDICTATOR_TRAIT = "indicatorTrait";
     public static final String TRAIT2 = "trait2";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return BIT_MOVE_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -65,15 +66,18 @@ public class TreeBitMoveOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a bit-move operator on a given parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return MCMCOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

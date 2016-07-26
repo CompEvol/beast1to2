@@ -55,6 +55,7 @@ public class AlloppSpeciesBindingsIndividualParser extends
 		AbstractXMLObjectParser {
 	public static final String INDIVIDUAL = "individual";
 
+	@Override
 	public String getParserName() {
 		return INDIVIDUAL;
 	}

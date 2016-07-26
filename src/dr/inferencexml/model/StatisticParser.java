@@ -39,8 +39,10 @@ public class StatisticParser extends AbstractXMLObjectParser {
 	
 	public final static String STATISTIC = "statistic";
 
+	@Override
 	public String getParserName() { return STATISTIC; }
 
+	@Override
 	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
@@ -64,12 +66,15 @@ public class StatisticParser extends AbstractXMLObjectParser {
 	// AbstractXMLObjectParser implementation
 	//************************************************************************
 	
+	@Override
 	public String getParserDescription() {
 		return "A statistic of a given name from the specified object.  ";
 	}
 	
+	@Override
 	public Class getReturnType() { return Statistic.class; }
 	
+	@Override
 	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 	
 	private final XMLSyntaxRule[] rules = {

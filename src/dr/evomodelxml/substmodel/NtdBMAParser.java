@@ -46,11 +46,13 @@ public class NtdBMAParser extends AbstractXMLObjectParser {
 
     public static final String FREQUENCIES = "frequencies";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return NTD_BMA;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -72,11 +74,13 @@ public class NtdBMAParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return NtdBMA.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -96,7 +100,8 @@ public class NtdBMAParser extends AbstractXMLObjectParser {
             new ElementRule(MODEL_CHOOSE,
                     new XMLSyntaxRule[]{new ElementRule(Variable.class)}, true),
     };
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
         return "A model that allows model averaging over nucleotide substitution models.";
     }
 }

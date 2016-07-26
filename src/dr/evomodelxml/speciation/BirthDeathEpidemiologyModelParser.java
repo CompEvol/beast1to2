@@ -25,13 +25,10 @@
 
 package dr.evomodelxml.speciation;
 
-import dr.evolution.util.Units;
 import dr.evomodel.speciation.BirthDeathSerialSamplingModel;
 import dr.evoxml.util.XMLUnits;
 import dr.inference.model.Parameter;
 import dr.xml.*;
-
-import java.util.logging.Logger;
 
 /**
  * @author Andrew Rambaut
@@ -47,11 +44,13 @@ public class BirthDeathEpidemiologyModelParser extends AbstractXMLObjectParser {
     public static final String SAMPLING_PROBABILITY = "samplingProbability";
     public static final String ORIGIN = BirthDeathSerialSamplingModelParser.ORIGIN;
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return BIRTH_DEATH_EPIDEMIOLOGY;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -88,15 +87,18 @@ public class BirthDeathEpidemiologyModelParser extends AbstractXMLObjectParser {
                 "Mol.Biol.Evol., doi: 10.1093/molbev/msr217, 2011";
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Stadler et al (2011) model of epidemiology.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return BirthDeathSerialSamplingModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

@@ -47,17 +47,20 @@ public class GammaSiteModelParser extends AbstractXMLObjectParser {
     public static final String PROPORTION_INVARIANT = "proportionInvariant";
 
 
-    public String[] getParserNames() {
+    @Override
+	public String[] getParserNames() {
         return new String[]{
                 getParserName(), "beast_" + getParserName()
         };
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SiteModel.class.getSimpleName();
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         SubstitutionModel substModel = (SubstitutionModel) xo.getElementFirstChild(SUBSTITUTION_MODEL);
         SiteModel siteModel = new SiteModel();
         siteModel.initByName("substModel", substModel);
@@ -111,15 +114,18 @@ public class GammaSiteModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A SiteModel that has a gamma distributed rates across sites";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return SiteModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

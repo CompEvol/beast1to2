@@ -29,9 +29,6 @@ import dr.evomodel.speciation.PopsIOSpeciesBindings;
 import dr.evomodel.tree.TreeModel;
 import dr.xml.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * User: Graham Jones
  * Date: 10/05/12
@@ -124,7 +121,8 @@ public class PopsIOSpeciesBindingsParser extends AbstractXMLObjectParser {
         return PopsIOSpeciesBindings.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return PIO_SPECIES_BINDINGS;
     }
 }

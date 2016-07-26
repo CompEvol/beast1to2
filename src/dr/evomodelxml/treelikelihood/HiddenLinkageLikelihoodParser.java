@@ -51,6 +51,7 @@ public class HiddenLinkageLikelihoodParser extends AbstractXMLObjectParser {
 	}
 
 	
+	@Override
 	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
@@ -62,6 +63,7 @@ public class HiddenLinkageLikelihoodParser extends AbstractXMLObjectParser {
 		}
 
 
+	@Override
 	public String getParserName() {
 		return "HiddenLinkageLikelihood";
 	}

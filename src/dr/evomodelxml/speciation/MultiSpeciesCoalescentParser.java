@@ -35,7 +35,8 @@ import dr.xml.*;
 public class MultiSpeciesCoalescentParser extends AbstractXMLObjectParser {
     public static final String SPECIES_COALESCENT = "speciesCoalescent";
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -45,22 +46,26 @@ public class MultiSpeciesCoalescentParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
                 new ElementRule(SpeciesBindings.class),
                 new ElementRule(SpeciesTreeModel.class),
         };
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Compute coalecent log-liklihood of a set of gene trees embedded inside one species tree.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return MultiSpeciesCoalescent.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SPECIES_COALESCENT;
     }
 }

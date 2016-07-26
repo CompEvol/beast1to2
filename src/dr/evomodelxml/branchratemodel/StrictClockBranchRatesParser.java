@@ -25,8 +25,6 @@
 
 package dr.evomodelxml.branchratemodel;
 
-import dr.evomodel.branchratemodel.StrictClockBranchRates;
-import dr.inference.model.Parameter;
 import dr.xml.*;
 
 import java.util.logging.Logger;
@@ -41,11 +39,13 @@ public class StrictClockBranchRatesParser extends AbstractXMLObjectParser {
     public static final String STRICT_CLOCK_BRANCH_RATES = "strictClockBranchRates";
     public static final String RATE = "rate";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return STRICT_CLOCK_BRANCH_RATES;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         RealParameter rateParameter = (RealParameter) xo.getElementFirstChild(RATE);
 
@@ -62,17 +62,20 @@ public class StrictClockBranchRatesParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return
                 "This element provides a strict clock model. " +
                         "All branches have the same rate of molecular evolution.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return StrictClockModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

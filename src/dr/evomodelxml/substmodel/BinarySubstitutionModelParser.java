@@ -25,11 +25,8 @@
 
 package dr.evomodelxml.substmodel;
 
-import dr.evolution.datatype.DataType;
-import dr.evolution.datatype.TwoStates;
 import dr.evomodel.substmodel.FrequencyModel;
 import dr.evomodel.substmodel.GeneralSubstitutionModel;
-import dr.inference.model.Parameter;
 import dr.xml.*;
 
 /**
@@ -39,11 +36,13 @@ public class BinarySubstitutionModelParser extends AbstractXMLObjectParser {
 
     public static final String BINARY_SUBSTITUTION_MODEL = "binarySubstitutionModel";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return BINARY_SUBSTITUTION_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -70,15 +69,18 @@ public class BinarySubstitutionModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A general reversible model of sequence substitution for binary data type.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return GeneralSubstitutionModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

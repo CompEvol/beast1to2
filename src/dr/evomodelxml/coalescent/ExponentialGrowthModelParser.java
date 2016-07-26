@@ -44,11 +44,13 @@ public class ExponentialGrowthModelParser extends AbstractXMLObjectParser {
     public static String DOUBLING_TIME = "doublingTime";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return EXPONENTIAL_GROWTH_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
@@ -77,15 +79,18 @@ public class ExponentialGrowthModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A demographic model of exponential growth.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ExponentialGrowth.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

@@ -26,10 +26,7 @@
 package dr.evoxml;
 
 import dr.evolution.tree.SimpleNode;
-import dr.evolution.util.Date;
 import dr.evolution.util.Taxon;
-import dr.util.Attributable;
-import dr.util.Attribute;
 import dr.xml.*;
 
 /**
@@ -44,9 +41,11 @@ public class SimpleNodeParser extends AbstractXMLObjectParser {
     public final static String HEIGHT = "height";
     public final static String RATE = "rate";
 
-    public String getParserName() { return NODE; }
+    @Override
+	public String getParserName() { return NODE; }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -103,13 +102,16 @@ public class SimpleNodeParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents a node in a tree.";
     }
 
-    public Class getReturnType() { return SimpleNode.class; }
+    @Override
+	public Class getReturnType() { return SimpleNode.class; }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private final XMLSyntaxRule[] rules = {
         AttributeRule.newDoubleRule(HEIGHT, true, "the age of the node"),

@@ -46,6 +46,7 @@ public class AlloppMoveLegsParser extends AbstractXMLObjectParser {
 	public static final String MOVE_LEGS = "moveLegs";
 
 
+	@Override
 	public String getParserName() {
 		return MOVE_LEGS;
 	}

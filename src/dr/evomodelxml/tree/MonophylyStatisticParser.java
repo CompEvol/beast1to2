@@ -40,11 +40,13 @@ public class MonophylyStatisticParser extends AbstractXMLObjectParser {
     public static final String MRCA = "mrca";
     public static final String IGNORE = "ignore";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MONOPHYLY_STATISTIC;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         String name = xo.getAttribute("name", xo.getId());
 
@@ -57,7 +59,7 @@ public class MonophylyStatisticParser extends AbstractXMLObjectParser {
             for (int i = 0; i < cxo.getChildCount(); i++) {
                 Object ccxo = cxo.getChild(i);
                 if (ccxo instanceof Taxon) {
-                    taxa1.setInputValue("taxon", (Taxon) ccxo);
+                    taxa1.setInputValue("taxon", ccxo);
                 }
             }
             taxa = taxa1;
@@ -72,7 +74,7 @@ public class MonophylyStatisticParser extends AbstractXMLObjectParser {
                 for (int i = 0; i < cxo.getChildCount(); i++) {
                     Object ccxo = cxo.getChild(i);
                     if (ccxo instanceof Taxon) {
-                        taxa1.setInputValue("taxon", (Taxon) ccxo);
+                        taxa1.setInputValue("taxon", ccxo);
                     }
                 }
                 ignore = taxa1;
@@ -96,15 +98,18 @@ public class MonophylyStatisticParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A statistic that returns true if a given set of taxa are monophyletic for a given tree";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return MRCAPrior.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

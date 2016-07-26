@@ -25,7 +25,6 @@
 
 package dr.inferencexml.model;
 
-import dr.inference.model.Statistic;
 import dr.inference.model.TestStatistic;
 import dr.util.Attribute;
 import dr.xml.*;
@@ -42,11 +41,13 @@ public class TestStatisticParser extends AbstractXMLObjectParser {
     private static final String SINSIDE = "inside";
     private static final String SOUTSIDE = "outside";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return TEST_STATISTIC;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -95,16 +96,19 @@ public class TestStatisticParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents a boolean statistic that returns 1 " +
                         "if the conditions are met and 0 otherwise.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TestStatistic.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

@@ -87,7 +87,8 @@ public class LeafTraitExtractorParser extends AbstractXMLObjectParser {
         return Parameter.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return NAME;
     }
 }

@@ -42,11 +42,13 @@ public class HKYParser extends AbstractXMLObjectParser {
     public static final String KAPPA = "kappa";
     public static final String FREQUENCIES = "frequencies";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return HKY.class.getSimpleName() + "Model";
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         HKY hky = new HKY();
 
         RealParameter kappaParam = (RealParameter) xo.getElementFirstChild(KAPPA);
@@ -64,16 +66,19 @@ public class HKYParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents an instance of the HKY85 " +
                 "(Hasegawa, Kishino & Yano, 1985) model of nucleotide evolution.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return HKY.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

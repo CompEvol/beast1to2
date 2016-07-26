@@ -27,7 +27,6 @@ package dr.evomodelxml.coalescent;
 
 import beast.core.parameter.RealParameter;
 import beast.evolution.tree.coalescent.Expansion;
-import beast.evolution.tree.coalescent.ExponentialGrowth;
 import beast1to2.Beast1to2Converter;
 import dr.evolution.util.Units;
 import dr.evoxml.util.XMLUnits;
@@ -45,11 +44,13 @@ public class ExpansionModelParser extends AbstractXMLObjectParser {
     public static final String GROWTH_RATE = "growthRate";
     public static final String DOUBLING_TIME = "doublingTime";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return EXPANSION_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
         XMLObject cxo = xo.getChild(POPULATION_SIZE);
@@ -80,15 +81,18 @@ public class ExpansionModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A demographic model of constant population size followed by exponential growth.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Expansion.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

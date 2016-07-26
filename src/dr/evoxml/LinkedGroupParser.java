@@ -27,7 +27,6 @@ package dr.evoxml;
 
 import dr.evolution.LinkedGroup;
 import dr.evolution.util.Taxa;
-import dr.evolution.util.TaxonList;
 import dr.xml.*;
 
 /**
@@ -36,21 +35,25 @@ import dr.xml.*;
 public class LinkedGroupParser extends AbstractXMLObjectParser {
 
 
+	@Override
 	public String getParserDescription() {
 		return "A group of metagenome reads linked with some probability";
 	}
 
 	
+	@Override
 	public Class getReturnType() {
 		return LinkedGroup.class;
 	}
 
 
+	@Override
 	public XMLSyntaxRule[] getSyntaxRules() {
 		return rules;
 	}
 
 
+	@Override
 	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
@@ -66,6 +69,7 @@ public class LinkedGroupParser extends AbstractXMLObjectParser {
 	*/
 		}
 
+	@Override
 	public String getParserName() {
 		return "LinkedGroup";
 	}

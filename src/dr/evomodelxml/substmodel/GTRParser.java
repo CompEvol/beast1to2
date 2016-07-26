@@ -46,11 +46,13 @@ public class GTRParser extends AbstractXMLObjectParser {
 
     public static final String FREQUENCIES = "frequencies";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return GTR_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         XMLObject cxo = xo.getChild(FREQUENCIES);
         Frequencies freqModel = (Frequencies) cxo.getChild(Frequencies.class);
@@ -106,11 +108,13 @@ public class GTRParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A general reversible model of nucleotide sequence substitution.";
     }
 
-    public String getExample() {
+    @Override
+	public String getExample() {
 
         return
                 "<!-- A general time reversible model for DNA.                                          -->\n" +
@@ -127,11 +131,13 @@ public class GTRParser extends AbstractXMLObjectParser {
                         "</" + getParserName() + ">\n";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return GTR.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

@@ -41,11 +41,13 @@ public class BinomialLikelihoodParser extends AbstractXMLObjectParser {
     public static final String VALUES = "values";
     public static final String ON_LOGIT_SCALE = "onLogitScale";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return BinomialLikelihood.BINOMIAL_LIKELIHOOD;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -90,7 +92,8 @@ public class BinomialLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -109,11 +112,13 @@ public class BinomialLikelihoodParser extends AbstractXMLObjectParser {
                     )),
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Calculates the likelihood of some data given some parametric or empirical distribution.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Likelihood.class;
     }
 }

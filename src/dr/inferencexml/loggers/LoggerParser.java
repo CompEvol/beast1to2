@@ -32,7 +32,6 @@ import beast.core.Loggable;
 import beast.core.Logger;
 import beast.core.parameter.Parameter;
 import beast.core.util.Log;
-import beast.evolution.branchratemodel.UCRelaxedClockModel;
 import beast.evolution.tree.Tree;
 import beast.evolution.tree.TreeHeightLogger;
 import beast1to2.BeastParser;
@@ -67,14 +66,16 @@ public class LoggerParser extends AbstractXMLObjectParser {
     public static final String DECIMAL_PLACES = "dp";
     public static final String WIDTH = "width";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return LOG;
     }
 
     /**
      * @return an object based on the XML element it was passed.
      */
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         // You must say how often you want to log
         final int logEvery = xo.getIntegerAttribute(LOG_EVERY);
 
@@ -212,7 +213,8 @@ public class LoggerParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -235,11 +237,13 @@ public class LoggerParser extends AbstractXMLObjectParser {
             )
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Logs one or more items at a given frequency to the screen or to a file";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Logger.class;
     }
 }

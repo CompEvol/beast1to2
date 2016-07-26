@@ -48,9 +48,11 @@ public class DistanceMatrixParser extends AbstractXMLObjectParser {
     public static final String DISTANCE_MATRIX = "distanceMatrix";
     public static final String CORRECTION = "correction";
 
-    public String getParserName() { return DISTANCE_MATRIX; }
+    @Override
+	public String getParserName() { return DISTANCE_MATRIX; }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
     	Alignment patterns = (Alignment)xo.getChild(Alignment.class);
 
@@ -73,7 +75,8 @@ public class DistanceMatrixParser extends AbstractXMLObjectParser {
         return matrix;
 	}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -84,9 +87,11 @@ public class DistanceMatrixParser extends AbstractXMLObjectParser {
         new ElementRule(Alignment.class)
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Constructs a distance matrix from a pattern list or alignment";
     }
 
-    public Class getReturnType() { return Distance.class; }
+    @Override
+	public Class getReturnType() { return Distance.class; }
 }

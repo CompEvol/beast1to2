@@ -25,10 +25,8 @@
 
 package dr.evomodelxml.substmodel;
 
-import dr.evolution.datatype.HiddenNucleotides;
 import dr.evomodel.substmodel.AbstractCovarionDNAModel;
 import dr.evomodel.substmodel.CovarionHKY;
-import dr.evomodel.substmodel.FrequencyModel;
 import dr.inference.model.Parameter;
 import dr.xml.*;
 
@@ -40,19 +38,23 @@ public class CovarionHKYParser extends AbstractXMLObjectParser {
     public static final String COVARION_HKY = "CovarionHKYModel";
     public static final String KAPPA = HKYParser.KAPPA;
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return COVARION_HKY;
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A covarion HKY model.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return CovarionHKY.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -68,7 +70,8 @@ public class CovarionHKYParser extends AbstractXMLObjectParser {
                             "A parameter representing the rates of the hidden classes relative to the first hidden class.")})
     };
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*

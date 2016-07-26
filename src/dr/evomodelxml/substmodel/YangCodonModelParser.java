@@ -25,7 +25,6 @@
 
 package dr.evomodelxml.substmodel;
 
-import dr.evolution.datatype.Codons;
 import dr.evolution.datatype.GeneticCode;
 import dr.evomodel.substmodel.FrequencyModel;
 import dr.evomodel.substmodel.YangCodonModel;
@@ -41,9 +40,11 @@ public class YangCodonModelParser extends AbstractXMLObjectParser {
     public static final String KAPPA = "kappa";
 
 
-    public String getParserName() { return YANG_CODON_MODEL; }
+    @Override
+	public String getParserName() { return YANG_CODON_MODEL; }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -96,13 +97,16 @@ public class YangCodonModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents the Yang model of codon evolution.";
     }
 
-    public Class getReturnType() { return YangCodonModel.class; }
+    @Override
+	public Class getReturnType() { return YangCodonModel.class; }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {
         new StringAttributeRule(GeneticCode.GENETIC_CODE,

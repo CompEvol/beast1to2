@@ -42,11 +42,13 @@ public class ACLikelihoodParser extends AbstractXMLObjectParser {
 
     public static final String DISTRIBUTION = "distribution";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return AC_LIKELIHOOD;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -76,7 +78,8 @@ public class ACLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return
                 "This element returns an object that can calculate the likelihood " +
                         "of rate changes in a tree under the assumption of " +
@@ -89,12 +92,14 @@ public class ACLikelihoodParser extends AbstractXMLObjectParser {
                         "branch length).";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ACLikelihood.class;
     }
 
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

@@ -26,7 +26,6 @@
 package dr.evoxml;
 
 import dr.evolution.distance.DistanceMatrix;
-import dr.evolution.tree.NeighborJoiningTree;
 import dr.evolution.tree.Tree;
 import dr.xml.*;
 
@@ -43,9 +42,11 @@ public class NeighborJoiningParser extends AbstractXMLObjectParser {
     //
     public final static String NEIGHBOR_JOINING_TREE = "neighborJoiningTree";
 
-    public String getParserName() { return NEIGHBOR_JOINING_TREE; }
+    @Override
+	public String getParserName() { return NEIGHBOR_JOINING_TREE; }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -55,13 +56,16 @@ public class NeighborJoiningParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a neighbour-joining tree generated from the given distances.";
     }
 
-    public Class getReturnType() { return Tree.class; }
+    @Override
+	public Class getReturnType() { return Tree.class; }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {
         new ElementRule(DistanceMatrix.class)

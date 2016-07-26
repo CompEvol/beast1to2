@@ -26,12 +26,9 @@
 package dr.inferencexml.distribution;
 
 import dr.inference.distribution.AbstractDistributionLikelihood;
-import dr.inference.distribution.CachedDistributionLikelihood;
 import dr.inference.distribution.DistributionLikelihood;
 import dr.inference.model.Variable;
 import dr.xml.*;
-
-import java.util.logging.Logger;
 
 /**
  * @author Marc Suchard
@@ -43,11 +40,13 @@ public class CachedDistributionLikelihoodParser extends AbstractXMLObjectParser 
    // public static final String RATE_BLOCK = "rates";
     //public static final String INDICATOR_BLOCK = "indicators";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return CACHED_PRIOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -69,7 +68,8 @@ public class CachedDistributionLikelihoodParser extends AbstractXMLObjectParser 
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -78,11 +78,13 @@ public class CachedDistributionLikelihoodParser extends AbstractXMLObjectParser 
             new ElementRule(Variable.class),
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Calculates a cached likelihood of some data given some parametric or empirical distribution.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return DistributionLikelihood.class;
     }
 }

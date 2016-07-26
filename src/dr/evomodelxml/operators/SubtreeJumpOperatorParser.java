@@ -26,10 +26,8 @@
 package dr.evomodelxml.operators;
 
 import dr.evomodel.operators.SubtreeJumpOperator;
-import dr.evomodel.operators.SubtreeSlideOperator;
 import dr.evomodel.tree.TreeModel;
 import dr.inference.operators.CoercableMCMCOperator;
-import dr.inference.operators.CoercionMode;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
 
@@ -39,11 +37,13 @@ public class SubtreeJumpOperatorParser extends AbstractXMLObjectParser {
 
     public static final String SUBTREE_JUMP = "subtreeJump";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SUBTREE_JUMP;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -77,15 +77,18 @@ public class SubtreeJumpOperatorParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "An operator that jumps a subtree to another edge at the same height.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return SubtreeJumpOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

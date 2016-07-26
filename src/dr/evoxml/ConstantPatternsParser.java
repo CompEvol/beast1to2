@@ -26,12 +26,8 @@
 package dr.evoxml;
 
 import dr.evolution.alignment.*;
-import dr.evolution.datatype.DataType;
-import dr.evolution.util.TaxonList;
 import dr.inference.model.Parameter;
 import dr.xml.*;
-
-import java.util.logging.Logger;
 
 /**
  * Creates a set of patterns for constant sites with weights as provided
@@ -45,14 +41,16 @@ public class ConstantPatternsParser extends AbstractXMLObjectParser {
     public static final String CONSTANT_PATTERNS = "constantPatterns";
     private static final String COUNTS = "counts";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return CONSTANT_PATTERNS;
     }
 
     /**
      * Parses a patterns element and returns a patterns object.
      */
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -74,7 +72,8 @@ public class ConstantPatternsParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -86,11 +85,13 @@ public class ConstantPatternsParser extends AbstractXMLObjectParser {
                     })
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Creates a set of patterns for constant sites with weights as provided.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return PatternList.class;
     }
 

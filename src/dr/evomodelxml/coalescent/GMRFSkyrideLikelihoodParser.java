@@ -65,15 +65,18 @@ public class GMRFSkyrideLikelihoodParser extends AbstractXMLObjectParser {
     public static final String PLOIDY = "ploidy";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SKYLINE_LIKELIHOOD;
     }
 
-    public String[] getParserNames() {
+    @Override
+	public String[] getParserNames() {
         return new String[]{getParserName(), SKYRIDE_LIKELIHOOD, SKYGRID_LIKELIHOOD}; // cannot duplicate
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         XMLObject cxo = xo.getChild(POPULATION_PARAMETER);
         RealParameter popParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
@@ -217,15 +220,18 @@ public class GMRFSkyrideLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents the likelihood of the tree given the population size vector.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return GMRFSkyrideLikelihood.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

@@ -25,13 +25,9 @@
 
 package dr.evomodelxml.substmodel;
 
-import dr.evolution.datatype.DataType;
 import dr.evomodel.substmodel.FrequencyModel;
 import dr.evomodel.substmodel.GeneralSubstitutionModel;
-import dr.inference.model.Parameter;
 import dr.xml.*;
-
-import java.util.logging.Logger;
 
 /**
  * @author Alexander V Alekseyenko (alexander.alekseyenko@gmail.com)
@@ -42,11 +38,13 @@ public class MkModelParser extends AbstractXMLObjectParser {
 
     public static final String MK_SUBSTITUTION_MODEL = "mkSubstitutionModel";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MK_SUBSTITUTION_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -70,15 +68,18 @@ public class MkModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "An Mk model of substitution. This model can also accomodate arbitrary orderings of changes.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return GeneralSubstitutionModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

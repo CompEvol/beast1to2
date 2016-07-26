@@ -37,6 +37,7 @@ import dr.util.XHTMLable;
  */
 public class XHTMLReport extends Report {
 		
+	@Override
 	public void createReport() {
 		System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>");
 		System.out.print("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" ");

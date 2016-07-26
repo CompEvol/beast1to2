@@ -25,7 +25,6 @@
 
 package dr.inferencexml.model;
 
-import dr.inference.model.DefaultModel;
 import dr.inference.model.DummyLikelihood;
 import dr.inference.model.Model;
 import dr.inference.model.Parameter;
@@ -38,9 +37,11 @@ public class DummyLikelihoodParser extends AbstractXMLObjectParser {
 
     public static final String DUMMY_LIKELIHOOD = "dummyLikelihood";
 
-    public String getParserName() { return DUMMY_LIKELIHOOD; }
+    @Override
+	public String getParserName() { return DUMMY_LIKELIHOOD; }
 
-    public Object parseXMLObject(XMLObject xo) {
+    @Override
+	public Object parseXMLObject(XMLObject xo) {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -63,13 +64,16 @@ public class DummyLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A function wraps a component model that would otherwise not be registered with the MCMC. Always returns a log likelihood of zero.";
     }
 
-    public Class getReturnType() { return DummyLikelihood.class; }
+    @Override
+	public Class getReturnType() { return DummyLikelihood.class; }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private final XMLSyntaxRule[] rules = {
             new XORRule(

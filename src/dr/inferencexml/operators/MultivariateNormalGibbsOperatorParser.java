@@ -27,7 +27,6 @@ package dr.inferencexml.operators;
 
 import dr.inference.distribution.MultivariateDistributionLikelihood;
 import dr.inference.operators.MultivariateNormalGibbsOperator;
-import dr.math.matrixAlgebra.IllegalDimension;
 import dr.xml.*;
 
 /**

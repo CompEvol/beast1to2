@@ -26,10 +26,7 @@
 package dr.inferencexml.trace;
 
 import dr.inference.trace.LogFileTraceExporter;
-import dr.util.FileHelpers;
 import dr.xml.*;
-
-import java.io.File;
 
 /**
  *
@@ -40,11 +37,13 @@ public class LogFileTraceExporterParser extends AbstractXMLObjectParser {
     private static final String FILENAME = "fileName";
     private static final String BURN_IN = "burnIn";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return LOG_FILE_TRACE;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -60,15 +59,18 @@ public class LogFileTraceExporterParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "reconstruct population graph from variable dimension run.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return LogFileTraceExporter.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

@@ -43,7 +43,8 @@ public class WikiDocumentationHandler extends XMLDocumentationHandler {
         super(parser);
     }
 
-    public void outputElements(PrintWriter writer) {
+    @Override
+	public void outputElements(PrintWriter writer) {
 
         printDocWikiTitle(writer);
 
@@ -87,7 +88,8 @@ public class WikiDocumentationHandler extends XMLDocumentationHandler {
      * Outputs all types that appear as required attributes or elements in an HTML table to the given writer.
      * @param writer PrintWriter
      */
-    public void outputTypes(PrintWriter writer) {
+    @Override
+	public void outputTypes(PrintWriter writer) {
 
         writer.println("==BEAST types==");
         writer.println("");
@@ -136,7 +138,8 @@ public class WikiDocumentationHandler extends XMLDocumentationHandler {
         }
     }
 
-    public String getHTMLForClass(Class c) {
+    @Override
+	public String getHTMLForClass(Class c) {
         return getWikiLink(ClassComparator.getName(c));
     }
 

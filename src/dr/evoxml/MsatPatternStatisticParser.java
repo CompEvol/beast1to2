@@ -37,12 +37,14 @@ public class MsatPatternStatisticParser extends AbstractXMLObjectParser {
     public static final String MSAT_PATTERN_STATISTIC_PARSER = "msatPatternStatistic";
     public static final String MODE = "mode";
 
-    public String getParserName(){
+    @Override
+	public String getParserName(){
         return MSAT_PATTERN_STATISTIC_PARSER;
     }
 
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -59,7 +61,8 @@ public class MsatPatternStatisticParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
                 new ElementRule(Patterns.class),
                 AttributeRule.newStringRule(MODE, true)
@@ -68,11 +71,13 @@ public class MsatPatternStatisticParser extends AbstractXMLObjectParser {
 
 
 
-    public String getParserDescription(){
+    @Override
+	public String getParserDescription(){
         return "Returns MsatPatternStatistic object";
     }
 
-    public Class getReturnType(){
+    @Override
+	public Class getReturnType(){
         return MsatPatternStatistic.class;
     }
 }

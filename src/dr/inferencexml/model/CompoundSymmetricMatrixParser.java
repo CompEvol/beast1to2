@@ -39,11 +39,13 @@ public class CompoundSymmetricMatrixParser extends AbstractXMLObjectParser {
     public static final String OFF_DIAGONAL = "offDiagonal";
     public static final String AS_CORRELATION = "asCorrelation";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MATRIX_PARAMETER;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -64,11 +66,13 @@ public class CompoundSymmetricMatrixParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A diagonal matrix parameter constructed from its diagonals.";
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -80,7 +84,8 @@ public class CompoundSymmetricMatrixParser extends AbstractXMLObjectParser {
             AttributeRule.newBooleanRule(AS_CORRELATION, true)
     };
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return CompoundSymmetricMatrix.class;
     }
 }

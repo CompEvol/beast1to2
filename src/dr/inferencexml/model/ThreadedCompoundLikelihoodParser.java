@@ -37,15 +37,18 @@ public class ThreadedCompoundLikelihoodParser extends AbstractXMLObjectParser {
     public static final String THREADED_COMPOUND_LIKELIHOOD = "threadedCompoundLikelihood";
     public static final String WEIGHT = "robustWeight";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return THREADED_COMPOUND_LIKELIHOOD;
     }
 
-    public String[] getParserNames() {
+    @Override
+	public String[] getParserNames() {
         return new String[]{getParserName()};
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -76,11 +79,13 @@ public class ThreadedCompoundLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A likelihood function which is simply the product of its component likelihood functions.";
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -89,7 +94,8 @@ public class ThreadedCompoundLikelihoodParser extends AbstractXMLObjectParser {
             AttributeRule.newDoubleRule(WEIGHT, true),
     };
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ThreadedCompoundLikelihood.class;
     }
 }

@@ -26,12 +26,9 @@
 package dr.evomodelxml.MSSD;
 
 import dr.evomodel.sitemodel.GammaSiteModel;
-import dr.evomodel.sitemodel.SiteModel;
 import dr.evomodel.substmodel.SubstitutionModel;
 import dr.inference.model.Parameter;
 import dr.xml.*;
-
-import java.util.logging.Logger;
 
 /**
  * This site model is a copy of SiteModelParser explicitly so that it is not overridden
@@ -51,17 +48,20 @@ public class ALSSiteModelParser extends AbstractXMLObjectParser {
     public static final String PROPORTION_INVARIANT = "proportionInvariant";
 
 
-    public String[] getParserNames() {
+    @Override
+	public String[] getParserNames() {
         return new String[]{
                 getParserName(), "beast_" + getParserName()
         };
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return ALS_SITE_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -110,15 +110,18 @@ public class ALSSiteModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A SiteModel that has a gamma distributed rates across sites";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return GammaSiteModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

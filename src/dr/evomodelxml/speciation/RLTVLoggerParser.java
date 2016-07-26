@@ -28,12 +28,7 @@ package dr.evomodelxml.speciation;
 import dr.evomodel.tree.TreeModel;
 import dr.evomodel.tree.randomlocalmodel.RLTVLogger;
 import dr.evomodel.tree.randomlocalmodel.RandomLocalTreeVariable;
-import dr.inference.loggers.TabDelimitedFormatter;
 import dr.xml.*;
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * Parses an element from an DOM document into a SpeciationModel. Recognises YuleModel.
@@ -44,11 +39,13 @@ public class RLTVLoggerParser extends AbstractXMLObjectParser {
     private static final String FILENAME = "fileName";
     private static final String LOG_EVERY = "logEvery";
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return RANDOM_LOCAL_LOGGER;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -75,15 +72,18 @@ public class RLTVLoggerParser extends AbstractXMLObjectParser {
         // AbstractXMLObjectParser implementation
         //************************************************************************
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "A speciation model of a Yule process whose rate can evolve down the tree.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return RLTVLogger.class;
         }
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 

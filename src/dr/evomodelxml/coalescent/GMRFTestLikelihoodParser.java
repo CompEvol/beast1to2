@@ -26,7 +26,6 @@
 package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.GMRFTestLikelihood;
-import dr.inference.model.DesignMatrix;
 import dr.inference.model.Parameter;
 import dr.xml.*;
 
@@ -39,11 +38,13 @@ public class GMRFTestLikelihoodParser extends AbstractXMLObjectParser {
     public static final String INTERVAL_PARAMETER = "intervals";
     public static final String SUFFSTAT_PARAMETER = "sufficientStatistics";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SKYLINE_TEST_LIKELIHOOD;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -78,15 +79,18 @@ public class GMRFTestLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents the likelihood of the tree given the population size vector.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return GMRFTestLikelihood.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

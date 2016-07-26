@@ -42,11 +42,13 @@ public class RandomWalkIntegerNodeHeightWeightedOperatorParser extends AbstractX
     public static final String WINDOW_SIZE = "windowSize";
     public static final String INTERNAL_NODE_HEIGHTS = "internalNodeHeights";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return RANDOM_WALK_INT_NODE_HEIGHT_WGT_OP;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -66,15 +68,18 @@ public class RandomWalkIntegerNodeHeightWeightedOperatorParser extends AbstractX
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a random walk node height weighted operator on a given parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return RandomWalkIntegerNodeHeightWeightedOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

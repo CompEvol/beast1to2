@@ -39,21 +39,25 @@ public class HiddenLinkageModelParser extends AbstractXMLObjectParser {
     public static final String NAME = "HiddenLinkageModel";
 
     
+	@Override
 	public String getParserDescription() {
 		return "A model to describe missing information about linkage among several reads from a metagenome";
 	}
 
 
+	@Override
 	public Class getReturnType() {
 		return HiddenLinkageModel.class;
 	}
 
 
+	@Override
 	public XMLSyntaxRule[] getSyntaxRules() {
 		return rules;
 	}
 
 
+	@Override
 	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
@@ -67,6 +71,7 @@ public class HiddenLinkageModelParser extends AbstractXMLObjectParser {
 		}
 
 
+	@Override
 	public String getParserName() {
 		return NAME;
 	}

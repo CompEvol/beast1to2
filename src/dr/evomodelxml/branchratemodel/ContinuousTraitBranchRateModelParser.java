@@ -31,8 +31,6 @@ import dr.evomodel.continuous.SampledMultivariateTraitLikelihood;
 import dr.inference.model.Parameter;
 import dr.xml.*;
 
-import java.util.logging.Logger;
-
 public class ContinuousTraitBranchRateModelParser extends AbstractXMLObjectParser {
 
     public static final String TRAIT_BRANCH_RATES = "continuousTraitRateModel";
@@ -41,11 +39,13 @@ public class ContinuousTraitBranchRateModelParser extends AbstractXMLObjectParse
     public static final String RATE = BranchRateModel.RATE;
     public static final String RATIO = "ratio";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return TRAIT_BRANCH_RATES;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -79,16 +79,19 @@ public class ContinuousTraitBranchRateModelParser extends AbstractXMLObjectParse
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns an trait rate model." +
                         "The branch rates are an average of the rates provided by a node trait.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ContinuousTraitBranchRateModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

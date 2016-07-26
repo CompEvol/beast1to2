@@ -35,9 +35,11 @@ public class MeanStatisticParser extends AbstractXMLObjectParser {
 
     public static String MEAN_STATISTIC = "meanStatistic";
 
-    public String getParserName() { return MEAN_STATISTIC; }
+    @Override
+	public String getParserName() { return MEAN_STATISTIC; }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -61,13 +63,16 @@ public class MeanStatisticParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a statistic that is the mean of the child statistics.";
     }
 
-    public Class getReturnType() { return MeanStatistic.class; }
+    @Override
+	public Class getReturnType() { return MeanStatistic.class; }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {
         new ElementRule(Statistic.class, 1, Integer.MAX_VALUE )

@@ -25,17 +25,7 @@
 
 package dr.evomodelxml;
 
-import dr.inference.model.Parameter;
-import dr.util.FileHelpers;
-import dr.util.TabularData;
 import dr.xml.*;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Joseph Heled
@@ -46,15 +36,18 @@ public class CSVExporterParser extends AbstractXMLObjectParser {
 
     final static public String CSV_EXPORT = "CSVexport";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return CSV_EXPORT;
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Write tabular data as an CSV file.";
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -190,7 +183,8 @@ public class CSVExporterParser extends AbstractXMLObjectParser {
     public static final String COLUMN = "CSVcolumn";
     public static final String COLUMN_NAME = "name";
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
 //                new StringAttributeRule(FILE_NAME,
 //                        "The name of a BEAST log file (can not include trees, which should be logged separately"),
@@ -210,7 +204,8 @@ public class CSVExporterParser extends AbstractXMLObjectParser {
     }
 
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return CSVExporterParser.class; //TODO write CSVExporter
     }
 }

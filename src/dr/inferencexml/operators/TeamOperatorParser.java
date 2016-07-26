@@ -38,11 +38,13 @@ public class TeamOperatorParser extends AbstractXMLObjectParser {
     public static final String SUBSET_SIZE = "size";
     // public static final String TARGET_ACCEPTANCE = "targetAcceptance";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return TEAM_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -67,17 +69,20 @@ public class TeamOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "An arbitrary list of operators; A random subset of size N is aggregated in one operation." +
                 " Operators may have unequal weights - in that case a subset probability of selection is proportional to " +
                 "the sum of it's members weights.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TeamOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

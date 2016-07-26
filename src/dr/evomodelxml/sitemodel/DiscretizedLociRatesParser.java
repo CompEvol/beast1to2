@@ -27,12 +27,9 @@ package dr.evomodelxml.sitemodel;
 
 import dr.xml.*;
 import dr.evomodel.branchratemodel.DiscretizedBranchRates;
-import dr.evomodel.sitemodel.DiscretizedLociRates;
 import dr.inference.distribution.ParametricDistributionModel;
 import dr.inference.model.Parameter;
 import dr.inference.model.CompoundParameter;
-
-import java.util.logging.Logger;
 
 /**
  * @author Chieh-Hsi Wu
@@ -49,10 +46,12 @@ public class DiscretizedLociRatesParser extends AbstractXMLObjectParser {
 
 
 
-    public String getParserName(){
+    @Override
+	public String getParserName(){
         return DISCRETIZED_LOCI_RATES;
     }
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -90,17 +89,20 @@ public class DiscretizedLociRatesParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return
                 "This element returns an discretized loci rate model." +
                         "The loci rates are drawn from a discretized parametric distribution.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return DiscretizedBranchRates.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

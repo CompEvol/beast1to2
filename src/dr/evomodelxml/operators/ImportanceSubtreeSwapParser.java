@@ -36,11 +36,13 @@ public class ImportanceSubtreeSwapParser extends AbstractXMLObjectParser {
 
     public static final String IMPORTANCE_SUBTREE_SWAP = "ImportanceSubtreeSwap";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return IMPORTANCE_SUBTREE_SWAP;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -57,16 +59,19 @@ public class ImportanceSubtreeSwapParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     // ************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents a importance guided subtree swap operator. "
                 + "This operator swaps a random subtree with a second subtree guided by an importance distribution.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ImportanceSubtreeSwap.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

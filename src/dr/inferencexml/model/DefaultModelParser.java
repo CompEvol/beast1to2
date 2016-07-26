@@ -39,11 +39,13 @@ public class DefaultModelParser extends AbstractXMLObjectParser {
 
     public static final String DUMMY_MODEL = "dummyModel";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return DUMMY_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) {
+    @Override
+	public Object parseXMLObject(XMLObject xo) {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -63,15 +65,18 @@ public class DefaultModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A function wraps a component model that would otherwise not be registered with the MCMC. Always returns a log likelihood of zero.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return DefaultModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

@@ -36,11 +36,13 @@ public class PositiveDefiniteSubstitutionModelParser extends AbstractXMLObjectPa
 
     public static final String SVS_GENERAL_SUBSTITUTION_MODEL = "positiveDefiniteSubstitutionModel";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SVS_GENERAL_SUBSTITUTION_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -55,15 +57,18 @@ public class PositiveDefiniteSubstitutionModelParser extends AbstractXMLObjectPa
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A general reversible model of sequence substitution for any data type with stochastic variable selection.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return PositiveDefiniteSubstitutionModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

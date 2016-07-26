@@ -25,7 +25,6 @@
 
 package dr.evomodelxml.coalescent;
 
-import dr.evolution.util.Units;
 import dr.evomodel.coalescent.EmpiricalPiecewiseModel;
 import dr.evoxml.util.XMLUnits;
 import dr.inference.model.Parameter;
@@ -43,11 +42,13 @@ public class EmpiricalPiecewiseModelParser extends AbstractXMLObjectParser {
     public static final String THRESHOLD = "threshold";
     public static final String LAG = "lag";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return EMPIRICAL_PIECEWISE;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -79,15 +80,18 @@ public class EmpiricalPiecewiseModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents a piecewise population model";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return EmpiricalPiecewiseModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

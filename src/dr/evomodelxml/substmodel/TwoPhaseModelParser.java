@@ -47,12 +47,14 @@ public class TwoPhaseModelParser extends AbstractXMLObjectParser{
     public static final double LOWER = 0.0;
     public static final String ESTIMATE_SUBMODEL_PARAMS = "estimateSubmodelParameters";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return TwoPhaseModel.TWO_PHASE_MODEL;
     }
 
     //AbstractXMLObjectParser implementation
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -80,11 +82,13 @@ public class TwoPhaseModelParser extends AbstractXMLObjectParser{
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents an instance of the Two Phase Model of microsatellite evolution.";
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -98,7 +102,8 @@ public class TwoPhaseModelParser extends AbstractXMLObjectParser{
         new StringAttributeRule(ESTIMATE_SUBMODEL_PARAMS,"whether or not to esitmate the parameters of the submodel",true)
     };
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TwoPhaseModel.class;
     }
 

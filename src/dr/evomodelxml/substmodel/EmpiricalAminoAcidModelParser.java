@@ -39,11 +39,13 @@ public class EmpiricalAminoAcidModelParser extends AbstractXMLObjectParser {
     public static final String TYPE = "type";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return EMPIRICAL_AMINO_ACID_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -85,7 +87,8 @@ public class EmpiricalAminoAcidModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -94,11 +97,13 @@ public class EmpiricalAminoAcidModelParser extends AbstractXMLObjectParser {
             new ElementRule(FREQUENCIES, FrequencyModel.class, "If the frequencies are omitted than the empirical frequencies associated with the selected model are used.", true)
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "An empirical amino acid substitution model.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return EmpiricalAminoAcidModel.class;
     }
 

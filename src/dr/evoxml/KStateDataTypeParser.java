@@ -26,11 +26,7 @@
 package dr.evoxml;
 
 import dr.evolution.datatype.DataType;
-import dr.evolution.datatype.GeneralDataType;
 import dr.xml.*;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Package: KStateDataTypeParser
@@ -50,7 +46,8 @@ public class KStateDataTypeParser extends AbstractXMLObjectParser {
 
     //public static XMLObjectParser PARSER=new KStateDataTypeParser();
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -74,19 +71,23 @@ public class KStateDataTypeParser extends AbstractXMLObjectParser {
             AttributeRule.newIntegerRule(STATE_COUNT, false),
             AttributeRule.newIntegerRule(START_WITH, true)};
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Parser for k-state model.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return DataType.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return K_STATE_DATATYPE;
     }
 

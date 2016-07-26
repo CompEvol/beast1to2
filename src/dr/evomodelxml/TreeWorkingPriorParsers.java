@@ -25,30 +25,10 @@
 
 package dr.evomodelxml;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
-
-import dr.evolution.io.Importer.ImportException;
-import dr.evolution.io.TreeTrace;
-import dr.evomodel.coalescent.CoalescentConstantLikelihood;
-import dr.evomodel.coalescent.ExponentialProductLikelihood;
-import dr.evomodel.coalescent.ExponentialProductPosteriorMeansLikelihood;
-import dr.evomodel.coalescent.ExponentialProductSufficientStatisticsLikelihood;
-import dr.evomodel.coalescent.GammaProductLikelihood;
-import dr.evomodel.tree.ConditionalCladeFrequency;
 import dr.evomodel.tree.TreeModel;
-import dr.inference.distribution.ConditionalCladeProbability;
 import dr.inference.distribution.MultivariateDistributionLikelihood;
-import dr.inference.model.ConstantLikelihood;
 import dr.inference.model.Likelihood;
 import dr.inference.model.Statistic;
-import dr.inference.trace.LogFileTraces;
-import dr.inference.trace.TraceException;
-import dr.math.distributions.MultivariateGammaDistribution;
-import dr.math.functionEval.GammaFunction;
-import dr.util.FileHelpers;
 import dr.xml.AbstractXMLObjectParser;
 import dr.xml.AttributeRule;
 import dr.xml.ElementRule;
@@ -87,11 +67,13 @@ public class TreeWorkingPriorParsers {
      */
     public static XMLObjectParser COALESCENT_CONSTANT_LIKELIHOOD_PARSER = new AbstractXMLObjectParser () {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return COALESCENT_CONSTANT_LIKELIHOOD;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -118,7 +100,8 @@ public class TreeWorkingPriorParsers {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -126,11 +109,13 @@ public class TreeWorkingPriorParsers {
                 new ElementRule(TreeModel.class)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the number of possible combinations of coalescent events.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
 
@@ -141,11 +126,13 @@ public class TreeWorkingPriorParsers {
      */
     public static XMLObjectParser CONTEMPORANEOUS_COALESCENT_CONSTANT_PARSER = new AbstractXMLObjectParser () {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return CONTEMPORANEOUS_COALESCENT_CONSTANT;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -161,7 +148,8 @@ public class TreeWorkingPriorParsers {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -169,11 +157,13 @@ public class TreeWorkingPriorParsers {
                 new ElementRule(TreeModel.class)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the number of possible combinations of coalescent events.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
 
@@ -184,11 +174,13 @@ public class TreeWorkingPriorParsers {
      */
     public static XMLObjectParser PRODUCT_OF_EXPONENTIALS_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return PRODUCT_OF_EXPONENTIALS;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -201,7 +193,8 @@ public class TreeWorkingPriorParsers {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -210,11 +203,13 @@ public class TreeWorkingPriorParsers {
                 new ElementRule(TreeModel.class)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates a product of exponentials based on a (set of) fixed log population sizes.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
 
@@ -225,11 +220,13 @@ public class TreeWorkingPriorParsers {
      */
     public static XMLObjectParser CONSTANT_DECREASED_VARIANCE_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return CONSTANT_DECREASED_VARIANCE_PRIOR;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -313,7 +310,8 @@ public class TreeWorkingPriorParsers {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -324,11 +322,13 @@ public class TreeWorkingPriorParsers {
                 new ElementRule(TreeModel.class)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates a product of exponentials based on a set of posterior sample means.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
 
@@ -339,11 +339,13 @@ public class TreeWorkingPriorParsers {
      */
     public static XMLObjectParser PRODUCT_OF_EXPONENTIALS_POSTERIOR_MEANS_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return PRODUCT_OF_EXPONENTIALS_POSTERIOR_MEANS;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -449,7 +451,8 @@ public class TreeWorkingPriorParsers {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -460,11 +463,13 @@ public class TreeWorkingPriorParsers {
                 new ElementRule(TreeModel.class)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates a product of exponentials based on a set of posterior sample means.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
 
@@ -475,11 +480,13 @@ public class TreeWorkingPriorParsers {
      */
     public static XMLObjectParser PRODUCT_OF_EXPONENTIALS_POSTERIOR_MEANS_LOESS_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return PRODUCT_OF_EXPONENTIALS_POSTERIOR_MEANS_LOESS;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -623,7 +630,8 @@ public class TreeWorkingPriorParsers {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -634,11 +642,13 @@ public class TreeWorkingPriorParsers {
                 new ElementRule(TreeModel.class)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates a product of exponentials based on a set of posterior sample means, undergoing loess smoothing.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
 
@@ -649,11 +659,13 @@ public class TreeWorkingPriorParsers {
      */
     public static XMLObjectParser PRODUCT_OF_EXPONENTIALS_SUFFICIENT_STATISTICS_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return PRODUCT_OF_EXPONENTIALS_SUFFICIENT_STATISTICS;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -757,7 +769,8 @@ public class TreeWorkingPriorParsers {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -768,11 +781,13 @@ public class TreeWorkingPriorParsers {
                 new ElementRule(TreeModel.class)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates a product of exponentials based on a set of posterior sample means, using sufficient statistics.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
 
@@ -783,11 +798,13 @@ public class TreeWorkingPriorParsers {
      */
     public static XMLObjectParser PRODUCT_OF_GAMMAS_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return PRODUCT_OF_GAMMAS;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -967,7 +984,8 @@ public class TreeWorkingPriorParsers {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -981,11 +999,13 @@ public class TreeWorkingPriorParsers {
                 new ElementRule(TreeModel.class)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates a product of gamma distributions.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
 
@@ -996,11 +1016,13 @@ public class TreeWorkingPriorParsers {
      */
     public static XMLObjectParser COALESCENT_HEIGHTS_REFERENCE_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return COALESCENT_HEIGHTS_REFERENCE_PRIOR;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -1156,7 +1178,8 @@ public class TreeWorkingPriorParsers {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -1168,11 +1191,13 @@ public class TreeWorkingPriorParsers {
                 new ElementRule(Statistic.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the coalescent height probabilities based on a sample of coalescent heights.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return MultivariateDistributionLikelihood.class;
         }
 
@@ -1184,11 +1209,13 @@ public class TreeWorkingPriorParsers {
 
     public static XMLObjectParser CONSTANT_TREE_TOPOLOGY_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return CONSTANT_TREE_TOPOLOGY_PRIOR;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -1202,7 +1229,8 @@ public class TreeWorkingPriorParsers {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -1210,11 +1238,13 @@ public class TreeWorkingPriorParsers {
                 new ElementRule(TreeModel.class)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the constant tree topology prior, i.e. 1 over the total number of rooted bifurcating trees.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
 
@@ -1225,11 +1255,13 @@ public class TreeWorkingPriorParsers {
      */
     public static XMLObjectParser CONDITIONAL_CLADE_REFERENCE_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return CONDITIONAL_CLADE_REFERENCE_PRIOR;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -1294,7 +1326,8 @@ public class TreeWorkingPriorParsers {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -1305,11 +1338,13 @@ public class TreeWorkingPriorParsers {
                 new ElementRule(TreeModel.class)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the conditional clade probability of a tree based on a sample of tree space.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
     };

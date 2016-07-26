@@ -29,7 +29,6 @@ import dr.evolution.tree.Tree;
 import dr.evomodel.speciation.MulSpeciesBindings;
 import dr.evomodel.speciation.MulSpeciesTreeModel;
 import dr.inference.model.Parameter;
-import dr.inference.model.ParameterParser;
 import dr.util.Attributable;
 import dr.xml.*;
 
@@ -48,7 +47,8 @@ public class MulSpeciesTreeModelParser extends AbstractXMLObjectParser {
     public static final String CONST_ROOT_POPULATION = "constantRoot";
     public static final String CONSTANT_POPULATION = "constantPopulation";
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -74,7 +74,8 @@ public class MulSpeciesTreeModelParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
                  AttributeRule.newBooleanRule(CONST_ROOT_POPULATION, true),
                  AttributeRule.newBooleanRule(CONSTANT_POPULATION, true),
@@ -87,15 +88,18 @@ public class MulSpeciesTreeModelParser extends AbstractXMLObjectParser {
         };
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Multiply-labelled species tree which includes demographic function per branch.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return MulSpeciesTreeModel.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MUL_SPECIES_TREE;
     }
 

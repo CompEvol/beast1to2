@@ -31,8 +31,6 @@ import dr.inference.distribution.ParametricDistributionModel;
 import dr.inference.model.Parameter;
 import dr.xml.*;
 
-import java.util.logging.Logger;
-
 /**
  * @author Wai Lok Sibon Li
  */
@@ -49,11 +47,13 @@ public class RandomDiscretizedBranchRatesParser extends AbstractXMLObjectParser 
     //public static final String NORMALIZED_MEAN = "normalizedMean";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return RANDOM_DISCRETIZED_BRANCH_RATES;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -102,17 +102,20 @@ public class RandomDiscretizedBranchRatesParser extends AbstractXMLObjectParser 
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return
                 "This element returns a random discretized relaxed clock model." +
                         "The branch rates are drawn from a continuous parametric distribution.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return null; //RandomDiscretizedBranchRates.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

@@ -37,27 +37,33 @@ public class SkewNormalDistributionModelParser extends DistributionModelParser {
     public static final String SCALE = "scale";
     public static final String SHAPE = "shape";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return "skewNormalDistributionModel";
     }
 
-    ParametricDistribution parseDistributionModel(RealParameter[] parameters, double offset) {
+    @Override
+	ParametricDistribution parseDistributionModel(RealParameter[] parameters, double offset) {
         return null; //new SkewNormalDistributionModel(parameters[0], parameters[1], parameters[2]);
     }
 
-    public String[] getParameterNames() {
+    @Override
+	public String[] getParameterNames() {
         return new String[]{LOCATION, SCALE, SHAPE};
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A model of a skew normal distribution.";
     }
 
-    public boolean allowOffset() {
+    @Override
+	public boolean allowOffset() {
         return false;
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ParametricDistribution.class;
     }
 }

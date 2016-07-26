@@ -4,7 +4,6 @@ package dr.evomodelxml.operators;
 import dr.inference.distribution.MomentDistributionModel;
 import dr.inference.model.LatentFactorModel;
 import dr.inference.model.MatrixParameter;
-import dr.inference.operators.CoercionMode;
 import dr.xml.*;
 
 /**

@@ -42,7 +42,8 @@ public class VectorSliceParameter extends CompoundParameter {
     private final int sliceDimension;
     private Bounds<Double> bounds;
 
-    public Bounds<Double> getBounds() {
+    @Override
+	public Bounds<Double> getBounds() {
 
         if (bounds == null) {
             bounds = new sliceBounds();
@@ -57,39 +58,47 @@ public class VectorSliceParameter extends CompoundParameter {
         this.sliceDimension = sliceDimension;
     }
 
-    public int getDimension() {
+    @Override
+	public int getDimension() {
         return getParameterCount();
     }
 
-    public double getParameterValue(int dim) {
+    @Override
+	public double getParameterValue(int dim) {
         Parameter parameter = getParameter(dim);
         return parameter.getParameterValue(sliceDimension);
     }
 
-    public void addDimension(int index, double value) {
+    @Override
+	public void addDimension(int index, double value) {
         throw new RuntimeException("Not yet implemented.");
     }
 
-    public double removeDimension(int index) {
+    @Override
+	public double removeDimension(int index) {
         throw new RuntimeException("Not yet implemented.");
     }
 
-    public void setParameterValue(int dim, double value) {
+    @Override
+	public void setParameterValue(int dim, double value) {
         Parameter parameter = getParameter(dim);
         parameter.setParameterValue(sliceDimension, value);
     }
 
-    public void setParameterValueQuietly(int dim, double value) {
+    @Override
+	public void setParameterValueQuietly(int dim, double value) {
         Parameter parameter = getParameter(dim);
         parameter.setParameterValueQuietly(sliceDimension, value);
     }
 
-    public void setParameterValueNotifyChangedAll(int dim, double value){
+    @Override
+	public void setParameterValueNotifyChangedAll(int dim, double value){
         Parameter parameter = getParameter(dim);
         parameter.setParameterValueNotifyChangedAll(sliceDimension, value);
     }
 
-    public String getDimensionName(int dim) {
+    @Override
+	public String getDimensionName(int dim) {
 
         return getParameter(dim).getVariableName() + Integer.toString(sliceDimension + 1);
     }
@@ -115,11 +124,13 @@ public class VectorSliceParameter extends CompoundParameter {
 
     public static XMLObjectParser PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return VECTOR_SLICE_PARAMETER;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
 
             int sliceDimension = xo.getIntegerAttribute(SLICE_DIMENSION);
@@ -152,11 +163,13 @@ public class VectorSliceParameter extends CompoundParameter {
         // AbstractXMLObjectParser implementation
         //************************************************************************
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "A vector parameter constructed from a slice of component parameters.";
         }
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -165,7 +178,8 @@ public class VectorSliceParameter extends CompoundParameter {
                 AttributeRule.newIntegerRule(SLICE_DIMENSION),
         };
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return VectorSliceParameter.class;
         }
     };

@@ -25,7 +25,6 @@
 
 package dr.evomodelxml.operators;
 
-import dr.evomodel.operators.RateExchangeOperator;
 import dr.evomodel.operators.SubtreeSlideOperator;
 import dr.evomodel.tree.TreeModel;
 import dr.inference.operators.MCMCOperator;
@@ -41,11 +40,13 @@ public class RateExchangeOperatorParser extends AbstractXMLObjectParser {
     public static final String SWAP_AT_ROOT = "swapAtRoot";
     public static final String MOVE_HEIGHT = "moveHeight";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return RATE_EXCHANGE;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -60,15 +61,18 @@ public class RateExchangeOperatorParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "An operator that exchanges rates and traits on a tree.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return SubtreeSlideOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

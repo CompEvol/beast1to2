@@ -46,11 +46,13 @@ public class CTMCScalePriorParser extends AbstractXMLObjectParser {
     public static final String RECIPROCAL = "reciprocal";
     public static final String TRIAL = "trial";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MODEL_NAME;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         Tree treeModel = (Tree) xo.getChild(Tree.class);
         RealParameter ctmcScale = (RealParameter) xo.getElementFirstChild(SCALEPARAMETER);
@@ -71,15 +73,18 @@ public class CTMCScalePriorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents the prior for CTMC scale parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Prior.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

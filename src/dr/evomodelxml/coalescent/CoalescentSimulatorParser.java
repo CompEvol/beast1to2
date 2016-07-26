@@ -32,7 +32,6 @@ import beast.evolution.tree.TraitSet;
 import beast.evolution.tree.Tree;
 import beast.evolution.tree.coalescent.ConstantPopulation;
 import beast.evolution.tree.coalescent.PopulationFunction;
-import beast.util.ClusterTree;
 import beast1to2.Beast1to2Converter;
 import dr.evoxml.TaxonParser;
 import dr.xml.*;
@@ -50,11 +49,13 @@ public class CoalescentSimulatorParser extends AbstractXMLObjectParser {
     public static final String COALESCENT_SIMULATOR = "coalescentSimulator";
     public static final String HEIGHT = "height";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return COALESCENT_SIMULATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         RandomTree randomTree = new RandomTree();
 
         PopulationFunction populationFunction = (PopulationFunction) xo.getChild(PopulationFunction.class);
@@ -188,16 +189,19 @@ public class CoalescentSimulatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a simulated tree under the given demographic model. The element can " +
                 "be nested to simulate with monophyletic clades. The tree will be rescaled to the given height.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Tree.class; //Object.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

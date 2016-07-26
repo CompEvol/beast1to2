@@ -27,10 +27,7 @@ package dr.evoxml;
 
 import dr.evolution.datatype.DataType;
 import dr.evolution.datatype.MutationDeathType;
-import dr.evoxml.util.DataTypeUtils;
 import dr.xml.*;
-
-import java.util.logging.Logger;
 
 /**
  *
@@ -44,11 +41,13 @@ public class MutationDeathTypeParser extends AbstractXMLObjectParser {
     public static final String AMBIGUITY = "ambiguity";
     public static final String EXTANT = "extantState";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MODEL_NAME;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -113,15 +112,18 @@ public class MutationDeathTypeParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents an instance of the MutationDeathType which extends a base datatype with an additional \"death\" state.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return MutationDeathType.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

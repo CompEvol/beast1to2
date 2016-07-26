@@ -26,7 +26,6 @@
 package dr.evomodelxml.treelikelihood;
 
 import dr.evomodel.branchratemodel.BranchRateModel;
-import dr.evomodel.branchratemodel.StrictClockBranchRates;
 import dr.evomodel.substmodel.MicrosatelliteModel;
 import dr.evomodel.tree.MicrosatelliteSamplerTreeModel;
 import dr.evomodel.treelikelihood.MicrosatelliteSamplerTreeLikelihood;
@@ -42,15 +41,18 @@ public class MicrosatelliteSamplerTreeLikelihoodParser extends AbstractXMLObject
     public static final String TREE_LIKELIHOOD = "microsatelliteSamplerTreeLikelihood";
     public static final String MUTATION_RATE = "mutationRate";
     public static final String BRANCH_RATE_MODEL = "branchRateModel";
-    public String getParserName(){
+    @Override
+	public String getParserName(){
         return TREE_LIKELIHOOD;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -86,11 +88,13 @@ public class MicrosatelliteSamplerTreeLikelihoodParser extends AbstractXMLObject
             new ElementRule(BranchRateModel.class,true)
     };
 
-    public String getParserDescription(){
+    @Override
+	public String getParserDescription(){
         return "this parser returns an object of the TreeMicrosatelliteSamplerLikelihood class";
     }
 
-    public Class getReturnType(){
+    @Override
+	public Class getReturnType(){
         return MicrosatelliteSamplerTreeLikelihood.class;
     }
 

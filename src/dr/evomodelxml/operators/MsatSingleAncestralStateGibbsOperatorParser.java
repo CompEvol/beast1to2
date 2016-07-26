@@ -37,11 +37,13 @@ import dr.evomodel.branchratemodel.BranchRateModel;
  * @author Chieh-Hsi Wu
  */
 public class MsatSingleAncestralStateGibbsOperatorParser extends AbstractXMLObjectParser {
-    public String getParserName(){
+    @Override
+	public String getParserName(){
         return MsatSingleAncestralStateGibbsOperator.MSAT_SINGLE_ANCESTAL_STATE_GIBBS_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -55,15 +57,18 @@ public class MsatSingleAncestralStateGibbsOperatorParser extends AbstractXMLObje
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents an operator that samples the state of a single ancestor given a microsatellite pattern and a tree";
     }
 
-    public Class getReturnType(){
+    @Override
+	public Class getReturnType(){
         return MsatSingleAncestralStateGibbsOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{

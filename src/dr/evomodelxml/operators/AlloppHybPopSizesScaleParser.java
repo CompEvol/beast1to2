@@ -42,7 +42,8 @@ public class AlloppHybPopSizesScaleParser extends AbstractXMLObjectParser {
     public static final String HYB_POP_SIZES_SCALE = "hybPopSizesScaleOperator";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return HYB_POP_SIZES_SCALE;
     }
 

@@ -38,7 +38,8 @@ public class ScaledBetaDistributionModelParser extends BetaDistributionModelPars
     public static final String LENGTH = "length";
     public static final String SCALED_BETA_DISTRIBUTION_MODEL = "scaledBetaDistributionModel";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SCALED_BETA_DISTRIBUTION_MODEL;
     }
 
@@ -46,19 +47,23 @@ public class ScaledBetaDistributionModelParser extends BetaDistributionModelPars
         return new BetaDistributionModel(parameters[0], parameters[1], offset, parameters[2].getParameterValue(0));
     }
 
-    public String[] getParameterNames() {
+    @Override
+	public String[] getParameterNames() {
         return new String[]{ALPHA, BETA, LENGTH};
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A model of a beta distribution allowing offset and scale.";
     }
 
-    public boolean allowOffset() {
+    @Override
+	public boolean allowOffset() {
         return true;
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return BetaDistributionModel.class;
     }
 }

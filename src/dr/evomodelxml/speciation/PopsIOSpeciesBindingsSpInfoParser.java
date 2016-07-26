@@ -67,7 +67,8 @@ public class PopsIOSpeciesBindingsSpInfoParser  extends AbstractXMLObjectParser 
         return PopsIOSpeciesBindings.SpInfo.class;
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return PIOSP;
     }
 }

@@ -53,7 +53,8 @@ public abstract class DistributionModelParser extends AbstractXMLObjectParser {
 
     abstract boolean allowOffset();
 
-    public final Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public final Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         double offset = xo.getAttribute(OFFSET, 0.0);
 
@@ -72,7 +73,8 @@ public abstract class DistributionModelParser extends AbstractXMLObjectParser {
                 (RealParameter) cxo.getChild(RealParameter.class) : new RealParameter(cxo.getDoubleChild(0) +"");
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
 
         String[] names = getParameterNames();
 

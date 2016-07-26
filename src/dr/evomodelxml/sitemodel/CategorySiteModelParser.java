@@ -43,11 +43,13 @@ public class CategorySiteModelParser extends AbstractXMLObjectParser {
     public static final String CATEGORY_STRING = "values";
     public static final String RELATIVE_TO = "relativeTo";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SITE_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -83,15 +85,18 @@ public class CategorySiteModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A SiteModel that has a gamma distributed rates across sites";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return CategorySiteModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

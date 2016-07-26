@@ -1,8 +1,6 @@
 package dr.inferencexml.model;
 
 
-//import dr.inference.model.ElementWiseMatrixMultiplicationParameter;
-import dr.inference.model.MatrixParameter;
 import dr.xml.AbstractXMLObjectParser;
 import dr.xml.XMLObject;
 import dr.xml.XMLParseException;

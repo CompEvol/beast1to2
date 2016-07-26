@@ -25,15 +25,9 @@
 
 package dr.inferencexml.trace;
 
-import dr.inference.trace.LogFileTraces;
 import dr.inference.trace.MarginalLikelihoodAnalysis;
-import dr.inference.trace.TraceException;
 import dr.util.Attribute;
 import dr.xml.*;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  *
@@ -48,11 +42,13 @@ public class MarginalLikelihoodAnalysisParser extends AbstractXMLObjectParser {
     public static final String ONLY_HARMONIC = "harmonicOnly";
     public static final String BOOTSTRAP_LENGTH = "bootstrapLength";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return ML_ANALYSIS;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -136,15 +132,18 @@ public class MarginalLikelihoodAnalysisParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Performs a trace analysis. Estimates the mean of the various statistics in the given log file.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return MarginalLikelihoodAnalysis.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

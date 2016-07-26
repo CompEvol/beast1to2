@@ -25,7 +25,6 @@
 
 package dr.inferencexml.model;
 
-import dr.inference.model.Bounds;
 import dr.inference.model.Variable;
 import dr.xml.AttributeRule;
 import dr.xml.XMLObject;
@@ -50,11 +49,13 @@ public class ParameterIntegerParser extends dr.xml.AbstractXMLObjectParser {
     public static final String PARAMETER = "integerParameter";
 //    public static final String RANDOMIZE = "randomize";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return PARAMETER;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
         return null;
 
@@ -176,7 +177,8 @@ public class ParameterIntegerParser extends dr.xml.AbstractXMLObjectParser {
 //        return param;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -191,11 +193,13 @@ public class ParameterIntegerParser extends dr.xml.AbstractXMLObjectParser {
     };
 
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "An integer-valued parameter only for staircase bound.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Variable.class;
     }
 

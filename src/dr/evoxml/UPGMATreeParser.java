@@ -53,11 +53,13 @@ public class UPGMATreeParser extends AbstractXMLObjectParser {
     public static final String ROOT_HEIGHT = TreeModelParser.ROOT_HEIGHT;
     public static final String RANDOMIZE = "nonzeroBranchLengths";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return UPGMA_TREE;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         boolean usingDatesSpecified = false;
         boolean usingDates = true;
@@ -226,7 +228,8 @@ public class UPGMATreeParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -237,11 +240,13 @@ public class UPGMATreeParser extends AbstractXMLObjectParser {
             new ElementRule(Distance.class)
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a UPGMA tree generated from the given distances.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ClusterTree.class;
     }
 }

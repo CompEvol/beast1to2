@@ -26,12 +26,8 @@
 package dr.evoxml;
 
 import dr.evolution.alignment.Alignment;
-import dr.evolution.alignment.ConvertAlignment;
 import dr.evolution.datatype.*;
-import dr.evoxml.util.DataTypeUtils;
 import dr.xml.*;
-
-import java.util.logging.Logger;
 
 /**
  * @author Alexei Drummond
@@ -43,9 +39,11 @@ public class ConvertAlignmentParser extends AbstractXMLObjectParser {
 
     public final static String CONVERT = "convert";
 
-    public String getParserName() { return CONVERT; }
+    @Override
+	public String getParserName() { return CONVERT; }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -69,13 +67,16 @@ public class ConvertAlignmentParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Converts an alignment to the given data type.";
     }
 
-    public Class getReturnType() { return Alignment.class; }
+    @Override
+	public Class getReturnType() { return Alignment.class; }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {
         new ElementRule(Alignment.class),

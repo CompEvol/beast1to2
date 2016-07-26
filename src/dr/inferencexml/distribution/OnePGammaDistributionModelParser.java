@@ -33,29 +33,35 @@ import beast.math.distributions.ParametricDistribution;
  */
 public class OnePGammaDistributionModelParser extends DistributionModelParser {
     
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return "onePGammaDistributionModel";
     }
 
-    ParametricDistribution parseDistributionModel(RealParameter[] parameters, double offset) {
+    @Override
+	ParametricDistribution parseDistributionModel(RealParameter[] parameters, double offset) {
         Gamma gamma = new Gamma();
         gamma.initByName("alpha", parameters[0], "mode", Gamma.mode.OneParameter);
         return gamma;
     }
 
-    public String[] getParameterNames() {
+    @Override
+	public String[] getParameterNames() {
         return new String[]{SHAPE};
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A model of a one parameter gamma distribution.";
     }
 
-    public boolean allowOffset() {
+    @Override
+	public boolean allowOffset() {
         return false;
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Gamma.class;
     }
 }

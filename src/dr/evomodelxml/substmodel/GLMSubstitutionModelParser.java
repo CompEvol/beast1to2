@@ -27,11 +27,8 @@ package dr.evomodelxml.substmodel;
 
 import dr.evolution.datatype.DataType;
 import dr.evomodel.substmodel.FrequencyModel;
-import dr.evomodel.substmodel.GLMSubstitutionModel;
 import dr.evomodel.substmodel.SubstitutionModel;
-import dr.evoxml.util.DataTypeUtils;
 import dr.inference.distribution.GeneralizedLinearModel;
-import dr.inference.distribution.LogLinearModel;
 import dr.xml.*;
 
 /**
@@ -41,11 +38,13 @@ public class GLMSubstitutionModelParser extends AbstractXMLObjectParser {
     public static final String GLM_SUBSTITUTION_MODEL = "glmSubstitutionModel";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return GLM_SUBSTITUTION_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -79,15 +78,18 @@ public class GLMSubstitutionModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A general model of sequence substitution for any data type where the rates come from the generalized linear model.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return SubstitutionModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

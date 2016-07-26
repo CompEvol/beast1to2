@@ -29,7 +29,6 @@ package dr.evomodelxml.speciation;
 import dr.evomodel.speciation.AlloppSpeciesBindings;
 import dr.evomodel.speciation.AlloppSpeciesNetworkModel;
 import dr.inference.model.Parameter;
-import dr.inference.model.ParameterParser;
 import dr.util.Attributable;
 import dr.xml.*;
 
@@ -99,7 +98,8 @@ public class AlloppSpeciesNetworkModelParser extends AbstractXMLObjectParser {
 
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
 		return ALLOPPSPECIESNETWORK;
 	}
 

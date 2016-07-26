@@ -25,7 +25,6 @@
 
 package dr.evomodelxml.coalescent;
 
-import dr.evomodel.coalescent.BayesianSkylineLikelihood;
 import dr.evomodel.coalescent.BayesianSkylinePopSizeStatistic;
 import dr.xml.AbstractXMLObjectParser;
 import dr.xml.XMLObject;
@@ -39,19 +38,23 @@ public class BayesianSkylinePopSizeStatisticParser extends AbstractXMLObjectPars
     public static final String BAYESIAN_SKYLINE_POP_SIZE_STATISTIC = "generalizedSkylinePopSizeStatistic";
 
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "The pop sizes at the given times";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return BayesianSkylinePopSizeStatistic.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return null;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -65,7 +68,8 @@ public class BayesianSkylinePopSizeStatisticParser extends AbstractXMLObjectPars
     */
 		}
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return BAYESIAN_SKYLINE_POP_SIZE_STATISTIC;
     }
 

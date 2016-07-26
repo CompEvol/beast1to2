@@ -35,8 +35,10 @@ import dr.xml.*;
  */
 public class PolarCoordinatesParser extends AbstractXMLObjectParser {
 
+		@Override
 		public String getParserName() { return "latLong"; }
 
+		@Override
 		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
@@ -53,12 +55,15 @@ public class PolarCoordinatesParser extends AbstractXMLObjectParser {
 		// AbstractXMLObjectParser implementation
 		//************************************************************************
 
+		@Override
 		public String getParserDescription() {
 			return "A latitude/longitude pair representing a point on the surface of the Earth.";
 		}
 
+		@Override
 		public Class getReturnType() { return SphericalPolarCoordinates.class; }
 
+		@Override
 		public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
 		private XMLSyntaxRule[] rules = new XMLSyntaxRule[] {

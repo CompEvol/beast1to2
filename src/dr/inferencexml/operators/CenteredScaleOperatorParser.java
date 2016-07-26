@@ -28,7 +28,6 @@ package dr.inferencexml.operators;
 import dr.inference.model.Parameter;
 import dr.inference.operators.CenteredScaleOperator;
 import dr.inference.operators.CoercableMCMCOperator;
-import dr.inference.operators.CoercionMode;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
 
@@ -39,11 +38,13 @@ public class CenteredScaleOperatorParser extends AbstractXMLObjectParser {
     public static final String CENTERED_SCALE = "centeredScale";
     public static final String SCALE_FACTOR = "scaleFactor";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return CENTERED_SCALE;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -60,15 +61,18 @@ public class CenteredScaleOperatorParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A centered-scale operator. This operator scales the the values of a multi-dimensional parameter so as to perserve the mean. It does this by expanding or conrtacting the parameter values around the mean.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return CenteredScaleOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

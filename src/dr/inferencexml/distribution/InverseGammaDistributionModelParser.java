@@ -33,29 +33,35 @@ import beast.math.distributions.ParametricDistribution;
  */
 public class InverseGammaDistributionModelParser extends DistributionModelParser {
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return "inverseGammaDistributionModel";
     }
 
-    ParametricDistribution parseDistributionModel(RealParameter[] parameters, double offset) {
+    @Override
+	ParametricDistribution parseDistributionModel(RealParameter[] parameters, double offset) {
         InverseGamma igamma = new InverseGamma();
         igamma.initByName("shape", parameters[0], "scale", parameters[1]);
         return igamma;
     }
 
-    public String[] getParameterNames() {
+    @Override
+	public String[] getParameterNames() {
         return new String[]{SHAPE, SCALE};
     }
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A model of an inverese gamma distribution.";
     }
 
-    public boolean allowOffset() {
+    @Override
+	public boolean allowOffset() {
         return false;
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return InverseGamma.class;
     }
 }

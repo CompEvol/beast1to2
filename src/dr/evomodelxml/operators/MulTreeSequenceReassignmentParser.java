@@ -48,6 +48,7 @@ public class MulTreeSequenceReassignmentParser extends AbstractXMLObjectParser {
 	public static final String MULTREE_SEQUENCE_REASSIGNMENT = "mulTreeSequenceReassignment";
 	
 	
+	@Override
 	public String getParserName() {
 		return MULTREE_SEQUENCE_REASSIGNMENT;
 	}

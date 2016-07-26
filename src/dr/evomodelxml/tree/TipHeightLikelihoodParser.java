@@ -40,11 +40,13 @@ public class TipHeightLikelihoodParser extends AbstractXMLObjectParser {
     public static final String DISTRIBUTION = "distribution";
     public static final String TIP_HEIGHTS = "tipHeights";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return TIP_HEIGHT_LIKELIHOOD;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -60,7 +62,8 @@ public class TipHeightLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -71,11 +74,13 @@ public class TipHeightLikelihoodParser extends AbstractXMLObjectParser {
                     new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Calculates the likelihood of the tipHeights given some parametric or empirical distribution.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TipHeightLikelihood.class;
     }
 }

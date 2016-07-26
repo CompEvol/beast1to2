@@ -26,11 +26,8 @@
 package dr.evoxml;
 
 import dr.evolution.alignment.PatternList;
-import dr.evolution.alignment.Patterns;
 import dr.evolution.alignment.SiteList;
 import dr.xml.*;
-
-import java.util.logging.Logger;
 
 /**
  * @author Alexei Drummond
@@ -43,14 +40,16 @@ public class PatternSubSetParser extends AbstractXMLObjectParser {
     public static final String SUB_SET = "subSet";
     public static final String SUB_SET_COUNT = "subSetCount";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return PATTERNS_SUB_SET;
     }
 
     /**
      * Parses a patterns element and returns a patterns object.
      */
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -84,7 +83,8 @@ public class PatternSubSetParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -95,11 +95,13 @@ public class PatternSubSetParser extends AbstractXMLObjectParser {
             new ElementRule(SiteList.class)
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A weighted list of the unique site patterns (unique columns) in an alignment.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return PatternList.class;
     }
 

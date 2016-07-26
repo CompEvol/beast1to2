@@ -36,11 +36,13 @@ public class IstvanOperatorParser extends AbstractXMLObjectParser {
 
     public static final String ALIGMENT_CHUNK_OPERATOR = "alignmentChunkOperator";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return ALIGMENT_CHUNK_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -60,15 +62,18 @@ public class IstvanOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents an operator that re-aligns a small chunk of an alignment.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return IstvanOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

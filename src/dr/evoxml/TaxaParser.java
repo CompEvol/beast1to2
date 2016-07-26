@@ -39,9 +39,11 @@ public class TaxaParser extends AbstractXMLObjectParser {
 
     public static final String TAXA = "taxa";
 
-    public String getParserName() { return TAXA; }
+    @Override
+	public String getParserName() { return TAXA; }
 
-    public String getExample() {
+    @Override
+	public String getExample() {
         return "<!-- A list of six taxa -->\n"+
                 "<taxa id=\"greatApes\">\n"+
                 "	<taxon id=\"human\"/>\n"+
@@ -61,7 +63,8 @@ public class TaxaParser extends AbstractXMLObjectParser {
     }
 
     /** @return an instance of Node created from a DOM element */
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         TaxonSet taxonList = new TaxonSet();
 
@@ -83,7 +86,8 @@ public class TaxaParser extends AbstractXMLObjectParser {
         return taxonList;
 	}
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private final XMLSyntaxRule[] rules = {
         new OrRule(
@@ -92,11 +96,13 @@ public class TaxaParser extends AbstractXMLObjectParser {
         )
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Defines a set of taxon objects.";
     }
 
-    public Class getReturnType() { return TaxonSet.class; }
+    @Override
+	public Class getReturnType() { return TaxonSet.class; }
 }
 
 

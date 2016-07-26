@@ -27,7 +27,6 @@ package dr.inferencexml.operators;
 
 import dr.inference.model.DiagonalMatrix;
 import dr.inference.model.LatentFactorModel;
-import dr.inference.operators.CoercionMode;
 import dr.inference.operators.FactorIndependenceOperator;
 import dr.xml.*;
 

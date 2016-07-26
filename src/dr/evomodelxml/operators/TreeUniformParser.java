@@ -37,11 +37,13 @@ public class TreeUniformParser extends AbstractXMLObjectParser {
     public static final String TREE_UNIFORM = "treeUniform";
     public static final String COUNT = "count";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return TREE_UNIFORM;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -60,15 +62,18 @@ public class TreeUniformParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     // ************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "Simultanouesly change height of two nodes.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return TreeUniform.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

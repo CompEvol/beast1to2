@@ -29,8 +29,6 @@ import beast.core.Distribution;
 import beast.core.parameter.Parameter;
 import beast.core.parameter.RealParameter;
 import beast.math.distributions.Gamma;
-import beast.math.distributions.GammaOneP;
-import beast1to2.Beast1to2Converter;
 import dr.inference.distribution.GammaDistributionModel;
 import dr.xml.*;
 
@@ -42,7 +40,8 @@ public class GammaDistributionModelParser extends AbstractXMLObjectParser {
     public static final String RATE = "rate";
     public static final String OFFSET = "offset";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return GammaDistributionModel.GAMMA_DISTRIBUTION_MODEL;
     }
 
@@ -71,7 +70,8 @@ public class GammaDistributionModelParser extends AbstractXMLObjectParser {
 
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
         double offset = xo.getAttribute(OFFSET, 0.0);
 
@@ -104,7 +104,8 @@ public class GammaDistributionModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 
@@ -116,11 +117,13 @@ public class GammaDistributionModelParser extends AbstractXMLObjectParser {
             AttributeRule.newDoubleRule(OFFSET, true)
     };
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "The gamma probability distribution.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return Distribution.class;
     }
 }

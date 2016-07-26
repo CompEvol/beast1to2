@@ -25,17 +25,9 @@
 
 package dr.evomodelxml.coalescent;
 
-import dr.evolution.io.Importer;
 import dr.evomodel.coalescent.GPSkytrackAnalysis;
 import dr.inference.model.Parameter;
-//import dr.evomodel.coalescent.GaussianProcessSkytrackLikelihood;
-import dr.inference.trace.TraceException;
-import dr.util.FileHelpers;
 import dr.xml.*;
-
-import java.io.File;
-//import java.io.FileWriter;
-//import java.io.PrintWriter;
 
 /**
  */
@@ -58,11 +50,13 @@ public class GPSkytrackAnalysisParser extends AbstractXMLObjectParser {
         return xo.getChild(childName).getStringChild(0);
     }
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return GP_ANALYSIS;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -104,15 +98,18 @@ public class GPSkytrackAnalysisParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "reconstruct population graph from GPSkytrack run.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return GPSkytrackAnalysis.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

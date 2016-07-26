@@ -59,14 +59,16 @@ public class MCMCParser extends AbstractXMLObjectParser {
     
 	public static List<StateNodeInitialiser> initialisers = new ArrayList<>();
 	
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return MCMC_;
     }
 
     /**
      * @return an mcmc object based on the XML element it was passed.
      */
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         MCMC mcmc = new MCMC();
         mcmc.initialisersInput.get().addAll(initialisers);
         long chainLength = xo.getLongIntegerAttribute(CHAIN_LENGTH);
@@ -235,15 +237,18 @@ public class MCMCParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns an MCMC chain and runs the chain as a side effect.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return MCMC.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

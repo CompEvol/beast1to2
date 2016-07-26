@@ -28,7 +28,6 @@ package dr.inferencexml.distribution;
 import beast.core.Function;
 import beast.core.parameter.Parameter;
 import beast.core.parameter.RealParameter;
-import beast.core.util.Log;
 import beast.math.distributions.Dirichlet;
 import beast.math.distributions.Exponential;
 import beast.math.distributions.Gamma;
@@ -41,12 +40,8 @@ import beast.math.distributions.ParametricDistribution;
 import beast.math.distributions.Poisson;
 import beast.math.distributions.Prior;
 import beast.math.distributions.Uniform;
-import beast1to2.BeastParser;
-import dr.inference.distribution.DistributionLikelihood;
 import dr.inference.distribution.MultivariateDistributionLikelihood;
 import dr.inference.model.Likelihood;
-import dr.inference.model.Statistic;
-import dr.math.distributions.*;
 import dr.xml.*;
 
 /**
@@ -87,11 +82,13 @@ public class PriorParsers {
      */
     public static XMLObjectParser UNIFORM_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return UNIFORM_PRIOR;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
             double lower = xo.getDoubleAttribute(LOWER);
             double upper = xo.getDoubleAttribute(UPPER);
@@ -122,7 +119,8 @@ public class PriorParsers {
             return prior(xo, distr);
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -132,11 +130,13 @@ public class PriorParsers {
                 new ElementRule(Function.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the prior probability of some data under a given uniform distribution.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
     };
@@ -146,11 +146,13 @@ public class PriorParsers {
      */
     public static XMLObjectParser EXPONENTIAL_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return EXPONENTIAL_PRIOR;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
             double scale;
 
@@ -166,7 +168,8 @@ public class PriorParsers {
             return prior(xo, exp);
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -179,11 +182,13 @@ public class PriorParsers {
                 new ElementRule(Function.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the prior probability of some data under a given exponential distribution.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
     };
@@ -193,11 +198,13 @@ public class PriorParsers {
      */
     public static XMLObjectParser POISSON_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return POISSON_PRIOR;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
             double mean = xo.getDoubleAttribute(MEAN);
             double offset = xo.getDoubleAttribute(OFFSET);
@@ -206,7 +213,8 @@ public class PriorParsers {
             return prior(xo, poisson);
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -216,11 +224,13 @@ public class PriorParsers {
                 new ElementRule(Function.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the prior probability of some data under a given poisson distribution.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
     };
@@ -230,11 +240,13 @@ public class PriorParsers {
      */
     public static XMLObjectParser NEGATIVE_BINOMIAL_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return NEGATIVE_BINOMIAL_PRIOR;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -255,7 +267,8 @@ public class PriorParsers {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -265,11 +278,13 @@ public class PriorParsers {
                 new ElementRule(Function.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the prior probability of some data under a given negative binomial distribution.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
     };
@@ -279,11 +294,13 @@ public class PriorParsers {
      */
     public static XMLObjectParser DISCRETE_UNIFORM_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return DISCRETE_UNIFORM_PRIOR;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
             double upper = xo.getDoubleAttribute(UPPER);
             double lower = xo.getDoubleAttribute(LOWER);
@@ -293,7 +310,8 @@ public class PriorParsers {
             return prior(xo, uniform);
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -303,11 +321,13 @@ public class PriorParsers {
                 new ElementRule(Function.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the prior probability of some data under a given discrete uniform distribution.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
     };
@@ -319,11 +339,13 @@ public class PriorParsers {
      */
     public static XMLObjectParser HALF_T_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return HALF_T_PRIOR;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -344,7 +366,8 @@ public class PriorParsers {
         */
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -354,11 +377,13 @@ public class PriorParsers {
                 new ElementRule(Function.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the prior probability of some data under a given half-T distribution.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
     };
@@ -368,11 +393,13 @@ public class PriorParsers {
      */
     public static XMLObjectParser NORMAL_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return NORMAL_PRIOR;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
             double mean = xo.getDoubleAttribute(MEAN);
             double stdev = xo.getDoubleAttribute(STDEV);
             Normal normal = new Normal();
@@ -381,7 +408,8 @@ public class PriorParsers {
             return prior(xo, normal);
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -391,11 +419,13 @@ public class PriorParsers {
                 new ElementRule(Function.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the prior probability of some data under a given normal distribution.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
     };
@@ -416,12 +446,14 @@ public class PriorParsers {
      */
     public static XMLObjectParser LOG_NORMAL_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return LOG_NORMAL_PRIOR;
         }
 
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
            double mean = xo.getDoubleAttribute(MEAN);
             final double stdev = xo.getDoubleAttribute(STDEV);
             final double offset = xo.getAttribute(OFFSET, 0.0);
@@ -441,7 +473,8 @@ public class PriorParsers {
             return prior(xo, distr);
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -453,11 +486,13 @@ public class PriorParsers {
                 new ElementRule(Function.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the prior probability of some data under a given lognormal distribution.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
     };
@@ -468,11 +503,13 @@ public class PriorParsers {
      */
     public static XMLObjectParser GAMMA_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return GAMMA_PRIOR;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
 
             final double shape = xo.getDoubleAttribute(SHAPE);
@@ -484,7 +521,8 @@ public class PriorParsers {
             return prior(xo, gamma);
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -496,11 +534,13 @@ public class PriorParsers {
                 new ElementRule(Function.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the prior probability of some data under a given gamma distribution.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
     };
@@ -510,15 +550,18 @@ public class PriorParsers {
      */
     public static XMLObjectParser INVGAMMA_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return INVGAMMA_PRIOR;
         }
 
-        public String[] getParserNames() {
+        @Override
+		public String[] getParserNames() {
             return new String[]{INVGAMMA_PRIOR, INVGAMMA_PRIOR_CORRECT};
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
             final double shape = xo.getDoubleAttribute(SHAPE);
             final double scale = xo.getDoubleAttribute(SCALE);
@@ -528,7 +571,8 @@ public class PriorParsers {
             return prior(xo, invgamma);
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -539,22 +583,26 @@ public class PriorParsers {
                 new ElementRule(Function.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the prior probability of some data under a given inverse gamma distribution.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
     };
 
     public static XMLObjectParser LAPLACE_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return LAPLACE_PRIOR;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
             double mean = xo.getDoubleAttribute(MEAN);
             double scale = xo.getDoubleAttribute(SCALE);
@@ -564,7 +612,8 @@ public class PriorParsers {
             return prior(xo, laplace);
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -574,11 +623,13 @@ public class PriorParsers {
                 new ElementRule(Function.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the prior probability of some data under a given laplace distribution.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
     };
@@ -588,11 +639,13 @@ public class PriorParsers {
      */
     public static XMLObjectParser BETA_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return BETA_PRIOR;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
             final double shape = xo.getDoubleAttribute(SHAPE);
             final double shapeB = xo.getDoubleAttribute(SHAPEB);
@@ -604,6 +657,7 @@ public class PriorParsers {
 		}
 
 
+		@Override
 		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
@@ -615,11 +669,13 @@ public class PriorParsers {
                 new ElementRule(Function.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the prior probability of some data under a given beta distribution.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return Likelihood.class;
         }
     };
@@ -629,11 +685,13 @@ public class PriorParsers {
      */
     public static XMLObjectParser DIRICHLET_PRIOR_PARSER = new AbstractXMLObjectParser() {
 
-        public String getParserName() {
+        @Override
+		public String getParserName() {
             return DIRICHLET_PRIOR;
         }
 
-        public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+        @Override
+		public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
             double[] counts = xo.getDoubleArrayAttribute(COUNTS);
             Double [] alpha = new Double[counts.length];
@@ -646,7 +704,8 @@ public class PriorParsers {
 			return prior(xo, dirichlet);
 		}
 
-        public XMLSyntaxRule[] getSyntaxRules() {
+        @Override
+		public XMLSyntaxRule[] getSyntaxRules() {
             return rules;
         }
 
@@ -655,11 +714,13 @@ public class PriorParsers {
                 new ElementRule(Function.class, 1, Integer.MAX_VALUE)
         };
 
-        public String getParserDescription() {
+        @Override
+		public String getParserDescription() {
             return "Calculates the prior probability of some data under a Dirichlet distribution.";
         }
 
-        public Class getReturnType() {
+        @Override
+		public Class getReturnType() {
             return MultivariateDistributionLikelihood.class;
         }
     };

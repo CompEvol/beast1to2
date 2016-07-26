@@ -29,7 +29,6 @@ import dr.evomodel.operators.RateVarianceScaleOperator;
 import dr.evomodel.tree.TreeModel;
 import dr.inference.model.Parameter;
 import dr.inference.operators.CoercableMCMCOperator;
-import dr.inference.operators.CoercionMode;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
 
@@ -40,11 +39,13 @@ public class RateVarianceScaleOperatorParser extends AbstractXMLObjectParser {
     public static final String SCALE_OPERATOR = "rateVarianceScaleOperator";
     public static final String SCALE_FACTOR = "scaleFactor";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SCALE_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -75,15 +76,18 @@ public class RateVarianceScaleOperatorParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a rateScale operator on a given parameter.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return RateVarianceScaleOperator.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

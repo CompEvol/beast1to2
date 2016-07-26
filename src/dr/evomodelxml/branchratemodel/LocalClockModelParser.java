@@ -25,9 +25,7 @@
 
 package dr.evomodelxml.branchratemodel;
 
-import dr.evolution.tree.Tree;
 import dr.evolution.util.Taxa;
-import dr.evolution.util.TaxonList;
 import dr.evomodel.branchratemodel.BranchRateModel;
 import dr.evomodel.branchratemodel.LocalClockModel;
 import dr.evomodel.tree.TreeModel;
@@ -50,11 +48,13 @@ public class LocalClockModelParser extends AbstractXMLObjectParser {
     public static final String INDEX = "index";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return LOCAL_CLOCK_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -153,15 +153,18 @@ public class LocalClockModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a branch rate model that adds a delta to each terminal branch length.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return LocalClockModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

@@ -25,9 +25,7 @@
 
 package dr.evomodelxml.tree;
 
-import dr.evolution.tree.Tree;
 import dr.evolution.util.Taxa;
-import dr.evolution.util.TaxonList;
 import dr.evomodel.tree.ParsimonyStatistic;
 import dr.evomodel.tree.TreeModel;
 import dr.inference.model.Statistic;
@@ -40,11 +38,13 @@ public class ParsimonyStatisticParser extends AbstractXMLObjectParser {
     public static final String PARSIMONY_STATISTIC = "parsimonyStatistic";
     public static final String STATE = "state";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return PARSIMONY_STATISTIC;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -66,16 +66,19 @@ public class ParsimonyStatisticParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "A statistic that has as its value the parsimony tree length of a set of a " +
                 "binary state defined by a set of taxa for a given tree";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return ParsimonyStatistic.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

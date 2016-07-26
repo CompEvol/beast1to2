@@ -41,7 +41,8 @@ public class BirthDeathCollapseNClustersStatisticParser extends AbstractXMLObjec
 
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return BDC_NCLUSTERS_STATISTIC;
     }
 

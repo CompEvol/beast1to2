@@ -27,7 +27,6 @@ package dr.evomodelxml.coalescent.operators;
 
 import beast.core.parameter.BooleanParameter;
 import beast.core.parameter.RealParameter;
-import beast.evolution.operators.SampleNonActiveGibbsOperator;
 import beast.evolution.tree.coalescent.SampleOffValues;
 import beast.math.distributions.ParametricDistribution;
 import dr.inference.operators.MCMCOperator;
@@ -42,11 +41,13 @@ public class SampleNonActiveGibbsOperatorParser extends AbstractXMLObjectParser 
     public static String INDICATOR_PARAMETER = "indicators";
     public static String DATA_PARAMETER = "data";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SAMPLE_NONACTIVE_GIBBS_OPERATOR;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
         final double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
 
         XMLObject cxo = xo.getChild(DISTRIBUTION);
@@ -70,15 +71,18 @@ public class SampleNonActiveGibbsOperatorParser extends AbstractXMLObjectParser 
     // AbstractXMLObjectParser implementation
     // ************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a Gibbs operator for the joint distribution of population sizes.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return SampleOffValues.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

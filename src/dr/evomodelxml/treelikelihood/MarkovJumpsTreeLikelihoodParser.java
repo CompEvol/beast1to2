@@ -25,12 +25,6 @@
 
 package dr.evomodelxml.treelikelihood;
 
-import dr.evolution.alignment.PatternList;
-import dr.evolution.datatype.DataType;
-import dr.evomodel.branchratemodel.BranchRateModel;
-import dr.evomodel.sitemodel.SiteModel;
-import dr.evomodel.substmodel.SubstitutionModel;
-import dr.evomodel.tree.TreeModel;
 import dr.evomodel.treelikelihood.AncestralStateTreeLikelihood;
 import dr.xml.*;
 
@@ -40,11 +34,13 @@ public class MarkovJumpsTreeLikelihoodParser extends AbstractXMLObjectParser {
 
     public static final String RECONSTRUCTING_TREE_LIKELIHOOD = "markovJumpsTreeLikelihood";
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return RECONSTRUCTING_TREE_LIKELIHOOD;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -56,15 +52,18 @@ public class MarkovJumpsTreeLikelihoodParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element represents the likelihood of a patternlist on a tree given the site model.";
     }
 
-    public Class getReturnType() {
+    @Override
+	public Class getReturnType() {
         return AncestralStateTreeLikelihood.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return null;
     }
 }

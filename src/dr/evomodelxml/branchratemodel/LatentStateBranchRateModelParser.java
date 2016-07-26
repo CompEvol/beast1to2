@@ -30,8 +30,6 @@ import dr.evomodel.tree.TreeModel;
 import dr.inference.model.Parameter;
 import dr.xml.*;
 
-import java.util.logging.Logger;
-
 /**
  */
 public class LatentStateBranchRateModelParser extends AbstractXMLObjectParser {
@@ -40,11 +38,13 @@ public class LatentStateBranchRateModelParser extends AbstractXMLObjectParser {
     public static final String LATENT_STATE_PROPORTIONS = "latentStateProportions";
 
 
-    public String getParserName() {
+    @Override
+	public String getParserName() {
         return SericolaLatentStateBranchRateModel.LATENT_STATE_BRANCH_RATE_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -77,15 +77,18 @@ public class LatentStateBranchRateModelParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element provides a model with a latent state where no evolution occurs but condition on being non-latent at the nodes.";
     }
 
-    public Class getReturnType()  {
+    @Override
+	public Class getReturnType()  {
         return SericolaLatentStateBranchRateModel.class;
     }
 
-    public XMLSyntaxRule[] getSyntaxRules() {
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() {
         return rules;
     }
 

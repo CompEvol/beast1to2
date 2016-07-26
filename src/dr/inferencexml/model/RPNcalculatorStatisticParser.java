@@ -29,11 +29,6 @@ import dr.inference.model.RPNcalculatorStatistic;
 import dr.inference.model.Statistic;
 import dr.xml.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  */
 public class RPNcalculatorStatisticParser extends AbstractXMLObjectParser {
@@ -41,9 +36,11 @@ public class RPNcalculatorStatisticParser extends AbstractXMLObjectParser {
     public static String RPN_STATISTIC = "RPNcalculator";
     public static String VARIABLE = "variable";
     public static String EXPRESSION = "expression";
-    public String getParserName() { return RPN_STATISTIC; }
+    @Override
+	public String getParserName() { return RPN_STATISTIC; }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -88,13 +85,16 @@ public class RPNcalculatorStatisticParser extends AbstractXMLObjectParser {
     */
 		}
 
-    public String getParserDescription() {
+    @Override
+	public String getParserDescription() {
         return "This element returns a statistic evaluated from arbitrary expression.";
     }
 
-    public Class getReturnType() { return RPNcalculatorStatistic.class; }
+    @Override
+	public Class getReturnType() { return RPNcalculatorStatistic.class; }
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private final XMLSyntaxRule[] rules = {
         new ElementRule(EXPRESSION,

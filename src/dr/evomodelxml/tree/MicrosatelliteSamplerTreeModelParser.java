@@ -31,8 +31,6 @@ import dr.evomodel.tree.TreeModel;
 import dr.inference.model.Parameter;
 import dr.xml.*;
 
-import java.util.HashMap;
-
 /**
  * @author Chieh-Hsi Wu
  *
@@ -46,11 +44,13 @@ public class MicrosatelliteSamplerTreeModelParser extends AbstractXMLObjectParse
     public static final String EXTERNAL_VALUES = "externalValues";
     public static final String USE_PROVIDED_INTERNAL_VALUES = "provideInternalNodeValues";
 
-    public String getParserName(){
+    @Override
+	public String getParserName(){
         return TREE_MICROSATELLITE_SAMPLER_MODEL;
     }
 
-    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
+    @Override
+	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
@@ -72,7 +72,8 @@ public class MicrosatelliteSamplerTreeModelParser extends AbstractXMLObjectParse
     */
 		}
 
-    public XMLSyntaxRule[] getSyntaxRules() { return rules; }
+    @Override
+	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newBooleanRule(USE_PROVIDED_INTERNAL_VALUES, true),
             new ElementRule(TREE, TreeModel.class),
@@ -80,11 +81,13 @@ public class MicrosatelliteSamplerTreeModelParser extends AbstractXMLObjectParse
             new ElementRule(EXTERNAL_VALUES, Patterns.class)
     };
 
-    public String getParserDescription(){
+    @Override
+	public String getParserDescription(){
         return "This parser returns a TreeMicrosatelliteSamplerModel Object";
     }
 
-    public Class getReturnType(){
+    @Override
+	public Class getReturnType(){
         return MicrosatelliteSamplerTreeModel.class;
 
     }
