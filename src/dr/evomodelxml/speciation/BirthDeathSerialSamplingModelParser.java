@@ -26,12 +26,13 @@
 package dr.evomodelxml.speciation;
 
 import dr.evolution.util.Units;
-import dr.evomodel.speciation.BirthDeathSerialSamplingModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
 import dr.xml.*;
 
 import java.util.logging.Logger;
+
+import beast.core.parameter.RealParameter;
+import beast.evolution.speciation.BirthDeathSerialSampling;
 
 /**
  * @author Alexei Drummond
@@ -58,37 +59,33 @@ public class BirthDeathSerialSamplingModelParser extends AbstractXMLObjectParser
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
-
         final String modelName = xo.getId();
         final Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
         
         boolean hasFinalSample = xo.getAttribute(HAS_FINAL_SAMPLE, false);
 
-        final Parameter lambda = (Parameter) xo.getElementFirstChild(LAMBDA);
+        final RealParameter lambda = (RealParameter) xo.getElementFirstChild(LAMBDA);
 
         boolean relativeDeath = xo.hasChildNamed(RELATIVE_MU);
-        Parameter mu;
+        RealParameter mu;
         if (relativeDeath) {
-            mu = (Parameter) xo.getElementFirstChild(RELATIVE_MU);
+            mu = (RealParameter) xo.getElementFirstChild(RELATIVE_MU);
         } else {
-            mu = (Parameter) xo.getElementFirstChild(MU);
+            mu = (RealParameter) xo.getElementFirstChild(MU);
         }
 
-        final Parameter psi = (Parameter) xo.getElementFirstChild(PSI);
+        final RealParameter psi = (RealParameter) xo.getElementFirstChild(PSI);
         //Issue 656: fix p=0
-        final Parameter p = xo.hasChildNamed(SAMPLE_PROBABILITY) ?
-                        (Parameter) xo.getElementFirstChild(SAMPLE_PROBABILITY) : new Parameter.Default(0.0);
+        final RealParameter p = xo.hasChildNamed(SAMPLE_PROBABILITY) ?
+                        (RealParameter) xo.getElementFirstChild(SAMPLE_PROBABILITY) : new RealParameter("0.0");
 
-        Parameter origin = null;
+                        RealParameter origin = null;
         if (xo.hasChildNamed(ORIGIN)) {
-            origin = (Parameter) xo.getElementFirstChild(ORIGIN);
+            origin = (RealParameter) xo.getElementFirstChild(ORIGIN);
         }
 
-        final Parameter r = xo.hasChildNamed(SAMPLE_BECOMES_NON_INFECTIOUS) ?
-                (Parameter) xo.getElementFirstChild(SAMPLE_BECOMES_NON_INFECTIOUS) : new Parameter.Default(0.0);
+        final RealParameter r = xo.hasChildNamed(SAMPLE_BECOMES_NON_INFECTIOUS) ?
+                (RealParameter) xo.getElementFirstChild(SAMPLE_BECOMES_NON_INFECTIOUS) : new RealParameter("0.0");
 //        r.setParameterValueQuietly(0, 1 - r.getParameterValue(0)); // donot use it, otherwise log is changed improperly
 
 //        final Parameter finalTimeInterval = xo.hasChildNamed(FINAL_TIME_INTERVAL) ?
@@ -96,9 +93,19 @@ public class BirthDeathSerialSamplingModelParser extends AbstractXMLObjectParser
 
         Logger.getLogger("dr.evomodel").info(xo.hasChildNamed(SAMPLE_BECOMES_NON_INFECTIOUS) ? getCitationRT() : getCitationPsiOrg());
 
-        return new BirthDeathSerialSamplingModel(modelName, lambda, mu, psi, p, relativeDeath,
-                r, hasFinalSample, origin, units);
-    */
+        BirthDeathSerialSampling model = new BirthDeathSerialSampling();
+        model.setInputValue("lambda", lambda);
+        model.setInputValue("mu", mu);
+        model.setInputValue("psi", psi);
+        model.setInputValue("p", p);
+        model.setInputValue("relativeDeath", relativeDeath);
+        model.setInputValue("r", r);
+        model.setInputValue("hasFinalSample", hasFinalSample);
+        model.setInputValue("origin", origin);
+        //model.setInputValue("units", units);
+        return model;
+//        return new BirthDeathSerialSamplingModel(modelName, lambda, mu, psi, p, relativeDeath,
+//                r, hasFinalSample, origin, units);
 		}
 
     //************************************************************************
@@ -120,7 +127,7 @@ public class BirthDeathSerialSamplingModelParser extends AbstractXMLObjectParser
     }
 
     public Class getReturnType() {
-        return BirthDeathSerialSamplingModel.class;
+        return BirthDeathSerialSampling.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -131,13 +138,13 @@ public class BirthDeathSerialSamplingModelParser extends AbstractXMLObjectParser
             AttributeRule.newStringRule(TREE_TYPE, true),
             AttributeRule.newBooleanRule(HAS_FINAL_SAMPLE, true),
 //            new ElementRule(FINAL_TIME_INTERVAL, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}, true),
-            new ElementRule(ORIGIN, Parameter.class, "The origin of the infection, x0 > tree.rootHeight", true),
-            new ElementRule(LAMBDA, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+            new ElementRule(ORIGIN, RealParameter.class, "The origin of the infection, x0 > tree.rootHeight", true),
+            new ElementRule(LAMBDA, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new XORRule(
-                    new ElementRule(MU, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-                    new ElementRule(RELATIVE_MU, new XMLSyntaxRule[]{new ElementRule(Parameter.class)})),
-            new ElementRule(PSI, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-            new ElementRule(SAMPLE_BECOMES_NON_INFECTIOUS, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}, true),
+                    new ElementRule(MU, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+                    new ElementRule(RELATIVE_MU, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)})),
+            new ElementRule(PSI, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+            new ElementRule(SAMPLE_BECOMES_NON_INFECTIOUS, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}, true),
             //Issue 656
 //            new ElementRule(SAMPLE_PROBABILITY, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
 //            XMLUnits.SYNTAX_RULES[0]
