@@ -25,7 +25,7 @@
 
 package dr.xml;
 
-import dr.app.tools.BeastParserDoc;
+//import dr.app.tools.BeastParserDoc;
 import org.w3c.dom.NamedNodeMap;
 
 import java.io.PrintWriter;
@@ -218,7 +218,7 @@ public abstract class AbstractXMLObjectParser implements XMLObjectParser {
         StringBuffer buffer = new StringBuffer();
         buffer.append("<div id=\"").append(getParserName()).append("\" class=\"element\">\n");
         buffer.append("  <div class=\"elementheader\">\n");
-        buffer.append("    <span class=\"elementname\"><a href=\"").append(BeastParserDoc.INDEX_HTML)
+        buffer.append("    <span class=\"elementname\"><a href=\"").append("index.html")//BeastParserDoc.INDEX_HTML)
                 .append("#").append(getParserName()).append("\"> <h3>&lt;").append(getParserName())
                 .append("&gt;</h3></a></span>\n");
         buffer.append("    <div class=\"description\"><b>Description:</b><br>\n");

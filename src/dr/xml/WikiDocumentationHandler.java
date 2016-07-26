@@ -25,8 +25,8 @@
 
 package dr.xml;
 
-import dr.app.beast.BeastParser;
-import dr.app.tools.BeastParserDoc;
+import beast1to2.BeastParser;
+//import dr.app.tools.BeastParserDoc;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -66,7 +66,7 @@ public class WikiDocumentationHandler extends XMLDocumentationHandler {
         SimpleDateFormat dateformatter = new SimpleDateFormat("'updated on' d MMMM yyyy zzz");
 
         writer.println(WIKILINK + "\n");
-        writer.println("==" + BeastParserDoc.TITTLE + "==\n");
+        writer.println("==" + /*BeastParserDoc.TITTLE +*/ "==\n");
 
         if (parser.parsers != null) {
             if (parser.parsers.equalsIgnoreCase(BeastParser.RELEASE)) {
