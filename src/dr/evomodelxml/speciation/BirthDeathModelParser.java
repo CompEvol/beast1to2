@@ -26,12 +26,13 @@
 package dr.evomodelxml.speciation;
 
 import dr.evolution.util.Units;
-import dr.evomodel.speciation.BirthDeathGernhard08Model;
-import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
 import dr.xml.*;
+import dr.evoxml.util.XMLUnits;
 
 import java.util.logging.Logger;
+
+import beast.core.parameter.RealParameter;
+import beast.evolution.speciation.BirthDeathGernhard08Model;
 
 /**
  * @author Alexei Drummond
@@ -55,9 +56,6 @@ public class BirthDeathModelParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         final Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
@@ -65,18 +63,25 @@ public class BirthDeathModelParser extends AbstractXMLObjectParser {
         final BirthDeathGernhard08Model.TreeType treeType = BirthDeathGernhard08Model.TreeType.valueOf(s);
         final boolean conditonalOnRoot =  xo.getAttribute(CONDITIONAL_ON_ROOT, false);
 
-        final Parameter birthParameter = (Parameter) xo.getElementFirstChild(BIRTHDIFF_RATE);
-        final Parameter deathParameter = (Parameter) xo.getElementFirstChild(RELATIVE_DEATH_RATE);
-        final Parameter sampleProbability = xo.hasChildNamed(SAMPLE_PROB) ?
-                (Parameter) xo.getElementFirstChild(SAMPLE_PROB) : null;
+        final RealParameter birthParameter = (RealParameter) xo.getElementFirstChild(BIRTHDIFF_RATE);
+        final RealParameter deathParameter = (RealParameter) xo.getElementFirstChild(RELATIVE_DEATH_RATE);
+        final RealParameter sampleProbability = xo.hasChildNamed(SAMPLE_PROB) ?
+                (RealParameter) xo.getElementFirstChild(SAMPLE_PROB) : null;
 
         Logger.getLogger("dr.evomodel").info(xo.hasChildNamed(SAMPLE_PROB) ? getCitationRHO() : getCitation());
 
         final String modelName = xo.getId();
+        
+        BirthDeathGernhard08Model model = new BirthDeathGernhard08Model();
+        model.setInputValue("birthDiffRate", birthParameter);
+        model.setInputValue("relativeDeathRate", deathParameter);
+        model.setInputValue("conditionalOnRoot", conditonalOnRoot);
+        model.setInputValue("type", treeType.toString());
+        model.setInputValue("sampleProbability", sampleProbability);
+        return model;
 
-        return new BirthDeathGernhard08Model(modelName, birthParameter, deathParameter, sampleProbability,
-                treeType, units, conditonalOnRoot);
-    */
+//        return new BirthDeathGernhard08Model(modelName, birthParameter, deathParameter, sampleProbability,
+//                treeType, units, conditonalOnRoot);
 		}
 
     //************************************************************************
@@ -106,9 +111,9 @@ public class BirthDeathModelParser extends AbstractXMLObjectParser {
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newStringRule(TREE_TYPE, true),
             AttributeRule.newBooleanRule(CONDITIONAL_ON_ROOT, true),
-            new ElementRule(BIRTHDIFF_RATE, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-            new ElementRule(RELATIVE_DEATH_RATE, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-            new ElementRule(SAMPLE_PROB, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}, true),
+            new ElementRule(BIRTHDIFF_RATE, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+            new ElementRule(RELATIVE_DEATH_RATE, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+            new ElementRule(SAMPLE_PROB, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}, true),
             XMLUnits.SYNTAX_RULES[0]
     };
 }
