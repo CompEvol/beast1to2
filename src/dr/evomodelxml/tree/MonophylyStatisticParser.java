@@ -25,12 +25,11 @@
 
 package dr.evomodelxml.tree;
 
-import dr.evolution.tree.Tree;
-import dr.evolution.util.Taxa;
-import dr.evolution.util.Taxon;
-import dr.evolution.util.TaxonList;
-import dr.evomodel.tree.MonophylyStatistic;
-import dr.inference.model.Statistic;
+import beast.evolution.alignment.Taxon;
+import beast.evolution.alignment.TaxonSet;
+import beast.evolution.tree.Tree;
+import beast.math.distributions.MRCAPrior;
+import beast1to2.Beast1to2Converter;
 import dr.xml.*;
 
 /**
@@ -46,50 +45,52 @@ public class MonophylyStatisticParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
-        String name = xo.getAttribute(Statistic.NAME, xo.getId());
+        String name = xo.getAttribute("name", xo.getId());
 
         Tree tree = (Tree) xo.getChild(Tree.class);
 
         XMLObject cxo = xo.getChild(MRCA);
-        TaxonList taxa = (TaxonList) cxo.getChild(TaxonList.class);
+        TaxonSet taxa = (TaxonSet) cxo.getChild(TaxonSet.class);
         if (taxa == null) {
-            Taxa taxa1 = new Taxa();
+        	TaxonSet taxa1 = new TaxonSet();
             for (int i = 0; i < cxo.getChildCount(); i++) {
                 Object ccxo = cxo.getChild(i);
                 if (ccxo instanceof Taxon) {
-                    taxa1.addTaxon((Taxon) ccxo);
+                    taxa1.setInputValue("taxon", (Taxon) ccxo);
                 }
             }
             taxa = taxa1;
         }
 
-        TaxonList ignore = null;
+        TaxonSet ignore = null;
         if (xo.hasChildNamed(IGNORE)) {
             cxo = xo.getChild(IGNORE);
-            ignore = (TaxonList) cxo.getChild(TaxonList.class);
+            ignore = (TaxonSet) cxo.getChild(TaxonSet.class);
             if (ignore == null) {
-                Taxa taxa1 = new Taxa();
+            	TaxonSet taxa1 = new TaxonSet();
                 for (int i = 0; i < cxo.getChildCount(); i++) {
                     Object ccxo = cxo.getChild(i);
                     if (ccxo instanceof Taxon) {
-                        taxa1.addTaxon((Taxon) ccxo);
+                        taxa1.setInputValue("taxon", (Taxon) ccxo);
                     }
                 }
                 ignore = taxa1;
             }
+            throw new XMLParseException(Beast1to2Converter.NIY + " " + IGNORE + " attribute in " + getParserName());
         }
 
-        try {
-            return new MonophylyStatistic(name, tree, taxa, ignore);
-        } catch (Tree.MissingTaxonException mte) {
-            throw new XMLParseException("Taxon, " + mte + ", in " + getParserName() + "was not found in the tree.");
-        }
-    */
-		}
+        MRCAPrior prior = new MRCAPrior();
+        prior.initByName("monophyletic", true, "taxonset", taxa, "tree", tree);
+        return prior;
+        
+//        try {
+//            return new MonophylyStatistic(name, tree, taxa, ignore);
+//        } catch (Tree.MissingTaxonException mte) {
+//            throw new XMLParseException("Taxon, " + mte + ", in " + getParserName() + "was not found in the tree.");
+//        }
+
+    }
 
     //************************************************************************
     // AbstractXMLObjectParser implementation
@@ -100,7 +101,7 @@ public class MonophylyStatisticParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return MonophylyStatistic.class;
+        return MRCAPrior.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -108,19 +109,19 @@ public class MonophylyStatisticParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new StringAttributeRule(Statistic.NAME, "A name for this statistic for the purpose of logging", true),
+            new StringAttributeRule("id", "A name for this statistic for the purpose of logging", true),
             // Any tree will do, no need to insist on a Tree Model
             new ElementRule(Tree.class),
-            new ElementRule(MRCA, new XMLSyntaxRule[]{
-                    new XORRule(
-                            new ElementRule(Taxon.class, 1, Integer.MAX_VALUE),
-                            new ElementRule(Taxa.class)
-                    )
-            }),
+//            new ElementRule(MRCA, new XMLSyntaxRule[]{
+//                    new XORRule(
+//                            new ElementRule(Taxon.class, 1, Integer.MAX_VALUE),
+//                            new ElementRule(TaxonSet.class)
+//                    )
+//            }),
             new ElementRule(IGNORE, new XMLSyntaxRule[]{
                     new XORRule(
                             new ElementRule(Taxon.class, 1, Integer.MAX_VALUE),
-                            new ElementRule(Taxa.class)
+                            new ElementRule(TaxonSet.class)
                     )
             }, "An optional list of taxa to ignore from the test of monophyly", true)
     };

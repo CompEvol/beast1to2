@@ -25,11 +25,10 @@
 
 package dr.evomodelxml.tree;
 
-import dr.evolution.tree.Tree;
-import dr.evolution.util.Taxa;
-import dr.evolution.util.TaxonList;
-import dr.evomodel.tree.TMRCAStatistic;
-import dr.inference.model.Statistic;
+import beast.evolution.alignment.TaxonSet;
+import beast.evolution.tree.Tree;
+import beast.math.distributions.MRCAPrior;
+import beast1to2.Beast1to2Converter;
 import dr.xml.*;
 
 /**
@@ -50,14 +49,13 @@ public class TMRCAStatisticParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
-
-        String name = xo.getAttribute(Statistic.NAME, xo.getId());
+        String name = xo.getAttribute("name", xo.getId());
         Tree tree = (Tree) xo.getChild(Tree.class);
-        TaxonList taxa = (TaxonList) xo.getElementFirstChild(MRCA);
+        TaxonSet taxa = (TaxonSet) xo.getElementFirstChild(MRCA);
         boolean isRate = xo.getAttribute("rate", false);
+        if (isRate) {
+            throw new XMLParseException(Beast1to2Converter.NIY + " rate=true");
+        }
         boolean includeStem = false;
         if (xo.hasAttribute(PARENT) && xo.hasAttribute(STEM)) {
              throw new XMLParseException("Please use either " + PARENT + " or " + STEM + "!");
@@ -67,13 +65,14 @@ public class TMRCAStatisticParser extends AbstractXMLObjectParser {
              includeStem = xo.getBooleanAttribute(STEM);
         }
 
-        try {
-            return new TMRCAStatistic(name, tree, taxa, isRate, includeStem);
-        } catch (Tree.MissingTaxonException mte) {
-            throw new XMLParseException(
-                    "Taxon, " + mte + ", in " + getParserName() + "was not found in the tree.");
-        }
-    */
+//        try {
+        	MRCAPrior prior = new MRCAPrior();
+        	prior.initByName("tree", tree, "taxonset", taxa, "useOriginate", includeStem);
+            return prior;
+//        } catch (Exception mte) {
+//            throw new XMLParseException(
+//                    "Taxon, " + mte + ", in " + getParserName() + "was not found in the tree.");
+//        }
 		}
 
     //************************************************************************
@@ -86,7 +85,7 @@ public class TMRCAStatisticParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return TMRCAStatistic.class;
+        return MRCAPrior.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -99,7 +98,7 @@ public class TMRCAStatisticParser extends AbstractXMLObjectParser {
                     "A name for this statistic primarily for the purposes of logging", true),
             AttributeRule.newBooleanRule("rate", true),
             new ElementRule(MRCA,
-                    new XMLSyntaxRule[]{new ElementRule(Taxa.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(TaxonSet.class)}),
             new OrRule(
                     new XMLSyntaxRule[]{
                             AttributeRule.newBooleanRule(PARENT, true),

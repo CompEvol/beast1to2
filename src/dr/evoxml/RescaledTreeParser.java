@@ -25,16 +25,10 @@
 
 package dr.evoxml;
 
-import dr.evolution.distance.DistanceMatrix;
-import dr.evolution.tree.*;
-import dr.evolution.util.Taxon;
-import dr.evolution.util.TaxonList;
+import beast.evolution.alignment.TaxonSet;
+import beast.evolution.tree.Tree;
 import dr.xml.*;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Parser takes a tree and rescales the node heights to match a set of clade heights defined by taxon sets.
@@ -54,9 +48,9 @@ public class RescaledTreeParser extends AbstractXMLObjectParser {
     public String getParserName() { return RESCALED_TREE; }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
+        Tree tree = (Tree)xo.getChild(Tree.class);
+		return tree;
+		/* TODO: implement more detail
 
         Tree tree = (Tree)xo.getChild(Tree.class);
 
@@ -102,6 +96,7 @@ public class RescaledTreeParser extends AbstractXMLObjectParser {
     */
 		}
 
+    /*
     private double interpolateHeights(MutableTree tree, NodeRef node) {
         if (!tree.isExternal(node)) {
 
@@ -140,6 +135,7 @@ public class RescaledTreeParser extends AbstractXMLObjectParser {
             return tree.getNodeHeight(node);
         }
     }
+    */
 
     public String getParserDescription() {
         return "This element rescales a given tree with a set of clade heights.";
@@ -154,7 +150,7 @@ public class RescaledTreeParser extends AbstractXMLObjectParser {
             new ElementRule(Tree.class),
             new ElementRule(CLADE, new XMLSyntaxRule[] {
                     AttributeRule.newDoubleRule(HEIGHT, true),
-                    new ElementRule(TaxonList.class)
+                    new ElementRule(TaxonSet.class)
             }, 0, Integer.MAX_VALUE)
     };
 }

@@ -25,16 +25,6 @@
 
 package dr.evomodelxml.speciation;
 
-import dr.evolution.tree.Tree;
-import dr.evolution.util.Taxa;
-import dr.evolution.util.Taxon;
-import dr.evolution.util.TaxonList;
-import dr.evomodel.speciation.CalibrationPoints;
-import dr.evomodel.speciation.SpeciationLikelihood;
-import dr.evomodel.speciation.SpeciationModel;
-import dr.inference.distribution.DistributionLikelihood;
-import dr.inference.model.Statistic;
-import dr.math.distributions.Distribution;
 import dr.xml.*;
 
 import java.util.ArrayList;
@@ -42,6 +32,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
+
+import beast.core.Function;
+import beast.evolution.alignment.Taxon;
+import beast.evolution.alignment.TaxonSet;
+import beast.evolution.speciation.BirthDeathGernhard08Model;
+import beast.evolution.speciation.CalibratedYuleModel;
+import beast.evolution.tree.Tree;
+import beast.evolution.tree.TreeDistribution;
+import beast.math.distributions.MRCAPrior;
+import beast.math.distributions.ParametricDistribution;
+import beast1to2.Beast1to2Converter;
 
 /**
  */
@@ -57,10 +58,10 @@ public class SpeciationLikelihoodParser extends AbstractXMLObjectParser {
     public static final String CORRECTION = "correction";
     public static final String POINT = "point";
 
-    private final String EXACT = CalibrationPoints.CorrectionType.EXACT.toString();
-    private final String APPROX = CalibrationPoints.CorrectionType.APPROXIMATED.toString();
-    private final String PEXACT = CalibrationPoints.CorrectionType.PEXACT.toString();
-    private final String NONE = CalibrationPoints.CorrectionType.NONE.toString();
+    private final String EXACT = "exact";
+    private final String APPROX = "approximated";
+    private final String PEXACT = "pexact";
+    private final String NONE = "none";
 
     public static final String PARENT = dr.evomodelxml.tree.TMRCAStatisticParser.PARENT;
 
@@ -69,29 +70,28 @@ public class SpeciationLikelihoodParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         XMLObject cxo = xo.getChild(MODEL);
-        final SpeciationModel specModel = (SpeciationModel) cxo.getChild(SpeciationModel.class);
+        TreeDistribution specModel = (TreeDistribution) cxo.getChild(TreeDistribution.class);
 
         cxo = xo.getChild(TREE);
         final Tree tree = (Tree) cxo.getChild(Tree.class);
+        specModel.treeInput.setValue(tree, specModel);
 
         Set<Taxon> excludeTaxa = null;
 
         if (xo.hasChildNamed(INCLUDE)) {
             excludeTaxa = new HashSet<Taxon>();
-            for (int i = 0; i < tree.getTaxonCount(); i++) {
-                excludeTaxa.add(tree.getTaxon(i));
+            TaxonSet s = tree.getTaxonset();
+            for (Taxon taxon : s.getTaxonSet()) {
+                excludeTaxa.add(taxon);
             }
 
             cxo = xo.getChild(INCLUDE);
             for (int i = 0; i < cxo.getChildCount(); i++) {
-                TaxonList taxonList = (TaxonList) cxo.getChild(i);
-                for (int j = 0; j < taxonList.getTaxonCount(); j++) {
-                    excludeTaxa.remove(taxonList.getTaxon(j));
+                TaxonSet taxonList = (TaxonSet) cxo.getChild(i);
+                for (Taxon taxon : taxonList.getTaxonSet()) {
+                    excludeTaxa.remove(taxon);
                 }
             }
         }
@@ -100,15 +100,15 @@ public class SpeciationLikelihoodParser extends AbstractXMLObjectParser {
             excludeTaxa = new HashSet<Taxon>();
             cxo = xo.getChild(EXCLUDE);
             for (int i = 0; i < cxo.getChildCount(); i++) {
-                TaxonList taxonList = (TaxonList) cxo.getChild(i);
-                for (int j = 0; j < taxonList.getTaxonCount(); j++) {
-                    excludeTaxa.add(taxonList.getTaxon(j));
+            	TaxonSet taxonList = (TaxonSet) cxo.getChild(i);
+                for (Taxon taxon : taxonList.getTaxonSet()) {
+                    excludeTaxa.add(taxon);
                 }
             }
         }
         if (excludeTaxa != null) {
             Logger.getLogger("dr.evomodel").info("Speciation model excluding " + excludeTaxa.size() + " taxa from prior - " +
-                    (tree.getTaxonCount() - excludeTaxa.size()) + " taxa remaining.");
+                    (tree.getLeafNodeCount() - excludeTaxa.size()) + " taxa remaining.");
         }
 
         final XMLObject cal = xo.getChild(CALIBRATION);
@@ -117,26 +117,30 @@ public class SpeciationLikelihoodParser extends AbstractXMLObjectParser {
                 throw new XMLParseException("Sorry, not implemented: internal calibration prior + excluded taxa");
             }
 
-            List<Distribution> dists = new ArrayList<Distribution>();
-            List<Taxa> taxa = new ArrayList<Taxa>();
+            List<ParametricDistribution> dists = new ArrayList<ParametricDistribution>();
+            List<TaxonSet> taxa = new ArrayList<>();
             List<Boolean> forParent = new ArrayList<Boolean>();
-            Statistic userPDF = null; // (Statistic) cal.getChild(Statistic.class);
+            Function userPDF = null; // (Statistic) cal.getChild(Statistic.class);
 
             for(int k = 0; k < cal.getChildCount(); ++k) {
                 final Object ck = cal.getChild(k);
-                if ( DistributionLikelihood.class.isInstance(ck) ) {
-                    dists.add( ((DistributionLikelihood) ck).getDistribution() );
-                } else if ( Distribution.class.isInstance(ck) ) {
-                    dists.add((Distribution) ck);
-                } else if ( Taxa.class.isInstance(ck) ) {
-                    final Taxa tx = (Taxa) ck;
+//                if ( DistributionLikelihood.class.isInstance(ck) ) {
+//                    dists.add( ((DistributionLikelihood) ck).getDistribution() );
+//                } else 
+                	if ( ParametricDistribution.class.isInstance(ck) ) {
+                    dists.add((ParametricDistribution) ck);
+                } else if ( TaxonSet.class.isInstance(ck) ) {
+                    final TaxonSet tx = (TaxonSet) ck;
                     taxa.add(tx);
                     forParent.add( tx.getTaxonCount() == 1 );
-                } else if ( Statistic.class.isInstance(ck) ) {
+                } else if ( Function.class.isInstance(ck) ) {
                     if( userPDF != null ) {
                         throw new XMLParseException("more than one userPDF correction???");
                     }
-                    userPDF = (Statistic) cal.getChild(Statistic.class);
+                    userPDF = (Function) cal.getChild(Function.class);
+                    if (userPDF != null) {
+                        throw new XMLParseException(Beast1to2Converter.NIY + " userPDF not supported");
+                    }
                 }
                 else {
                     XMLObject cko = (XMLObject) ck;
@@ -144,13 +148,14 @@ public class SpeciationLikelihoodParser extends AbstractXMLObjectParser {
 
                     for(int i = 0; i < 2; ++i) {
                         final Object chi = cko.getChild(i);
-                        if ( DistributionLikelihood.class.isInstance(chi) ) {
-                            dists.add( ((DistributionLikelihood) chi).getDistribution() );
-                        } else if ( Distribution.class.isInstance(chi) ) {
-                            dists.add((Distribution) chi);
-                        } else if ( Taxa.class.isInstance(chi) ) {
-                            taxa.add((Taxa) chi);
-                            boolean fp = ((Taxa) chi).getTaxonCount() == 1;
+//                        if ( DistributionLikelihood.class.isInstance(chi) ) {
+//                            dists.add( ((DistributionLikelihood) chi).getDistribution() );
+//                        } else 
+                        if ( ParametricDistribution.class.isInstance(chi) ) {
+                            dists.add((ParametricDistribution) chi);
+                        } else if ( TaxonSet.class.isInstance(chi) ) {
+                            taxa.add((TaxonSet) chi);
+                            boolean fp = ((TaxonSet) chi).getTaxonCount() == 1;
                             if( cko.hasAttribute(PARENT) ) {
                                 boolean ufp = cko.getBooleanAttribute(PARENT);
                                 if( fp && ! ufp ) {
@@ -173,27 +178,61 @@ public class SpeciationLikelihoodParser extends AbstractXMLObjectParser {
             try {
                 final String correction = cal.getAttribute(CORRECTION, EXACT);
 
-                final CalibrationPoints.CorrectionType type = correction.equals(EXACT) ? CalibrationPoints.CorrectionType.EXACT :
-                        (correction.equals(APPROX) ? CalibrationPoints.CorrectionType.APPROXIMATED :
-                                (correction.equals(NONE) ? CalibrationPoints.CorrectionType.NONE :
-                                        (correction.equals(PEXACT) ? CalibrationPoints.CorrectionType.PEXACT :  null)));
+                final CorrectionType type = correction.equals(EXACT) ? CorrectionType.EXACT :
+                        (correction.equals(APPROX) ? CorrectionType.APPROXIMATED :
+                                (correction.equals(NONE) ? CorrectionType.NONE :
+                                        (correction.equals(PEXACT) ? CorrectionType.PEXACT :  null)));
 
+                if (type == CorrectionType.EXACT && specModel.getID().equals("yule")) {
+                	BirthDeathGernhard08Model yule = (BirthDeathGernhard08Model) specModel;
+                	CalibratedYuleModel cYule = new CalibratedYuleModel();
+                	cYule.initByName("tree", tree, "birthRate", yule.birthDiffRateParameterInput.get());
+                	specModel = cYule;
+                }
+                
                 if( cal.hasAttribute(CORRECTION) && type == null ) {
                    throw new XMLParseException("correction type == " + correction + "???");
                 }
 
-                final CalibrationPoints calib =
-                        new CalibrationPoints(tree, specModel.isYule(), dists, taxa, forParent, userPDF, type);
-                final SpeciationLikelihood speciationLikelihood = new SpeciationLikelihood(tree, specModel, null, calib);
-                return speciationLikelihood;
+                MRCAPrior prior = new MRCAPrior();
+                if (dists.size() == 0) {
+                	dists.add(null);
+                }
+                if (dists.size() > 1) {
+                	throw new XMLParseException(Beast1to2Converter.NIY + " only one distribution per taxonset is supported");
+                }
+                prior.initByName("tree", tree, "distr", dists.get(0), "taxonset", taxa.get(0), "useOriginate", forParent.get(0));
+                
+//                final CalibrationPoints calib =
+//                        new CalibrationPoints(tree, specModel.isYule(), dists, taxa, forParent, userPDF, type);
+//                final SpeciationLikelihood speciationLikelihood = new SpeciationLikelihood(tree, specModel, null, calib);
+//                return speciationLikelihood;
             } catch( IllegalArgumentException e ) {
                 throw new XMLParseException( e.getMessage() );
             }
         }
+        
+        specModel.initAndValidate();
+        return specModel;
+//        return new SpeciationLikelihood(tree, specModel, excludeTaxa, null);
+	}
+    
+    public static enum CorrectionType {
+        EXACT("exact"),
+        APPROXIMATED("approximated"),
+        PEXACT("pexact"),
+        NONE("none");
 
-        return new SpeciationLikelihood(tree, specModel, excludeTaxa, null);
-    */
-		}
+        CorrectionType(String name) {
+            this.name = name;
+        }
+
+        public String toString() {
+            return name;
+        }
+
+        private final String name;
+    }
 
     //************************************************************************
     // AbstractXMLObjectParser implementation
@@ -204,7 +243,7 @@ public class SpeciationLikelihoodParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return SpeciationLikelihood.class;
+        return TreeDistribution.class;
     }
 
     public XMLSyntaxRule[] getSyntaxRules() {
@@ -213,38 +252,38 @@ public class SpeciationLikelihoodParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] calibrationPoint = {
             AttributeRule.newBooleanRule(PARENT, true),
-            new XORRule(
-                    new ElementRule(Distribution.class),
-                    new ElementRule(DistributionLikelihood.class)),
-            new ElementRule(Taxa.class)
+//            new XORRule(
+                    new ElementRule(ParametricDistribution.class),
+//                    new ElementRule(DistributionLikelihood.class)),
+            new ElementRule(TaxonSet.class)
     };
 
     private final XMLSyntaxRule[] calibration = {
 //            AttributeRule.newDoubleArrayRule(COEFFS,true, "use log(lam) -lam * c[0] + sum_k=1..n (c[k+1] * e**(-k*lam*x)) " +
 //                    "as a calibration correction instead of default - used when additional constarints are put on the topology."),
             AttributeRule.newStringRule(CORRECTION, true),
-            new ElementRule(Statistic.class, true),
-            new XORRule(
-                    new ElementRule(Distribution.class, 1, 100),
-                    new ElementRule(DistributionLikelihood.class, 1, 100)),
-            new ElementRule(Taxa.class, 1, 100),
+            new ElementRule(Function.class, true),
+//            new XORRule(
+                    new ElementRule(ParametricDistribution.class, 1, 100),
+//                    new ElementRule(DistributionLikelihood.class, 1, 100)),
+            new ElementRule(TaxonSet.class, 1, 100),
             new ElementRule("point", calibrationPoint, 0, 100)
     };
 
     private final XMLSyntaxRule[] rules = {
             new ElementRule(MODEL, new XMLSyntaxRule[]{
-                    new ElementRule(SpeciationModel.class)
+                    new ElementRule(TreeDistribution.class)
             }),
             new ElementRule(TREE, new XMLSyntaxRule[]{
                     new ElementRule(Tree.class)
             }),
 
             new ElementRule(INCLUDE, new XMLSyntaxRule[]{
-                    new ElementRule(Taxa.class, 1, Integer.MAX_VALUE)
+                    new ElementRule(TaxonSet.class, 1, Integer.MAX_VALUE)
             }, "One or more subsets of taxa which should be included from calculate the likelihood (the remaining taxa are excluded)", true),
 
             new ElementRule(EXCLUDE, new XMLSyntaxRule[]{
-                    new ElementRule(Taxa.class, 1, Integer.MAX_VALUE)
+                    new ElementRule(TaxonSet.class, 1, Integer.MAX_VALUE)
             }, "One or more subsets of taxa which should be excluded from calculate the likelihood (which is calculated on the remaining subtree)", true),
 
             new ElementRule(CALIBRATION, calibration, true),

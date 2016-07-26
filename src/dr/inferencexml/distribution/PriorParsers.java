@@ -35,6 +35,7 @@ import beast.math.distributions.Gamma;
 import beast.math.distributions.InverseGamma;
 import beast.math.distributions.LaplaceDistribution;
 import beast.math.distributions.LogNormalDistributionModel;
+import beast.math.distributions.MRCAPrior;
 import beast.math.distributions.Normal;
 import beast.math.distributions.ParametricDistribution;
 import beast.math.distributions.Poisson;
@@ -118,9 +119,7 @@ public class PriorParsers {
                 }
             }
 
-            Prior prior = new Prior();
-            prior.initByName("distr", distr, "x", x);
-            return prior;
+            return prior(xo, distr);
 		}
 
         public XMLSyntaxRule[] getSyntaxRules() {
@@ -673,6 +672,12 @@ public class PriorParsers {
             } else {
                 throw new XMLParseException("illegal element in " + xo.getName() + " element");
             }
+        }
+
+        if (x instanceof MRCAPrior) {
+        	MRCAPrior prior = (MRCAPrior) x;
+        	prior.distInput.setValue(distr, prior);
+         	return prior;
         }
 
         Prior prior = new Prior();

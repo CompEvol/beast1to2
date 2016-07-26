@@ -25,8 +25,8 @@
 
 package dr.inferencexml.distribution;
 
-import dr.inference.distribution.NormalDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.math.distributions.Normal;
 import dr.xml.*;
 
 /**
@@ -44,41 +44,45 @@ public class NormalDistributionModelParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
-        Parameter meanParam;
-        Parameter stdevParam;
-        Parameter precParam;
+        RealParameter meanParam;
+        RealParameter stdevParam;
+        RealParameter precParam;
 
         XMLObject cxo = xo.getChild(MEAN);
-        if (cxo.getChild(0) instanceof Parameter) {
-            meanParam = (Parameter) cxo.getChild(Parameter.class);
+        if (cxo.getChild(0) instanceof RealParameter) {
+            meanParam = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            meanParam = new Parameter.Default(cxo.getDoubleChild(0));
+            meanParam = new RealParameter("0.0");
         }
 
         if (xo.getChild(STDEV) != null) {
 
             cxo = xo.getChild(STDEV);
-            if (cxo.getChild(0) instanceof Parameter) {
-                stdevParam = (Parameter) cxo.getChild(Parameter.class);
+            if (cxo.getChild(0) instanceof RealParameter) {
+                stdevParam = (RealParameter) cxo.getChild(RealParameter.class);
             } else {
-                stdevParam = new Parameter.Default(cxo.getDoubleChild(0));
+                stdevParam = new RealParameter(cxo.getDoubleChild(0) + "");
             }
 
-            return new NormalDistributionModel(meanParam, stdevParam);
+            Normal distr = new Normal();
+            distr.initByName("mean", meanParam, "sigma", stdevParam);
+            return distr;
+            
+ //           return new NormalDistributionModel(meanParam, stdevParam);
         }
 
         cxo = xo.getChild(PREC);
-        if (cxo.getChild(0) instanceof Parameter) {
-            precParam = (Parameter) cxo.getChild(Parameter.class);
+        if (cxo.getChild(0) instanceof RealParameter) {
+            precParam = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            precParam = new Parameter.Default(cxo.getDoubleChild(0));
+            precParam = new RealParameter(cxo.getDoubleChild(0) + "");
         }
-        return new NormalDistributionModel(meanParam, precParam, true);
-    */
+
+        Normal distr = new Normal();
+        distr.initByName("mean", meanParam, "tau", precParam);
+        return distr;
+        //return new NormalDistributionModel(meanParam, precParam, true);
 		}
 
     //************************************************************************
@@ -93,7 +97,7 @@ public class NormalDistributionModelParser extends AbstractXMLObjectParser {
             new ElementRule(MEAN,
                     new XMLSyntaxRule[]{
                             new XORRule(
-                                    new ElementRule(Parameter.class),
+                                    new ElementRule(RealParameter.class),
                                     new ElementRule(Double.class)
                             )}
             ),
@@ -101,14 +105,14 @@ public class NormalDistributionModelParser extends AbstractXMLObjectParser {
                     new ElementRule(STDEV,
                             new XMLSyntaxRule[]{
                                     new XORRule(
-                                            new ElementRule(Parameter.class),
+                                            new ElementRule(RealParameter.class),
                                             new ElementRule(Double.class)
                                     )}
                     ),
                     new ElementRule(PREC,
                             new XMLSyntaxRule[]{
                                     new XORRule(
-                                            new ElementRule(Parameter.class),
+                                            new ElementRule(RealParameter.class),
                                             new ElementRule(Double.class)
                                     )}
                     )
@@ -121,7 +125,7 @@ public class NormalDistributionModelParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return NormalDistributionModel.class;
+        return Normal.class;
     }
 
 }

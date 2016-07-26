@@ -25,16 +25,16 @@
 
 package dr.evoxml;
 
-import dr.evolution.distance.DistanceMatrix;
-import dr.evolution.tree.MutableTree;
-import dr.evolution.tree.NodeRef;
-import dr.evolution.tree.UPGMATree;
-import dr.evolution.util.TimeScale;
 import dr.evomodelxml.tree.TreeModelParser;
-import dr.math.MathUtils;
 import dr.xml.*;
 
 import java.util.logging.Logger;
+
+import beast.evolution.alignment.Alignment;
+import beast.evolution.alignment.distance.Distance;
+import beast.evolution.tree.Node;
+import beast.util.ClusterTree;
+import beast.util.Randomizer;
 
 /**
  * @author Alexei Drummond
@@ -58,9 +58,6 @@ public class UPGMATreeParser extends AbstractXMLObjectParser {
     }
 
     public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
         boolean usingDatesSpecified = false;
         boolean usingDates = true;
@@ -71,17 +68,31 @@ public class UPGMATreeParser extends AbstractXMLObjectParser {
             usingDates = xo.getBooleanAttribute(SimpleTreeParser.USING_DATES);
         }
 
-        DistanceMatrix distances = (DistanceMatrix) xo.getChild(DistanceMatrix.class);
+        Distance distances = (Distance) xo.getChild(Distance.class);
 
-        UPGMATree tree = new UPGMATree(distances);
+    	Alignment alignment = null;
+    	for (int i = 0; i < xo.getChildCount(); i++) {
+        	Object o = xo.getRawChild(i); 
+        	if (o instanceof XMLObject) {
+        		XMLObject xco = (XMLObject) o;
+        		if (xco.getName().equals("distanceMatrix")) {
+        			alignment = (Alignment)xco.getChild(Alignment.class);
+        		}
+        	}
+        }
+        
+        ClusterTree tree = new ClusterTree();
+        tree.initByName("distance", distances, "clusterType", "upgma", "taxa", alignment);
+        return tree;
 
+        /** TODO: add more functionality: 
         if (rootHeight > 0) {
             double scaleFactor = rootHeight / tree.getNodeHeight(tree.getRoot());
 
             for (int i = 0; i < tree.getInternalNodeCount(); i++) {
-                NodeRef node = tree.getInternalNode(i);
-                double height = tree.getNodeHeight(node);
-                tree.setNodeHeight(node, height * scaleFactor);
+                Node node = tree.getNode(i);
+                double height = node.getHeight();
+                node.setHeight(height * scaleFactor);
             }
         }
 
@@ -162,35 +173,35 @@ public class UPGMATreeParser extends AbstractXMLObjectParser {
     */
 		}
 
-    private boolean shakeNode(UPGMATree tree, NodeRef node) {
-        if (tree.isRoot(node) || tree.isExternal(node)) {
+    private boolean shakeNode(ClusterTree tree, Node node) {
+        if (node.isRoot() || node.isLeaf()) {
             return false;
         }
 
         boolean shake = false;
-        if (tree.getBranchLength(node) <= tolerance) {
+        if (node.getLength() <= tolerance) {
             shake = true;
         }
-        double maxHeight = tree.getNodeHeight(tree.getParent(node));
+        double maxHeight = node.getParent().getHeight();
         double minHeight = Double.NEGATIVE_INFINITY;
-        for (int i = 0; i < tree.getChildCount(node); i++) {
-            NodeRef child = tree.getChild(node, i);
-            if (tree.getBranchLength(child) <= tolerance) {
+        for (int i = 0; i < node.getChildCount(); i++) {
+            Node child = node.getChild(i);
+            if (child.getLength() <= tolerance) {
                 shake = true;
             }
-            double thisHeight = tree.getNodeHeight(child);
+            double thisHeight = child.getHeight();
             if (thisHeight > minHeight) {
                 minHeight = thisHeight;
             }
         }
         if (shake) {
-            double draw = minHeight + (maxHeight - minHeight) * MathUtils.nextDouble();
-            tree.setNodeHeight(node, draw);
+            double draw = minHeight + (maxHeight - minHeight) * Randomizer.nextDouble();
+            node.setHeight(draw);
         }
         return shake;
     }
 
-    private void shakeTree(UPGMATree tree) {
+    private void shakeTree(ClusterTree tree) {
         boolean shake = true;
         int[] permutation = new int[tree.getNodeCount()];
         for (int i = 0; i < tree.getNodeCount(); i++) {
@@ -198,10 +209,10 @@ public class UPGMATreeParser extends AbstractXMLObjectParser {
         }
         while (shake) {
             Logger.getLogger("dr.evomodelxml").info("Adjusting heights in UPGMA tree");
-            MathUtils.permute(permutation);
+            Randomizer.permute(permutation);
             shake = false;
             for (int i = 0; i < tree.getNodeCount(); i++) {
-                NodeRef node = tree.getNode(permutation[i]);
+                Node node = tree.getNode(permutation[i]);
                 if (shakeNode(tree, node)) {
                     shake = true;
                 }
@@ -223,7 +234,7 @@ public class UPGMATreeParser extends AbstractXMLObjectParser {
             AttributeRule.newBooleanRule(SimpleTreeParser.USING_DATES, true),
             AttributeRule.newDoubleRule(ROOT_HEIGHT, true),
             AttributeRule.newBooleanRule(RANDOMIZE, true),
-            new ElementRule(DistanceMatrix.class)
+            new ElementRule(Distance.class)
     };
 
     public String getParserDescription() {
@@ -231,6 +242,6 @@ public class UPGMATreeParser extends AbstractXMLObjectParser {
     }
 
     public Class getReturnType() {
-        return UPGMATree.class;
+        return ClusterTree.class;
     }
 }

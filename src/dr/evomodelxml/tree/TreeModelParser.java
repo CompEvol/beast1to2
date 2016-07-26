@@ -27,6 +27,7 @@ package dr.evomodelxml.tree;
 
 
 
+import beast.core.Input;
 import beast.core.StateNodeInitialiser;
 import beast.core.parameter.Parameter;
 import beast.core.parameter.RealParameter;
@@ -131,6 +132,15 @@ public class TreeModelParser extends AbstractXMLObjectParser {
         if (initialTree != null) {
         	initialTree.m_initial.setValue(tree, initialTree);
         	tree.m_taxonset.setValue(initialTree.m_taxonset.get(), tree);
+        	if (tree.m_taxonset.get() == null) {
+        		Input<?> input = initialTree.getInput("taxa");
+        		if (input != null && Alignment.class.isAssignableFrom(input.getType())) {
+        			Alignment alignment = (Alignment) input.get();
+        			TaxonSet taxonset = new TaxonSet();
+        			taxonset.initByName("alignment", alignment);
+                	tree.m_taxonset.setValue(taxonset, tree);
+        		}
+        	}
         	tree.m_traitList.get().addAll(initialTree.m_traitList.get());
         	MCMCParser.initialisers.add((StateNodeInitialiser) initialTree);
         }

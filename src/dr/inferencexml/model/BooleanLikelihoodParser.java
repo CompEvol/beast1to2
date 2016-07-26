@@ -25,11 +25,17 @@
 
 package dr.inferencexml.model;
 
-import dr.inference.model.BooleanLikelihood;
-import dr.inference.model.BooleanStatistic;
+import java.util.ArrayList;
+import java.util.List;
+
+import beast.core.Distribution;
+import beast.core.util.Log;
+import beast.math.distributions.MRCAPrior;
+import beast1to2.Beast1to2Converter;
 import dr.xml.AbstractXMLObjectParser;
 import dr.xml.ElementRule;
 import dr.xml.XMLObject;
+import dr.xml.XMLParseException;
 import dr.xml.XMLSyntaxRule;
 
 /**
@@ -43,21 +49,24 @@ public class BooleanLikelihoodParser extends AbstractXMLObjectParser {
 
     public String getParserName() { return BOOLEAN_LIKELIHOOD; }
 
-    public Object parseXMLObject(XMLObject xo) {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
+    public Object parseXMLObject(XMLObject xo) throws XMLParseException {
 
-        BooleanLikelihood likelihood = new BooleanLikelihood();
+//        BooleanLikelihood likelihood = new BooleanLikelihood();
 
+    	List<Distribution> distrs = new ArrayList<>();
         for (int i = 0; i < xo.getChildCount(); i++) {
-            if (xo.getChild(i) instanceof BooleanStatistic) {
-                likelihood.addData( (BooleanStatistic)xo.getChild(i));
+            if (xo.getChild(i) instanceof Distribution) {
+                distrs.add((Distribution)xo.getChild(i));
             }
         }
-
-        return likelihood;
-    */
+        if (distrs.size() > 1) {
+        	Log.warning.println("Only first distribution in booleanLikelihood is used, the rest is ignored");
+        }
+        if (distrs.size() == 1 && !(distrs.get(0) instanceof MRCAPrior)) {
+        	throw new XMLParseException(Beast1to2Converter.NIY + " " + BOOLEAN_LIKELIHOOD);
+        }
+        	
+         return distrs.get(0);
 		}
 
     //************************************************************************
@@ -69,12 +78,12 @@ public class BooleanLikelihoodParser extends AbstractXMLObjectParser {
                 "If all the statistics are true then it returns 0.0 otherwise -infinity.";
     }
 
-    public Class getReturnType() { return BooleanLikelihood.class; }
+    public Class getReturnType() { return Distribution.class; }
 
     public XMLSyntaxRule[] getSyntaxRules() { return rules; }
 
     private final XMLSyntaxRule[] rules = {
-        new ElementRule(BooleanStatistic.class, 1, Integer.MAX_VALUE )
+        new ElementRule(Distribution.class, 1, Integer.MAX_VALUE )
     };
 
 }
