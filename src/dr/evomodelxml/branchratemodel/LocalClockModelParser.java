@@ -73,7 +73,7 @@ public class LocalClockModelParser extends AbstractXMLObjectParser {
                     boolean relative = xoc.getAttribute(RELATIVE, false);
 
                     RealParameter rateParameter = (RealParameter) xoc.getChild(RealParameter.class);
-                    TaxonList taxonList = (TaxonList) xoc.getChild(TaxonList.class);
+                    TaxonSet taxonList = (TaxonSet) xoc.getChild(TaxonSet.class);
 
                     if (taxonList.getTaxonCount() == 1) {
                         throw new XMLParseException("A local clock for a clade must be defined by at least two taxa");
@@ -111,7 +111,7 @@ public class LocalClockModelParser extends AbstractXMLObjectParser {
                     boolean relative = xoc.getAttribute(RELATIVE, false);
 
                     RealParameter rateParameter = (RealParameter) xoc.getChild(RealParameter.class);
-                    TaxonList taxonList = (TaxonList) xoc.getChild(TaxonList.class);
+                    TaxonSet taxonList = (TaxonSet) xoc.getChild(TaxonSet.class);
 
 
                     try {
@@ -129,7 +129,7 @@ public class LocalClockModelParser extends AbstractXMLObjectParser {
                         indexParameter = (RealParameter) xoc.getElementFirstChild(INDEX);
                     }
                     RealParameter rateParameter = (RealParameter) xoc.getChild(RealParameter.class);
-                    TaxonList taxonList = (TaxonList) xoc.getChild(TaxonList.class);
+                    TaxonSet taxonList = (TaxonSet) xoc.getChild(TaxonSet.class);
 
 
                     try {

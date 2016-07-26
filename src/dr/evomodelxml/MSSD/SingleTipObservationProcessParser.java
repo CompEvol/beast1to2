@@ -26,7 +26,7 @@
 package dr.evomodelxml.MSSD;
 
 import dr.evolution.alignment.PatternList;
-import dr.evolution.util.Taxon;
+import beast.evolution.alignment.Taxon;
 import dr.evomodel.MSSD.SingleTipObservationProcess;
 import dr.evomodel.branchratemodel.BranchRateModel;
 import dr.evomodel.sitemodel.SiteModel;

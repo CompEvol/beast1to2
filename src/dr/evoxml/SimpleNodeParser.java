@@ -26,7 +26,7 @@
 package dr.evoxml;
 
 import dr.evolution.tree.SimpleNode;
-import dr.evolution.util.Taxon;
+import beast.evolution.alignment.Taxon;
 import dr.xml.*;
 
 /**

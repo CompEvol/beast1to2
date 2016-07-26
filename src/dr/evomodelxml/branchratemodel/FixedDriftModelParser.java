@@ -69,7 +69,7 @@ public class FixedDriftModelParser extends AbstractXMLObjectParser {
         RealParameter remainingRates = (RealParameter) xo.getElementFirstChild(REMAINING_RATES);
         * /
 
-        TaxonList taxonList = (TaxonList) xo.getElementFirstChild(BACKBONE_TAXON_LIST);
+        TaxonSet taxonList = (TaxonSet) xo.getElementFirstChild(BACKBONE_TAXON_LIST);
 
         Tree treeModel = (Tree) xo.getChild(Tree.class);
 

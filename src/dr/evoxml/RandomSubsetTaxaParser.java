@@ -26,7 +26,7 @@
 package dr.evoxml;
 
 import dr.evolution.util.Taxa;
-import dr.evolution.util.Taxon;
+import beast.evolution.alignment.Taxon;
 import dr.xml.*;
 
 /**
@@ -56,8 +56,8 @@ public class RandomSubsetTaxaParser extends AbstractXMLObjectParser {
             if (child instanceof Taxon) {
                 Taxon taxon = (Taxon)child;
                 originalTaxa.addTaxon(taxon);
-            } else if (child instanceof TaxonList) {
-                TaxonList taxonList1 = (TaxonList)child;
+            } else if (child instanceof TaxonSet) {
+                TaxonSet taxonList1 = (TaxonSet)child;
                 for (int j = 0; j < taxonList1.getTaxonCount(); j++) {
                     originalTaxa.addTaxon(taxonList1.getTaxon(j));
                 }

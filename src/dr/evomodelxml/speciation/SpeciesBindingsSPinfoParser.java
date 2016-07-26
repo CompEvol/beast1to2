@@ -25,7 +25,7 @@
 
 package dr.evomodelxml.speciation;
 
-import dr.evolution.util.Taxon;
+import beast.evolution.alignment.Taxon;
 import dr.evomodel.speciation.SpeciesBindings;
 import dr.xml.*;
 

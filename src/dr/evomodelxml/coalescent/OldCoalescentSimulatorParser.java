@@ -161,7 +161,7 @@ public class OldCoalescentSimulatorParser extends AbstractXMLObjectParser {
         CoalescentSimulator simulator = new CoalescentSimulator();
 
         DemographicModel demoModel = (DemographicModel) xo.getChild(DemographicModel.class);
-        List<TaxonList> taxonLists = new ArrayList<TaxonList>();
+        List<TaxonSet> taxonLists = new ArrayList<TaxonSet>();
         List<Tree> subtrees = new ArrayList<Tree>();
 
         double rootHeight = xo.getAttribute(ROOT_HEIGHT, -1.0);
@@ -177,13 +177,13 @@ public class OldCoalescentSimulatorParser extends AbstractXMLObjectParser {
             // AER - swapped the order of these round because Trees are TaxonLists...
             if (child instanceof Tree) {
                 subtrees.add((Tree) child);
-            } else if (child instanceof TaxonList) {
-                taxonLists.add((TaxonList) child);
+            } else if (child instanceof TaxonSet) {
+                taxonLists.add((TaxonSet) child);
             } else if (xo.getChildName(i).equals(CONSTRAINED_TAXA)) {
                 XMLObject constrainedTaxa = (XMLObject) child;
 
                 // all taxa
-                final TaxonList taxa = (TaxonList) constrainedTaxa.getChild(TaxonList.class);
+                final TaxonSet taxa = (TaxonSet) constrainedTaxa.getChild(TaxonSet.class);
 
                 List<CoalescentSimulator.TaxaConstraint> constraints = new ArrayList<CoalescentSimulator.TaxaConstraint>();
                 final String setsNotCompatibleMessage = "taxa sets not compatible";
@@ -199,7 +199,7 @@ public class OldCoalescentSimulatorParser extends AbstractXMLObjectParser {
                         final XMLObject constraint = (XMLObject) object;
 
                         if (constraint.getName().equals(TMRCA_CONSTRAINT)) {
-                            TaxonList taxaSubSet = (TaxonList) constraint.getChild(TaxonList.class);
+                            TaxonSet taxaSubSet = (TaxonSet) constraint.getChild(TaxonSet.class);
                             ParametricDistributionModel dist =
                                     (ParametricDistributionModel) constraint.getChild(ParametricDistributionModel.class);
                             boolean isMono = constraint.getAttribute(IS_MONOPHYLETIC, true);
@@ -215,7 +215,7 @@ public class OldCoalescentSimulatorParser extends AbstractXMLObjectParser {
                                         continue;
                                     }
 
-                                    final TaxonList taxonsip = iConstraint.taxons;
+                                    final TaxonSet taxonsip = iConstraint.taxons;
                                     final int nIn = simulator.sizeOfIntersection(taxonsip, taxaSubSet);
                                     if (nIn == taxaSubSet.getTaxonCount()) {
                                         break;

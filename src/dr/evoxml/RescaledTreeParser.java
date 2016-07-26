@@ -68,7 +68,7 @@ public class RescaledTreeParser extends AbstractXMLObjectParser {
             if (xo.getChild(i) instanceof XMLObject) {
                 XMLObject cxo = (XMLObject)xo.getChild(i);
                 if (cxo.getName().equals(CLADE)) {
-                    TaxonList taxa = (TaxonList)cxo.getChild(TaxonList.class);
+                    TaxonSet taxa = (TaxonSet)cxo.getChild(TaxonSet.class);
 
                     Set<String> leafSet = new HashSet<String>();
                     for (Taxon taxon : taxa) {

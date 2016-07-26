@@ -57,8 +57,8 @@ public class MetagenomeDataParser extends AbstractXMLObjectParser {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
-        TaxonList taxa = null;
-    	taxa = (TaxonList)xo.getChild(TaxonList.class);
+        TaxonSet taxa = null;
+    	taxa = (TaxonSet)xo.getChild(TaxonSet.class);
         if(taxa==null)
         	taxa = (Tree)xo.getChild(Tree.class);
 

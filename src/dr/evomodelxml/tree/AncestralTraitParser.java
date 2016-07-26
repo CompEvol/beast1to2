@@ -66,9 +66,9 @@ public class AncestralTraitParser extends AbstractXMLObjectParser {
         Tree tree = (Tree) xo.getChild(Tree.class);
         TreeTraitProvider treeTraitProvider = (TreeTraitProvider) xo.getChild(TreeTraitProvider.class);
 
-        TaxonList taxa = null;
+        TaxonSet taxa = null;
         if (xo.hasChildNamed(MRCA)) {
-            taxa = (TaxonList) xo.getElementFirstChild(MRCA);
+            taxa = (TaxonSet) xo.getElementFirstChild(MRCA);
         }
 
         TreeTrait trait = treeTraitProvider.getTreeTrait(traitName);

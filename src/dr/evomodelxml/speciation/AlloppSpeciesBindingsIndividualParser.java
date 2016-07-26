@@ -27,7 +27,7 @@ package dr.evomodelxml.speciation;
 
 
 
-import dr.evolution.util.Taxon;
+import beast.evolution.alignment.Taxon;
 import dr.evomodel.speciation.AlloppSpeciesBindings;
 import dr.xml.AbstractXMLObjectParser;
 import dr.xml.ElementRule;

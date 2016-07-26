@@ -54,10 +54,10 @@ public class ParsimonyStateStatisticParser extends AbstractXMLObjectParser {
 
         Tree tree = (Tree) xo.getChild(Tree.class);
         XMLObject cxo = xo.getChild(STATE);
-        TaxonList stateTaxa = (TaxonList) cxo.getChild(TaxonList.class);
+        TaxonSet stateTaxa = (TaxonSet) cxo.getChild(TaxonSet.class);
 
         cxo = xo.getChild(MRCA);
-        TaxonList mrcaTaxa = (TaxonList) cxo.getChild(TaxonList.class);
+        TaxonSet mrcaTaxa = (TaxonSet) cxo.getChild(TaxonSet.class);
 
         try {
             return new ParsimonyStateStatistic(name, tree, stateTaxa, mrcaTaxa);

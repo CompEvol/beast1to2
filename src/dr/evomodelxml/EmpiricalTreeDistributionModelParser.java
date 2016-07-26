@@ -26,7 +26,7 @@
 package dr.evomodelxml;
 
 import dr.xml.*;
-import dr.evolution.util.TaxonList;
+import beast.evolution.alignment.TaxonSet;
 import dr.evomodel.tree.EmpiricalTreeDistributionModel;
 
 /**
@@ -62,7 +62,7 @@ public class EmpiricalTreeDistributionModelParser extends AbstractXMLObjectParse
 
         Logger.getLogger("dr.evomodel").info("Creating the empirical tree distribution model, '" + xo.getId() + "'");
 
-        TaxonList taxa = (TaxonList)xo.getChild(TaxonList.class);
+        TaxonSet taxa = (TaxonSet)xo.getChild(TaxonSet.class);
 
         final File file = FileHelpers.getFile(fileName);
 
@@ -70,7 +70,7 @@ public class EmpiricalTreeDistributionModelParser extends AbstractXMLObjectParse
         try {
             FileReader reader = new FileReader(file);
             NexusImporter importer = new NexusImporter(reader);
-            trees = importer.importTrees(taxa, true); // Re-order taxon numbers to original TaxonList order
+            trees = importer.importTrees(taxa, true); // Re-order taxon numbers to original TaxonSet order
 
         } catch (FileNotFoundException e) {
             throw new XMLParseException(e.getMessage());
@@ -99,7 +99,7 @@ public class EmpiricalTreeDistributionModelParser extends AbstractXMLObjectParse
                         "The name of a NEXUS tree file"),
 //                AttributeRule.newIntegerRule(BURNIN, true,
 //                        "The number of trees to exclude"),
-                new ElementRule(TaxonList.class),
+                new ElementRule(TaxonSet.class),
         };
     }
 

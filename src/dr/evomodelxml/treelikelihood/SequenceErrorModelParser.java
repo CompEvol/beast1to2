@@ -25,7 +25,7 @@
 
 package dr.evomodelxml.treelikelihood;
 
-import dr.evolution.util.TaxonList;
+import beast.evolution.alignment.TaxonSet;
 import dr.evomodel.treelikelihood.SequenceErrorModel;
 import beast.core.parameter.RealParameter;
 import dr.xml.*;
@@ -86,15 +86,15 @@ public class SequenceErrorModelParser extends AbstractXMLObjectParser {
         }
 
 
-        TaxonList includeTaxa = null;
-        TaxonList excludeTaxa = null;
+        TaxonSet includeTaxa = null;
+        TaxonSet excludeTaxa = null;
 
         if (xo.hasChildNamed(INCLUDE)) {
-            includeTaxa = (TaxonList) xo.getElementFirstChild(INCLUDE);
+            includeTaxa = (TaxonSet) xo.getElementFirstChild(INCLUDE);
         }
 
         if (xo.hasChildNamed(EXCLUDE)) {
-            excludeTaxa = (TaxonList) xo.getElementFirstChild(EXCLUDE);
+            excludeTaxa = (TaxonSet) xo.getElementFirstChild(EXCLUDE);
         }
 
         SequenceErrorModel aDNADamageModel = new SequenceErrorModel(includeTaxa, excludeTaxa,
@@ -132,8 +132,8 @@ public class SequenceErrorModelParser extends AbstractXMLObjectParser {
             new ElementRule(AGE_RELATED_RATE, RealParameter.class, "The error rate per site per unit time", true),
             new ElementRule(INDICATORS, RealParameter.class, "A binary indicator of whether the sequence has errors", true),
             new XORRule(
-                    new ElementRule(INCLUDE, TaxonList.class, "A set of taxa to which to apply the damage model to"),
-                    new ElementRule(EXCLUDE, TaxonList.class, "A set of taxa to which to not apply the damage model to")
+                    new ElementRule(INCLUDE, TaxonSet.class, "A set of taxa to which to apply the damage model to"),
+                    new ElementRule(EXCLUDE, TaxonSet.class, "A set of taxa to which to not apply the damage model to")
                     , true)
     };
 

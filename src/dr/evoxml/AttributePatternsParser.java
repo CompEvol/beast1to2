@@ -27,7 +27,7 @@ package dr.evoxml;
 
 import dr.evolution.alignment.PatternList;
 import dr.evolution.datatype.DataType;
-import dr.evolution.util.TaxonList;
+import beast.evolution.alignment.TaxonSet;
 import dr.xml.*;
 
 /**
@@ -55,7 +55,7 @@ public class AttributePatternsParser extends AbstractXMLObjectParser {
 
         String attributeName = xo.getStringAttribute(ATTRIBUTE);
         String secondaryAttributeName = xo.getAttribute(SECONDARY_ATTRIBUTE, (String)null);
-        TaxonList taxa = (TaxonList)xo.getChild(TaxonList.class);
+        TaxonSet taxa = (TaxonSet)xo.getChild(TaxonSet.class);
         DataType dataType = DataTypeUtils.getDataType(xo);
 
         if (dataType == null) {
@@ -136,7 +136,7 @@ public class AttributePatternsParser extends AbstractXMLObjectParser {
                 ),
             AttributeRule.newStringRule(ATTRIBUTE),
             AttributeRule.newStringRule(SECONDARY_ATTRIBUTE, true),
-            new ElementRule(TaxonList.class, "The taxon set")
+            new ElementRule(TaxonSet.class, "The taxon set")
     };
 
     @Override

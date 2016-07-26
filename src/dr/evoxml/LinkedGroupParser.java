@@ -58,12 +58,12 @@ public class LinkedGroupParser extends AbstractXMLObjectParser {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
-        TaxonList taxa = null;
+        TaxonSet taxa = null;
         double linkageProbability = 0.9999999999;
         if (xo.hasAttribute("probability")) {
             linkageProbability = xo.getDoubleAttribute("probability");
         }
-    	taxa = (TaxonList)xo.getChild(TaxonList.class);
+    	taxa = (TaxonSet)xo.getChild(TaxonSet.class);
     	LinkedGroup lg = new LinkedGroup(taxa, linkageProbability);
 		return lg;
 	*/

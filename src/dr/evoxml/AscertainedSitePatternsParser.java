@@ -27,7 +27,7 @@ package dr.evoxml;
 
 import dr.evolution.alignment.Alignment;
 import dr.evolution.alignment.PatternList;
-import dr.evolution.util.TaxonList;
+import beast.evolution.alignment.TaxonSet;
 import dr.xml.*;
 
 /**
@@ -62,7 +62,7 @@ public class AscertainedSitePatternsParser extends AbstractXMLObjectParser {
 		/*
         Alignment alignment = (Alignment) xo.getChild(Alignment.class);
         XMLObject xoc;
-        TaxonList taxa = null;
+        TaxonSet taxa = null;
 
         int from = -1;
         int to = -1;
@@ -88,7 +88,7 @@ public class AscertainedSitePatternsParser extends AbstractXMLObjectParser {
 
 
         if (xo.hasChildNamed(TAXON_LIST)) {
-            taxa = (TaxonList) xo.getElementFirstChild(TAXON_LIST);
+            taxa = (TaxonSet) xo.getElementFirstChild(TAXON_LIST);
         }
 
         if (from > alignment.getSiteCount())
@@ -162,7 +162,7 @@ public class AscertainedSitePatternsParser extends AbstractXMLObjectParser {
             AttributeRule.newIntegerRule(TO, true, "The site position to finish at, must be greater than <b>" + FROM + "</b>, default is length of given alignment"),
             AttributeRule.newIntegerRule(EVERY, true, "Determines how many sites are selected. A value of 3 will select every third site starting from <b>" + FROM + "</b>, default is 1 (every site)"),
             new ElementRule(TAXON_LIST,
-                    new XMLSyntaxRule[]{new ElementRule(TaxonList.class)}, true),
+                    new XMLSyntaxRule[]{new ElementRule(TaxonSet.class)}, true),
             new ElementRule(Alignment.class),
             new ContentRule("<includePatterns from=\"Z\" to=\"X\"/>"),
             new ContentRule("<excludePatterns from=\"Z\" to=\"X\"/>")

@@ -50,7 +50,7 @@ public class ExternalLengthStatisticParser extends AbstractXMLObjectParser {
         String name = xo.getAttribute(Statistic.NAME, xo.getId());
 
         Tree tree = (Tree) xo.getChild(Tree.class);
-        TaxonList taxa = (TaxonList) xo.getChild(Taxa.class);
+        TaxonSet taxa = (TaxonSet) xo.getChild(Taxa.class);
 
         try {
             return new ExternalLengthStatistic(name, tree, taxa);

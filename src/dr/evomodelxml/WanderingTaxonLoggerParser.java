@@ -27,7 +27,7 @@ package dr.evomodelxml;
 
 import dr.xml.*;
 import dr.evomodel.tree.WanderingTaxonLogger;
-import dr.evolution.util.Taxon;
+import beast.evolution.alignment.Taxon;
 
 /**
  * @author Marc A. Suchard

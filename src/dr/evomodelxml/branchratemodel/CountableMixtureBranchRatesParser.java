@@ -94,7 +94,7 @@ public class CountableMixtureBranchRatesParser extends AbstractXMLObjectParser {
                 if (xo.getChild(i) instanceof XMLObject) {
                     XMLObject xoc = (XMLObject) xo.getChild(i);
                     if (xoc.getName().equals(LocalClockModelParser.CLADE)) {
-                        TaxonList taxonList = (TaxonList) xoc.getChild(TaxonList.class);
+                        TaxonSet taxonList = (TaxonSet) xoc.getChild(TaxonSet.class);
 
                         boolean includeStem = xoc.getAttribute(LocalClockModelParser.INCLUDE_STEM, false);
                         boolean excludeClade = xoc.getAttribute(LocalClockModelParser.EXCLUDE_CLADE, false);
@@ -105,7 +105,7 @@ public class CountableMixtureBranchRatesParser extends AbstractXMLObjectParser {
                             throw new XMLParseException("Unable to find taxon for clade in countable mixture model: " + e.getMessage());
                         }
                     }  else if (xoc.getName().equals(LocalClockModelParser.TRUNK)) {
-                        TaxonList taxonList = (TaxonList) xoc.getChild(TaxonList.class);
+                        TaxonSet taxonList = (TaxonSet) xoc.getChild(TaxonSet.class);
 
                         boolean includeStem = xoc.getAttribute(LocalClockModelParser.INCLUDE_STEM, false);
                         boolean excludeClade = xoc.getAttribute(LocalClockModelParser.EXCLUDE_CLADE, false);

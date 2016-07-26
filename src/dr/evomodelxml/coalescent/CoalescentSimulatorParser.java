@@ -129,7 +129,7 @@ public class CoalescentSimulatorParser extends AbstractXMLObjectParser {
         CoalescentSimulator simulator = new CoalescentSimulator();
 
         DemographicModel demoModel = (DemographicModel) xo.getChild(DemographicModel.class);
-        List<TaxonList> taxonLists = new ArrayList<TaxonList>();
+        List<TaxonSet> taxonLists = new ArrayList<TaxonSet>();
         List<Tree> subtrees = new ArrayList<Tree>();
 
         double height = xo.getAttribute(HEIGHT, Double.NaN);
@@ -141,8 +141,8 @@ public class CoalescentSimulatorParser extends AbstractXMLObjectParser {
             // AER - swapped the order of these round because Trees are TaxonLists...
             if (child instanceof Tree) {
                 subtrees.add((Tree) child);
-            } else if (child instanceof TaxonList) {
-                taxonLists.add((TaxonList) child);
+            } else if (child instanceof TaxonSet) {
+                taxonLists.add((TaxonSet) child);
             }
           }
 

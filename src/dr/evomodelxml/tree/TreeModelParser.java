@@ -193,7 +193,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
                 } else if (cxo.getName().equals(LEAF_HEIGHTS)) {
                     // get a set of leaf height parameters out as a compound parameter...
 
-//                    TaxonList taxa = (TaxonList)cxo.getChild(TaxonList.class);
+//                    TaxonSet taxa = (TaxonSet)cxo.getChild(TaxonSet.class);
 //                    RealParameter offsetParameter = (RealParameter)cxo.getChild(RealParameter.class);
 //
 //                    CompoundParameter leafHeights = new CompoundParameter("leafHeights");
@@ -362,7 +362,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
                 } else if (cxo.getName().equals(LEAF_HEIGHTS)) {
                     // get a set of leaf height parameters out as a compound parameter...
 
-                    TaxonList taxa = (TaxonList)cxo.getChild(TaxonList.class);
+                    TaxonSet taxa = (TaxonSet)cxo.getChild(TaxonSet.class);
                     RealParameter offsetParameter = (RealParameter)cxo.getChild(RealParameter.class);
 
                     CompoundParameter leafHeights = new CompoundParameter("leafHeights");

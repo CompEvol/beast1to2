@@ -140,18 +140,18 @@ public class CoalescentLikelihoodParser extends AbstractXMLObjectParser {
             throw new XMLParseException("Incorrectly constructed likelihood element");
         }
 
-        TaxonList includeSubtree = null;
+        TaxonSet includeSubtree = null;
 
         if (xo.hasChildNamed(INCLUDE)) {
-            includeSubtree = (TaxonList) xo.getElementFirstChild(INCLUDE);
+            includeSubtree = (TaxonSet) xo.getElementFirstChild(INCLUDE);
         }
 
-        List<TaxonList> excludeSubtrees = new ArrayList<TaxonList>();
+        List<TaxonSet> excludeSubtrees = new ArrayList<TaxonSet>();
 
         if (xo.hasChildNamed(EXCLUDE)) {
             cxo = xo.getChild(EXCLUDE);
             for (int i = 0; i < cxo.getChildCount(); i++) {
-                excludeSubtrees.add((TaxonList) cxo.getChild(i));
+                excludeSubtrees.add((TaxonSet) cxo.getChild(i));
             }
         }
 

@@ -52,7 +52,7 @@ public class ParsimonyStatisticParser extends AbstractXMLObjectParser {
         String name = xo.getAttribute(Statistic.NAME, xo.getId());
         Tree tree = (Tree) xo.getChild(Tree.class);
         XMLObject cxo = xo.getChild(STATE);
-        TaxonList taxa = (TaxonList) cxo.getChild(TaxonList.class);
+        TaxonSet taxa = (TaxonSet) cxo.getChild(TaxonSet.class);
 
         try {
             return new ParsimonyStatistic(name, tree, taxa);

@@ -54,7 +54,7 @@ public class MRCATraitStatisticParser extends AbstractXMLObjectParser {
         String trait = xo.getStringAttribute(TRAIT);
 
         Tree tree = (Tree) xo.getChild(Tree.class);
-        TaxonList taxa = (TaxonList) xo.getElementFirstChild(MRCA);
+        TaxonSet taxa = (TaxonSet) xo.getElementFirstChild(MRCA);
 
         try {
             return new MRCATraitStatistic(name, trait, tree, taxa);
