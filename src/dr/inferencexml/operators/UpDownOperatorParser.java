@@ -25,6 +25,7 @@
 
 package dr.inferencexml.operators;
 
+import beast.core.parameter.RealParameter;
 import dr.inference.model.Parameter;
 import dr.inference.operators.*;
 import dr.xml.*;
@@ -48,7 +49,7 @@ public class UpDownOperatorParser extends AbstractXMLObjectParser {
         Scalable[] args = new Scalable[list.getChildCount()];
         for (int k = 0; k < list.getChildCount(); ++k) {
             final Object child = list.getChild(k);
-            if (child instanceof Parameter) {
+            if (child instanceof RealParameter) {
                 args[k] = new Scalable.Default((Parameter) child);
             } else if (child instanceof Scalable) {
                 args[k] = (Scalable) child;
@@ -132,7 +133,7 @@ public class UpDownOperatorParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] ee = {
             new ElementRule(Scalable.class, true),
-            new ElementRule(Parameter.class, true),
+            new ElementRule(RealParameter.class, true),
             new ElementRule("scale", new XMLSyntaxRule[]{
                     AttributeRule.newIntegerRule("count", true),
                     AttributeRule.newIntegerRule("df", true),

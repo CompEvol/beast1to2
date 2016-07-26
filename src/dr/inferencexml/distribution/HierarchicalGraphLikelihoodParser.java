@@ -27,7 +27,7 @@ package dr.inferencexml.distribution;
 
 import dr.inference.distribution.HierarchicalGraphLikelihood;
 import dr.inference.model.Likelihood;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -55,13 +55,13 @@ public class HierarchicalGraphLikelihoodParser extends AbstractXMLObjectParser {
 		/*
 
         XMLObject cxo = xo.getChild(HIERARCHICAL_INDICATOR);
-        Parameter hierarchicalIndicator = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter hierarchicalIndicator = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(STRATA_INDICATOR);
         MatrixParameter strataIndicatorMatrix = new MatrixParameter("matrix");
         int dim = 0;
         for (int i = 0; i < cxo.getChildCount(); i++) {
-            Parameter parameter = (Parameter) cxo.getChild(i);
+            RealParameter parameter = (RealParameter) cxo.getChild(i);
             strataIndicatorMatrix.addParameter(parameter);
             if (i == 0)
                 dim = parameter.getDimension();
@@ -74,7 +74,7 @@ public class HierarchicalGraphLikelihoodParser extends AbstractXMLObjectParser {
     
         
         cxo = xo.getChild(PROB);
-        Parameter prob = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter prob = (RealParameter) cxo.getChild(RealParameter.class);
 
         return new HierarchicalGraphLikelihood(hierarchicalIndicator, strataIndicatorMatrix, prob);
 
@@ -92,11 +92,11 @@ public class HierarchicalGraphLikelihoodParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             new ElementRule(HIERARCHICAL_INDICATOR,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(STRATA_INDICATOR,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class, 1, Integer.MAX_VALUE)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class, 1, Integer.MAX_VALUE)}),
             new ElementRule(PROB,
-                            new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                            new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
                     
     };
 

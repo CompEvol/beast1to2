@@ -26,7 +26,7 @@
 package dr.inferencexml.distribution;
 
 import dr.inference.distribution.UniformDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -49,21 +49,21 @@ public class UniformDistributionModelParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        Parameter upperParam;
-        Parameter lowerParam;
+        RealParameter upperParam;
+        RealParameter lowerParam;
 
         XMLObject cxo = xo.getChild(LOWER);
-        if (cxo.getChild(0) instanceof Parameter) {
-            lowerParam = (Parameter) cxo.getChild(Parameter.class);
+        if (cxo.getChild(0) instanceof RealParameter) {
+            lowerParam = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            lowerParam = new Parameter.Default(cxo.getDoubleChild(0));
+            lowerParam = new RealParameter.Default(cxo.getDoubleChild(0));
         }
 
         cxo = xo.getChild(UPPER);
-        if (cxo.getChild(0) instanceof Parameter) {
-            upperParam = (Parameter) cxo.getChild(Parameter.class);
+        if (cxo.getChild(0) instanceof RealParameter) {
+            upperParam = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            upperParam = new Parameter.Default(cxo.getDoubleChild(0));
+            upperParam = new RealParameter.Default(cxo.getDoubleChild(0));
         }
 
         return new UniformDistributionModel(lowerParam, upperParam);
@@ -83,14 +83,14 @@ public class UniformDistributionModelParser extends AbstractXMLObjectParser {
             new ElementRule(LOWER,
                     new XMLSyntaxRule[]{
                             new XORRule(
-                                    new ElementRule(Parameter.class),
+                                    new ElementRule(RealParameter.class),
                                     new ElementRule(Double.class)
                             )}
             ),
             new ElementRule(UPPER,
                     new XMLSyntaxRule[]{
                             new XORRule(
-                                    new ElementRule(Parameter.class),
+                                    new ElementRule(RealParameter.class),
                                     new ElementRule(Double.class)
                             )}
             )

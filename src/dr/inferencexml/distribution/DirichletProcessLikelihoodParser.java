@@ -25,6 +25,7 @@
 
 package dr.inferencexml.distribution;
 
+import beast.core.parameter.RealParameter;
 import dr.inference.distribution.DirichletProcessLikelihood;
 import dr.inference.model.*;
 import dr.xml.*;
@@ -52,7 +53,7 @@ public class DirichletProcessLikelihoodParser extends AbstractXMLObjectParser {
         Statistic etaParam = (Statistic) cxo.getChild(Statistic.class);
 
         cxo = xo.getChild(CHI);
-        Parameter chiParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter chiParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         return new DirichletProcessLikelihood(etaParam, chiParameter);
 
@@ -72,7 +73,7 @@ public class DirichletProcessLikelihoodParser extends AbstractXMLObjectParser {
             new ElementRule(ETA,
                     new XMLSyntaxRule[]{new ElementRule(Statistic.class)}, "Counts of N items distributed amongst K classes"),
             new ElementRule(CHI,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}, "Aggregation parameter"),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}, "Aggregation parameter"),
     };
 
     @Override

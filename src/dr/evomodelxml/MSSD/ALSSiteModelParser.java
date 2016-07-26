@@ -27,7 +27,7 @@ package dr.evomodelxml.MSSD;
 
 import dr.evomodel.sitemodel.GammaSiteModel;
 import dr.evomodel.substmodel.SubstitutionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -69,34 +69,34 @@ public class ALSSiteModelParser extends AbstractXMLObjectParser {
 
         String msg = "";
 
-        Parameter muParam = null;
+        RealParameter muParam = null;
         if (xo.hasChildNamed(SUBSTITUTION_RATE)) {
-            muParam = (Parameter) xo.getElementFirstChild(SUBSTITUTION_RATE);
+            muParam = (RealParameter) xo.getElementFirstChild(SUBSTITUTION_RATE);
 
             msg += "\n  with initial substitution rate = " + muParam.getParameterValue(0);
         } else  if (xo.hasChildNamed(MUTATION_RATE)) {
-            muParam = (Parameter) xo.getElementFirstChild(MUTATION_RATE);
+            muParam = (RealParameter) xo.getElementFirstChild(MUTATION_RATE);
 
             msg += "\n  with initial substitution rate = " + muParam.getParameterValue(0);
         } else if (xo.hasChildNamed(RELATIVE_RATE)) {
-            muParam = (Parameter) xo.getElementFirstChild(RELATIVE_RATE);
+            muParam = (RealParameter) xo.getElementFirstChild(RELATIVE_RATE);
 
             msg += "\n  with initial relative rate = " + muParam.getParameterValue(0);
         }
 
-        Parameter shapeParam = null;
+        RealParameter shapeParam = null;
         int catCount = 4;
         if (xo.hasChildNamed(GAMMA_SHAPE)) {
             final XMLObject cxo = xo.getChild(GAMMA_SHAPE);
             catCount = cxo.getIntegerAttribute(GAMMA_CATEGORIES);
-            shapeParam = (Parameter) cxo.getChild(Parameter.class);
+            shapeParam = (RealParameter) cxo.getChild(RealParameter.class);
 
             msg += "\n  " + catCount + " category discrete gamma with initial shape = " + shapeParam.getParameterValue(0);
         }
 
-        Parameter invarParam = null;
+        RealParameter invarParam = null;
         if (xo.hasChildNamed(PROPORTION_INVARIANT)) {
-            invarParam = (Parameter) xo.getElementFirstChild(PROPORTION_INVARIANT);
+            invarParam = (RealParameter) xo.getElementFirstChild(PROPORTION_INVARIANT);
             msg += "\n  initial proportion of invariant sites = " + invarParam.getParameterValue(0);
         }
 
@@ -132,22 +132,22 @@ public class ALSSiteModelParser extends AbstractXMLObjectParser {
             new XORRule(
                     new XORRule(
                             new ElementRule(SUBSTITUTION_RATE, new XMLSyntaxRule[]{
-                                    new ElementRule(Parameter.class)
+                                    new ElementRule(RealParameter.class)
                             }),
                             new ElementRule(MUTATION_RATE, new XMLSyntaxRule[]{
-                                    new ElementRule(Parameter.class)
+                                    new ElementRule(RealParameter.class)
                             })
                     ),
                     new ElementRule(RELATIVE_RATE, new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class)
+                            new ElementRule(RealParameter.class)
                     }), true
             ),
             new ElementRule(GAMMA_SHAPE, new XMLSyntaxRule[]{
                     AttributeRule.newIntegerRule(GAMMA_CATEGORIES, true),
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }, true),
             new ElementRule(PROPORTION_INVARIANT, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }, true)
     };
 }

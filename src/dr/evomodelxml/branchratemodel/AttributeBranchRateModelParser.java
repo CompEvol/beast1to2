@@ -26,7 +26,7 @@
 package dr.evomodelxml.branchratemodel;
 
 import dr.evomodel.branchratemodel.AttributeBranchRateModel;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.xml.*;
 
 /**
@@ -46,7 +46,7 @@ public class AttributeBranchRateModelParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        TreeModel tree = (TreeModel) xo.getChild(TreeModel.class);
+        Tree tree = (Tree) xo.getChild(Tree.class);
 
 
         final String rateAttributeName = (xo.hasAttribute(RATE_ATTRIBUTE_NAME) ?
@@ -77,7 +77,7 @@ public class AttributeBranchRateModelParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             new StringAttributeRule(RATE_ATTRIBUTE_NAME,
                     "Optional name of a rate attribute to be read with the trees")
     };

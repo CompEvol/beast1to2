@@ -30,7 +30,7 @@ import java.util.logging.Logger;
 import dr.evolution.datatype.DataType;
 import dr.evolution.datatype.GeneticCode;
 import dr.evomodel.substmodel.*;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -90,18 +90,18 @@ public class EmpiricalCodonModelParser extends AbstractXMLObjectParser {
             }
         }
         
-        Parameter omegaParam = (Parameter)xo.getElementFirstChild(OMEGA);
-        Parameter kappaParam = null;
-        Parameter mntParam = null;
+        RealParameter omegaParam = (RealParameter)xo.getElementFirstChild(OMEGA);
+        RealParameter kappaParam = null;
+        RealParameter mntParam = null;
         if(xo.hasChildNamed(KAPPATSTV)) {
-        	kappaParam = (Parameter)xo.getElementFirstChild(KAPPATSTV);
+        	kappaParam = (RealParameter)xo.getElementFirstChild(KAPPATSTV);
         	if(kappaParam.getDimension() != 2 && kappaParam.getDimension() != 9) {
             	throw new XMLParseException("If you use the kappa parameter, you need to enter exactly\n" +
             			"two values for ts and tv or nine values\n" +
             			"according to the Kosiol ECM+F+omega+9k model");
             }
     	} else {
-    		mntParam = (Parameter)xo.getElementFirstChild(MULTI_NT_CHANGE);
+    		mntParam = (RealParameter)xo.getElementFirstChild(MULTI_NT_CHANGE);
     	}
         
         String dirString = xo.getStringAttribute(ECM_DATA_DIR);
@@ -185,12 +185,12 @@ public class EmpiricalCodonModelParser extends AbstractXMLObjectParser {
         	"The csv file with the ECM frequency matrix",
             "freqs.csv", true),
         new ElementRule(OMEGA,
-        	new XMLSyntaxRule[] { new ElementRule(Parameter.class) }),
+        	new XMLSyntaxRule[] { new ElementRule(RealParameter.class) }),
         new XORRule(
         	new ElementRule(KAPPATSTV,
-        		new XMLSyntaxRule[] { new ElementRule(Parameter.class) }),
+        		new XMLSyntaxRule[] { new ElementRule(RealParameter.class) }),
         	new ElementRule(MULTI_NT_CHANGE,
-        	    new XMLSyntaxRule[] { new ElementRule(Parameter.class) })),
+        	    new XMLSyntaxRule[] { new ElementRule(RealParameter.class) })),
         new ElementRule(FrequencyModel.class, true)
     };
 }

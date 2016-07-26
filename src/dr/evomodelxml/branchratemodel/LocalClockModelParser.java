@@ -28,8 +28,8 @@ package dr.evomodelxml.branchratemodel;
 import dr.evolution.util.Taxa;
 import dr.evomodel.branchratemodel.BranchRateModel;
 import dr.evomodel.branchratemodel.LocalClockModel;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+import beast.evolution.tree.Tree;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -59,9 +59,9 @@ public class LocalClockModelParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        TreeModel tree = (TreeModel) xo.getChild(TreeModel.class);
+        Tree tree = (Tree) xo.getChild(Tree.class);
 
-        Parameter globalRateParameter = (Parameter) xo.getElementFirstChild(RATE);
+        RealParameter globalRateParameter = (RealParameter) xo.getElementFirstChild(RATE);
         LocalClockModel localClockModel = new LocalClockModel(tree, globalRateParameter);
 
         for (int i = 0; i < xo.getChildCount(); i++) {
@@ -72,7 +72,7 @@ public class LocalClockModelParser extends AbstractXMLObjectParser {
 
                     boolean relative = xoc.getAttribute(RELATIVE, false);
 
-                    Parameter rateParameter = (Parameter) xoc.getChild(Parameter.class);
+                    RealParameter rateParameter = (RealParameter) xoc.getChild(RealParameter.class);
                     TaxonList taxonList = (TaxonList) xoc.getChild(TaxonList.class);
 
                     if (taxonList.getTaxonCount() == 1) {
@@ -110,7 +110,7 @@ public class LocalClockModelParser extends AbstractXMLObjectParser {
 
                     boolean relative = xoc.getAttribute(RELATIVE, false);
 
-                    Parameter rateParameter = (Parameter) xoc.getChild(Parameter.class);
+                    RealParameter rateParameter = (RealParameter) xoc.getChild(RealParameter.class);
                     TaxonList taxonList = (TaxonList) xoc.getChild(TaxonList.class);
 
 
@@ -124,11 +124,11 @@ public class LocalClockModelParser extends AbstractXMLObjectParser {
 
                     boolean relative = xoc.getAttribute(RELATIVE, false);
 
-                    Parameter indexParameter = null;
+                    RealParameter indexParameter = null;
                     if (xoc.hasChildNamed(INDEX)) {
-                        indexParameter = (Parameter) xoc.getElementFirstChild(INDEX);
+                        indexParameter = (RealParameter) xoc.getElementFirstChild(INDEX);
                     }
-                    Parameter rateParameter = (Parameter) xoc.getChild(Parameter.class);
+                    RealParameter rateParameter = (RealParameter) xoc.getChild(RealParameter.class);
                     TaxonList taxonList = (TaxonList) xoc.getChild(TaxonList.class);
 
 
@@ -169,14 +169,14 @@ public class LocalClockModelParser extends AbstractXMLObjectParser {
     }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
-            new ElementRule(TreeModel.class),
-            new ElementRule(RATE, Parameter.class, "The molecular evolutionary rate parameter", false),
+            new ElementRule(Tree.class),
+            new ElementRule(RATE, RealParameter.class, "The molecular evolutionary rate parameter", false),
             new ElementRule(EXTERNAL_BRANCHES,
                     new XMLSyntaxRule[]{
                             AttributeRule.newBooleanRule(RELATIVE, true),
                             new ElementRule(Taxa.class, "A local clock that will be applied only to " +
                                     "the external branches for these taxa"),
-                            new ElementRule(Parameter.class, "The rate parameter"),
+                            new ElementRule(RealParameter.class, "The rate parameter"),
                     }, 0, Integer.MAX_VALUE),
             new ElementRule(CLADE,
                     new XMLSyntaxRule[]{
@@ -185,15 +185,15 @@ public class LocalClockModelParser extends AbstractXMLObjectParser {
                             AttributeRule.newDoubleRule(STEM_PROPORTION, true, "proportion of stem to include in clade rate (default 0)."),
                             AttributeRule.newBooleanRule(EXCLUDE_CLADE, true, "determines whether to exclude actual branches of the clade from the siteModel (default false)."),
                             new ElementRule(Taxa.class, "A set of taxa which defines a clade to apply a different site model to"),
-                            new ElementRule(Parameter.class, "The rate parameter")
+                            new ElementRule(RealParameter.class, "The rate parameter")
                     }, 0, Integer.MAX_VALUE),
             new ElementRule(TRUNK,
                     new XMLSyntaxRule[]{
                             AttributeRule.newBooleanRule(RELATIVE, true),
                             new ElementRule(Taxa.class, "A local clock that will be applied only to " +
                                     "the 'trunk' branches defined by these taxa"),
-                            new ElementRule(Parameter.class, "The rate parameter"),
-                            new ElementRule(INDEX, Parameter.class, "The trunk taxon index", true),
+                            new ElementRule(RealParameter.class, "The rate parameter"),
+                            new ElementRule(INDEX, RealParameter.class, "The trunk taxon index", true),
                     }, 0, Integer.MAX_VALUE),
     };
 }

@@ -52,7 +52,7 @@ public class BlockDiagonalMatrixParameter extends MatrixParameter {
     private final List<Integer> rowOffset;
     private final List<Integer> colOffset;
 
-//    public BlockDiagonalMatrixParameter(String name, Parameter[] parameters) {
+//    public BlockDiagonalMatrixParameter(String name, RealParameter[] parameters) {
 //        super(name, parameters);
 //        dimensionsEstablished = true;
 //    }
@@ -95,7 +95,7 @@ public class BlockDiagonalMatrixParameter extends MatrixParameter {
 //            dimensionsEstablished = true;
 //
 //            for (int i = 0; i < rowDimension; i++) {
-//                Parameter row = new Parameter.Default(columnDimension, 0.0);
+//                RealParameter row = new RealParameter.Default(columnDimension, 0.0);
 //                row.addBounds(new DefaultBounds(Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, columnDimension));
 //                addParameter(row);
 //            }
@@ -133,9 +133,9 @@ public class BlockDiagonalMatrixParameter extends MatrixParameter {
 //        StringTokenizer st = new StringTokenizer(clip, ",");
 //        int count = st.countTokens();
 //        int dim = (-1 + (int) Math.sqrt(1 + 8 * count)) / 2;
-//        Parameter[] parameter = new Parameter[dim];
+//        RealParameter[] parameter = new RealParameter[dim];
 //        for (int i = 0; i < dim; i++)
-//            parameter[i] = new Parameter.Default(dim);
+//            parameter[i] = new RealParameter.Default(dim);
 //        for (int i = 0; i < dim; i++) {
 //            for (int j = i; j < dim; j++) {
 //                double datum = new Double(st.nextToken());
@@ -149,9 +149,9 @@ public class BlockDiagonalMatrixParameter extends MatrixParameter {
 //    public static BlockDiagonalMatrixParameter parseFromSymmetricDoubleArray(Object[] data) {
 //
 //        int dim = (-1 + (int) Math.sqrt(1 + 8 * data.length)) / 2;
-//        Parameter[] parameter = new Parameter[dim];
+//        RealParameter[] parameter = new RealParameter[dim];
 //        for (int i = 0; i < dim; i++)
-//            parameter[i] = new Parameter.Default(dim);
+//            parameter[i] = new RealParameter.Default(dim);
 //        int index = 0;
 //        for (int i = 0; i < dim; i++) {
 //            for (int j = i; j < dim; j++) {

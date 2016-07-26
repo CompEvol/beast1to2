@@ -68,7 +68,7 @@ public class DeltaExchangeOperatorParser extends AbstractXMLObjectParser {
         if (xo.hasAttribute(PARAMETER_WEIGHTS)) {
             int[] parameterWeights;
             parameterWeights = xo.getIntegerArrayAttribute(PARAMETER_WEIGHTS);
-            System.out.print("Parameter weights for delta exchange are: ");
+            System.out.print("RealParameter weights for delta exchange are: ");
             for (int parameterWeight : parameterWeights) {
                 System.out.print(parameterWeight + "\t");
             }
@@ -124,6 +124,6 @@ public class DeltaExchangeOperatorParser extends AbstractXMLObjectParser {
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
             AttributeRule.newBooleanRule(CoercableMCMCOperator.AUTO_OPTIMIZE, true),
             AttributeRule.newBooleanRule(INTEGER_OPERATOR, true),
-            new ElementRule(Parameter.class)
+            new ElementRule(RealParameter.class)
     };
 }

@@ -26,7 +26,7 @@
 package dr.inferencexml.distribution;
 
 import dr.inference.distribution.LocationScaleJeffreysPrior;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -55,12 +55,12 @@ public class LocationScaleJeffreysPriorParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        Parameter location = (Parameter) xo.getChild(LOCATION).getChild(Parameter.class);
-        Parameter sigma = (Parameter) xo.getChild(SIGMA).getChild(Parameter.class);
-        Parameter gamma = (Parameter) xo.getChild(GAMMA).getChild(Parameter.class);
+        RealParameter location = (RealParameter) xo.getChild(LOCATION).getChild(RealParameter.class);
+        RealParameter sigma = (RealParameter) xo.getChild(SIGMA).getChild(RealParameter.class);
+        RealParameter gamma = (RealParameter) xo.getChild(GAMMA).getChild(RealParameter.class);
 
-        Parameter alpha0 = (Parameter) xo.getChild(ALPHA_0).getChild(Parameter.class);
-        Parameter beta0 = (Parameter) xo.getChild(BETA_0).getChild(Parameter.class);
+        RealParameter alpha0 = (RealParameter) xo.getChild(ALPHA_0).getChild(RealParameter.class);
+        RealParameter beta0 = (RealParameter) xo.getChild(BETA_0).getChild(RealParameter.class);
 
         String typeString = xo.getStringAttribute(PARAMETERIZATION);
         LocationScaleJeffreysPrior.Type type = LocationScaleJeffreysPrior.Type.parseFromString(
@@ -87,24 +87,24 @@ public class LocationScaleJeffreysPriorParser extends AbstractXMLObjectParser {
             AttributeRule.newStringArrayRule(PARAMETERIZATION),
             new ElementRule(LOCATION,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class),
+                            new ElementRule(RealParameter.class),
                     }),
             new ElementRule(SIGMA,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class),
+                            new ElementRule(RealParameter.class),
                     }),
             new ElementRule(GAMMA,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class),
+                            new ElementRule(RealParameter.class),
                     }),
             new ElementRule(ALPHA_0,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class),
+                            new ElementRule(RealParameter.class),
                     }, true),
 
             new ElementRule(BETA_0,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class),
+                            new ElementRule(RealParameter.class),
                     }, true),
     };
 

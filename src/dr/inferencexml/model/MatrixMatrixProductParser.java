@@ -28,7 +28,7 @@ package dr.inferencexml.model;
 import dr.inference.model.CompoundParameter;
 import dr.inference.model.MatrixMatrixProduct;
 import dr.inference.model.MatrixParameter;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -43,7 +43,7 @@ public class MatrixMatrixProductParser extends AbstractXMLObjectParser {
     private final XMLSyntaxRule[] rules = {
             new ElementRule(LEFT, MatrixParameter.class),
             new ElementRule(RIGHT, CompoundParameter.class),
-            new ElementRule(COLUMN_MASK, Parameter.class, "Only some columns need to be multiplied", true),
+            new ElementRule(COLUMN_MASK, RealParameter.class, "Only some columns need to be multiplied", true),
             new ElementRule(IN_PLACE, MatrixParameter.class, "Matrix values that are returned", true)
     };
 
@@ -61,17 +61,17 @@ public class MatrixMatrixProductParser extends AbstractXMLObjectParser {
         else{
             int rowDim=temp[0].getRowDimension();
             int colDim=temp[1].getColumnDimension();
-            Parameter[] params=new Parameter[colDim];
+            RealParameter[] params=new RealParameter[colDim];
             for (int i = 0; i <colDim ; i++) {
-                params[i]=new Parameter.Default(rowDim);
+                params[i]=new RealParameter.Default(rowDim);
             }
             temp[2]=new MatrixParameter(null, params);
         }
-        Parameter ColumnMask;
+        RealParameter ColumnMask;
         if(xo.getChild(COLUMN_MASK)!=null)
-            ColumnMask=(Parameter) xo.getChild(COLUMN_MASK).getChild(MatrixParameter.class);
+            ColumnMask=(RealParameter) xo.getChild(COLUMN_MASK).getChild(MatrixParameter.class);
         else
-            ColumnMask=new Parameter.Default(null, temp[1].getColumnDimension(), 1);
+            ColumnMask=new RealParameter.Default(null, temp[1].getColumnDimension(), 1);
         return new MatrixMatrixProduct(temp, ColumnMask);
     */
 		}

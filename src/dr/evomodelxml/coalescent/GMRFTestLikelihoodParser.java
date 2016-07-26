@@ -26,7 +26,7 @@
 package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.GMRFTestLikelihood;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -50,22 +50,22 @@ public class GMRFTestLikelihoodParser extends AbstractXMLObjectParser {
 		/*
 
         XMLObject cxo = xo.getChild(GMRFSkyrideLikelihoodParser.POPULATION_PARAMETER);
-        Parameter popParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter popParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(GMRFSkyrideLikelihoodParser.PRECISION_PARAMETER);
-        Parameter precParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter precParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(INTERVAL_PARAMETER);
-        Parameter intervalParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter intervalParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(SUFFSTAT_PARAMETER);
-        Parameter statParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter statParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(GMRFSkyrideLikelihoodParser.LAMBDA_PARAMETER);
-        Parameter lambda = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter lambda = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(GMRFSkyrideLikelihoodParser.BETA_PARAMETER);
-        Parameter betaParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter betaParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         DesignMatrix designMatrix = (DesignMatrix) xo.getChild(DesignMatrix.class);
 
@@ -96,14 +96,14 @@ public class GMRFTestLikelihoodParser extends AbstractXMLObjectParser {
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             new ElementRule(GMRFSkyrideLikelihoodParser.POPULATION_PARAMETER, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }),
             new ElementRule(GMRFSkyrideLikelihoodParser.PRECISION_PARAMETER, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }),
 
             new ElementRule(GMRFSkyrideLikelihoodParser.LAMBDA_PARAMETER, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }),
     };
     

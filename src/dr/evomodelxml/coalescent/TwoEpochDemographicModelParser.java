@@ -28,7 +28,7 @@ package dr.evomodelxml.coalescent;
 import dr.evomodel.coalescent.DemographicModel;
 import dr.evomodel.coalescent.TwoEpochDemographicModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -62,7 +62,7 @@ public class TwoEpochDemographicModelParser extends AbstractXMLObjectParser {
         DemographicModel demo2 = (DemographicModel) cxo.getChild(DemographicModel.class);
 
         cxo = xo.getChild(TRANSITION_TIME);
-        Parameter timeParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter timeParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         return new TwoEpochDemographicModel(demo1, demo2, timeParameter, units);
     */
@@ -95,7 +95,7 @@ public class TwoEpochDemographicModelParser extends AbstractXMLObjectParser {
                     new XMLSyntaxRule[]{new ElementRule(DemographicModel.class)},
                     "The demographic model for the ancient epoch."),
             new ElementRule(TRANSITION_TIME,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                     "The time that splits the two epochs."),
             XMLUnits.SYNTAX_RULES[0]
     };

@@ -28,7 +28,7 @@ package dr.evomodelxml.sitemodel;
 import dr.xml.*;
 import dr.evomodel.sitemodel.GammaSiteBMA;
 import dr.evomodel.substmodel.SubstitutionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.model.Variable;
 
 /**
@@ -59,12 +59,12 @@ public class GammaSiteBMAParser extends AbstractXMLObjectParser {
 		/*
         SubstitutionModel substitutionModel = (SubstitutionModel) xo.getElementFirstChild(SUBSTITUTION_MODEL);
 
-        Parameter muParam = (Parameter) xo.getElementFirstChild(MUTATION_RATE);
+        RealParameter muParam = (RealParameter) xo.getElementFirstChild(MUTATION_RATE);
 
-        Parameter logitInvar = (Parameter) xo.getElementFirstChild(LOGIT_PROPORTION_INVARIANT);
+        RealParameter logitInvar = (RealParameter) xo.getElementFirstChild(LOGIT_PROPORTION_INVARIANT);
 
         final XMLObject cxo = xo.getChild(LOG_GAMMA_SHAPE);
-        Parameter logShape = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter logShape = (RealParameter) cxo.getChild(RealParameter.class);
 
         int catCount = cxo.getIntegerAttribute(GAMMA_CATEGORIES);
 
@@ -94,14 +94,14 @@ public class GammaSiteBMAParser extends AbstractXMLObjectParser {
                     new ElementRule(SubstitutionModel.class)
             }),
             new ElementRule(MUTATION_RATE, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }),
             new ElementRule(LOG_GAMMA_SHAPE, new XMLSyntaxRule[]{
                     AttributeRule.newIntegerRule(GAMMA_CATEGORIES),
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }),
             new ElementRule(LOGIT_PROPORTION_INVARIANT, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }),
             new ElementRule(MODEL_CHOOSE, new XMLSyntaxRule[]{
                     new ElementRule(Variable.class)

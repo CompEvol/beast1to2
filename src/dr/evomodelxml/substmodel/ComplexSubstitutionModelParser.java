@@ -27,7 +27,7 @@ package dr.evomodelxml.substmodel;
 
 import dr.evolution.datatype.DataType;
 import dr.evomodel.substmodel.FrequencyModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -69,7 +69,7 @@ public class ComplexSubstitutionModelParser extends AbstractXMLObjectParser {
 
         XMLObject cxo = xo.getChild(RATES);
 
-        Parameter ratesParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter ratesParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         int rateCount = (dataType.getStateCount() - 1) * dataType.getStateCount();
 
@@ -86,10 +86,10 @@ public class ComplexSubstitutionModelParser extends AbstractXMLObjectParser {
             throw new XMLParseException("Data type of " + getParserName() + " element does not match that of its rootFrequencyModel.");
         }
 
-        Parameter indicators = null;
+        RealParameter indicators = null;
 
         if (xo.hasChildNamed(INDICATOR)) {
-            indicators = (Parameter) ((XMLObject) xo.getChild(INDICATOR)).getChild(Parameter.class);
+            indicators = (RealParameter) ((XMLObject) xo.getChild(INDICATOR)).getChild(RealParameter.class);
             if (ratesParameter.getDimension() != indicators.getDimension())
                 throw new XMLParseException("Rate parameter dimension must match indicator parameter dimension");
         }
@@ -173,11 +173,11 @@ public class ComplexSubstitutionModelParser extends AbstractXMLObjectParser {
             new ElementRule(ROOT_FREQUENCIES, FrequencyModel.class),
             new ElementRule(RATES,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class)}
+                            new ElementRule(RealParameter.class)}
             ),
             new ElementRule(INDICATOR,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class)
+                            new ElementRule(RealParameter.class)
                     }, true),
             AttributeRule.newBooleanRule(NORMALIZATION, true),
             AttributeRule.newDoubleRule(MAX_CONDITION_NUMBER, true),

@@ -26,9 +26,9 @@
 package dr.evomodelxml.branchratemodel;
 
 //import dr.evomodel.branchratemodel.RandomDiscretizedBranchRates;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.inference.distribution.ParametricDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -69,12 +69,12 @@ public class RandomDiscretizedBranchRatesParser extends AbstractXMLObjectParser 
 //        final boolean normalize = xo.getAttribute(NORMALIZE, false);
 //        final double normalizeBranchRateTo = xo.getAttribute(NORMALIZE_BRANCH_RATE_TO, Double.NaN);
 //
-//        TreeModel tree = (TreeModel) xo.getChild(TreeModel.class);
+//        Tree tree = (Tree) xo.getChild(Tree.class);
 //        ParametricDistributionModel distributionModel = (ParametricDistributionModel) xo.getElementFirstChild(DISTRIBUTION);
 //
-//        //Parameter rateCategoryParameter = (Parameter) xo.getElementFirstChild(RATE_CATEGORIES);
+//        //RealParameter rateCategoryParameter = (RealParameter) xo.getElementFirstChild(RATE_CATEGORIES);
 //
-//        Parameter rateCategoryQuantilesParameter = (Parameter) xo.getElementFirstChild(RATE_CATEGORY_QUANTILES);
+//        RealParameter rateCategoryQuantilesParameter = (RealParameter) xo.getElementFirstChild(RATE_CATEGORY_QUANTILES);
 //
 //        Logger.getLogger("dr.evomodel").info("Using random discretized relaxed clock model.");
 //        //Logger.getLogger("dr.evomodel").info("  over sampling = " + overSampling);
@@ -125,9 +125,9 @@ public class RandomDiscretizedBranchRatesParser extends AbstractXMLObjectParser 
             //AttributeRule.newIntegerRule(OVERSAMPLING, true, "The integer factor for oversampling the distribution model (1 means no oversampling)"),
             AttributeRule.newBooleanRule(NORMALIZE, true, "Whether the mean rate has to be normalized to a particular value"),
             AttributeRule.newDoubleRule(NORMALIZE_BRANCH_RATE_TO, true, "The mean rate to normalize to, if normalizing"),
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             new ElementRule(DISTRIBUTION, ParametricDistributionModel.class, "The distribution model for rates among branches", false),
-            /*new ElementRule(RATE_CATEGORIES, Parameter.class, "The rate categories parameter", false),      */
-            new ElementRule(RATE_CATEGORY_QUANTILES, Parameter.class, "The quantiles for", false),
+            /*new ElementRule(RATE_CATEGORIES, RealParameter.class, "The rate categories parameter", false),      */
+            new ElementRule(RATE_CATEGORY_QUANTILES, RealParameter.class, "The quantiles for", false),
     };
 }

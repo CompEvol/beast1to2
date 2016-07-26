@@ -27,7 +27,7 @@ package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.ConstantExponentialModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -60,24 +60,24 @@ public class ConstExpConstModelParser extends AbstractXMLObjectParser {
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
         XMLObject cxo = xo.getChild(POPULATION_SIZE);
-        Parameter N0Param = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter N0Param = (RealParameter) cxo.getChild(RealParameter.class);
 
-        Parameter N1Param = null;
-        Parameter growthRateParam = null;
+        RealParameter N1Param = null;
+        RealParameter growthRateParam = null;
 
         if (xo.hasChildNamed(ANCESTRAL_POPULATION_SIZE)) {
             cxo = xo.getChild(ANCESTRAL_POPULATION_SIZE);
-            N1Param = (Parameter) cxo.getChild(Parameter.class);
+            N1Param = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
             cxo = xo.getChild(GROWTH_RATE);
-            growthRateParam = (Parameter) cxo.getChild(Parameter.class);
+            growthRateParam = (RealParameter) cxo.getChild(RealParameter.class);
         }
 
         cxo = xo.getChild(FINAL_PHASE_START_TIME);
-        Parameter timeParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter timeParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(GROWTH_PHASE_TIME);
-        Parameter epochParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter epochParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         boolean useNumericalIntegrator = false;
         if (xo.hasAttribute(USE_NUMERICAL_INTEGRATION)) {
@@ -111,17 +111,17 @@ public class ConstExpConstModelParser extends AbstractXMLObjectParser {
             XMLUnits.SYNTAX_RULES[0],
             AttributeRule.newBooleanRule(USE_NUMERICAL_INTEGRATION, true),
             new ElementRule(POPULATION_SIZE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new XORRule(
                     new ElementRule(ANCESTRAL_POPULATION_SIZE,
-                            new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                            new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
                     new ElementRule(GROWTH_RATE,
-                            new XMLSyntaxRule[]{new ElementRule(Parameter.class)})
+                            new XMLSyntaxRule[]{new ElementRule(RealParameter.class)})
             ),
             new ElementRule(FINAL_PHASE_START_TIME,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(GROWTH_PHASE_TIME,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
     };
 
 

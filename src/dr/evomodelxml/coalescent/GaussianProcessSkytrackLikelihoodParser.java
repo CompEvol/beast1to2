@@ -26,9 +26,9 @@
 package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.GaussianProcessSkytrackLikelihood;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 //import dr.inference.model.MatrixParameter;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -83,19 +83,19 @@ public class GaussianProcessSkytrackLikelihoodParser extends AbstractXMLObjectPa
 
 
         XMLObject cxo = xo.getChild(POPULATION_PARAMETER);
-        Parameter popParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter popParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
 
 
 
         cxo = xo.getChild(PRECISION_PARAMETER);
-        Parameter precParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter precParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
 //        cxo = xo.getChild(LAMBDA_BOUND_PARAMETER);
-//        Parameter lambda_bound = (Parameter) cxo.getChild(Parameter.class);
+//        RealParameter lambda_bound = (RealParameter) cxo.getChild(RealParameter.class);
 //
 //        cxo = xo.getChild(LAMBDA_PARAMETER);
-//        Parameter lambda_parameter = (Parameter) cxo.getChild(Parameter.class);
+//        RealParameter lambda_parameter = (RealParameter) cxo.getChild(RealParameter.class);
 
 
         cxo = xo.getChild(POPULATION_TREE);
@@ -104,152 +104,152 @@ public class GaussianProcessSkytrackLikelihoodParser extends AbstractXMLObjectPa
         for (int i = 0; i < cxo.getChildCount(); i++) {
             Object testObject = cxo.getChild(i);
             if (testObject instanceof Tree) {
-                treeList.add((TreeModel) testObject);
+                treeList.add((Tree) testObject);
             }
         }
 
-//        TreeModel treeModel = (TreeModel) cxo.getChild(TreeModel.class);
+//        Tree treeModel = (Tree) cxo.getChild(Tree.class);
 
 //        cxo = xo.getChild(GROUP_SIZES);
-//        Parameter groupParameter = null;
+//        RealParameter groupParameter = null;
 //        if (cxo != null) {
-//            groupParameter = (Parameter) cxo.getChild(Parameter.class);
+//            groupParameter = (RealParameter) cxo.getChild(RealParameter.class);
 //
 //            if (popParameter.getDimension() != groupParameter.getDimension())
 //                throw new XMLParseException("Population and group size parameters must have the same length");
 //        }
 
-        Parameter lambda_parameter;
+        RealParameter lambda_parameter;
         if (xo.getChild(LAMBDA_PARAMETER) != null) {
             cxo = xo.getChild(LAMBDA_PARAMETER);
-            lambda_parameter = (Parameter) cxo.getChild(Parameter.class);
+            lambda_parameter = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            lambda_parameter = new Parameter.Default(1.0);
+            lambda_parameter = new RealParameter.Default(1.0);
 
         }
 
-        Parameter GPtype;
+        RealParameter GPtype;
         if (xo.getChild(GPTYPE) != null) {
             cxo = xo.getChild(GPTYPE);
-            GPtype = (Parameter) cxo.getChild(Parameter.class);
+            GPtype = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            GPtype = new Parameter.Default(1.0);
+            GPtype = new RealParameter.Default(1.0);
 
         }
 
-        Parameter Tmrca;
+        RealParameter Tmrca;
         if (xo.getChild(TMRCA) != null) {
             cxo = xo.getChild(TMRCA);
-            Tmrca = (Parameter) cxo.getChild(Parameter.class);
+            Tmrca = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            Tmrca = new Parameter.Default(1.0);
+            Tmrca = new RealParameter.Default(1.0);
 
         }
 
 
-        Parameter numPoints;
+        RealParameter numPoints;
         if (xo.getChild(NUMBER_POINTS) != null) {
             cxo = xo.getChild(NUMBER_POINTS);
-            numPoints = (Parameter) cxo.getChild(Parameter.class);
+            numPoints = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            numPoints = new Parameter.Default(1.0);
+            numPoints = new RealParameter.Default(1.0);
 
         }
 
-        Parameter CoalCounts;
+        RealParameter CoalCounts;
         if (xo.getChild(COALCOUNT) != null) {
             cxo = xo.getChild(COALCOUNT);
-            CoalCounts = (Parameter) cxo.getChild(Parameter.class);
+            CoalCounts = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            CoalCounts = new Parameter.Default(1.0);
+            CoalCounts = new RealParameter.Default(1.0);
 
         }
 
-        Parameter GPcounts;
+        RealParameter GPcounts;
         if (xo.getChild(GPCOUNTS) != null) {
             cxo = xo.getChild(GPCOUNTS);
-            GPcounts = (Parameter) cxo.getChild(Parameter.class);
+            GPcounts = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            GPcounts = new Parameter.Default(1.0);
+            GPcounts = new RealParameter.Default(1.0);
 
         }
 
 
-        Parameter coalfactor;
+        RealParameter coalfactor;
         if (xo.getChild(COALFACTOR) != null) {
             cxo = xo.getChild(COALFACTOR);
-            coalfactor = (Parameter) cxo.getChild(Parameter.class);
+            coalfactor = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            coalfactor = new Parameter.Default(1.0);
+            coalfactor = new RealParameter.Default(1.0);
 
         }
 
-        Parameter lambda_bound;
+        RealParameter lambda_bound;
         if (xo.getChild(LAMBDA_BOUND_PARAMETER) != null) {
             cxo = xo.getChild(LAMBDA_BOUND_PARAMETER);
-            lambda_bound = (Parameter) cxo.getChild(Parameter.class);
+            lambda_bound = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            lambda_bound = new Parameter.Default(1.0);
+            lambda_bound = new RealParameter.Default(1.0);
         }
 
-        Parameter alpha_parameter;
+        RealParameter alpha_parameter;
         if (xo.getChild(ALPHA_PARAMETER) != null) {
             cxo = xo.getChild(ALPHA_PARAMETER);
-            alpha_parameter = (Parameter) cxo.getChild(Parameter.class);
+            alpha_parameter = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            alpha_parameter = new Parameter.Default(0.001);
+            alpha_parameter = new RealParameter.Default(0.001);
         }
 
-        Parameter beta_parameter;
+        RealParameter beta_parameter;
                if (xo.getChild(BETA_PARAMETER) != null) {
                    cxo = xo.getChild(BETA_PARAMETER);
-                   beta_parameter = (Parameter) cxo.getChild(Parameter.class);
+                   beta_parameter = (RealParameter) cxo.getChild(RealParameter.class);
                } else {
-                   beta_parameter = new Parameter.Default(0.001);
+                   beta_parameter = new RealParameter.Default(0.001);
                }
 
-        Parameter change_points;
+        RealParameter change_points;
                if (xo.getChild(CHANGE_POINTS) != null) {
                    cxo = xo.getChild(CHANGE_POINTS);
-                   change_points = (Parameter) cxo.getChild(Parameter.class);
+                   change_points = (RealParameter) cxo.getChild(RealParameter.class);
                } else {
-                   change_points = new Parameter.Default(0,1);
+                   change_points = new RealParameter.Default(0,1);
                }
 
                 /*
 
 
-        Parameter gridPoints = null;
+        RealParameter gridPoints = null;
         if (xo.getChild(GRID_POINTS) != null) {
             cxo = xo.getChild(GRID_POINTS);
-            gridPoints = (Parameter) cxo.getChild(Parameter.class);
+            gridPoints = (RealParameter) cxo.getChild(RealParameter.class);
         }
         * /
 
 
-//        Parameter numGridPoints = new Parameter.Default(0,1);
+//        RealParameter numGridPoints = new RealParameter.Default(0,1);
 //        if (xo.getChild(NUM_GRID_POINTS) != null) {
 //            cxo = xo.getChild(NUM_GRID_POINTS);
-//            numGridPoints = (Parameter) cxo.getChild(Parameter.class);
+//            numGridPoints = (RealParameter) cxo.getChild(RealParameter.class);
 //        }
 
-//        Parameter cutOff = null;
+//        RealParameter cutOff = null;
 //        if (xo.getChild(CUT_OFF) != null) {
 //            cxo = xo.getChild(CUT_OFF);
-//            cutOff = (Parameter) cxo.getChild(Parameter.class);
+//            cutOff = (RealParameter) cxo.getChild(RealParameter.class);
 //        }
 //
-//        Parameter phi = null;
+//        RealParameter phi = null;
 //        if (xo.getChild(PHI_PARAMETER) != null) {
 //            cxo = xo.getChild(PHI_PARAMETER);
-//            phi = (Parameter) cxo.getChild(Parameter.class);
+//            phi = (RealParameter) cxo.getChild(RealParameter.class);
 //        }
 //
 //
-//        Parameter beta = null;
+//        RealParameter beta = null;
 //        if (xo.getChild(BETA_PARAMETER) != null) {
 //            cxo = xo.getChild(BETA_PARAMETER);
-//            beta = (Parameter) cxo.getChild(Parameter.class);
+//            beta = (RealParameter) cxo.getChild(RealParameter.class);
 //        }
 
 //        MatrixParameter dMatrix = null;
@@ -275,8 +275,8 @@ public class GaussianProcessSkytrackLikelihoodParser extends AbstractXMLObjectPa
 
         if (xo.getAttribute(RANDOMIZE_TREE, false)) {
             for (Tree tree : treeList) {
-                if (tree instanceof TreeModel) {
-                    GaussianProcessSkytrackLikelihood.checkTree((TreeModel) tree);
+                if (tree instanceof Tree) {
+                    GaussianProcessSkytrackLikelihood.checkTree((Tree) tree);
                 } else {
                     throw new XMLParseException("Can not randomize a fixed tree");
                 }
@@ -285,7 +285,7 @@ public class GaussianProcessSkytrackLikelihoodParser extends AbstractXMLObjectPa
 
 
 //        XMLObject latentChild = xo.getChild(LATENT_PARAMETER);
-//        Parameter latentPoints = (Parameter) latentChild.getChild(Parameter.class);
+//        RealParameter latentPoints = (RealParameter) latentChild.getChild(RealParameter.class);
 
 
         boolean rescaleByRootHeight = xo.getAttribute(RESCALE_BY_ROOT_ISSUE, true);
@@ -325,37 +325,37 @@ public class GaussianProcessSkytrackLikelihoodParser extends AbstractXMLObjectPa
 
     private final XMLSyntaxRule[] rules = {
             new ElementRule(POPULATION_PARAMETER, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }),
             new ElementRule(CHANGE_POINTS, new XMLSyntaxRule[]{
-                              new ElementRule(Parameter.class)
+                              new ElementRule(RealParameter.class)
             }),
             new ElementRule(PRECISION_PARAMETER, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }),
 
             new ElementRule(LAMBDA_BOUND_PARAMETER, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }),
             new ElementRule(LAMBDA_PARAMETER, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }),
             new ElementRule(ALPHA_PARAMETER, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }),
             new ElementRule(BETA_PARAMETER, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }),
 //            new ElementRule(PHI_PARAMETER, new XMLSyntaxRule[]{
-//                    new ElementRule(Parameter.class)
+//                    new ElementRule(RealParameter.class)
 //            }, true), // Optional
             new ElementRule(POPULATION_TREE, new XMLSyntaxRule[]{
-                    new ElementRule(TreeModel.class, 1, Integer.MAX_VALUE)
+                    new ElementRule(Tree.class, 1, Integer.MAX_VALUE)
             }),
 //            new ElementRule(GROUP_SIZES, new XMLSyntaxRule[]{
-//                    new ElementRule(Parameter.class)
+//                    new ElementRule(RealParameter.class)
 //            }, true),
-//            new ElementRule(LATENT_PARAMETER,Parameter.class),
+//            new ElementRule(LATENT_PARAMETER,RealParameter.class),
 
             AttributeRule.newBooleanRule(RESCALE_BY_ROOT_ISSUE, true),
             AttributeRule.newBooleanRule(RANDOMIZE_TREE, true),

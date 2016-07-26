@@ -28,8 +28,8 @@ package dr.evomodelxml.branchratemodel;
 import dr.evolution.util.Taxa;
 import dr.evomodel.branchratemodel.AbstractBranchRateModel;
 import dr.evomodel.branchratemodel.CountableMixtureBranchRates;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+import beast.evolution.tree.Tree;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -56,7 +56,7 @@ public class CountableMixtureBranchRatesParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        Parameter ratesParameter = null;
+        RealParameter ratesParameter = null;
 
         List<AbstractBranchRateModel> fixedEffects = null;
         if (xo.hasChildNamed(FIXED_EFFECTS)) {
@@ -66,12 +66,12 @@ public class CountableMixtureBranchRatesParser extends AbstractXMLObjectParser {
                 fixedEffects.add((AbstractBranchRateModel)cxo.getChild(i));
             }
         } else {
-            ratesParameter = (Parameter) xo.getElementFirstChild(RATES);
+            ratesParameter = (RealParameter) xo.getElementFirstChild(RATES);
         }
 
 
-        Parameter allocationParameter = (Parameter) xo.getElementFirstChild(ALLOCATION);
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        RealParameter allocationParameter = (RealParameter) xo.getElementFirstChild(ALLOCATION);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
         List<AbstractBranchRateModel> randomEffects = null;
         if (xo.hasChildNamed(RANDOM_EFFECTS)) {
             XMLObject cxo = xo.getChild(RANDOM_EFFECTS);
@@ -154,16 +154,16 @@ public class CountableMixtureBranchRatesParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             new XORRule(
-                    new ElementRule(RATES, Parameter.class, "The molecular evolutionary rate parameter", false),
+                    new ElementRule(RATES, RealParameter.class, "The molecular evolutionary rate parameter", false),
                     new ElementRule(FIXED_EFFECTS,
                             new XMLSyntaxRule[] {
                                     new ElementRule(AbstractBranchRateModel.class, 0, Integer.MAX_VALUE),
                             },
                             "Fixed effects", false)
             ),
-            new ElementRule(ALLOCATION, Parameter.class, "Allocation parameter", false),
+            new ElementRule(ALLOCATION, RealParameter.class, "Allocation parameter", false),
             new ElementRule(RANDOM_EFFECTS,
                     new XMLSyntaxRule[] {
                             new ElementRule(AbstractBranchRateModel.class, 0, Integer.MAX_VALUE),

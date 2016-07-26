@@ -26,7 +26,7 @@
 package dr.evomodelxml.speciation;
 
 import dr.evomodel.speciation.SpeciesBindings;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.xml.*;
 
 /**
@@ -59,20 +59,20 @@ public class SpeciesBindingsParser extends AbstractXMLObjectParser {
 
         final XMLObject xogt = xo.getChild(GENE_TREES);
         final int nTrees = xogt.getChildCount();
-        final TreeModel[] trees = new TreeModel[nTrees];
+        final Tree[] trees = new Tree[nTrees];
         double[] popFactors = new double[nTrees];
 
         for (int nt = 0; nt < trees.length; ++nt) {
             Object child = xogt.getChild(nt);
-            if (!(child instanceof TreeModel)) {
+            if (!(child instanceof Tree)) {
                 assert child instanceof XMLObject;
                 popFactors[nt] = ((XMLObject) child).getDoubleAttribute(PLOIDY);
-                child = ((XMLObject) child).getChild(TreeModel.class);
+                child = ((XMLObject) child).getChild(Tree.class);
 
             } else {
                 popFactors[nt] = -1;
             }
-            trees[nt] = (TreeModel) child;
+            trees[nt] = (Tree) child;
         }
 
         try {
@@ -86,8 +86,8 @@ public class SpeciesBindingsParser extends AbstractXMLObjectParser {
     /* Can't be tree because XML parser supports usage of global tags only as main tags */
     ElementRule treeWithPloidy = new ElementRule(GTREE,
             new XMLSyntaxRule[]{AttributeRule.newDoubleRule(PLOIDY),
-                    new ElementRule(TreeModel.class)}, 0, Integer.MAX_VALUE);
-    //XMLSyntaxRule[] someTree = {new OrRule(new ElementRule(TreeModel.class), treeWithPloidy)};
+                    new ElementRule(Tree.class)}, 0, Integer.MAX_VALUE);
+    //XMLSyntaxRule[] someTree = {new OrRule(new ElementRule(Tree.class), treeWithPloidy)};
 
     @Override
 	public XMLSyntaxRule[] getSyntaxRules() {
@@ -97,7 +97,7 @@ public class SpeciesBindingsParser extends AbstractXMLObjectParser {
                 new ElementRule(GENE_TREES,
                         new XMLSyntaxRule[]{
                                 // start at 0 for only ploidy tree cases
-                                new ElementRule(TreeModel.class, 0, Integer.MAX_VALUE),
+                                new ElementRule(Tree.class, 0, Integer.MAX_VALUE),
                                 treeWithPloidy
                         }),
         };

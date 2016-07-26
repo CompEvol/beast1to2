@@ -26,9 +26,9 @@
 package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.PiecewisePopulationModel;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -54,10 +54,10 @@ public class ScaledPiecewiseModelParser extends AbstractXMLObjectParser {
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
         XMLObject cxo = xo.getChild(EPOCH_SIZES);
-        Parameter epochSizes = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter epochSizes = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(TREE_MODEL);
-        TreeModel treeModel = (TreeModel) cxo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) cxo.getChild(Tree.class);
 
         boolean isLinear = xo.getBooleanAttribute("linear");
 
@@ -86,8 +86,8 @@ public class ScaledPiecewiseModelParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(EPOCH_SIZES, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-            new ElementRule(TREE_MODEL, new XMLSyntaxRule[]{new ElementRule(TreeModel.class)}),
+            new ElementRule(EPOCH_SIZES, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+            new ElementRule(TREE_MODEL, new XMLSyntaxRule[]{new ElementRule(Tree.class)}),
             XMLUnits.SYNTAX_RULES[0],
             AttributeRule.newBooleanRule("linear")
     };

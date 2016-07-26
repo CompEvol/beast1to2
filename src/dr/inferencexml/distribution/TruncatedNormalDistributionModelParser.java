@@ -26,7 +26,7 @@
 package dr.inferencexml.distribution;
 
 import dr.inference.distribution.TruncatedNormalDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -52,58 +52,58 @@ public class TruncatedNormalDistributionModelParser extends AbstractXMLObjectPar
 		return null;
 		/*
 
-        Parameter meanParam;
-        Parameter stdevParam;
-        Parameter minParam;
-        Parameter maxParam;
-        Parameter precParam;
+        RealParameter meanParam;
+        RealParameter stdevParam;
+        RealParameter minParam;
+        RealParameter maxParam;
+        RealParameter precParam;
 
         XMLObject cxo = xo.getChild(MEAN);
-        if (cxo.getChild(0) instanceof Parameter) {
-            meanParam = (Parameter) cxo.getChild(Parameter.class);
+        if (cxo.getChild(0) instanceof RealParameter) {
+            meanParam = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            meanParam = new Parameter.Default(cxo.getDoubleChild(0));
+            meanParam = new RealParameter.Default(cxo.getDoubleChild(0));
         }
 
         if(xo.hasChildNamed(MINIMUM)){
             cxo = xo.getChild(MINIMUM);
-            if(cxo.getChild(0) instanceof Parameter) {
-                minParam = (Parameter) cxo.getChild(Parameter.class);
+            if(cxo.getChild(0) instanceof RealParameter) {
+                minParam = (RealParameter) cxo.getChild(RealParameter.class);
             } else {
-                minParam = new Parameter.Default(cxo.getDoubleChild(0));
+                minParam = new RealParameter.Default(cxo.getDoubleChild(0));
             }
         } else {
-            minParam = new Parameter.Default(Double.NEGATIVE_INFINITY);
+            minParam = new RealParameter.Default(Double.NEGATIVE_INFINITY);
         }
 
         if(xo.hasChildNamed(MAXIMUM)){
             cxo = xo.getChild(MAXIMUM);
-            if(cxo.getChild(0) instanceof Parameter) {
-                maxParam = (Parameter) cxo.getChild(Parameter.class);
+            if(cxo.getChild(0) instanceof RealParameter) {
+                maxParam = (RealParameter) cxo.getChild(RealParameter.class);
             } else {
-                maxParam = new Parameter.Default(cxo.getDoubleChild(0));
+                maxParam = new RealParameter.Default(cxo.getDoubleChild(0));
             }
         } else {
-            maxParam = new Parameter.Default(Double.POSITIVE_INFINITY);
+            maxParam = new RealParameter.Default(Double.POSITIVE_INFINITY);
         }
 
         if (xo.getChild(STDEV) != null) {
 
             cxo = xo.getChild(STDEV);
-            if (cxo.getChild(0) instanceof Parameter) {
-                stdevParam = (Parameter) cxo.getChild(Parameter.class);
+            if (cxo.getChild(0) instanceof RealParameter) {
+                stdevParam = (RealParameter) cxo.getChild(RealParameter.class);
             } else {
-                stdevParam = new Parameter.Default(cxo.getDoubleChild(0));
+                stdevParam = new RealParameter.Default(cxo.getDoubleChild(0));
             }
 
             return new TruncatedNormalDistributionModel(meanParam, stdevParam, minParam, maxParam);
         }
 
         cxo = xo.getChild(PREC);
-        if (cxo.getChild(0) instanceof Parameter) {
-            precParam = (Parameter) cxo.getChild(Parameter.class);
+        if (cxo.getChild(0) instanceof RealParameter) {
+            precParam = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            precParam = new Parameter.Default(cxo.getDoubleChild(0));
+            precParam = new RealParameter.Default(cxo.getDoubleChild(0));
         }
         return new TruncatedNormalDistributionModel(meanParam, precParam, minParam, maxParam, true);
     */
@@ -122,7 +122,7 @@ public class TruncatedNormalDistributionModelParser extends AbstractXMLObjectPar
             new ElementRule(MEAN,
                     new XMLSyntaxRule[]{
                             new XORRule(
-                                    new ElementRule(Parameter.class),
+                                    new ElementRule(RealParameter.class),
                                     new ElementRule(Double.class)
                             )}
             ),
@@ -130,14 +130,14 @@ public class TruncatedNormalDistributionModelParser extends AbstractXMLObjectPar
                     new ElementRule(STDEV,
                             new XMLSyntaxRule[]{
                                     new XORRule(
-                                            new ElementRule(Parameter.class),
+                                            new ElementRule(RealParameter.class),
                                             new ElementRule(Double.class)
                                     )}
                     ),
                     new ElementRule(PREC,
                             new XMLSyntaxRule[]{
                                     new XORRule(
-                                            new ElementRule(Parameter.class),
+                                            new ElementRule(RealParameter.class),
                                             new ElementRule(Double.class)
                                     )}
                     )
@@ -146,14 +146,14 @@ public class TruncatedNormalDistributionModelParser extends AbstractXMLObjectPar
                     new ElementRule(MINIMUM,
                             new XMLSyntaxRule[]{
                                     new XORRule(
-                                            new ElementRule(Parameter.class),
+                                            new ElementRule(RealParameter.class),
                                             new ElementRule(Double.class)
                                     )}
                     ),
                     new ElementRule(MAXIMUM,
                             new XMLSyntaxRule[]{
                                     new XORRule(
-                                            new ElementRule(Parameter.class),
+                                            new ElementRule(RealParameter.class),
                                             new ElementRule(Double.class)
                                     )
                             }

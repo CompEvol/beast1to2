@@ -28,7 +28,7 @@ package dr.evomodelxml.speciation;
 
 import dr.evomodel.speciation.AlloppSpeciesBindings;
 import dr.evomodel.speciation.AlloppSpeciesNetworkModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.util.Attributable;
 import dr.xml.*;
 
@@ -72,13 +72,13 @@ import dr.xml.*;
  * 
  * 
  *  ParameterParser.replaceParameter(prhxo, asnm.prHeights);
- *  final Parameter.DefaultBounds prhbounds =
- *  new Parameter.DefaultBounds(Double.MAX_VALUE, 0, asnm.prHeights.getDimension());
+ *  final RealParameter.DefaultBounds prhbounds =
+ *  new RealParameter.DefaultBounds(Double.MAX_VALUE, 0, asnm.prHeights.getDimension());
  *  asnm.prHeights.addBounds(prhbounds);
  * 
  * 	private ElementRule prhElementRule() {
  * 	return new ElementRule(PRE_ROOT_HEIGHTS, new XMLSyntaxRule[]{
- *                         new ElementRule(Parameter.class)});
+ *                         new ElementRule(RealParameter.class)});
  *                         }
  *                         
  *    also code in    AlloppSpeciesNetworkModel                  
@@ -123,18 +123,18 @@ public class AlloppSpeciesNetworkModelParser extends AbstractXMLObjectParser {
                 tippopvalue, rootpopvalue, hybpopvalue, onehyb, diprootisroot);
 		// don't know dimensionality until network created, so replace parameters
         ParameterParser.replaceParameter(tippopxo, asnm.tippopvalues);
-        final Parameter.DefaultBounds tippopbounds =
-                new Parameter.DefaultBounds(Double.MAX_VALUE, 0, asnm.tippopvalues.getDimension());
+        final RealParameter.DefaultBounds tippopbounds =
+                new RealParameter.DefaultBounds(Double.MAX_VALUE, 0, asnm.tippopvalues.getDimension());
         asnm.tippopvalues.addBounds(tippopbounds);
 
         ParameterParser.replaceParameter(rootpopxo, asnm.rootpopvalues);
-        final Parameter.DefaultBounds rootpopbounds =
-                new Parameter.DefaultBounds(Double.MAX_VALUE, 0, asnm.rootpopvalues.getDimension());
+        final RealParameter.DefaultBounds rootpopbounds =
+                new RealParameter.DefaultBounds(Double.MAX_VALUE, 0, asnm.rootpopvalues.getDimension());
         asnm.rootpopvalues.addBounds(rootpopbounds);
 
         ParameterParser.replaceParameter(hybpopxo, asnm.logginghybpopvalues);
-        final Parameter.DefaultBounds hybpopbounds =
-                new Parameter.DefaultBounds(Double.MAX_VALUE, 0, asnm.logginghybpopvalues.getDimension());
+        final RealParameter.DefaultBounds hybpopbounds =
+                new RealParameter.DefaultBounds(Double.MAX_VALUE, 0, asnm.logginghybpopvalues.getDimension());
         asnm.logginghybpopvalues.addBounds(hybpopbounds);
         // note hybpopvalues are different and only work for logging.
         return asnm;
@@ -145,18 +145,18 @@ public class AlloppSpeciesNetworkModelParser extends AbstractXMLObjectParser {
 	private ElementRule tippopElementRule() {
 		return new ElementRule(TIP_POPULATIONS, new XMLSyntaxRule[]{
 	                        AttributeRule.newDoubleRule(Attributable.VALUE, true),
-	                        new ElementRule(Parameter.class)});
+	                        new ElementRule(RealParameter.class)});
 		}
 
     private ElementRule rootpopElementRule() {
         return new ElementRule(ROOT_POPULATIONS, new XMLSyntaxRule[]{
                 AttributeRule.newDoubleRule(Attributable.VALUE, true),
-                new ElementRule(Parameter.class)});
+                new ElementRule(RealParameter.class)});
     }
     private ElementRule hybpopElementRule() {
         return new ElementRule(HYBRID_POPULATIONS, new XMLSyntaxRule[]{
                 AttributeRule.newDoubleRule(Attributable.VALUE, true),
-                new ElementRule(Parameter.class)});
+                new ElementRule(RealParameter.class)});
     }
 
 

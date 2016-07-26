@@ -26,7 +26,7 @@
 package dr.evomodelxml.operators;
 
 import dr.evomodel.operators.TreeUniform;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
 
@@ -48,7 +48,7 @@ public class TreeUniformParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
         final double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
         final int n = xo.getAttribute(COUNT, 2);
         if( ! ( n == 2 || n == 3) ) {
@@ -80,7 +80,7 @@ public class TreeUniformParser extends AbstractXMLObjectParser {
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
             AttributeRule.newIntegerRule(COUNT, true),
-            new ElementRule(TreeModel.class)
+            new ElementRule(Tree.class)
     };
 
 }

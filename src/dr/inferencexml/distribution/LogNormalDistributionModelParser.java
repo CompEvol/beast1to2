@@ -50,7 +50,7 @@ public class LogNormalDistributionModelParser extends AbstractXMLObjectParser {
 
     @Override
 	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-        Parameter<?> meanParam;
+        RealParameter meanParam;
 
         final double offset = xo.getAttribute(OFFSET, 0.0);
 
@@ -63,8 +63,8 @@ public class LogNormalDistributionModelParser extends AbstractXMLObjectParser {
 
         {
             final XMLObject cxo = xo.getChild(MEAN);
-            if (cxo.getChild(0) instanceof Parameter) {
-                meanParam = (Parameter) cxo.getChild(Parameter.class);
+            if (cxo.getChild(0) instanceof RealParameter) {
+                meanParam = (RealParameter) cxo.getChild(RealParameter.class);
             } else {
             	throw new XMLParseException(beast1to2.Beast1to2Converter.NIY);
                 //meanParam = new RealParameter.Default(cxo.getDoubleChild(0));
@@ -76,23 +76,23 @@ public class LogNormalDistributionModelParser extends AbstractXMLObjectParser {
             
             if (cxo != null) {
             	throw new XMLParseException(beast1to2.Beast1to2Converter.NIY);
-//                Parameter precParam;
-//                if (cxo.getChild(0) instanceof Parameter) {
-//                    precParam = (Parameter) cxo.getChild(Parameter.class);
+//                RealParameter precParam;
+//                if (cxo.getChild(0) instanceof RealParameter) {
+//                    precParam = (RealParameter) cxo.getChild(RealParameter.class);
 //                } else {
-//                    precParam = new Parameter.Default(cxo.getDoubleChild(0));
+//                    precParam = new RealParameter.Default(cxo.getDoubleChild(0));
 //                }
 //                return new LogNormalDistributionModel(meanParam, precParam, offset, meanInRealSpace,stdevInRealSpace, false);
             }
         }
         {
             final XMLObject cxo = xo.getChild(STDEV);
-            Parameter stdevParam;
+            RealParameter stdevParam;
             if (cxo.getChild(0) instanceof RealParameter) {
-                stdevParam = (RealParameter) cxo.getChild(Parameter.class);
+                stdevParam = (RealParameter) cxo.getChild(RealParameter.class);
             } else {
             	throw new XMLParseException(beast1to2.Beast1to2Converter.NIY);
-                // stdevParam = new Parameter.Default(cxo.getDoubleChild(0));
+                // stdevParam = new RealParameter.Default(cxo.getDoubleChild(0));
             }
 
             LogNormalDistributionModel distr = new LogNormalDistributionModel();
@@ -117,7 +117,7 @@ public class LogNormalDistributionModelParser extends AbstractXMLObjectParser {
             new ElementRule(MEAN,
                     new XMLSyntaxRule[]{
                             new XORRule(
-                                    new ElementRule(Parameter.class),
+                                    new ElementRule(RealParameter.class),
                                     new ElementRule(Double.class)
                             )}
             ),
@@ -125,14 +125,14 @@ public class LogNormalDistributionModelParser extends AbstractXMLObjectParser {
                     new ElementRule(STDEV,
                             new XMLSyntaxRule[]{
                                     new XORRule(
-                                            new ElementRule(Parameter.class),
+                                            new ElementRule(RealParameter.class),
                                             new ElementRule(Double.class)
                                     )}
                     ),
                     new ElementRule(PRECISION,
                             new XMLSyntaxRule[]{
                                     new XORRule(
-                                            new ElementRule(Parameter.class),
+                                            new ElementRule(RealParameter.class),
                                             new ElementRule(Double.class)
                                     )}
 

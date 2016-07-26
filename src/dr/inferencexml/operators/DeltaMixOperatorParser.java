@@ -25,7 +25,7 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.operators.CoercableMCMCOperator;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
@@ -58,13 +58,13 @@ public class DeltaMixOperatorParser extends AbstractXMLObjectParser {
             throw new XMLParseException("delta must be between 0.0 and 1.0");
         }
 
-        Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+        RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
 
 
         int[] parameterWeights;
         if (xo.hasAttribute(PARAMETER_WEIGHTS)) {
             parameterWeights = xo.getIntegerArrayAttribute(PARAMETER_WEIGHTS);
-            System.out.print("Parameter weights for delta exchange are: ");
+            System.out.print("RealParameter weights for delta exchange are: ");
             for (int parameterWeight : parameterWeights) {
                 System.out.print(parameterWeight + "\t");
             }
@@ -110,6 +110,6 @@ public class DeltaMixOperatorParser extends AbstractXMLObjectParser {
             AttributeRule.newIntegerArrayRule(PARAMETER_WEIGHTS, true),
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
             AttributeRule.newBooleanRule(CoercableMCMCOperator.AUTO_OPTIMIZE, true),
-            new ElementRule(Parameter.class)
+            new ElementRule(RealParameter.class)
     };
 }

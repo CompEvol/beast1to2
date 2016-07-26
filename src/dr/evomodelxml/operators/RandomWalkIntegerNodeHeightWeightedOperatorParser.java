@@ -28,7 +28,7 @@ package dr.evomodelxml.operators;
 import dr.xml.*;
 import dr.inference.operators.MCMCOperator;
 import dr.evomodel.operators.RandomWalkIntegerNodeHeightWeightedOperator;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 
 /**
  * @author Chieh-Hsi Wu
@@ -61,8 +61,8 @@ public class RandomWalkIntegerNodeHeightWeightedOperatorParser extends AbstractX
         }
 
         int windowSize = (int)d;
-        Parameter parameter = (Parameter) xo.getChild(Parameter.class);
-        Parameter internalNodeHeights = (Parameter)xo.getElementFirstChild(INTERNAL_NODE_HEIGHTS);
+        RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
+        RealParameter internalNodeHeights = (RealParameter)xo.getElementFirstChild(INTERNAL_NODE_HEIGHTS);
         
         return new RandomWalkIntegerNodeHeightWeightedOperator(parameter, windowSize, weight, internalNodeHeights);
     */
@@ -86,7 +86,7 @@ public class RandomWalkIntegerNodeHeightWeightedOperatorParser extends AbstractX
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             AttributeRule.newDoubleRule(WINDOW_SIZE),
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
-            new ElementRule(Parameter.class),
-            new ElementRule(INTERNAL_NODE_HEIGHTS, new XMLSyntaxRule[]{new ElementRule(Parameter.class)})
+            new ElementRule(RealParameter.class),
+            new ElementRule(INTERNAL_NODE_HEIGHTS, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)})
     };
 }

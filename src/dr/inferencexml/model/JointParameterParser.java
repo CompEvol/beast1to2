@@ -26,7 +26,7 @@
 package dr.inferencexml.model;
 
 import dr.inference.model.JointParameter;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -50,7 +50,7 @@ public class JointParameterParser extends AbstractXMLObjectParser {
         JointParameter jointParameter = new JointParameter((String) null);
 
         for (int i = 0; i < xo.getChildCount(); i++) {
-            jointParameter.addParameter((Parameter) xo.getChild(i));
+            jointParameter.addParameter((RealParameter) xo.getChild(i));
         }
 
         return jointParameter;
@@ -73,7 +73,7 @@ public class JointParameterParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules;{
         rules = new XMLSyntaxRule[]{
-                new ElementRule(Parameter.class, 1, Integer.MAX_VALUE),
+                new ElementRule(RealParameter.class, 1, Integer.MAX_VALUE),
         };
     }
 

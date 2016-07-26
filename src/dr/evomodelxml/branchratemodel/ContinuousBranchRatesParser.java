@@ -26,9 +26,9 @@
 package dr.evomodelxml.branchratemodel;
 
 import dr.evomodel.branchratemodel.ContinuousBranchRates;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.inference.distribution.ParametricDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -59,14 +59,14 @@ public class ContinuousBranchRatesParser extends AbstractXMLObjectParser {
         final boolean normalize = xo.getAttribute(NORMALIZE, false);
         final double normalizeBranchRateTo = xo.getAttribute(NORMALIZE_BRANCH_RATE_TO, Double.NaN);
 
-        TreeModel tree = (TreeModel) xo.getChild(TreeModel.class);
+        Tree tree = (Tree) xo.getChild(Tree.class);
         ParametricDistributionModel distributionModel = (ParametricDistributionModel) xo.getElementFirstChild(DISTRIBUTION);
 
-        Parameter rateQuantilesParameter;
+        RealParameter rateQuantilesParameter;
         if (xo.hasChildNamed(RATE_QUANTILES)) {
-            rateQuantilesParameter = (Parameter) xo.getElementFirstChild(RATE_QUANTILES);
+            rateQuantilesParameter = (RealParameter) xo.getElementFirstChild(RATE_QUANTILES);
         } else {
-            rateQuantilesParameter = (Parameter) xo.getElementFirstChild(RATE_CATEGORY_QUANTILES);
+            rateQuantilesParameter = (RealParameter) xo.getElementFirstChild(RATE_CATEGORY_QUANTILES);
         }
 
         Logger.getLogger("dr.evomodel").info("Using continuous relaxed clock model.");
@@ -108,11 +108,11 @@ public class ContinuousBranchRatesParser extends AbstractXMLObjectParser {
             AttributeRule.newBooleanRule(SINGLE_ROOT_RATE, true, "Whether only a single rate should be used for the two children branches of the root"),
             AttributeRule.newBooleanRule(NORMALIZE, true, "Whether the mean rate has to be normalized to a particular value"),
             AttributeRule.newDoubleRule(NORMALIZE_BRANCH_RATE_TO, true, "The mean rate to normalize to, if normalizing"),
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             new ElementRule(DISTRIBUTION, ParametricDistributionModel.class, "The distribution model for rates among branches", false),
             new XORRule(
-                    new ElementRule(RATE_QUANTILES, Parameter.class, "The quantiles for each branch", false),
-                    new ElementRule(RATE_CATEGORY_QUANTILES, Parameter.class, "The quantiles for each branch", false)
+                    new ElementRule(RATE_QUANTILES, RealParameter.class, "The quantiles for each branch", false),
+                    new ElementRule(RATE_CATEGORY_QUANTILES, RealParameter.class, "The quantiles for each branch", false)
             )
     };
 }

@@ -27,7 +27,7 @@ package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.LinearGrowthModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -52,7 +52,7 @@ public class LinearGrowthModelParser extends AbstractXMLObjectParser {
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
         XMLObject cxo = xo.getChild(SLOPE);
-        Parameter slopeParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter slopeParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         return new LinearGrowthModel(slopeParam, units);
     */
@@ -81,7 +81,7 @@ public class LinearGrowthModelParser extends AbstractXMLObjectParser {
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             XMLUnits.UNITS_RULE,
             new ElementRule(SLOPE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)})
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)})
     };
 
 }

@@ -45,12 +45,12 @@ public class GammaDistributionModelParser extends AbstractXMLObjectParser {
         return GammaDistributionModel.GAMMA_DISTRIBUTION_MODEL;
     }
 
-    private Parameter<?> getParameterOrValue(String name, XMLObject xo) throws XMLParseException {
-        Parameter parameter;
+    private RealParameter getParameterOrValue(String name, XMLObject xo) throws XMLParseException {
+        RealParameter parameter;
         if (xo.hasChildNamed(name)) {
             XMLObject cxo = xo.getChild(name);
 
-            parameter = (Parameter)cxo.getChild(Parameter.class);
+            parameter = (RealParameter)cxo.getChild(RealParameter.class);
             if (parameter == null) {
                 if (cxo.getChildCount() < 1) {
                     throw new XMLParseException("Distribution parameter, " + name + ", is missing a value or parameter element");
@@ -75,9 +75,9 @@ public class GammaDistributionModelParser extends AbstractXMLObjectParser {
 
         double offset = xo.getAttribute(OFFSET, 0.0);
 
-        Parameter shapeParameter = getParameterOrValue(SHAPE, xo);
+        RealParameter shapeParameter = getParameterOrValue(SHAPE, xo);
 
-        Parameter parameter2;
+        RealParameter parameter2;
         Gamma.mode parameterization;
 
         if (xo.hasChildNamed(SCALE)) {
@@ -110,10 +110,10 @@ public class GammaDistributionModelParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(SHAPE,  new XMLSyntaxRule[]{new ElementRule(Parameter.class, true)}, "Shape parameter"),
-            new ElementRule(SCALE,  new XMLSyntaxRule[]{new ElementRule(Parameter.class, true)}, "Scale parameter", true),
-            new ElementRule(RATE,  new XMLSyntaxRule[]{new ElementRule(Parameter.class, true)}, "Rate parameter", true),
-            new ElementRule(MEAN,  new XMLSyntaxRule[]{new ElementRule(Parameter.class, true)}, "Mean parameter", true),
+            new ElementRule(SHAPE,  new XMLSyntaxRule[]{new ElementRule(RealParameter.class, true)}, "Shape parameter"),
+            new ElementRule(SCALE,  new XMLSyntaxRule[]{new ElementRule(RealParameter.class, true)}, "Scale parameter", true),
+            new ElementRule(RATE,  new XMLSyntaxRule[]{new ElementRule(RealParameter.class, true)}, "Rate parameter", true),
+            new ElementRule(MEAN,  new XMLSyntaxRule[]{new ElementRule(RealParameter.class, true)}, "Mean parameter", true),
             AttributeRule.newDoubleRule(OFFSET, true)
     };
 

@@ -62,16 +62,16 @@ public class LewisMkSubstitutionModelParser extends AbstractXMLObjectParser {
         DataType dataType = freqModel.getDataType();
         int k = dataType.getStateCount();
         System.err.println("Number of states " + k);
-        Parameter ratesParameter;
+        RealParameter ratesParameter;
         if (xo.hasAttribute(TOTAL_ORDER) && xo.getBooleanAttribute(TOTAL_ORDER)) { //TOTAL ORDERING OF THE STATES BASED ON DATATYPE
-            ratesParameter = new Parameter.Default(k * (k - 1) / 2, 0);
+            ratesParameter = new RealParameter.Default(k * (k - 1) / 2, 0);
             int j = k - 1;
             for (int i = 0; i < (k - 1) * k / 2; i = i + j + 1) {
                 ratesParameter.setParameterValue(i, 1);
                 j -= 1;
             }
         } else if (xo.hasChildNamed(ORDER)) { // USER-SPECIFIED ORDERING OF THE STATES
-            ratesParameter = new Parameter.Default(k * (k - 1) / 2, 0);
+            ratesParameter = new RealParameter.Default(k * (k - 1) / 2, 0);
             for (int i = 0; i < xo.getChildCount(); ++i) {
                 if (xo.getChildName(i).equals(ORDER)) {
                     cxo = (XMLObject) xo.getChild(i);
@@ -89,7 +89,7 @@ public class LewisMkSubstitutionModelParser extends AbstractXMLObjectParser {
                 }
             }
         } else {
-            ratesParameter = new Parameter.Default(k * (k - 1) / 2, 1);
+            ratesParameter = new RealParameter.Default(k * (k - 1) / 2, 1);
         }
         System.err.println(ratesParameter.toString());
         System.err.println("Infinitesimal matrix:");

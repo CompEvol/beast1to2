@@ -26,8 +26,8 @@
 package dr.evomodelxml.branchratemodel;
 
 import dr.evomodel.branchratemodel.ScaledTreeLengthRateModel;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+import beast.evolution.tree.Tree;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -47,10 +47,10 @@ public class ScaledTreeLengthRateModelParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        TreeModel tree = (TreeModel) xo.getChild(TreeModel.class);
-        Parameter totalLength = (Parameter) xo.getElementFirstChild(SCALING_FACTOR);
+        Tree tree = (Tree) xo.getChild(Tree.class);
+        RealParameter totalLength = (RealParameter) xo.getElementFirstChild(SCALING_FACTOR);
         if (totalLength == null) {
-            totalLength = new Parameter.Default(1, 1.0);
+            totalLength = new RealParameter.Default(1, 1.0);
         }
         Logger.getLogger("dr.evomodel.branchratemodel").info("\n ---------------------------------\nCreating ScaledTreeLengthRateModel model.");
         Logger.getLogger("dr.evomodel.branchratemodel").info("\tTotal tree length will be scaled to " + totalLength.getParameterValue(0) + ".");
@@ -79,8 +79,8 @@ public class ScaledTreeLengthRateModelParser extends AbstractXMLObjectParser {
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             new ElementRule(SCALING_FACTOR,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}, true),
-            new ElementRule(TreeModel.class)
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}, true),
+            new ElementRule(Tree.class)
     };
 
 }

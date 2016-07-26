@@ -54,8 +54,8 @@ public class BitSwapOperatorParser extends AbstractXMLObjectParser {
 		/*
 
         final double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
-        Parameter data = (Parameter) ((XMLObject) xo.getChild(DATA)).getChild(Parameter.class);
-        Parameter indicators = (Parameter) ((XMLObject) xo.getChild(INDICATORS)).getChild(Parameter.class);
+        RealParameter data = (RealParameter) ((XMLObject) xo.getChild(DATA)).getChild(RealParameter.class);
+        RealParameter indicators = (RealParameter) ((XMLObject) xo.getChild(INDICATORS)).getChild(RealParameter.class);
         int radius = -1;
 
         if (xo.hasAttribute(RADIUS)) {

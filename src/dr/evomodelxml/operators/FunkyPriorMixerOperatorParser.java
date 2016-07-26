@@ -25,8 +25,8 @@
 
 package dr.evomodelxml.operators;
 
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+import beast.evolution.tree.Tree;
+import beast.core.parameter.RealParameter;
 import dr.inference.operators.CoercableMCMCOperator;
 import dr.inference.operators.MCMCOperator;
 import dr.inference.operators.RandomWalkOperator;
@@ -60,8 +60,8 @@ public class FunkyPriorMixerOperatorParser extends AbstractXMLObjectParser {
 
             double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
             double windowSize = xo.getDoubleAttribute(WINDOW_SIZE);
-            Parameter parameter = (Parameter) xo.getChild(Parameter.class);
-            TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+            RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
+            Tree treeModel = (Tree) xo.getChild(Tree.class);
 
             RandomWalkOperator.BoundaryCondition condition = RandomWalkOperator.BoundaryCondition.valueOf(
                     xo.getAttribute(BOUNDARY_CONDITION, RandomWalkOperator.BoundaryCondition.reflecting.name()));
@@ -94,7 +94,7 @@ public class FunkyPriorMixerOperatorParser extends AbstractXMLObjectParser {
                 AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
                 AttributeRule.newBooleanRule(CoercableMCMCOperator.AUTO_OPTIMIZE, true),
                 new StringAttributeRule(BOUNDARY_CONDITION, null, RandomWalkOperator.BoundaryCondition.values(), true),
-                new ElementRule(Parameter.class),
-                new ElementRule(TreeModel.class)
+                new ElementRule(RealParameter.class),
+                new ElementRule(Tree.class)
         };
 }

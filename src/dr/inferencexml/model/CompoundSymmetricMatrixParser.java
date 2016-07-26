@@ -26,7 +26,7 @@
 package dr.inferencexml.model;
 
 import dr.inference.model.CompoundSymmetricMatrix;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -51,10 +51,10 @@ public class CompoundSymmetricMatrixParser extends AbstractXMLObjectParser {
 		/*
 
         XMLObject cxo = xo.getChild(DIAGONAL);
-        Parameter diagonalParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter diagonalParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(OFF_DIAGONAL);
-        Parameter offDiagonalParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter offDiagonalParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         boolean asCorrelation = xo.getAttribute(AS_CORRELATION, false);
 
@@ -78,9 +78,9 @@ public class CompoundSymmetricMatrixParser extends AbstractXMLObjectParser {
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             new ElementRule(DIAGONAL,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(OFF_DIAGONAL,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             AttributeRule.newBooleanRule(AS_CORRELATION, true)
     };
 

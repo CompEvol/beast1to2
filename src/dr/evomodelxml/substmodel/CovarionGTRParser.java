@@ -28,7 +28,7 @@ package dr.evomodelxml.substmodel;
 import dr.evomodel.substmodel.AbstractCovarionDNAModel;
 import dr.evomodel.substmodel.CovarionGTR;
 import dr.evomodel.substmodel.FrequencyModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -53,32 +53,32 @@ public class CovarionGTRParser extends AbstractXMLObjectParser {
 
         HiddenNucleotides dataType = (HiddenNucleotides) freqModel.getDataType();
 
-        Parameter hiddenRates = (Parameter) xo.getElementFirstChild(AbstractCovarionDNAModel.HIDDEN_CLASS_RATES);
-        Parameter switchingRates = (Parameter) xo.getElementFirstChild(AbstractCovarionDNAModel.SWITCHING_RATES);
+        RealParameter hiddenRates = (RealParameter) xo.getElementFirstChild(AbstractCovarionDNAModel.HIDDEN_CLASS_RATES);
+        RealParameter switchingRates = (RealParameter) xo.getElementFirstChild(AbstractCovarionDNAModel.SWITCHING_RATES);
 
-        Parameter rateACParameter = null;
+        RealParameter rateACParameter = null;
         if (xo.hasChildNamed(GTRParser.A_TO_C)) {
-            rateACParameter = (Parameter) xo.getElementFirstChild(GTRParser.A_TO_C);
+            rateACParameter = (RealParameter) xo.getElementFirstChild(GTRParser.A_TO_C);
         }
-        Parameter rateAGParameter = null;
+        RealParameter rateAGParameter = null;
         if (xo.hasChildNamed(GTRParser.A_TO_G)) {
-            rateAGParameter = (Parameter) xo.getElementFirstChild(GTRParser.A_TO_G);
+            rateAGParameter = (RealParameter) xo.getElementFirstChild(GTRParser.A_TO_G);
         }
-        Parameter rateATParameter = null;
+        RealParameter rateATParameter = null;
         if (xo.hasChildNamed(GTRParser.A_TO_T)) {
-            rateATParameter = (Parameter) xo.getElementFirstChild(GTRParser.A_TO_T);
+            rateATParameter = (RealParameter) xo.getElementFirstChild(GTRParser.A_TO_T);
         }
-        Parameter rateCGParameter = null;
+        RealParameter rateCGParameter = null;
         if (xo.hasChildNamed(GTRParser.C_TO_G)) {
-            rateCGParameter = (Parameter) xo.getElementFirstChild(GTRParser.C_TO_G);
+            rateCGParameter = (RealParameter) xo.getElementFirstChild(GTRParser.C_TO_G);
         }
-        Parameter rateCTParameter = null;
+        RealParameter rateCTParameter = null;
         if (xo.hasChildNamed(GTRParser.C_TO_T)) {
-            rateCTParameter = (Parameter) xo.getElementFirstChild(GTRParser.C_TO_T);
+            rateCTParameter = (RealParameter) xo.getElementFirstChild(GTRParser.C_TO_T);
         }
-        Parameter rateGTParameter = null;
+        RealParameter rateGTParameter = null;
         if (xo.hasChildNamed(GTRParser.G_TO_T)) {
-            rateGTParameter = (Parameter) xo.getElementFirstChild(GTRParser.G_TO_T);
+            rateGTParameter = (RealParameter) xo.getElementFirstChild(GTRParser.G_TO_T);
         }
 
 
@@ -120,14 +120,14 @@ public class CovarionGTRParser extends AbstractXMLObjectParser {
     }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
-            new ElementRule(GTRParser.A_TO_C, Parameter.class, "relative rate of A<->C substitution", true),
-            new ElementRule(GTRParser.A_TO_G, Parameter.class, "relative rate of A<->G substitution", true),
-            new ElementRule(GTRParser.A_TO_T, Parameter.class, "relative rate of A<->T substitution", true),
-            new ElementRule(GTRParser.C_TO_G, Parameter.class, "relative rate of C<->G substitution", true),
-            new ElementRule(GTRParser.C_TO_T, Parameter.class, "relative rate of C<->T substitution", true),
-            new ElementRule(GTRParser.G_TO_T, Parameter.class, "relative rate of G<->T substitution", true),
-            new ElementRule(AbstractCovarionDNAModel.HIDDEN_CLASS_RATES, Parameter.class),
-            new ElementRule(AbstractCovarionDNAModel.SWITCHING_RATES, Parameter.class),
+            new ElementRule(GTRParser.A_TO_C, RealParameter.class, "relative rate of A<->C substitution", true),
+            new ElementRule(GTRParser.A_TO_G, RealParameter.class, "relative rate of A<->G substitution", true),
+            new ElementRule(GTRParser.A_TO_T, RealParameter.class, "relative rate of A<->T substitution", true),
+            new ElementRule(GTRParser.C_TO_G, RealParameter.class, "relative rate of C<->G substitution", true),
+            new ElementRule(GTRParser.C_TO_T, RealParameter.class, "relative rate of C<->T substitution", true),
+            new ElementRule(GTRParser.G_TO_T, RealParameter.class, "relative rate of G<->T substitution", true),
+            new ElementRule(AbstractCovarionDNAModel.HIDDEN_CLASS_RATES, RealParameter.class),
+            new ElementRule(AbstractCovarionDNAModel.SWITCHING_RATES, RealParameter.class),
             new ElementRule(AbstractCovarionDNAModel.FREQUENCIES, FrequencyModel.class),
     };
 

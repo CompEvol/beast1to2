@@ -25,7 +25,7 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.operators.SwapParameterOperator;
 import dr.xml.*;
 
@@ -48,10 +48,10 @@ public class SwapParameterOperatorParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        List<Parameter> parameterList = new ArrayList<Parameter>();
+        List<RealParameter> parameterList = new ArrayList<RealParameter>();
 
         for (int i = 0; i < xo.getChildCount(); ++i) {
-            parameterList.add((Parameter) xo.getChild(i));
+            parameterList.add((RealParameter) xo.getChild(i));
         }
 
         double weight = xo.getDoubleAttribute(WEIGHT);
@@ -88,7 +88,7 @@ public class SwapParameterOperatorParser extends AbstractXMLObjectParser {
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             AttributeRule.newDoubleRule(WEIGHT),
             AttributeRule.newBooleanRule(FORCE_GIBBS, true),
-            new ElementRule(Parameter.class, 2, Integer.MAX_VALUE)
+            new ElementRule(RealParameter.class, 2, Integer.MAX_VALUE)
     };
 
 }

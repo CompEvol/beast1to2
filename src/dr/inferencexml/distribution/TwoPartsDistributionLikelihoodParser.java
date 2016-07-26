@@ -56,9 +56,9 @@ public class TwoPartsDistributionLikelihoodParser extends AbstractXMLObjectParse
         DistributionLikelihood pseudoPriorLikelihood = (DistributionLikelihood)xo.getElementFirstChild(PSEUDO_PRIOR);
         Distribution prior = priorLikelihood.getDistribution();
         Distribution pseudoPrior = pseudoPriorLikelihood.getDistribution();
-        Parameter bitVector = (Parameter)xo.getElementFirstChild(PARAMETER_VECTOR);
+        RealParameter bitVector = (RealParameter)xo.getElementFirstChild(PARAMETER_VECTOR);
         int paramIndex = xo.getIntegerAttribute(PARAMETER_INDEX);
-        Parameter selectedVariable = (Parameter)xo.getElementFirstChild(SELECTED_VARIABLE);
+        RealParameter selectedVariable = (RealParameter)xo.getElementFirstChild(SELECTED_VARIABLE);
 
 
         TwoPartsDistributionLikelihood likelihood =

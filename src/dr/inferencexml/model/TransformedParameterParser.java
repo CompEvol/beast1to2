@@ -25,7 +25,7 @@
 
 package dr.inferencexml.model;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.model.TransformedParameter;
 import dr.util.Transform;
 import dr.xml.*;
@@ -44,7 +44,7 @@ public class TransformedParameterParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        final Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+        final RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
         final Transform.ParsedTransform parsedTransform = (Transform.ParsedTransform) xo.getChild(Transform.ParsedTransform.class);
         final boolean inverse = xo.getAttribute(INVERSE, false);
 
@@ -59,7 +59,7 @@ public class TransformedParameterParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(Parameter.class),
+            new ElementRule(RealParameter.class),
             new ElementRule(Transform.ParsedTransform.class),
             AttributeRule.newBooleanRule(INVERSE, true),
 

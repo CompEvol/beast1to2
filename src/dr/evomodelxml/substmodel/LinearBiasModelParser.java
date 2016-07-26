@@ -29,7 +29,7 @@ import dr.evolution.datatype.Microsatellite;
 import dr.evomodel.substmodel.FrequencyModel;
 import dr.evomodel.substmodel.LinearBiasModel;
 import dr.evomodel.substmodel.OnePhaseModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 /**
  * @author Chieh-Hsi Wu
@@ -60,14 +60,14 @@ public class LinearBiasModelParser extends AbstractXMLObjectParser {
         OnePhaseModel subModel = (OnePhaseModel) xo.getElementFirstChild(SUBMODEL);
         Microsatellite dataType = (Microsatellite)subModel.getDataType();
 
-        Parameter biasConst = null;
+        RealParameter biasConst = null;
         if(xo.hasChildNamed(BIAS_CONSTANT)){
-            biasConst =(Parameter) xo.getElementFirstChild(BIAS_CONSTANT);
+            biasConst =(RealParameter) xo.getElementFirstChild(BIAS_CONSTANT);
         }
 
-        Parameter biasLin = null;
+        RealParameter biasLin = null;
         if(xo.hasChildNamed(BIAS_LINEAR)){
-            biasLin = (Parameter) xo.getElementFirstChild(BIAS_LINEAR);
+            biasLin = (RealParameter) xo.getElementFirstChild(BIAS_LINEAR);
         }
 
         //get FrequencyModel
@@ -122,8 +122,8 @@ public class LinearBiasModelParser extends AbstractXMLObjectParser {
                     new ElementRule(FrequencyModel.class)},true),
             new ElementRule(SUBMODEL,new XMLSyntaxRule[]{new ElementRule(OnePhaseModel.class)}),
             new ElementRule(Microsatellite.class),
-            new ElementRule(BIAS_CONSTANT,new XMLSyntaxRule[]{new ElementRule(Parameter.class)},true),
-            new ElementRule(BIAS_LINEAR,new XMLSyntaxRule[]{new ElementRule(Parameter.class)},true),
+            new ElementRule(BIAS_CONSTANT,new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},true),
+            new ElementRule(BIAS_LINEAR,new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},true),
             new StringAttributeRule(ESTIMATE_SUBMODEL_PARAMS,"whether or not to esitmate the parameters of the submodel",true),
             AttributeRule.newBooleanRule(LOGISTICS,true),
             AttributeRule.newBooleanRule(IS_SUBMODEL,true)

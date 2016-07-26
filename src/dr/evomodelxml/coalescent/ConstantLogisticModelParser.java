@@ -27,7 +27,7 @@ package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.ConstantLogisticModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -57,16 +57,16 @@ public class ConstantLogisticModelParser extends AbstractXMLObjectParser {
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
         XMLObject cxo = xo.getChild(POPULATION_SIZE);
-        Parameter N0Param = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter N0Param = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(ANCESTRAL_POPULATION_SIZE);
-        Parameter N1Param = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter N1Param = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(GROWTH_RATE);
-        Parameter rParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter rParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(SHAPE);
-        Parameter cParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter cParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         double alpha = xo.getDoubleAttribute(ALPHA);
 
@@ -96,13 +96,13 @@ public class ConstantLogisticModelParser extends AbstractXMLObjectParser {
     private final XMLSyntaxRule[] rules = {
             XMLUnits.SYNTAX_RULES[0],
             new ElementRule(POPULATION_SIZE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(ANCESTRAL_POPULATION_SIZE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(GROWTH_RATE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(SHAPE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             AttributeRule.newDoubleRule(ALPHA)
     };
 

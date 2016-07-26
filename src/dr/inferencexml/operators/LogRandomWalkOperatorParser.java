@@ -25,7 +25,7 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.operators.CoercableMCMCOperator;
 import dr.inference.operators.LogRandomWalkOperator;
 import dr.inference.operators.MCMCOperator;
@@ -63,7 +63,7 @@ public class LogRandomWalkOperatorParser extends AbstractXMLObjectParser {
             throw new XMLParseException("size must be positive");
         }
 
-        final Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+        final RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
 
         return new LogRandomWalkOperator(parameter, size, mode, weight, scaleAll, scaleAllInd);
     */
@@ -96,7 +96,7 @@ public class LogRandomWalkOperatorParser extends AbstractXMLObjectParser {
             AttributeRule.newBooleanRule(SCALE_ALL, true),
             AttributeRule.newBooleanRule(SCALE_ALL_IND, true),
 
-            new ElementRule(Parameter.class),
+            new ElementRule(RealParameter.class),
     };
 
 }

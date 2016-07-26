@@ -26,8 +26,8 @@
 package dr.evomodelxml.branchratemodel;
 
 import dr.evomodel.branchratemodel.ArbitraryBranchRates;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+import beast.evolution.tree.Tree;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -51,11 +51,11 @@ public class ArbitraryBranchRatesParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        TreeModel tree = (TreeModel) xo.getChild(TreeModel.class);
+        Tree tree = (Tree) xo.getChild(Tree.class);
 
         XMLObject cxo = xo.getChild(RATES);
 
-        Parameter rateCategoryParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter rateCategoryParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         boolean reciprocal = xo.getAttribute(RECIPROCAL, false);
         boolean centerAtOne = xo.getAttribute(CENTER_AT_ONE, true);
@@ -98,8 +98,8 @@ public class ArbitraryBranchRatesParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(TreeModel.class),
-            new ElementRule(RATES, Parameter.class, "The rate parameter"),
+            new ElementRule(Tree.class),
+            new ElementRule(RATES, RealParameter.class, "The rate parameter"),
             AttributeRule.newBooleanRule(RECIPROCAL, true),
             AttributeRule.newBooleanRule(CENTER_AT_ONE, true),
             AttributeRule.newBooleanRule(EXP, true),

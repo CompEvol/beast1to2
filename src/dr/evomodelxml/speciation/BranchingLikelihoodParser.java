@@ -27,7 +27,7 @@ package dr.evomodelxml.speciation;
 
 import dr.evomodel.speciation.BranchingLikelihood;
 import dr.evomodel.speciation.BranchingModel;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.xml.AbstractXMLObjectParser;
 import dr.xml.ElementRule;
 import dr.xml.XMLObject;
@@ -56,7 +56,7 @@ public class BranchingLikelihoodParser extends AbstractXMLObjectParser {
         BranchingModel branchingModel = (BranchingModel) cxo.getChild(BranchingModel.class);
 
         cxo = xo.getChild(TREE);
-        TreeModel treeModel = (TreeModel) cxo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) cxo.getChild(Tree.class);
 
         return new BranchingLikelihood(treeModel, branchingModel);
     */
@@ -86,7 +86,7 @@ public class BranchingLikelihoodParser extends AbstractXMLObjectParser {
                     new ElementRule(BranchingModel.class)
             }),
             new ElementRule(TREE, new XMLSyntaxRule[]{
-                    new ElementRule(TreeModel.class)
+                    new ElementRule(Tree.class)
             }),
     };
 

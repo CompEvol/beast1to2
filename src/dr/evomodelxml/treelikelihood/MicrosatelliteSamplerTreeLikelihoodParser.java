@@ -29,7 +29,7 @@ import dr.evomodel.branchratemodel.BranchRateModel;
 import dr.evomodel.substmodel.MicrosatelliteModel;
 import dr.evomodel.tree.MicrosatelliteSamplerTreeModel;
 import dr.evomodel.treelikelihood.MicrosatelliteSamplerTreeLikelihood;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -69,12 +69,12 @@ public class MicrosatelliteSamplerTreeLikelihoodParser extends AbstractXMLObject
 
         }else if(xo.hasChildNamed(MUTATION_RATE)){
 
-            Parameter muRate = (Parameter)xo.getElementFirstChild(MUTATION_RATE);
+            RealParameter muRate = (RealParameter)xo.getElementFirstChild(MUTATION_RATE);
             branchRateModel = new StrictClockBranchRates(muRate);
             System.out.println("mutation rate provided to MicrosatelliteSamplerTreeLikelihood");
 
         }else{
-            branchRateModel = new StrictClockBranchRates(new Parameter.Default(1.0));
+            branchRateModel = new StrictClockBranchRates(new RealParameter.Default(1.0));
         }
 
         return new MicrosatelliteSamplerTreeLikelihood(mstModel,microsatelliteModel, branchRateModel);
@@ -84,7 +84,7 @@ public class MicrosatelliteSamplerTreeLikelihoodParser extends AbstractXMLObject
     private final XMLSyntaxRule[] rules = {
             new ElementRule(MicrosatelliteSamplerTreeModel.class),
             new ElementRule(MicrosatelliteModel.class),
-            new ElementRule(MUTATION_RATE, new XMLSyntaxRule[]{new ElementRule(Parameter.class)},true),
+            new ElementRule(MUTATION_RATE, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},true),
             new ElementRule(BranchRateModel.class,true)
     };
 

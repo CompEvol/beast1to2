@@ -26,7 +26,7 @@
 package dr.evomodelxml.operators;
 
 import dr.evomodel.operators.GibbsSubtreeSwap;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
 
@@ -47,7 +47,7 @@ public class GibbsSubtreeSwapParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
         final double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
         final boolean pruned = xo.getAttribute("pruned", true);
 
@@ -78,7 +78,7 @@ public class GibbsSubtreeSwapParser extends AbstractXMLObjectParser {
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
             AttributeRule.newBooleanRule("pruned", true),
-            new ElementRule(TreeModel.class)
+            new ElementRule(Tree.class)
     };
 
 }

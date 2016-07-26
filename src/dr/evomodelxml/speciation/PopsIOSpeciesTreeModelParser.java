@@ -27,7 +27,7 @@ package dr.evomodelxml.speciation;
 
 import dr.evomodel.speciation.PopsIOSpeciesBindings;
 import dr.evomodel.speciation.PopsIOSpeciesTreeModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -53,7 +53,7 @@ public class PopsIOSpeciesTreeModelParser extends AbstractXMLObjectParser {
         System.out.println("PopsIOSpeciesTreeModelParser");
         PopsIOSpeciesBindings piosb = (PopsIOSpeciesBindings) xo.getChild(PopsIOSpeciesBindings.class);
 
-        final Parameter popPriorScale = (Parameter) xo.getElementFirstChild(PIO_POP_PRIOR_SCALE);
+        final RealParameter popPriorScale = (RealParameter) xo.getElementFirstChild(PIO_POP_PRIOR_SCALE);
         final XMLObject pioppxo = xo.getChild(PIO_POP_PRIOR_INVGAMMAS);
         final int nComponents = pioppxo.getChildCount();
         PopsIOSpeciesTreeModel.PriorComponent [] components = new PopsIOSpeciesTreeModel.PriorComponent[nComponents];
@@ -92,7 +92,7 @@ public class PopsIOSpeciesTreeModelParser extends AbstractXMLObjectParser {
     public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
               new ElementRule(PopsIOSpeciesBindings.class),
-              new ElementRule(PIO_POP_PRIOR_SCALE, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+              new ElementRule(PIO_POP_PRIOR_SCALE, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
               new ElementRule(PIO_POP_PRIOR_INVGAMMAS, popPriorSyntax())
         };
     }

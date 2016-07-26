@@ -30,8 +30,8 @@ import dr.evolution.util.Taxon;
 import dr.evomodel.MSSD.SingleTipObservationProcess;
 import dr.evomodel.branchratemodel.BranchRateModel;
 import dr.evomodel.sitemodel.SiteModel;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+import beast.evolution.tree.Tree;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -50,9 +50,9 @@ public class SingleTipObservationProcessParser extends AbstractXMLObjectParser {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
-        Parameter mu = (Parameter) xo.getElementFirstChild(AnyTipObservationProcessParser.DEATH_RATE);
-        Parameter lam = (Parameter) xo.getElementFirstChild(AnyTipObservationProcessParser.IMMIGRATION_RATE);
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        RealParameter mu = (RealParameter) xo.getElementFirstChild(AnyTipObservationProcessParser.DEATH_RATE);
+        RealParameter lam = (RealParameter) xo.getElementFirstChild(AnyTipObservationProcessParser.IMMIGRATION_RATE);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
         PatternList patterns = (PatternList) xo.getChild(PatternList.class);
         Taxon sourceTaxon = (Taxon) xo.getChild(Taxon.class);
         SiteModel siteModel = (SiteModel) xo.getChild(SiteModel.class);
@@ -83,12 +83,12 @@ public class SingleTipObservationProcessParser extends AbstractXMLObjectParser {
     }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             new ElementRule(PatternList.class),
             new ElementRule(Taxon.class),
             new ElementRule(SiteModel.class),
             new ElementRule(BranchRateModel.class),
-            new ElementRule(AnyTipObservationProcessParser.DEATH_RATE, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-            new ElementRule(AnyTipObservationProcessParser.IMMIGRATION_RATE, new XMLSyntaxRule[]{new ElementRule(Parameter.class)})
+            new ElementRule(AnyTipObservationProcessParser.DEATH_RATE, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+            new ElementRule(AnyTipObservationProcessParser.IMMIGRATION_RATE, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)})
     };
 }

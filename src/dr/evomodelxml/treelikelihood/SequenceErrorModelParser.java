@@ -27,7 +27,7 @@ package dr.evomodelxml.treelikelihood;
 
 import dr.evolution.util.TaxonList;
 import dr.evomodel.treelikelihood.SequenceErrorModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -65,14 +65,14 @@ public class SequenceErrorModelParser extends AbstractXMLObjectParser {
             }
         }
 
-        Parameter baseDamageRateParameter = null;
+        RealParameter baseDamageRateParameter = null;
         if (xo.hasChildNamed(BASE_ERROR_RATE)) {
-            baseDamageRateParameter = (Parameter) xo.getElementFirstChild(BASE_ERROR_RATE);
+            baseDamageRateParameter = (RealParameter) xo.getElementFirstChild(BASE_ERROR_RATE);
         }
 
-        Parameter ageRelatedRateParameter = null;
+        RealParameter ageRelatedRateParameter = null;
         if (xo.hasChildNamed(AGE_RELATED_RATE)) {
-            ageRelatedRateParameter = (Parameter) xo.getElementFirstChild(AGE_RELATED_RATE);
+            ageRelatedRateParameter = (RealParameter) xo.getElementFirstChild(AGE_RELATED_RATE);
         }
 
         if (baseDamageRateParameter == null && ageRelatedRateParameter == null) {
@@ -80,9 +80,9 @@ public class SequenceErrorModelParser extends AbstractXMLObjectParser {
                     BASE_ERROR_RATE + " and " + AGE_RELATED_RATE + " parameters");
         }
 
-        Parameter indicatorParameter = null;
+        RealParameter indicatorParameter = null;
         if (xo.hasChildNamed(INDICATORS)) {
-            indicatorParameter = (Parameter)xo.getElementFirstChild(INDICATORS);
+            indicatorParameter = (RealParameter)xo.getElementFirstChild(INDICATORS);
         }
 
 
@@ -128,9 +128,9 @@ public class SequenceErrorModelParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newStringRule(TYPE, true),
-            new ElementRule(BASE_ERROR_RATE, Parameter.class, "The base error rate per site per sequence", true),
-            new ElementRule(AGE_RELATED_RATE, Parameter.class, "The error rate per site per unit time", true),
-            new ElementRule(INDICATORS, Parameter.class, "A binary indicator of whether the sequence has errors", true),
+            new ElementRule(BASE_ERROR_RATE, RealParameter.class, "The base error rate per site per sequence", true),
+            new ElementRule(AGE_RELATED_RATE, RealParameter.class, "The error rate per site per unit time", true),
+            new ElementRule(INDICATORS, RealParameter.class, "A binary indicator of whether the sequence has errors", true),
             new XORRule(
                     new ElementRule(INCLUDE, TaxonList.class, "A set of taxa to which to apply the damage model to"),
                     new ElementRule(EXCLUDE, TaxonList.class, "A set of taxa to which to not apply the damage model to")

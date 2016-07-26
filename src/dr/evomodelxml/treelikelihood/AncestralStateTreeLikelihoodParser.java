@@ -28,7 +28,7 @@ package dr.evomodelxml.treelikelihood;
 import dr.evolution.alignment.PatternList;
 import dr.evomodel.branchratemodel.BranchRateModel;
 import dr.evomodel.sitemodel.SiteModel;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.evomodel.treelikelihood.AncestralStateTreeLikelihood;
 import dr.xml.*;
 
@@ -66,7 +66,7 @@ public class AncestralStateTreeLikelihoodParser extends AbstractXMLObjectParser 
 //        boolean storePartials = xo.getAttribute(TreeLikelihoodParser.STORE_PARTIALS, true);
 //
 //        PatternList patternList = (PatternList) xo.getChild(PatternList.class);
-//        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+//        Tree treeModel = (Tree) xo.getChild(Tree.class);
 //        SiteModel siteModel = (SiteModel) xo.getChild(SiteModel.class);
 //
 //        BranchRateModel branchRateModel = (BranchRateModel) xo.getChild(BranchRateModel.class);
@@ -114,7 +114,7 @@ public class AncestralStateTreeLikelihoodParser extends AbstractXMLObjectParser 
             AttributeRule.newBooleanRule(MAP_RECONSTRUCTION, true),
             AttributeRule.newBooleanRule(MARGINAL_LIKELIHOOD, true),
             new ElementRule(PatternList.class),
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             new ElementRule(SiteModel.class),
             new ElementRule(BranchRateModel.class, true)
     };

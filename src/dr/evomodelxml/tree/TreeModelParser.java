@@ -182,7 +182,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
 //                    }
 //                    NodeRef node = treeModel.getExternalNode(index);
 //
-//                    Parameter newParameter = treeModel.getLeafHeightParameter(node);
+//                    RealParameter newParameter = treeModel.getLeafHeightParameter(node);
 //
 //                    ParameterParser.replaceParameter(cxo, newParameter);
 //
@@ -194,7 +194,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
                     // get a set of leaf height parameters out as a compound parameter...
 
 //                    TaxonList taxa = (TaxonList)cxo.getChild(TaxonList.class);
-//                    Parameter offsetParameter = (Parameter)cxo.getChild(Parameter.class);
+//                    RealParameter offsetParameter = (RealParameter)cxo.getChild(RealParameter.class);
 //
 //                    CompoundParameter leafHeights = new CompoundParameter("leafHeights");
 //                    for (Taxon taxon : taxa) {
@@ -204,7 +204,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
 //                        }
 //                        NodeRef node = treeModel.getExternalNode(index);
 //
-//                        Parameter newParameter = treeModel.getLeafHeightParameter(node);
+//                        RealParameter newParameter = treeModel.getLeafHeightParameter(node);
 //
 //                        leafHeights.addParameter(newParameter);
 //
@@ -291,7 +291,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
 //                    }
 //                    NodeRef node = treeModel.getExternalNode(index);
 //
-//                    Parameter parameter = treeModel.getNodeTraitParameter(node, name);
+//                    RealParameter parameter = treeModel.getNodeTraitParameter(node, name);
 //
 //                    if (parameter == null)
 //                        throw new XMLParseException("trait '" + name + "' not found for leafTrait (taxon, " + taxonName + ") element in treeModel element");
@@ -323,7 +323,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
         Tree tree = (Tree) xo.getChild(Tree.class);
         boolean fixHeights = xo.getAttribute(FIX_HEIGHTS, false);
 
-        TreeModel treeModel = new TreeModel(xo.getId(), tree, fixHeights);
+        Tree treeModel = new Tree(xo.getId(), tree, fixHeights);
 
         Logger.getLogger("dr.evomodel").info("Creating the tree model, '" + xo.getId() + "'");
 
@@ -351,7 +351,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
                     }
                     NodeRef node = treeModel.getExternalNode(index);
 
-                    Parameter newParameter = treeModel.getLeafHeightParameter(node);
+                    RealParameter newParameter = treeModel.getLeafHeightParameter(node);
 
                     ParameterParser.replaceParameter(cxo, newParameter);
 
@@ -363,7 +363,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
                     // get a set of leaf height parameters out as a compound parameter...
 
                     TaxonList taxa = (TaxonList)cxo.getChild(TaxonList.class);
-                    Parameter offsetParameter = (Parameter)cxo.getChild(Parameter.class);
+                    RealParameter offsetParameter = (RealParameter)cxo.getChild(RealParameter.class);
 
                     CompoundParameter leafHeights = new CompoundParameter("leafHeights");
                     for (Taxon taxon : taxa) {
@@ -373,7 +373,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
                         }
                         NodeRef node = treeModel.getExternalNode(index);
 
-                        Parameter newParameter = treeModel.getLeafHeightParameter(node);
+                        RealParameter newParameter = treeModel.getLeafHeightParameter(node);
 
                         leafHeights.addParameter(newParameter);
 
@@ -448,7 +448,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
                     }
                     NodeRef node = treeModel.getExternalNode(index);
 
-                    Parameter parameter = treeModel.getNodeTraitParameter(node, name);
+                    RealParameter parameter = treeModel.getNodeTraitParameter(node, name);
 
                     if (parameter == null)
                         throw new XMLParseException("trait '" + name + "' not found for leafTrait (taxon, " + taxonName + ") element in treeModel element");
@@ -476,7 +476,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
     */
 		}
 /*
-    private void setPrecisionBounds(Parameter newParameter, Taxon taxon) {
+    private void setPrecisionBounds(RealParameter newParameter, Taxon taxon) {
         Date date = taxon.getDate();
         if (date != null) {
             double precision = date.getPrecision();
@@ -491,7 +491,7 @@ public class TreeModelParser extends AbstractXMLObjectParser {
                 }
 
                 // set the bounds for the given precision
-                newParameter.addBounds(new Parameter.DefaultBounds(upper, lower, 1));
+                newParameter.addBounds(new RealParameter.DefaultBounds(upper, lower, 1));
 
                 // set the initial value to be mid-point
                 newParameter.setParameterValue(0, (upper + lower) / 2);

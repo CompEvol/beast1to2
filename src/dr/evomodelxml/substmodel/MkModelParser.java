@@ -54,7 +54,7 @@ public class MkModelParser extends AbstractXMLObjectParser {
 
         DataType dataType = freqModel.getDataType();
         int rateCount = ((dataType.getStateCount() - 1) * dataType.getStateCount()) / 2 - 1;
-        Parameter ratesParameter = new Parameter.Default(rateCount, 1.0);
+        RealParameter ratesParameter = new RealParameter.Default(rateCount, 1.0);
 
         Logger.getLogger("dr.evolution").info("Creating an Mk substitution model with data type: " + dataType.getType() + "on " + dataType.getStateCount() + " states.");
 

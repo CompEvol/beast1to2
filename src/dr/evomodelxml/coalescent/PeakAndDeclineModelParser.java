@@ -27,7 +27,7 @@ package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.LogisticGrowthModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -55,17 +55,17 @@ public class PeakAndDeclineModelParser extends AbstractXMLObjectParser {
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
         XMLObject cxo = xo.getChild(PEAK_VALUE);
-        Parameter peakValueParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter peakValueParam = (RealParameter) cxo.getChild(RealParameter.class);
 
 
-        Parameter rParam;
+        RealParameter rParam;
 
         cxo = xo.getChild(SHAPE);
-        rParam = (Parameter) cxo.getChild(Parameter.class);
+        rParam = (RealParameter) cxo.getChild(RealParameter.class);
 
 
         cxo = xo.getChild(PEAK_TIME);
-        Parameter peakTimeParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter peakTimeParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         return new PeakAndDeclineModel(peakValueParam, rParam, peakTimeParam, units);
     */
@@ -93,14 +93,14 @@ public class PeakAndDeclineModelParser extends AbstractXMLObjectParser {
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             XMLUnits.SYNTAX_RULES[0],
             new ElementRule(PEAK_VALUE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
 
 
                     new ElementRule(SHAPE,
-                            new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                            new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
 
 
             new ElementRule(PEAK_TIME,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)})
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)})
     };
 }

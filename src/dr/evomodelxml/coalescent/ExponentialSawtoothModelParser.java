@@ -27,7 +27,7 @@ package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.ExponentialSawtoothModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -56,16 +56,16 @@ public class ExponentialSawtoothModelParser extends AbstractXMLObjectParser {
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
         XMLObject cxo = xo.getChild(POPULATION_SIZE);
-        Parameter N0Param = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter N0Param = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(GROWTH_RATE);
-        Parameter rParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter rParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(WAVELENGTH);
-        Parameter wavelengthParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter wavelengthParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(OFFSET);
-        Parameter tParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter tParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         return new ExponentialSawtoothModel(N0Param, rParam, wavelengthParam, tParam, units);
     */
@@ -92,15 +92,15 @@ public class ExponentialSawtoothModelParser extends AbstractXMLObjectParser {
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             new ElementRule(POPULATION_SIZE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(GROWTH_RATE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                     "The rate of exponential growth during the growth phase."),
             new ElementRule(WAVELENGTH,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                     "The wavelength between successive population crashes."),
             new ElementRule(OFFSET,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                     "The proportion of the last growth phase that is not achieved at the final sample time."),
             XMLUnits.SYNTAX_RULES[0]
     };

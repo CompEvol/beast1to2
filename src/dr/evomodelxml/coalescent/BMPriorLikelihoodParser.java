@@ -27,7 +27,7 @@ package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.BMPriorLikelihood;
 import dr.evomodel.coalescent.VariableDemographicModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -59,19 +59,21 @@ public class BMPriorLikelihoodParser extends AbstractXMLObjectParser { //TODO Pa
         return BM;
     }
 
-    private Parameter getParam(XMLObject xo, String name) throws XMLParseException {
+    private RealParameter getParam(XMLObject xo, String name) throws XMLParseException {
         final XMLObject object = xo.getChild(name);
         // optional
         if (object == null) {
             return null;
         }
         final Object child = object.getChild(0);
-        if (child instanceof Parameter) {
-            return (Parameter) child;
+        if (child instanceof RealParameter) {
+            return (RealParameter) child;
         }
 
         double x = object.getDoubleChild(0);
-        return new Parameter.Default(x);
+        return new RealParameter(x+"");
+        
+        
     }
 
     @Override
@@ -80,9 +82,9 @@ public class BMPriorLikelihoodParser extends AbstractXMLObjectParser { //TODO Pa
 		return null;
 		/*
 
-        // Parameter mean = getParam(xo, MEAN);
-        Parameter sigma = getParam(xo, SIGMA);
-        //  Parameter lambda = getParam(xo, LAMBDA);
+        // RealParameter mean = getParam(xo, MEAN);
+        RealParameter sigma = getParam(xo, SIGMA);
+        //  RealParameter lambda = getParam(xo, LAMBDA);
 
         final boolean logSpace = xo.getAttribute(LOG_SPACE, false);
         //   final boolean normalize = xo.getAttribute(NORMALIZE, false);
@@ -103,7 +105,7 @@ public class BMPriorLikelihoodParser extends AbstractXMLObjectParser { //TODO Pa
 
                 new XORRule(
                         new ElementRule(SIGMA, Double.class),
-                        new ElementRule(SIGMA, Parameter.class)
+                        new ElementRule(SIGMA, RealParameter.class)
                 ),
 
                 // you can't have a XOR (b AND c), yikes

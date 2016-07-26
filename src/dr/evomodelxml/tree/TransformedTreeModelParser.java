@@ -26,7 +26,8 @@
 package dr.evomodelxml.tree;
 
 import dr.evomodel.tree.*;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
+import beast.evolution.tree.Tree;
 import dr.xml.*;
 
 /**
@@ -52,8 +53,8 @@ public class TransformedTreeModelParser extends AbstractXMLObjectParser {
 		/*
 
 
-        TreeModel tree = (TreeModel) xo.getChild(TreeModel.class);
-        Parameter scale = (Parameter) xo.getChild(Parameter.class);
+        Tree tree = (Tree) xo.getChild(Tree.class);
+        RealParameter scale = (RealParameter) xo.getChild(RealParameter.class);
 
         String id = tree.getId();
         if (!xo.hasId()) {
@@ -102,8 +103,8 @@ public class TransformedTreeModelParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules =
             new XMLSyntaxRule[]{
-                    new ElementRule(TreeModel.class),
-                    new ElementRule(Parameter.class),
+                    new ElementRule(Tree.class),
+                    new ElementRule(RealParameter.class),
                     AttributeRule.newStringRule(VERSION, true),
             };
 }

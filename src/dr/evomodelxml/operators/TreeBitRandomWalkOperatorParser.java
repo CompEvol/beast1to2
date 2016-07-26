@@ -25,7 +25,7 @@
 
 package dr.evomodelxml.operators;
 
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
 
@@ -51,7 +51,7 @@ public class TreeBitRandomWalkOperatorParser extends AbstractXMLObjectParser {
 
         double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
 
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
 
 
         String trait1 = null;
@@ -87,7 +87,7 @@ public class TreeBitRandomWalkOperatorParser extends AbstractXMLObjectParser {
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             AttributeRule.newStringRule(INDICTATOR_TRAIT, true),
             AttributeRule.newStringRule(TRAIT2, true),
             AttributeRule.newBooleanRule(SWAP_TRAIT2, true),

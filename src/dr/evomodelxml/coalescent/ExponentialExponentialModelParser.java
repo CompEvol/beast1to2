@@ -27,7 +27,7 @@ package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.ExponentialExponentialModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -55,16 +55,16 @@ public class ExponentialExponentialModelParser extends AbstractXMLObjectParser {
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
         XMLObject cxo = xo.getChild(POPULATION_SIZE);
-        Parameter N0Param = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter N0Param = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(GROWTH_RATE);
-        Parameter growthParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter growthParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(ANCESTRAL_GROWTH_RATE);
-        Parameter ancestralGrowthParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter ancestralGrowthParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(TRANSITION_TIME);
-        Parameter timeParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter timeParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         return new ExponentialExponentialModel(N0Param, growthParam, ancestralGrowthParam, timeParam, units);
     */
@@ -92,12 +92,12 @@ public class ExponentialExponentialModelParser extends AbstractXMLObjectParser {
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             XMLUnits.SYNTAX_RULES[0],
             new ElementRule(POPULATION_SIZE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(GROWTH_RATE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(ANCESTRAL_GROWTH_RATE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(TRANSITION_TIME,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
     };
 }

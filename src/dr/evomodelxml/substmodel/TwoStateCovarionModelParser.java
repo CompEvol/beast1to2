@@ -28,7 +28,7 @@ package dr.evomodelxml.substmodel;
 import dr.evomodel.substmodel.AbstractCovarionDNAModel;
 import dr.evomodel.substmodel.FrequencyModel;
 import dr.evomodel.substmodel.TwoStateCovarionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -50,8 +50,8 @@ public class TwoStateCovarionModelParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        Parameter alphaParameter;
-        Parameter switchingRateParameter;
+        RealParameter alphaParameter;
+        RealParameter switchingRateParameter;
 
         XMLObject cxo = xo.getChild(AbstractCovarionDNAModel.FREQUENCIES);
         FrequencyModel freqModel = (FrequencyModel) cxo.getChild(FrequencyModel.class);
@@ -59,13 +59,13 @@ public class TwoStateCovarionModelParser extends AbstractXMLObjectParser {
         TwoStateCovarion dataType = TwoStateCovarion.INSTANCE;  // fancy new datatype courtesy of Helen
 
         cxo = xo.getChild(ALPHA);
-        alphaParameter = (Parameter) cxo.getChild(Parameter.class);
+        alphaParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         // alpha must be positive and less than 1.0 because the fast rate is normalized to 1.0
-        alphaParameter.addBounds(new Parameter.DefaultBounds(1.0, 0.0, 1));
+        alphaParameter.addBounds(new RealParameter.DefaultBounds(1.0, 0.0, 1));
 
         cxo = xo.getChild(SWITCHING_RATE);
-        switchingRateParameter = (Parameter) cxo.getChild(Parameter.class);
+        switchingRateParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         if (dataType != freqModel.getDataType()) {
             throw new XMLParseException("Data type of " + getParserName() + " element does not match that of its frequencyModel.");
@@ -101,10 +101,10 @@ public class TwoStateCovarionModelParser extends AbstractXMLObjectParser {
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             new ElementRule(AbstractCovarionDNAModel.FREQUENCIES, FrequencyModel.class),
             new ElementRule(ALPHA, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class, true)}
+                    new ElementRule(RealParameter.class, true)}
             ),
             new ElementRule(SWITCHING_RATE, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class, true)}
+                    new ElementRule(RealParameter.class, true)}
             ),
     };
 }

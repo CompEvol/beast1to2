@@ -25,7 +25,7 @@
 
 package dr.inferencexml.model;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -40,10 +40,10 @@ public class SumParameterParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        List<Parameter> paramList = new ArrayList<Parameter>();
+        List<RealParameter> paramList = new ArrayList<RealParameter>();
         int dim = -1;
         for (int i = 0; i < xo.getChildCount(); ++i) {
-            Parameter parameter = (Parameter) xo.getChild(i);
+            RealParameter parameter = (RealParameter) xo.getChild(i);
             if (dim == -1) {
                 dim = parameter.getDimension();
             } else {
@@ -64,7 +64,7 @@ public class SumParameterParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(Parameter.class,1,Integer.MAX_VALUE),
+            new ElementRule(RealParameter.class,1,Integer.MAX_VALUE),
     };
 
     @Override
@@ -74,7 +74,7 @@ public class SumParameterParser extends AbstractXMLObjectParser {
 
     @Override
 	public Class getReturnType() {
-        return Parameter.class;
+        return RealParameter.class;
     }
 
     @Override

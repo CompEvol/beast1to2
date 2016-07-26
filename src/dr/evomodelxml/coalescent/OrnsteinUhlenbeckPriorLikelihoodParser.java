@@ -27,7 +27,7 @@ package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.OrnsteinUhlenbeckPriorLikelihood;
 import dr.evomodel.coalescent.VariableDemographicModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.model.Statistic;
 import dr.xml.*;
 
@@ -61,19 +61,19 @@ public class OrnsteinUhlenbeckPriorLikelihoodParser extends AbstractXMLObjectPar
         return OU;
     }
 
-    private Parameter getParam(XMLObject xo, String name) throws XMLParseException {
+    private RealParameter getParam(XMLObject xo, String name) throws XMLParseException {
         final XMLObject object = xo.getChild(name);
         // optional
         if (object == null) {
             return null;
         }
         final Object child = object.getChild(0);
-        if (child instanceof Parameter) {
-            return (Parameter) child;
+        if (child instanceof RealParameter) {
+            return (RealParameter) child;
         }
 
         double x = object.getDoubleChild(0);
-        return new Parameter.Default(x);
+        return new RealParameter(x+"");
     }
 
     @Override
@@ -82,9 +82,9 @@ public class OrnsteinUhlenbeckPriorLikelihoodParser extends AbstractXMLObjectPar
 		return null;
 		/*
 
-        Parameter mean = getParam(xo, MEAN);
-        Parameter sigma = getParam(xo, SIGMA);
-        Parameter lambda = getParam(xo, LAMBDA);
+        RealParameter mean = getParam(xo, MEAN);
+        RealParameter sigma = getParam(xo, SIGMA);
+        RealParameter lambda = getParam(xo, LAMBDA);
 
         final boolean logSpace = xo.getAttribute(LOG_SPACE, false);
         final boolean normalize = xo.getAttribute(NORMALIZE, false);
@@ -97,9 +97,9 @@ public class OrnsteinUhlenbeckPriorLikelihoodParser extends AbstractXMLObjectPar
         }
 
         final XMLObject cxo1 = xo.getChild(DATA);
-        Parameter dataParameter = (Parameter) cxo1.getChild(Parameter.class);
+        RealParameter dataParameter = (RealParameter) cxo1.getChild(RealParameter.class);
         final XMLObject cxo2 = xo.getChild(TIMES);
-        final Parameter timesParameter = (Parameter) cxo2.getChild(Parameter.class);
+        final RealParameter timesParameter = (RealParameter) cxo2.getChild(RealParameter.class);
 
         return new OrnsteinUhlenbeckPriorLikelihood(mean, sigma, lambda, dataParameter, timesParameter, logSpace, normalize);
     */
@@ -115,17 +115,17 @@ public class OrnsteinUhlenbeckPriorLikelihoodParser extends AbstractXMLObjectPar
                 //new ElementRule(TIMES, new XMLSyntaxRule[]{new ElementRule(Statistic.class)}),
                 new XORRule(
                         new ElementRule(MEAN, Double.class),
-                        new ElementRule(MEAN, Parameter.class),
+                        new ElementRule(MEAN, RealParameter.class),
                         true
                 ),
                 new XORRule(
                         new ElementRule(SIGMA, Double.class),
-                        new ElementRule(SIGMA, Parameter.class)
+                        new ElementRule(SIGMA, RealParameter.class)
                 ),
 
                 new XORRule(
                         new ElementRule(LAMBDA, Double.class),
-                        new ElementRule(LAMBDA, Parameter.class),
+                        new ElementRule(LAMBDA, RealParameter.class),
                         true
                 ),
 

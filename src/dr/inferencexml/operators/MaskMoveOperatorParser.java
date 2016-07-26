@@ -25,7 +25,7 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.operators.MCMCOperator;
 import dr.inference.operators.MaskMoveOperator;
 import dr.xml.*;
@@ -56,18 +56,18 @@ public class MaskMoveOperatorParser extends AbstractXMLObjectParser {
 
         double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
 
-//        Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+//        RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
 
-        List<Parameter> masks = new ArrayList<Parameter>();
+        List<RealParameter> masks = new ArrayList<RealParameter>();
         for (int i = 0; i < xo.getChildCount(); ++i) {
-            if (xo.getChild(i) instanceof Parameter) {
-                masks.add((Parameter) xo.getChild(i));
+            if (xo.getChild(i) instanceof RealParameter) {
+                masks.add((RealParameter) xo.getChild(i));
             }
         }
 
-        Parameter cutPoint = (Parameter) xo.getElementFirstChild(CUT_POINT);
-//        Parameter before = (Parameter) xo.getElementFirstChild(BEFORE_VALUE);
-//        Parameter after = (Parameter) xo.getElementFirstChild(AFTER_VALUE);
+        RealParameter cutPoint = (RealParameter) xo.getElementFirstChild(CUT_POINT);
+//        RealParameter before = (RealParameter) xo.getElementFirstChild(BEFORE_VALUE);
+//        RealParameter after = (RealParameter) xo.getElementFirstChild(AFTER_VALUE);
 
         double[] before = xo.getChild(CUT_MASK).getDoubleArrayAttribute(SELECT_BEFORE);
         double[] after = xo.getChild(CUT_MASK).getDoubleArrayAttribute(SELECT_AFTER);
@@ -117,19 +117,19 @@ public class MaskMoveOperatorParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
-            new ElementRule(Parameter.class, 1, Integer.MAX_VALUE),
+            new ElementRule(RealParameter.class, 1, Integer.MAX_VALUE),
             new ElementRule(CUT_POINT, new XMLSyntaxRule[] {
-                   new ElementRule(Parameter.class),
+                   new ElementRule(RealParameter.class),
             }),
             new ElementRule(CUT_MASK, new XMLSyntaxRule[] {
                     AttributeRule.newDoubleArrayRule(SELECT_BEFORE),
                     AttributeRule.newDoubleArrayRule(SELECT_AFTER),
             })
 //            new ElementRule(BEFORE_VALUE, new XMLSyntaxRule[] {
-//                   new ElementRule(Parameter.class),
+//                   new ElementRule(RealParameter.class),
 //            }),
 //            new ElementRule(AFTER_VALUE, new XMLSyntaxRule[] {
-//                   new ElementRule(Parameter.class),
+//                   new ElementRule(RealParameter.class),
 //            }),
     };
 }

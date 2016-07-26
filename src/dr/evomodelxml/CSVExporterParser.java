@@ -63,7 +63,7 @@ public class CSVExporterParser extends AbstractXMLObjectParser {
                 TabularData source = (TabularData) columns.getChild(TabularData.class);
                 // look for columns
                 List<Integer> iColumns = new ArrayList<Integer>();
-                List<Parameter[]> adds = new ArrayList<Parameter[]>();
+                List<RealParameter[]> adds = new ArrayList<RealParameter[]>();
                 int maxAdds = 0;
 
                 for (int nc = 0; nc < columns.getChildCount(); ++nc) {
@@ -79,9 +79,9 @@ public class CSVExporterParser extends AbstractXMLObjectParser {
                             iColumns.add(n);
 
                             final int nAddtional = column.getChildCount();
-                            Parameter[] additionals = nAddtional > 0 ? new Parameter[nAddtional] : null;
+                            RealParameter[] additionals = nAddtional > 0 ? new RealParameter[nAddtional] : null;
                             for (int nc1 = 0; nc1 < nAddtional; ++nc1) {
-                                additionals[nc1] = (Parameter) column.getChild(nc1);
+                                additionals[nc1] = (RealParameter) column.getChild(nc1);
                             }
                             maxAdds = Math.max(maxAdds, nAddtional);
 
@@ -124,7 +124,7 @@ public class CSVExporterParser extends AbstractXMLObjectParser {
 
                         }
                         for (int nr = 0; nr < maxAdds; ++nr) {
-                            final Parameter[] addsnc = adds.get(nc);
+                            final RealParameter[] addsnc = adds.get(nc);
                             if (addsnc != null && nr < addsnc.length) {
                                 final Object value = addsnc[nr].getParameterValues()[0];
                                 writer.print(sep);
@@ -159,7 +159,7 @@ public class CSVExporterParser extends AbstractXMLObjectParser {
                             if (nc > 0) {
                                 writer.print(sep);
                             }
-                            final Parameter[] addsnc = adds.get(nc);
+                            final RealParameter[] addsnc = adds.get(nc);
                             if (addsnc != null && nr < addsnc.length) {
                                 final Object value = addsnc[nr].getParameterValues()[0];
                                 writer.print(value);
@@ -197,7 +197,7 @@ public class CSVExporterParser extends AbstractXMLObjectParser {
 //                        new ElementRule(TabularData.class),
 //                        new ElementRule(COLUMN, new XMLSyntaxRule[]{
 //                                AttributeRule.newStringArrayRule(COLUMN_NAME),
-//                                new ElementRule(Parameter.class)
+//                                new ElementRule(RealParameter.class)
 //                        }, "column name", 0, Integer.MAX_VALUE)
 //                }, "A subset of columns from one source", 1, Integer.MAX_VALUE)
         };

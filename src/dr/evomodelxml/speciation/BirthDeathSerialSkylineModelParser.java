@@ -27,7 +27,7 @@ package dr.evomodelxml.speciation;
 
 import dr.evomodel.speciation.BirthDeathSerialSamplingModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -62,30 +62,30 @@ public class BirthDeathSerialSkylineModelParser extends AbstractXMLObjectParser 
         final String modelName = xo.getId();
         final Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
-        final Parameter times = (Parameter) xo.getElementFirstChild(TIMES);
-        final Parameter lambda = (Parameter) xo.getElementFirstChild(LAMBDA);
+        final RealParameter times = (RealParameter) xo.getElementFirstChild(TIMES);
+        final RealParameter lambda = (RealParameter) xo.getElementFirstChild(LAMBDA);
 
 
         boolean relativeDeath = xo.hasChildNamed(RELATIVE_MU);
-        Parameter mu;
+        RealParameter mu;
         if (relativeDeath) {
-            mu = (Parameter) xo.getElementFirstChild(RELATIVE_MU);
+            mu = (RealParameter) xo.getElementFirstChild(RELATIVE_MU);
         } else {
-            mu = (Parameter) xo.getElementFirstChild(MU);
+            mu = (RealParameter) xo.getElementFirstChild(MU);
         }
 
-        final Parameter psi = (Parameter) xo.getElementFirstChild(PSI);
-        final Parameter p = (Parameter) xo.getElementFirstChild(SAMPLE_PROBABILITY);
+        final RealParameter psi = (RealParameter) xo.getElementFirstChild(PSI);
+        final RealParameter p = (RealParameter) xo.getElementFirstChild(SAMPLE_PROBABILITY);
 
         final boolean timesStartFromOrigin = xo.getAttribute(TIMES_START_FROM_ORIGIN, false);
 
-        Parameter origin = null;
+        RealParameter origin = null;
         if (xo.hasChildNamed(ORIGIN)) {
-            origin = (Parameter) xo.getElementFirstChild(ORIGIN);
+            origin = (RealParameter) xo.getElementFirstChild(ORIGIN);
         }
 
-        final Parameter r = xo.hasChildNamed(SAMPLE_BECOMES_NON_INFECTIOUS) ?
-                (Parameter) xo.getElementFirstChild(SAMPLE_BECOMES_NON_INFECTIOUS) : new Parameter.Default(0.0);
+        final RealParameter r = xo.hasChildNamed(SAMPLE_BECOMES_NON_INFECTIOUS) ?
+                (RealParameter) xo.getElementFirstChild(SAMPLE_BECOMES_NON_INFECTIOUS) : new RealParameter.Default(0.0);
 //        r.setParameterValueQuietly(0, 1 - r.getParameterValue(0)); // donot use it, otherwise log is changed improperly
 
         Logger.getLogger("dr.evomodel").info(xo.hasChildNamed(SAMPLE_BECOMES_NON_INFECTIOUS) ? getCitationRT() : getCitationPsiOrg());
@@ -129,15 +129,15 @@ public class BirthDeathSerialSkylineModelParser extends AbstractXMLObjectParser 
                     "epoch widths in times starting from the origin and moving tipwards. " +
                     "Note that the birth/death/sampling rate vectors still specify the parameters starting from tips " +
                     "and moving to root."),
-            new ElementRule(ORIGIN, Parameter.class, "The origin of the infection, x0 > tree.rootHeight", true),
-            new ElementRule(TIMES, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-            new ElementRule(LAMBDA, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+            new ElementRule(ORIGIN, RealParameter.class, "The origin of the infection, x0 > tree.rootHeight", true),
+            new ElementRule(TIMES, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+            new ElementRule(LAMBDA, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new XORRule(
-                    new ElementRule(MU, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-                    new ElementRule(RELATIVE_MU, new XMLSyntaxRule[]{new ElementRule(Parameter.class)})),
-            new ElementRule(PSI, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-            new ElementRule(SAMPLE_BECOMES_NON_INFECTIOUS, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}, true),
-            new ElementRule(SAMPLE_PROBABILITY, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new ElementRule(MU, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+                    new ElementRule(RELATIVE_MU, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)})),
+            new ElementRule(PSI, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+            new ElementRule(SAMPLE_BECOMES_NON_INFECTIOUS, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}, true),
+            new ElementRule(SAMPLE_PROBABILITY, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             XMLUnits.SYNTAX_RULES[0]
     };
 }

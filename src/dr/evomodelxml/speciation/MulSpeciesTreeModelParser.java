@@ -28,7 +28,7 @@ package dr.evomodelxml.speciation;
 import dr.evolution.tree.Tree;
 import dr.evomodel.speciation.MulSpeciesBindings;
 import dr.evomodel.speciation.MulSpeciesTreeModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.util.Attributable;
 import dr.xml.*;
 
@@ -61,11 +61,11 @@ public class MulSpeciesTreeModelParser extends AbstractXMLObjectParser {
 
         final double value = cxo.getAttribute(Attributable.VALUE, 1.0);
         final boolean nonConstRootPopulation = !cr;
-        final Parameter sppSplitPopulations = MulSpeciesTreeModel.createSplitPopulationsParameter(spb, value, nonConstRootPopulation, cp);
+        final RealParameter sppSplitPopulations = MulSpeciesTreeModel.createSplitPopulationsParameter(spb, value, nonConstRootPopulation, cp);
         ParameterParser.replaceParameter(cxo, sppSplitPopulations);
 
-        final Parameter.DefaultBounds bounds =
-                new Parameter.DefaultBounds(Double.MAX_VALUE, 0, sppSplitPopulations.getDimension());
+        final RealParameter.DefaultBounds bounds =
+                new RealParameter.DefaultBounds(Double.MAX_VALUE, 0, sppSplitPopulations.getDimension());
         sppSplitPopulations.addBounds(bounds);
 
         final Tree startTree = null; //(Tree) xo.getChild(Tree.class);
@@ -84,7 +84,7 @@ public class MulSpeciesTreeModelParser extends AbstractXMLObjectParser {
                 new ElementRule(Tree.class, true),
                 new ElementRule(SPP_SPLIT_POPULATIONS, new XMLSyntaxRule[]{
                         AttributeRule.newDoubleRule(Attributable.VALUE, true),
-                        new ElementRule(Parameter.class)})
+                        new ElementRule(RealParameter.class)})
         };
     }
 

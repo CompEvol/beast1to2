@@ -27,7 +27,7 @@ package dr.evomodelxml.operators;
 
 import dr.evomodel.clock.RateEvolutionLikelihood;
 import dr.evomodel.operators.RateSampleOperator;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
 
@@ -54,7 +54,7 @@ public class RateSampleOperatorParser extends AbstractXMLObjectParser {
 
         final boolean sampleAll = xo.getBooleanAttribute(SAMPLE_ALL);
 
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
 
         RateEvolutionLikelihood rateEvolution = (RateEvolutionLikelihood) xo.getChild(RateEvolutionLikelihood.class);
 
@@ -86,7 +86,7 @@ public class RateSampleOperatorParser extends AbstractXMLObjectParser {
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
             AttributeRule.newBooleanRule(SAMPLE_ALL, true),
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             new ElementRule(RateEvolutionLikelihood.class, true),
     };
 }

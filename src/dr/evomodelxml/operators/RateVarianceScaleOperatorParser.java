@@ -26,8 +26,8 @@
 package dr.evomodelxml.operators;
 
 import dr.evomodel.operators.RateVarianceScaleOperator;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+import beast.evolution.tree.Tree;
+import beast.core.parameter.RealParameter;
 import dr.inference.operators.CoercableMCMCOperator;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
@@ -59,9 +59,9 @@ public class RateVarianceScaleOperatorParser extends AbstractXMLObjectParser {
             throw new XMLParseException("scaleFactor must be between 0.0 and 1.0");
         }
 
-        final TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        final Tree treeModel = (Tree) xo.getChild(Tree.class);
 
-        final Parameter variance = (Parameter) xo.getChild(Parameter.class);
+        final RealParameter variance = (RealParameter) xo.getChild(RealParameter.class);
         if (variance.getDimension() != 1) {
             throw new XMLParseException("dimension of the variance parameter should be 1");
         }
@@ -95,7 +95,7 @@ public class RateVarianceScaleOperatorParser extends AbstractXMLObjectParser {
             AttributeRule.newDoubleRule(SCALE_FACTOR),
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
             AttributeRule.newBooleanRule(CoercableMCMCOperator.AUTO_OPTIMIZE, true),
-            new ElementRule(TreeModel.class),
-            new ElementRule(Parameter.class),
+            new ElementRule(Tree.class),
+            new ElementRule(RealParameter.class),
     };
 }

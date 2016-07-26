@@ -27,7 +27,7 @@ package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.LogisticGrowthModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -54,13 +54,13 @@ public class AsymptoticGrowthModelParser extends AbstractXMLObjectParser {
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
         XMLObject cxo = xo.getChild(ASYMPTOTE_VALUE);
-        Parameter asymptoticValueParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter asymptoticValueParam = (RealParameter) cxo.getChild(RealParameter.class);
 
 
-        Parameter rParam;
+        RealParameter rParam;
 
         cxo = xo.getChild(SHAPE);
-        Parameter shapeParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter shapeParam = (RealParameter) cxo.getChild(RealParameter.class);
 
 
         return new AsymptoticGrowthModel(asymptoticValueParam, shapeParam, units);
@@ -89,10 +89,10 @@ public class AsymptoticGrowthModelParser extends AbstractXMLObjectParser {
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             XMLUnits.SYNTAX_RULES[0],
             new ElementRule(ASYMPTOTE_VALUE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
 
 
                     new ElementRule(SHAPE,
-                            new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                            new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
     };
 }

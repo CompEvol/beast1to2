@@ -87,9 +87,9 @@ public class ParameterIntegerParser extends dr.xml.AbstractXMLObjectParser {
 //            if( xo.hasAttribute(DIMENSION) ) {
 //                values = new int[xo.getIntegerAttribute(DIMENSION)];
 //            } else {
-//                // parameter dimension will get set correctly by TreeModel presumably.
+//                // parameter dimension will get set correctly by Tree presumably.
 ////                if (!xo.hasChildNamed(RANDOMIZE)) {
-////                    return new Parameter.Default(1);
+////                    return new RealParameter.Default(1);
 ////                }
 //                values = new int[1];
 //                values[0] = 0;
@@ -203,11 +203,11 @@ public class ParameterIntegerParser extends dr.xml.AbstractXMLObjectParser {
         return Variable.class;
     }
 
-//    static public void replaceParameter(XMLObject xo, Parameter newParam) throws XMLParseException {
+//    static public void replaceParameter(XMLObject xo, RealParameter newParam) throws XMLParseException {
 //
 //        for (int i = 0; i < xo.getChildCount(); i++) {
 //
-//            if (xo.getChild(i) instanceof Parameter) {
+//            if (xo.getChild(i) instanceof RealParameter) {
 //
 //                XMLObject rxo;
 //                Object obj = xo.getRawChild(i);
@@ -251,13 +251,13 @@ public class ParameterIntegerParser extends dr.xml.AbstractXMLObjectParser {
 //        }
 //    }
 
-//    static public Parameter getParameter(XMLObject xo) throws XMLParseException {
+//    static public RealParameter getParameter(XMLObject xo) throws XMLParseException {
 //
 //        int paramCount = 0;
-//        Parameter param = null;
+//        RealParameter param = null;
 //        for (int i = 0; i < xo.getChildCount(); i++) {
-//            if (xo.getChild(i) instanceof Parameter) {
-//                param = (Parameter) xo.getChild(i);
+//            if (xo.getChild(i) instanceof RealParameter) {
+//                param = (RealParameter) xo.getChild(i);
 //                paramCount += 1;
 //            }
 //        }

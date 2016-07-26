@@ -27,8 +27,8 @@ package dr.evomodelxml.clock;
 
 import dr.evomodel.clock.RateEvolutionLikelihood;
 import dr.evomodel.clock.UCLikelihood;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+import beast.evolution.tree.Tree;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -50,13 +50,13 @@ public class UCLikelihoodParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        TreeModel tree = (TreeModel) xo.getChild(TreeModel.class);
+        Tree tree = (Tree) xo.getChild(Tree.class);
 
-        Parameter ratesParameter = (Parameter) xo.getElementFirstChild(RateEvolutionLikelihood.RATES);
+        RealParameter ratesParameter = (RealParameter) xo.getElementFirstChild(RateEvolutionLikelihood.RATES);
 
-        Parameter rootRate = (Parameter) xo.getElementFirstChild(RateEvolutionLikelihood.ROOTRATE);
+        RealParameter rootRate = (RealParameter) xo.getElementFirstChild(RateEvolutionLikelihood.ROOTRATE);
 
-        Parameter variance = (Parameter) xo.getElementFirstChild(VARIANCE);
+        RealParameter variance = (RealParameter) xo.getElementFirstChild(VARIANCE);
 
 
         boolean isLogSpace = xo.getAttribute(RateEvolutionLikelihood.LOGSPACE, false);
@@ -89,11 +89,11 @@ public class UCLikelihoodParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(TreeModel.class),
-            new ElementRule(RateEvolutionLikelihood.RATES, Parameter.class, "The branch rates parameter", false),
+            new ElementRule(Tree.class),
+            new ElementRule(RateEvolutionLikelihood.RATES, RealParameter.class, "The branch rates parameter", false),
             AttributeRule.newBooleanRule(RateEvolutionLikelihood.LOGSPACE, true, "true if model considers the log of the rates."),
-            new ElementRule(RateEvolutionLikelihood.ROOTRATE, Parameter.class, "The root rate parameter"),
-            new ElementRule(VARIANCE, Parameter.class, "The standard deviation of the (log)normal distribution"),
+            new ElementRule(RateEvolutionLikelihood.ROOTRATE, RealParameter.class, "The root rate parameter"),
+            new ElementRule(VARIANCE, RealParameter.class, "The standard deviation of the (log)normal distribution"),
     };
 
 }

@@ -27,8 +27,8 @@ package dr.evomodelxml.clock;
 
 import dr.evomodel.clock.ACLikelihood;
 import dr.evomodel.clock.RateEvolutionLikelihood;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+import beast.evolution.tree.Tree;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -53,18 +53,18 @@ public class ACLikelihoodParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        TreeModel tree = (TreeModel) xo.getChild(TreeModel.class);
+        Tree tree = (Tree) xo.getChild(Tree.class);
 
-        Parameter ratesParameter = (Parameter) xo.getElementFirstChild(RateEvolutionLikelihood.RATES);
+        RealParameter ratesParameter = (RealParameter) xo.getElementFirstChild(RateEvolutionLikelihood.RATES);
 
-        Parameter rootRate = (Parameter) xo.getElementFirstChild(RateEvolutionLikelihood.ROOTRATE);
+        RealParameter rootRate = (RealParameter) xo.getElementFirstChild(RateEvolutionLikelihood.ROOTRATE);
 
-        Parameter variance = (Parameter) xo.getElementFirstChild(VARIANCE);
+        RealParameter variance = (RealParameter) xo.getElementFirstChild(VARIANCE);
 
         boolean isEpisodic = xo.getBooleanAttribute(RateEvolutionLikelihood.EPISODIC);
 
         //Distribution distributionModel = new InverseGaussianDistribution(0,1);
-        //Parameter distribution = (Parameter) xo.getElementFirstChild(DISTRIBUTION);
+        //RealParameter distribution = (RealParameter) xo.getElementFirstChild(DISTRIBUTION);
         String distribution = xo.getStringAttribute(DISTRIBUTION);
 
         //boolean isLogSpace = xo.getAttribute(LOGSPACE, false);
@@ -104,15 +104,15 @@ public class ACLikelihoodParser extends AbstractXMLObjectParser {
     }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
-            new ElementRule(TreeModel.class),
-            new ElementRule(RateEvolutionLikelihood.RATES, Parameter.class, "The branch rates parameter", false),
+            new ElementRule(Tree.class),
+            new ElementRule(RateEvolutionLikelihood.RATES, RealParameter.class, "The branch rates parameter", false),
             AttributeRule.newBooleanRule(RateEvolutionLikelihood.EPISODIC, false, "true if model is branch length independent, false if length-dependent."),
             AttributeRule.newStringRule(DISTRIBUTION, false, "The distribution to use"),
             //AttributeRule.newBooleanRule(LOGSPACE, true, "true if model considers the log of the rates."),
-            new ElementRule(RateEvolutionLikelihood.ROOTRATE, Parameter.class, "The root rate parameter"),
-            new ElementRule(VARIANCE, Parameter.class, "The standard deviation of the distribution"),
-            //new ElementRule(VARIANCE, Parameter.class, "The standard deviation of the (log)normal distribution"),
-            //new ElementRule(DISTRIBUTION, Parameter.class, "The distribution to use"),
+            new ElementRule(RateEvolutionLikelihood.ROOTRATE, RealParameter.class, "The root rate parameter"),
+            new ElementRule(VARIANCE, RealParameter.class, "The standard deviation of the distribution"),
+            //new ElementRule(VARIANCE, RealParameter.class, "The standard deviation of the (log)normal distribution"),
+            //new ElementRule(DISTRIBUTION, RealParameter.class, "The distribution to use"),
             //new ElementRule(DISTRIBUTION, ParametricDistributionModel.class, "The distribution model for rates among branches", false),
     };
 }

@@ -25,7 +25,7 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.operators.CoercableMCMCOperator;
 import dr.inference.operators.MCMCOperator;
 import dr.inference.operators.TransformedRandomWalkOperator;
@@ -68,7 +68,7 @@ public class TransformedRandomWalkOperatorParser extends AbstractXMLObjectParser
 
             double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
             double windowSize = xo.getDoubleAttribute(WINDOW_SIZE);
-            Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+            RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
 
             int dim = parameter.getDimension();
             Transform[] transformations = new Transform[dim];
@@ -106,9 +106,9 @@ public class TransformedRandomWalkOperatorParser extends AbstractXMLObjectParser
 
             if (xo.hasChildNamed(UPDATE_INDEX)) {
                 XMLObject cxo = xo.getChild(UPDATE_INDEX);
-                Parameter updateIndex = (Parameter) cxo.getChild(Parameter.class);
+                RealParameter updateIndex = (RealParameter) cxo.getChild(RealParameter.class);
                 if (updateIndex.getDimension() != parameter.getDimension())
-                    throw new RuntimeException("Parameter to update and missing indices must have the same dimension");
+                    throw new RuntimeException("RealParameter to update and missing indices must have the same dimension");
                 return new TransformedRandomWalkOperator(parameter, transformations, updateIndex, windowSize, condition,
                         weight, mode, lower, upper);
             }
@@ -144,10 +144,10 @@ public class TransformedRandomWalkOperatorParser extends AbstractXMLObjectParser
                 AttributeRule.newBooleanRule(CoercableMCMCOperator.AUTO_OPTIMIZE, true),
                 new ElementRule(UPDATE_INDEX,
                         new XMLSyntaxRule[] {
-                                new ElementRule(Parameter.class),
+                                new ElementRule(RealParameter.class),
                         },true),
                 new StringAttributeRule(BOUNDARY_CONDITION, null, TransformedRandomWalkOperator.BoundaryCondition.values(), true),
-                new ElementRule(Parameter.class),
+                new ElementRule(RealParameter.class),
                 new ElementRule(Transform.ParsedTransform.class, 0, Integer.MAX_VALUE)
         };
 }

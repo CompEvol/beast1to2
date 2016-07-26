@@ -126,7 +126,7 @@ public class FrequencyModelParser extends AbstractXMLObjectParser {
 
         DataType dataType = DataTypeUtils.getDataType(xo);
 
-        Parameter freqsParam = (Parameter) xo.getElementFirstChild(FREQUENCIES);
+        RealParameter freqsParam = (RealParameter) xo.getElementFirstChild(FREQUENCIES);
         double[] frequencies = null;
 
         for (int i = 0; i < xo.getChildCount(); i++) {

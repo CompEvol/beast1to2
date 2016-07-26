@@ -28,7 +28,7 @@ package dr.evomodelxml.sitemodel;
 import dr.xml.*;
 import dr.evomodel.branchratemodel.DiscretizedBranchRates;
 import dr.inference.distribution.ParametricDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.model.CompoundParameter;
 
 /**
@@ -62,7 +62,7 @@ public class DiscretizedLociRatesParser extends AbstractXMLObjectParser {
         final int categoryCount = xo.getIntegerAttribute(CATEGORY_COUNT);
 
         CompoundParameter lociRates = (CompoundParameter) xo.getElementFirstChild(LOCI_RATES);
-        Parameter rateCategoryParameter = (Parameter) xo.getElementFirstChild(RATE_CATEGORIES);
+        RealParameter rateCategoryParameter = (RealParameter) xo.getElementFirstChild(RATE_CATEGORIES);
         ParametricDistributionModel distributionModel = (ParametricDistributionModel) xo.getElementFirstChild(DISTRIBUTION);
 
 
@@ -112,6 +112,6 @@ public class DiscretizedLociRatesParser extends AbstractXMLObjectParser {
             AttributeRule.newIntegerRule(CATEGORY_COUNT, true, "The number of categories that the distribution will be divided into"),
             new ElementRule(LOCI_RATES, CompoundParameter.class, "The compound parameter that contains all the loci rate parameters", false),
             new ElementRule(DISTRIBUTION, ParametricDistributionModel.class, "The distribution model for rates among branches", false),
-            new ElementRule(RATE_CATEGORIES, Parameter.class, "The rate categories parameter", false),
+            new ElementRule(RATE_CATEGORIES, RealParameter.class, "The rate categories parameter", false),
     };
 }

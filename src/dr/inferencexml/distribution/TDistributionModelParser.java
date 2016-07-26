@@ -26,7 +26,7 @@
 package dr.inferencexml.distribution;
 
 import dr.inference.distribution.TDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -50,30 +50,30 @@ public class TDistributionModelParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        Parameter locationParam;
-        Parameter scaleParam;
-        Parameter dfParam;
+        RealParameter locationParam;
+        RealParameter scaleParam;
+        RealParameter dfParam;
 
         XMLObject cxo = xo.getChild(LOCATION);
-        if (cxo.getChild(0) instanceof Parameter) {
-            locationParam = (Parameter) cxo.getChild(Parameter.class);
+        if (cxo.getChild(0) instanceof RealParameter) {
+            locationParam = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            locationParam = new Parameter.Default(cxo.getDoubleChild(0));
+            locationParam = new RealParameter.Default(cxo.getDoubleChild(0));
         }
 
         cxo = xo.getChild(SCALE);
-        if (cxo.getChild(0) instanceof Parameter) {
-            scaleParam = (Parameter) cxo.getChild(Parameter.class);
+        if (cxo.getChild(0) instanceof RealParameter) {
+            scaleParam = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            scaleParam = new Parameter.Default(cxo.getDoubleChild(0));
+            scaleParam = new RealParameter.Default(cxo.getDoubleChild(0));
         }
 
 
         cxo = xo.getChild(DF);
-        if (cxo.getChild(0) instanceof Parameter) {
-            dfParam = (Parameter) cxo.getChild(Parameter.class);
+        if (cxo.getChild(0) instanceof RealParameter) {
+            dfParam = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            dfParam = new Parameter.Default(cxo.getDoubleChild(0));
+            dfParam = new RealParameter.Default(cxo.getDoubleChild(0));
         }
         return new TDistributionModel(locationParam, scaleParam, dfParam);
     */
@@ -92,21 +92,21 @@ public class TDistributionModelParser extends AbstractXMLObjectParser {
             new ElementRule(LOCATION,
                     new XMLSyntaxRule[]{
                             new XORRule(
-                                    new ElementRule(Parameter.class),
+                                    new ElementRule(RealParameter.class),
                                     new ElementRule(Double.class)
                             )}
             ),
             new ElementRule(SCALE,
                     new XMLSyntaxRule[]{
                             new XORRule(
-                                    new ElementRule(Parameter.class),
+                                    new ElementRule(RealParameter.class),
                                     new ElementRule(Double.class)
                             )}
             ),
             new ElementRule(DF,
                     new XMLSyntaxRule[]{
                             new XORRule(
-                                    new ElementRule(Parameter.class),
+                                    new ElementRule(RealParameter.class),
                                     new ElementRule(Double.class)
                             )}
             )

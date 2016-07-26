@@ -25,6 +25,7 @@
 
 package dr.inferencexml.model;
 
+import beast.core.parameter.RealParameter;
 import dr.inference.model.*;
 import dr.xml.*;
 
@@ -70,14 +71,14 @@ public class LatentFactorModelParser extends AbstractXMLObjectParser {
         boolean computeResiduals= xo.getAttribute(RECOMPUTE_RESIDUALS, true);
         boolean computeFactors=xo.getAttribute(RECOMPUTE_FACTORS, true);
         boolean computeLoadings=xo.getAttribute(RECOMPUTE_LOADINGS, true);
-        Parameter continuous=null;
+        RealParameter continuous=null;
         if(xo.getChild(CONTINUOUS)!=null)
-            continuous=(Parameter) xo.getChild(CONTINUOUS).getChild(Parameter.class);
+            continuous=(RealParameter) xo.getChild(CONTINUOUS).getChild(RealParameter.class);
         else
-            continuous=new Parameter.Default(colPrecision.getRowDimension(), 1.0);
+            continuous=new RealParameter.Default(colPrecision.getRowDimension(), 1.0);
         boolean scaleData=xo.getAttribute(SCALE_DATA, true);
  //       int numFactors = xo.getAttribute(NUMBER_OF_FACTORS, 4);
-        Parameter temp=null;
+        RealParameter temp=null;
 //        for(int i=0; i<loadings.getColumnDimension(); i++)
 //        {
 //            if(loadings.getParameterValue(i,i)<0)
@@ -114,7 +115,7 @@ public class LatentFactorModelParser extends AbstractXMLObjectParser {
                     new ElementRule(DiagonalMatrix.class)
             }),
             new ElementRule(CONTINUOUS, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }, true),
     };
 

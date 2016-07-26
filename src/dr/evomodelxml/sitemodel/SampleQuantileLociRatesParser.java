@@ -27,7 +27,7 @@ package dr.evomodelxml.sitemodel;
 
 import dr.xml.*;
 import dr.inference.model.CompoundParameter;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.distribution.ParametricDistributionModel;
 import dr.evomodel.branchratemodel.DiscretizedBranchRates;
 
@@ -60,7 +60,7 @@ public class SampleQuantileLociRatesParser extends AbstractXMLObjectParser{
         final double normalizeBranchRateTo = xo.getAttribute(NORMALIZE_MEAN_LOCI_RATE_TO, Double.NaN);
 
         CompoundParameter lociRates = (CompoundParameter) xo.getElementFirstChild(LOCI_RATES);
-        Parameter rateQuantilesParameter = (Parameter) xo.getElementFirstChild(RATE_QUANTILES);
+        RealParameter rateQuantilesParameter = (RealParameter) xo.getElementFirstChild(RATE_QUANTILES);
         ParametricDistributionModel distributionModel = (ParametricDistributionModel) xo.getElementFirstChild(DISTRIBUTION);
 
 
@@ -107,7 +107,7 @@ public class SampleQuantileLociRatesParser extends AbstractXMLObjectParser{
             AttributeRule.newDoubleRule(NORMALIZE_MEAN_LOCI_RATE_TO, true, "The mean rate to normalize to, if normalizing"),
             new ElementRule(LOCI_RATES, CompoundParameter.class, "The compound parameter that contains all the loci rate parameters", false),
             new ElementRule(DISTRIBUTION, ParametricDistributionModel.class, "The distribution model for rates among branches", false),
-            new ElementRule(RATE_QUANTILES, Parameter.class, "The rate quantiles parameter", false),
+            new ElementRule(RATE_QUANTILES, RealParameter.class, "The rate quantiles parameter", false),
     };
 
 }

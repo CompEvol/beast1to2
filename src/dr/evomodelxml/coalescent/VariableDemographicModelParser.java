@@ -73,7 +73,7 @@ public class VariableDemographicModelParser extends AbstractXMLObjectParser {
         RealParameter popParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(INDICATOR_PARAMETER);
-        Parameter indicatorParamX = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter indicatorParamX = (RealParameter) cxo.getChild(RealParameter.class);
         // convert to BooleanParameter
         BooleanParameter indicatorParam = null;
         for (int i = 0; i < xo.getChildCount(); i++) {
@@ -175,7 +175,7 @@ public class VariableDemographicModelParser extends AbstractXMLObjectParser {
                     new ElementRule(RealParameter.class)
             }),
             new ElementRule(INDICATOR_PARAMETER, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }),
             new ElementRule(POPULATION_TREES, new XMLSyntaxRule[]{
                     new ElementRule(POP_TREE, new XMLSyntaxRule[]{

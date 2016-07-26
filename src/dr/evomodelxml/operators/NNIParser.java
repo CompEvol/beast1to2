@@ -26,7 +26,7 @@
 package dr.evomodelxml.operators;
 
 import dr.evomodel.operators.NNI;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
 
@@ -47,7 +47,7 @@ public class NNIParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
         double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
 
         return new NNI(treeModel, weight);
@@ -77,6 +77,6 @@ public class NNIParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
-            new ElementRule(TreeModel.class)
+            new ElementRule(Tree.class)
     };
 }

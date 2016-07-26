@@ -27,7 +27,7 @@ package dr.evomodelxml.speciation;
 
 import dr.evomodel.speciation.AlloppSpeciesBindings;
 import dr.evomodel.speciation.MulSpeciesBindings;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.xml.*;
 
 
@@ -114,20 +114,20 @@ public class MulSpeciesBindingsParser extends AbstractXMLObjectParser {
         }
         final XMLObject xogt = xo.getChild(GENE_TREES);
         final int nTrees = xogt.getChildCount();
-        final TreeModel[] trees = new TreeModel[nTrees];
+        final Tree[] trees = new Tree[nTrees];
         double[] popFactors = new double[nTrees];
 
         for (int nt = 0; nt < trees.length; ++nt) {
             Object child = xogt.getChild(nt);
-            if (!(child instanceof TreeModel)) {
+            if (!(child instanceof Tree)) {
                 assert child instanceof XMLObject;
                 popFactors[nt] = ((XMLObject) child).getDoubleAttribute(POPFACTOR);
-                child = ((XMLObject) child).getChild(TreeModel.class);
+                child = ((XMLObject) child).getChild(Tree.class);
 
             } else {
                 popFactors[nt] = -1;
             }
-            trees[nt] = (TreeModel) child;
+            trees[nt] = (Tree) child;
         }
 
         try {
@@ -145,7 +145,7 @@ public class MulSpeciesBindingsParser extends AbstractXMLObjectParser {
 	// the only use I can think of for popfactors in an AlloppNetwork is chloroplast data 
     ElementRule treeWithPopFactors = new ElementRule(GTREE,
             new XMLSyntaxRule[]{AttributeRule.newDoubleRule(POPFACTOR),
-                    new ElementRule(TreeModel.class)}, 0, Integer.MAX_VALUE);
+                    new ElementRule(Tree.class)}, 0, Integer.MAX_VALUE);
 
     
 	@Override
@@ -154,7 +154,7 @@ public class MulSpeciesBindingsParser extends AbstractXMLObjectParser {
                 new ElementRule(AlloppSpeciesBindings.ApSpInfo.class, 2, Integer.MAX_VALUE),
                 new ElementRule(GENE_TREES,
                         new XMLSyntaxRule[]{
-                                new ElementRule(TreeModel.class, 0, Integer.MAX_VALUE),
+                                new ElementRule(Tree.class, 0, Integer.MAX_VALUE),
                                 treeWithPopFactors
                         }),
         };

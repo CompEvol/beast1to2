@@ -25,7 +25,7 @@
 
 package dr.inferencexml.model;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -51,8 +51,8 @@ public class CopyParameterValuesParser extends AbstractXMLObjectParser {
         return null;
 
 
-//        Parameter source = (Parameter) xo.getChild(SOURCE).getChild(Parameter.class);
-//        Parameter destination = (Parameter) xo.getChild(DESTINATION).getChild(Parameter.class);
+//        RealParameter source = (RealParameter) xo.getChild(SOURCE).getChild(RealParameter.class);
+//        RealParameter destination = (RealParameter) xo.getChild(DESTINATION).getChild(RealParameter.class);
 //
 //        if (source.getDimension() != destination.getDimension()) {
 //            throw new XMLParseException("Source (" + source.getDimension() + ") and destination (" +
@@ -74,10 +74,10 @@ public class CopyParameterValuesParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             new ElementRule(SOURCE, new XMLSyntaxRule[] {
-                    new ElementRule(Parameter.class),
+                    new ElementRule(RealParameter.class),
             }),
             new ElementRule(DESTINATION, new XMLSyntaxRule[] {
-                    new ElementRule(Parameter.class),
+                    new ElementRule(RealParameter.class),
             }),
     };
 
@@ -89,7 +89,7 @@ public class CopyParameterValuesParser extends AbstractXMLObjectParser {
 
     @Override
 	public Class getReturnType() {
-        return Parameter.class;
+        return RealParameter.class;
     }
 
 }

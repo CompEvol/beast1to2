@@ -85,7 +85,7 @@ public class ParameterParser extends AbstractXMLObjectParser {
             if( xo.hasAttribute(DIMENSION) ) {
                 values = new double[xo.getIntegerAttribute(DIMENSION)];
             } else {
-                // parameter dimension will get set correctly by TreeModel presumably.
+                // parameter dimension will get set correctly by Tree presumably.
                 if (!xo.hasChildNamed(RANDOMIZE)) {
                     return new RealParameter("1.0");
                 }
@@ -203,7 +203,7 @@ public class ParameterParser extends AbstractXMLObjectParser {
 //        		values[0] += ((Double)parameterSamples.get(i))/((double)stop);
 //        	}
 //        	System.out.println("Number of samples: " + parameterSamples.size());
-//        	System.out.println("Parameter mean: " + values[0]);
+//        	System.out.println("RealParameter mean: " + values[0]);
 //        } else if( xo.hasAttribute(VALUE) ) {
 //            if( values == null ) {
 //                values = xo.getDoubleArrayAttribute(VALUE);
@@ -223,9 +223,9 @@ public class ParameterParser extends AbstractXMLObjectParser {
 //            if( xo.hasAttribute(DIMENSION) ) {
 //                values = new double[xo.getIntegerAttribute(DIMENSION)];
 //            } else {
-//                // parameter dimension will get set correctly by TreeModel presumably.
+//                // parameter dimension will get set correctly by Tree presumably.
 //                if (!xo.hasChildNamed(RANDOMIZE)) {
-//                    return new Parameter.Default(1);
+//                    return new RealParameter.Default(1);
 //                }
 //                values = new double[1];
 //                values[0] = 1.0;
@@ -307,11 +307,11 @@ public class ParameterParser extends AbstractXMLObjectParser {
 //            }
 //        }
 //
-//        Parameter param = new Parameter.Default(values.length);
+//        RealParameter param = new RealParameter.Default(values.length);
 //        for(int i = 0; i < values.length; i++) {
 //            param.setParameterValue(i, values[i]);
 //        }
-//        param.addBounds(new Parameter.DefaultBounds(uppers, lowers));
+//        param.addBounds(new RealParameter.DefaultBounds(uppers, lowers));
 //        return param;
     }
 
@@ -344,11 +344,11 @@ public class ParameterParser extends AbstractXMLObjectParser {
         return RealParameter.class;
     }
 
-//    static public void replaceParameter(XMLObject xo, Parameter.Base newParam) throws XMLParseException {
+//    static public void replaceParameter(XMLObject xo, RealParameter.Base newParam) throws XMLParseException {
 //
 //        for (int i = 0; i < xo.getChildCount(); i++) {
 //
-//            if (xo.getChild(i) instanceof Parameter.Base) {
+//            if (xo.getChild(i) instanceof RealParameter.Base) {
 //
 //                XMLObject rxo;
 //                Object obj = xo.getRawChild(i);
@@ -392,13 +392,13 @@ public class ParameterParser extends AbstractXMLObjectParser {
 //        }
 //    }
 
-    static public Parameter getParameter(XMLObject xo) throws XMLParseException {
+    static public RealParameter getParameter(XMLObject xo) throws XMLParseException {
 
         int paramCount = 0;
-        Parameter param = null;
+        RealParameter param = null;
         for (int i = 0; i < xo.getChildCount(); i++) {
-            if (xo.getChild(i) instanceof Parameter) {
-                param = (Parameter) xo.getChild(i);
+            if (xo.getChild(i) instanceof RealParameter) {
+                param = (RealParameter) xo.getChild(i);
                 paramCount += 1;
             }
         }

@@ -28,7 +28,7 @@ package dr.evomodelxml.speciation;
 import dr.evolution.tree.Tree;
 import dr.evomodel.speciation.SpeciesBindings;
 import dr.evomodel.speciation.SpeciesTreeModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.util.Attributable;
 import dr.xml.*;
 
@@ -52,8 +52,8 @@ public class SpeciesTreeModelParser extends AbstractXMLObjectParser {
 		/*
         SpeciesBindings spb = (SpeciesBindings) xo.getChild(SpeciesBindings.class);
 
-        Parameter coalPointsPops = null;
-        Parameter coalPointsIndicators = null;
+        RealParameter coalPointsPops = null;
+        RealParameter coalPointsIndicators = null;
         final Boolean cr = xo.getAttribute(CONST_ROOT_POPULATION, false);
         final Boolean cp = xo.getAttribute(CONSTANT_POPULATION, false);
 
@@ -65,13 +65,13 @@ public class SpeciesTreeModelParser extends AbstractXMLObjectParser {
                 coalPointsPops = SpeciesTreeModel.createCoalPointsPopParameter(spb, cxo.getAttribute(Attributable.VALUE, value), bmp);
                 ParameterParser.replaceParameter(cxo, coalPointsPops);
                 coalPointsPops.addBounds(
-                        new Parameter.DefaultBounds(Double.MAX_VALUE, 0, coalPointsPops.getDimension()));
+                        new RealParameter.DefaultBounds(Double.MAX_VALUE, 0, coalPointsPops.getDimension()));
 
                 cxo = xo.getChild(COALESCENT_POINTS_INDICATORS);
                 if( cxo == null ) {
                     throw new XMLParseException("Must have indicators");
                 }
-                coalPointsIndicators = new Parameter.Default(coalPointsPops.getDimension(), 0);
+                coalPointsIndicators = new RealParameter.Default(coalPointsPops.getDimension(), 0);
                 ParameterParser.replaceParameter(cxo, coalPointsIndicators);
             } else {
                // assert ! bmp;
@@ -82,11 +82,11 @@ public class SpeciesTreeModelParser extends AbstractXMLObjectParser {
 
         final double value = cxo.getAttribute(Attributable.VALUE, 1.0);
         final boolean nonConstRootPopulation = coalPointsPops == null && !cr;
-        final Parameter sppSplitPopulations = SpeciesTreeModel.createSplitPopulationsParameter(spb, value, nonConstRootPopulation, cp);
+        final RealParameter sppSplitPopulations = SpeciesTreeModel.createSplitPopulationsParameter(spb, value, nonConstRootPopulation, cp);
         ParameterParser.replaceParameter(cxo, sppSplitPopulations);
 
-        final Parameter.DefaultBounds bounds =
-                new Parameter.DefaultBounds(Double.MAX_VALUE, 0, sppSplitPopulations.getDimension());
+        final RealParameter.DefaultBounds bounds =
+                new RealParameter.DefaultBounds(Double.MAX_VALUE, 0, sppSplitPopulations.getDimension());
         sppSplitPopulations.addBounds(bounds);
 
         final Tree startTree = (Tree) xo.getChild(Tree.class);
@@ -107,14 +107,14 @@ public class SpeciesTreeModelParser extends AbstractXMLObjectParser {
                 new ElementRule(Tree.class, true),
                 new ElementRule(SPP_SPLIT_POPULATIONS, new XMLSyntaxRule[]{
                         AttributeRule.newDoubleRule(Attributable.VALUE, true),
-                        new ElementRule(Parameter.class)}),
+                        new ElementRule(RealParameter.class)}),
 
                 new ElementRule(COALESCENT_POINTS_POPULATIONS, new XMLSyntaxRule[]{
                         AttributeRule.newDoubleRule(Attributable.VALUE, true),
-                        new ElementRule(Parameter.class)}, true),
+                        new ElementRule(RealParameter.class)}, true),
 
                 new ElementRule(COALESCENT_POINTS_INDICATORS, new XMLSyntaxRule[]{
-                        new ElementRule(Parameter.class)}, true),
+                        new ElementRule(RealParameter.class)}, true),
         };
     }
 

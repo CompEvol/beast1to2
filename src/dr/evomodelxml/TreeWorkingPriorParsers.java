@@ -25,7 +25,7 @@
 
 package dr.evomodelxml;
 
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.inference.distribution.MultivariateDistributionLikelihood;
 import dr.inference.model.Likelihood;
 import dr.inference.model.Statistic;
@@ -93,7 +93,7 @@ public class TreeWorkingPriorParsers {
             System.err.println("logPDF = " + logPDF);
             return new ConstantLikelihood(-logPDF);* /
 
-            TreeModel tree = (TreeModel) xo.getChild(TreeModel.class);
+            Tree tree = (Tree) xo.getChild(Tree.class);
             //System.err.println(tree);
             return new CoalescentConstantLikelihood(tree);
 
@@ -106,7 +106,7 @@ public class TreeWorkingPriorParsers {
         }
 
         private final XMLSyntaxRule[] rules = {
-                new ElementRule(TreeModel.class)
+                new ElementRule(Tree.class)
         };
 
         @Override
@@ -137,7 +137,7 @@ public class TreeWorkingPriorParsers {
 		return null;
 		/*
 
-            TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+            Tree treeModel = (Tree) xo.getChild(Tree.class);
             final int nTaxa = treeModel.getExternalNodeCount();
             double logPDF = 0.0;
             for (int i = nTaxa; i > 2; --i) {
@@ -154,7 +154,7 @@ public class TreeWorkingPriorParsers {
         }
 
         private final XMLSyntaxRule[] rules = {
-                new ElementRule(TreeModel.class)
+                new ElementRule(Tree.class)
         };
 
         @Override
@@ -186,7 +186,7 @@ public class TreeWorkingPriorParsers {
 		/*
 
             double logPopSize = xo.getDoubleAttribute("logPopSize");
-            TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+            Tree treeModel = (Tree) xo.getChild(Tree.class);
 
             return new ExponentialProductLikelihood(treeModel, logPopSize);
 
@@ -200,7 +200,7 @@ public class TreeWorkingPriorParsers {
 
         private final XMLSyntaxRule[] rules = {
                 AttributeRule.newDoubleRule("logPopSize"),
-                new ElementRule(TreeModel.class)
+                new ElementRule(Tree.class)
         };
 
         @Override
@@ -231,7 +231,7 @@ public class TreeWorkingPriorParsers {
 		return null;
 		/*
 
-            TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+            Tree treeModel = (Tree) xo.getChild(Tree.class);
             String fileName = xo.getStringAttribute(FileHelpers.FILE_NAME);
 
             try {
@@ -319,7 +319,7 @@ public class TreeWorkingPriorParsers {
                 AttributeRule.newStringRule("fileName"),
                 AttributeRule.newStringRule("parameterColumn"),
                 AttributeRule.newIntegerRule("dimension"),
-                new ElementRule(TreeModel.class)
+                new ElementRule(Tree.class)
         };
 
         @Override
@@ -350,7 +350,7 @@ public class TreeWorkingPriorParsers {
 		return null;
 		/*
 
-            TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+            Tree treeModel = (Tree) xo.getChild(Tree.class);
             String fileName = xo.getStringAttribute(FileHelpers.FILE_NAME);
 
             try {
@@ -460,7 +460,7 @@ public class TreeWorkingPriorParsers {
                 AttributeRule.newStringRule("fileName"),
                 AttributeRule.newStringRule("parameterColumn"),
                 AttributeRule.newIntegerRule("dimension"),
-                new ElementRule(TreeModel.class)
+                new ElementRule(Tree.class)
         };
 
         @Override
@@ -491,7 +491,7 @@ public class TreeWorkingPriorParsers {
 		return null;
 		/*
 
-            TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+            Tree treeModel = (Tree) xo.getChild(Tree.class);
             String fileName = xo.getStringAttribute(FileHelpers.FILE_NAME);
 
             try {
@@ -639,7 +639,7 @@ public class TreeWorkingPriorParsers {
                 AttributeRule.newStringRule("fileName"),
                 AttributeRule.newStringRule("parameterColumn"),
                 AttributeRule.newIntegerRule("dimension"),
-                new ElementRule(TreeModel.class)
+                new ElementRule(Tree.class)
         };
 
         @Override
@@ -670,7 +670,7 @@ public class TreeWorkingPriorParsers {
 		return null;
 		/*
 
-            TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+            Tree treeModel = (Tree) xo.getChild(Tree.class);
             String fileName = xo.getStringAttribute(FileHelpers.FILE_NAME);
 
             try {
@@ -778,7 +778,7 @@ public class TreeWorkingPriorParsers {
                 AttributeRule.newStringRule("fileName"),
                 AttributeRule.newStringRule("parameterColumn"),
                 AttributeRule.newIntegerRule("dimension"),
-                new ElementRule(TreeModel.class)
+                new ElementRule(Tree.class)
         };
 
         @Override
@@ -809,7 +809,7 @@ public class TreeWorkingPriorParsers {
 		return null;
 		/*
 
-            TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+            Tree treeModel = (Tree) xo.getChild(Tree.class);
             double popSize = xo.getDoubleAttribute("popSize");
             String fileName = xo.getStringAttribute(FileHelpers.FILE_NAME);
 
@@ -995,8 +995,8 @@ public class TreeWorkingPriorParsers {
                 AttributeRule.newStringRule("parameterColumn"),
                 AttributeRule.newIntegerRule("dimension"),
                 AttributeRule.newDoubleRule("popSize"),
-                //new ElementRule(Parameter.class),
-                new ElementRule(TreeModel.class)
+                //new ElementRule(RealParameter.class),
+                new ElementRule(Tree.class)
         };
 
         @Override
@@ -1220,7 +1220,7 @@ public class TreeWorkingPriorParsers {
 		return null;
 		/*
 
-            TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+            Tree treeModel = (Tree) xo.getChild(Tree.class);
             final int nTaxa = treeModel.getExternalNodeCount();
             double combinations = GammaFunction.factorial(2*nTaxa-3)/(GammaFunction.factorial(nTaxa-2)*Math.pow(2.0,nTaxa-2));
             double logPDF = Math.log(1.0/combinations);
@@ -1235,7 +1235,7 @@ public class TreeWorkingPriorParsers {
         }
 
         private final XMLSyntaxRule[] rules = {
-                new ElementRule(TreeModel.class)
+                new ElementRule(Tree.class)
         };
 
         @Override
@@ -1268,7 +1268,7 @@ public class TreeWorkingPriorParsers {
 
             //Coalescent.TREEPRIOR = true;
 
-            TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+            Tree treeModel = (Tree) xo.getChild(Tree.class);
 
             String fileName = xo.getStringAttribute(FileHelpers.FILE_NAME);
 
@@ -1335,7 +1335,7 @@ public class TreeWorkingPriorParsers {
                 AttributeRule.newStringRule("fileName"),
                 AttributeRule.newIntegerRule(BURNIN),
                 AttributeRule.newDoubleRule(EPSILON),
-                new ElementRule(TreeModel.class)
+                new ElementRule(Tree.class)
         };
 
         @Override

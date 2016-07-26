@@ -27,7 +27,7 @@ package dr.evomodelxml.branchratemodel;
 
 import dr.evomodel.branchratemodel.RateEpochBranchRateModel;
 import dr.evomodelxml.tree.TreeModelParser;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -60,21 +60,21 @@ public class RateEpochBranchRateModelParser extends AbstractXMLObjectParser {
             if (xoc.getName().equals(EPOCH)) {
                 double t = xoc.getAttribute(TRANSITION_TIME, 0.0);
 
-                Parameter p = (Parameter) xoc.getChild(Parameter.class);
+                RealParameter p = (RealParameter) xoc.getChild(RealParameter.class);
 
-                Parameter tt = null;
+                RealParameter tt = null;
                 if (xoc.hasChildNamed(TRANSITION_TIME)) {
-                    tt = (Parameter) xoc.getElementFirstChild(TRANSITION_TIME);
+                    tt = (RealParameter) xoc.getElementFirstChild(TRANSITION_TIME);
                 }
                 epochs.add(new Epoch(t, p, tt));
             }
         }
 
-        Parameter ancestralRateParameter = (Parameter) xo.getElementFirstChild(RATE);
+        RealParameter ancestralRateParameter = (RealParameter) xo.getElementFirstChild(RATE);
 
         Collections.sort(epochs);
-        Parameter[] rateParameters = new Parameter[epochs.size() + 1];
-        Parameter[] timeParameters = new Parameter[epochs.size()];
+        RealParameter[] rateParameters = new RealParameter[epochs.size() + 1];
+        RealParameter[] timeParameters = new RealParameter[epochs.size()];
 
         int i = 0;
         for (Epoch epoch : epochs) {
@@ -82,7 +82,7 @@ public class RateEpochBranchRateModelParser extends AbstractXMLObjectParser {
             if (epoch.timeParameter != null) {
                 timeParameters[i] = epoch.timeParameter;
             } else {
-                timeParameters[i] = new Parameter.Default(1);
+                timeParameters[i] = new RealParameter.Default(1);
                 timeParameters[i].setParameterValue(0, epoch.transitionTime);
             }
             i++;
@@ -90,7 +90,7 @@ public class RateEpochBranchRateModelParser extends AbstractXMLObjectParser {
         rateParameters[i] = ancestralRateParameter;
 
         if (xo.hasAttribute(CONTINUOUS_NORMALIZATION) && xo.getBooleanAttribute(CONTINUOUS_NORMALIZATION)) {
-            Parameter rootHeight = (Parameter) xo.getChild(TreeModelParser.ROOT_HEIGHT).getChild(Parameter.class);
+            RealParameter rootHeight = (RealParameter) xo.getChild(TreeModelParser.ROOT_HEIGHT).getChild(RealParameter.class);
             return new ContinuousEpochBranchRateModel(timeParameters, rateParameters, rootHeight);
         }
 
@@ -101,10 +101,10 @@ public class RateEpochBranchRateModelParser extends AbstractXMLObjectParser {
     class Epoch implements Comparable {
 
         private final double transitionTime;
-        private final Parameter rateParameter;
-        private final Parameter timeParameter;
+        private final RealParameter rateParameter;
+        private final RealParameter timeParameter;
 
-        public Epoch(double transitionTime, Parameter rateParameter, Parameter timeParameter) {
+        public Epoch(double transitionTime, RealParameter rateParameter, RealParameter timeParameter) {
             this.transitionTime = transitionTime;
             this.rateParameter = rateParameter;
             this.timeParameter = timeParameter;
@@ -143,16 +143,16 @@ public class RateEpochBranchRateModelParser extends AbstractXMLObjectParser {
             new ElementRule(EPOCH,
                     new XMLSyntaxRule[]{
                             AttributeRule.newDoubleRule(TRANSITION_TIME, true, "The time of transition between this epoch and the previous one"),
-                            new ElementRule(Parameter.class, "The evolutionary rate parameter for this epoch"),
-                            new ElementRule(TRANSITION_TIME, Parameter.class, "The transition time parameter for this epoch", true)
+                            new ElementRule(RealParameter.class, "The evolutionary rate parameter for this epoch"),
+                            new ElementRule(TRANSITION_TIME, RealParameter.class, "The transition time parameter for this epoch", true)
                     }, "An epoch that lasts until transitionTime",
                     1, Integer.MAX_VALUE
             ),
-            new ElementRule(RATE, Parameter.class, "The ancestral molecular evolutionary rate parameter", false),
+            new ElementRule(RATE, RealParameter.class, "The ancestral molecular evolutionary rate parameter", false),
             AttributeRule.newBooleanRule(CONTINUOUS_NORMALIZATION, true, "Special rate normalization for a Brownian diffusion process"),
             new ElementRule(TreeModelParser.ROOT_HEIGHT,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class, "The tree root height")
+                            new ElementRule(RealParameter.class, "The tree root height")
                     }, "Parameterization may require the root height", 0, 1)
     };
 

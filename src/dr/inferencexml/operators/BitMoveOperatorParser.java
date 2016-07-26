@@ -25,7 +25,7 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.operators.BitMoveOperator;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
@@ -53,12 +53,12 @@ public class BitMoveOperatorParser extends AbstractXMLObjectParser {
 
         int numBitsToMove = xo.getIntegerAttribute(NUM_BITS_TO_MOVE);
 
-        Parameter bitsParameter = (Parameter) xo.getElementFirstChild("bits");
-        Parameter valuesParameter = null;
+        RealParameter bitsParameter = (RealParameter) xo.getElementFirstChild("bits");
+        RealParameter valuesParameter = null;
 
 
         if (xo.hasChildNamed("values")) {
-            valuesParameter = (Parameter) xo.getElementFirstChild("values");
+            valuesParameter = (RealParameter) xo.getElementFirstChild("values");
         }
 
 
@@ -88,8 +88,8 @@ public class BitMoveOperatorParser extends AbstractXMLObjectParser {
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
             AttributeRule.newIntegerRule(NUM_BITS_TO_MOVE),
-            new ElementRule("bits", Parameter.class),
-            new ElementRule("values", Parameter.class, "values parameter", true)
+            new ElementRule("bits", RealParameter.class),
+            new ElementRule("values", RealParameter.class, "values parameter", true)
     };
 
 }

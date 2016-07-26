@@ -61,7 +61,7 @@ public class MVOUCovarianceOperatorParser extends AbstractXMLObjectParser {
             throw new XMLParseException("mixingFactor must be greater than 0.0 and less thatn 1.0");
         }
 
-//            Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+//            RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
 
 //            XMLObject cxo = (XMLObject) xo.getChild(VARIANCE_MATRIX);
         MatrixParameter varMatrix = (MatrixParameter) xo.getChild(MatrixParameter.class);
@@ -102,7 +102,7 @@ public class MVOUCovarianceOperatorParser extends AbstractXMLObjectParser {
             AttributeRule.newIntegerRule(PRIOR_DF),
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
             AttributeRule.newBooleanRule(CoercableMCMCOperator.AUTO_OPTIMIZE, true),
-//                new ElementRule(Parameter.class),
+//                new ElementRule(RealParameter.class),
 //                new ElementRule(VARIANCE_MATRIX,
 //                        new XMLSyntaxRule[]{new ElementRule(MatrixParameter.class)}),
 

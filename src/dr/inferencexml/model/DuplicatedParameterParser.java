@@ -25,7 +25,7 @@
 
 package dr.inferencexml.model;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -41,9 +41,9 @@ public class DuplicatedParameterParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+        RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
         XMLObject cxo = xo.getChild(COPIES);
-        Parameter dup = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter dup = (RealParameter) cxo.getChild(RealParameter.class);
 
         DuplicatedParameter duplicatedParameter = new DuplicatedParameter(parameter);
         duplicatedParameter.addDuplicationParameter(dup);
@@ -58,10 +58,10 @@ public class DuplicatedParameterParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(Parameter.class),
+            new ElementRule(RealParameter.class),
             new ElementRule(COPIES,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class)
+                            new ElementRule(RealParameter.class)
                     }),
     };
 
@@ -72,7 +72,7 @@ public class DuplicatedParameterParser extends AbstractXMLObjectParser {
 
     @Override
 	public Class getReturnType() {
-        return Parameter.class;
+        return RealParameter.class;
     }
 
     @Override

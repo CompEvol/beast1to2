@@ -26,7 +26,7 @@
 package dr.inferencexml.distribution;
 
 import dr.inference.distribution.WishartGammalDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -52,13 +52,13 @@ public class WishartGammaDistributionModelParser extends AbstractXMLObjectParser
 		/*
 
         XMLObject cxo = xo.getChild(DF_PARAMETER);
-        Parameter df = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter df = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(MIXING_PARAMETER);
-        Parameter mixing = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter mixing = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(SCALE_PARAMETER);
-        Parameter scale = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter scale = (RealParameter) cxo.getChild(RealParameter.class);
 
         if ((mixing.getDimension() != scale.getDimension())
                 && df.getDimension() != 1) {
@@ -83,11 +83,11 @@ public class WishartGammaDistributionModelParser extends AbstractXMLObjectParser
 
     private final XMLSyntaxRule[] rules = {
             new ElementRule(DF_PARAMETER,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(MIXING_PARAMETER,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(SCALE_PARAMETER,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             AttributeRule.newBooleanRule(FIX_MIXING, true),
     };
 

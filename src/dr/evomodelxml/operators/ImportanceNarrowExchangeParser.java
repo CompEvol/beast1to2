@@ -27,7 +27,7 @@ package dr.evomodelxml.operators;
 
 import dr.evolution.alignment.PatternList;
 import dr.evomodel.operators.ImportanceNarrowExchange;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
 
@@ -49,7 +49,7 @@ public class ImportanceNarrowExchangeParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        final TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        final Tree treeModel = (Tree) xo.getChild(Tree.class);
         final PatternList patterns = (PatternList) xo.getChild(PatternList.class);
         final double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
         final double epsilon = xo.getAttribute(EPSILON, 0.1);
@@ -87,6 +87,6 @@ public class ImportanceNarrowExchangeParser extends AbstractXMLObjectParser {
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
             AttributeRule.newDoubleRule(EPSILON, true),
             new ElementRule(PatternList.class),
-            new ElementRule(TreeModel.class)
+            new ElementRule(Tree.class)
     };
 }

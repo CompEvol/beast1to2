@@ -26,7 +26,7 @@
 package dr.inferencexml.model;
 
 import dr.inference.model.BlockUpperTriangularMatrixParameter;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -49,22 +49,22 @@ public class BlockUpperTriangularMatrixParameterParser extends AbstractXMLObject
 //        int rowDim=xo.getChildCount();
 //        int colDim;
         final boolean diagonalRestriction=xo.getAttribute(DIAGONAL_RESTRICTION, false);
-        Parameter temp=null;
+        RealParameter temp=null;
 //        if(xo.hasAttribute(COLUMN_DIMENSION)) {
 //            colDim = xo.getAttribute(COLUMN_DIMENSION, 1);
 //        }
 //        else
 //        {
-//            temp=(Parameter) xo.getChild(xo.getChildCount()-1);
+//            temp=(RealParameter) xo.getChild(xo.getChildCount()-1);
 //            colDim=temp.getDimension();
 //        }
 
-        Parameter[] params=new Parameter[xo.getChildCount()];
+        RealParameter[] params=new RealParameter[xo.getChildCount()];
 
 
 
         for (int i = 0; i < xo.getChildCount(); i++) {
-            temp = (Parameter) xo.getChild(i);
+            temp = (RealParameter) xo.getChild(i);
             params[i]=temp;}
 
         BlockUpperTriangularMatrixParameter ltmp=new BlockUpperTriangularMatrixParameter(name, params, diagonalRestriction);
@@ -83,7 +83,7 @@ public class BlockUpperTriangularMatrixParameterParser extends AbstractXMLObject
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(Parameter.class, 0, Integer.MAX_VALUE),
+            new ElementRule(RealParameter.class, 0, Integer.MAX_VALUE),
             AttributeRule.newBooleanRule(TRANSPOSE, true),
             AttributeRule.newIntegerRule(COLUMN_DIMENSION, true),
             AttributeRule.newBooleanRule(DIAGONAL_RESTRICTION, true),

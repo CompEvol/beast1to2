@@ -26,7 +26,7 @@
 package dr.evomodelxml.operators;
 
 import dr.evomodel.operators.RateScaleOperator;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.inference.operators.CoercableMCMCOperator;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
@@ -61,7 +61,7 @@ public class RateScaleOperatorParser extends AbstractXMLObjectParser {
             throw new XMLParseException("scaleFactor must be between 0.0 and 1.0");
         }
 
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
 
         RateScaleOperator operator = new RateScaleOperator(treeModel, scaleFactor, noRoot, mode);
         operator.setWeight(weight);
@@ -93,7 +93,7 @@ public class RateScaleOperatorParser extends AbstractXMLObjectParser {
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
             AttributeRule.newBooleanRule(CoercableMCMCOperator.AUTO_OPTIMIZE, true),
             AttributeRule.newBooleanRule(NO_ROOT, true),
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
     };
 
 }

@@ -26,7 +26,7 @@
 package dr.inferencexml.distribution;
 
 import dr.inference.distribution.InverseGaussianDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -51,37 +51,37 @@ public class InverseGaussianDistributionModelParser extends AbstractXMLObjectPar
 		return null;
 		/*
 
-        Parameter meanParam;
+        RealParameter meanParam;
 
         double offset = xo.getAttribute(OFFSET, 0.0);
 
         XMLObject cxo = xo.getChild(MEAN);
-        if (cxo.getChild(0) instanceof Parameter) {
-            meanParam = (Parameter) cxo.getChild(Parameter.class);
+        if (cxo.getChild(0) instanceof RealParameter) {
+            meanParam = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            meanParam = new Parameter.Default(cxo.getDoubleChild(0));
+            meanParam = new RealParameter.Default(cxo.getDoubleChild(0));
         }
 
         if(xo.hasChildNamed(STDEV) && xo.hasChildNamed(SHAPE)) {
             throw new RuntimeException("XML has both standard deviation and shape for Inverse Gaussian distribution");
         }
         else if(xo.hasChildNamed(STDEV)) {
-            Parameter stdevParam;
+            RealParameter stdevParam;
             cxo = xo.getChild(STDEV);
-            if (cxo.getChild(0) instanceof Parameter) {
-                stdevParam = (Parameter) cxo.getChild(Parameter.class);
+            if (cxo.getChild(0) instanceof RealParameter) {
+                stdevParam = (RealParameter) cxo.getChild(RealParameter.class);
             } else {
-                stdevParam = new Parameter.Default(cxo.getDoubleChild(0));
+                stdevParam = new RealParameter.Default(cxo.getDoubleChild(0));
             }
             return new InverseGaussianDistributionModel(meanParam, stdevParam, offset, false);
         }
         else if(xo.hasChildNamed(SHAPE)) {
-            Parameter shapeParam;
+            RealParameter shapeParam;
             cxo = xo.getChild(SHAPE);
-            if (cxo.getChild(0) instanceof Parameter) {
-                shapeParam = (Parameter) cxo.getChild(Parameter.class);
+            if (cxo.getChild(0) instanceof RealParameter) {
+                shapeParam = (RealParameter) cxo.getChild(RealParameter.class);
             } else {
-                shapeParam = new Parameter.Default(cxo.getDoubleChild(0));
+                shapeParam = new RealParameter.Default(cxo.getDoubleChild(0));
             }
             return new InverseGaussianDistributionModel(meanParam, shapeParam, offset, true);
         }
@@ -105,14 +105,14 @@ public class InverseGaussianDistributionModelParser extends AbstractXMLObjectPar
             new ElementRule(MEAN,
                     new XMLSyntaxRule[]{
                             new XORRule(
-                                    new ElementRule(Parameter.class),
+                                    new ElementRule(RealParameter.class),
                                     new ElementRule(Double.class)
                             )}
             , false),
             new ElementRule(STDEV,
                     new XMLSyntaxRule[]{
                             new XORRule(
-                                    new ElementRule(Parameter.class),
+                                    new ElementRule(RealParameter.class),
                                     new ElementRule(Double.class)
                             )}
             , true),
@@ -120,7 +120,7 @@ public class InverseGaussianDistributionModelParser extends AbstractXMLObjectPar
             new ElementRule(SHAPE,
                 new XMLSyntaxRule[]{
                         new XORRule(
-                                new ElementRule(Parameter.class),
+                                new ElementRule(RealParameter.class),
                                 new ElementRule(Double.class)
                         )}
             , true)

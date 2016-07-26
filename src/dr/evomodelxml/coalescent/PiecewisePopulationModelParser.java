@@ -26,7 +26,7 @@
 package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.PiecewisePopulationModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -60,7 +60,7 @@ public class PiecewisePopulationModelParser extends AbstractXMLObjectParser {
         double[] epochWidths = obj.getDoubleArrayAttribute(WIDTHS);
 
         if (xo.hasChildNamed(EPOCH_SIZES)) {
-            Parameter epochSizes = (Parameter) xo.getElementFirstChild(EPOCH_SIZES);
+            RealParameter epochSizes = (RealParameter) xo.getElementFirstChild(EPOCH_SIZES);
 
             boolean isLinear = false;
             if (xo.hasAttribute(LINEAR)) {
@@ -69,8 +69,8 @@ public class PiecewisePopulationModelParser extends AbstractXMLObjectParser {
 
             return new PiecewisePopulationModel(PIECEWISE_POPULATION, epochSizes, epochWidths, isLinear, units);
         } else {
-            Parameter populationSize = (Parameter) xo.getElementFirstChild(POPULATION_SIZE);
-            Parameter growthRates = (Parameter) xo.getElementFirstChild(GROWTH_RATES);
+            RealParameter populationSize = (RealParameter) xo.getElementFirstChild(POPULATION_SIZE);
+            RealParameter growthRates = (RealParameter) xo.getElementFirstChild(GROWTH_RATES);
             return new PiecewisePopulationModel(PIECEWISE_POPULATION, populationSize, growthRates, epochWidths, units);
         }
     */
@@ -99,12 +99,12 @@ public class PiecewisePopulationModelParser extends AbstractXMLObjectParser {
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             new XORRule(
                     new ElementRule(EPOCH_SIZES,
-                            new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                            new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
                     new AndRule(
                             new ElementRule(POPULATION_SIZE,
-                                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
                             new ElementRule(GROWTH_RATES,
-                                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)})
+                                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)})
                     )
             ),
             new ElementRule(EPOCH_WIDTHS,

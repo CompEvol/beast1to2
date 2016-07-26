@@ -25,7 +25,7 @@
 
 package dr.evomodelxml.operators;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
 
@@ -47,13 +47,13 @@ public class MicrosatelliteModelSelectOperatorParser extends AbstractXMLObjectPa
 		return null;
 		/*
              double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
-        Parameter modelChoose = (Parameter)xo.getElementFirstChild(MODEL_CHOOSE);
+        RealParameter modelChoose = (RealParameter)xo.getElementFirstChild(MODEL_CHOOSE);
         XMLObject xoInd = xo.getChild(MODEL_INDICATORS);
              int childNum = xoInd.getChildCount();
         System.out.println("There are 12 potential models");
-        Parameter[] modelIndicators = new Parameter[childNum];
+        RealParameter[] modelIndicators = new RealParameter[childNum];
         for(int i = 0; i < modelIndicators.length; i++){
-            modelIndicators[i] = (Parameter)xoInd.getChild(i);
+            modelIndicators[i] = (RealParameter)xoInd.getChild(i);
         }
              return new MicrosatelliteModelSelectOperator(modelChoose, modelIndicators, weight);
     */
@@ -75,7 +75,7 @@ public class MicrosatelliteModelSelectOperatorParser extends AbstractXMLObjectPa
     }
          private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
-            new ElementRule(MODEL_CHOOSE, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-            new ElementRule(MODEL_INDICATORS, new XMLSyntaxRule[]{new ElementRule(Parameter.class,1,Integer.MAX_VALUE)}),
+            new ElementRule(MODEL_CHOOSE, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+            new ElementRule(MODEL_INDICATORS, new XMLSyntaxRule[]{new ElementRule(RealParameter.class,1,Integer.MAX_VALUE)}),
     };
 }

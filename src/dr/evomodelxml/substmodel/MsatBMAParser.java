@@ -27,7 +27,7 @@ package dr.evomodelxml.substmodel;
 
 import dr.xml.*;
 import dr.evolution.datatype.Microsatellite;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.evomodel.substmodel.MsatBMA;
 
 import java.util.ArrayList;
@@ -99,12 +99,12 @@ public class MsatBMAParser extends AbstractXMLObjectParser{
 
         }
 
-        Parameter[][] paramModelMap = new Parameter[6][modelCount];
+        RealParameter[][] paramModelMap = new RealParameter[6][modelCount];
 
 
 
         XMLObject propRatesXO = xo.getChild(RATE_PROPS);
-        ArrayList<Parameter> rateProps =
+        ArrayList<RealParameter> rateProps =
                 processParameters(
                         propRatesXO,
                         paramModelMap,
@@ -112,7 +112,7 @@ public class MsatBMAParser extends AbstractXMLObjectParser{
                 );
 
         XMLObject quadRatesXO = xo.getChild(RATE_QUADS);
-        ArrayList<Parameter> rateQuads =
+        ArrayList<RealParameter> rateQuads =
                 processParameters(
                         quadRatesXO,
                         paramModelMap,
@@ -120,7 +120,7 @@ public class MsatBMAParser extends AbstractXMLObjectParser{
                 );
 
         XMLObject biasConstsXO = xo.getChild(BIAS_CONSTS);
-        ArrayList<Parameter> biasConsts =
+        ArrayList<RealParameter> biasConsts =
                 processParameters(
                         biasConstsXO,
                         paramModelMap,
@@ -128,7 +128,7 @@ public class MsatBMAParser extends AbstractXMLObjectParser{
                 );
 
         XMLObject biasLinsXO = xo.getChild(BIAS_LINS);
-        ArrayList<Parameter> biasLins =
+        ArrayList<RealParameter> biasLins =
                 processParameters(
                         biasLinsXO,
                         paramModelMap,
@@ -136,7 +136,7 @@ public class MsatBMAParser extends AbstractXMLObjectParser{
                 );
 
         XMLObject geosXO = xo.getChild(GEOS);
-        ArrayList<Parameter> geos =
+        ArrayList<RealParameter> geos =
                 processParameters(
                         geosXO,
                         paramModelMap,
@@ -144,15 +144,15 @@ public class MsatBMAParser extends AbstractXMLObjectParser{
                 );
 
         XMLObject phaseProbXO = xo.getChild(PHASE_PROBS);
-        ArrayList<Parameter> phaseProbs =
+        ArrayList<RealParameter> phaseProbs =
                 processParameters(
                         phaseProbXO,
                         paramModelMap,
                         MsatBMA.PHASE_PROB_INDEX
                 );
 
-        Parameter modelChoose = (Parameter) xo.getElementFirstChild(MODEL_CHOOSE);
-        Parameter modelIndicator = (Parameter) xo.getElementFirstChild(MODEL_INDICATOR);
+        RealParameter modelChoose = (RealParameter) xo.getElementFirstChild(MODEL_CHOOSE);
+        RealParameter modelIndicator = (RealParameter) xo.getElementFirstChild(MODEL_INDICATOR);
 
         printParameters(paramModelMap);
         return new MsatBMA(
@@ -172,19 +172,19 @@ public class MsatBMAParser extends AbstractXMLObjectParser{
     */
 		}
 
-    public ArrayList<Parameter> processParameters(
+    public ArrayList<RealParameter> processParameters(
             XMLObject paramsXO,
-            Parameter[][] paramModelMap,
+            RealParameter[][] paramModelMap,
             int paramIndex)throws XMLParseException{
 
-        ArrayList<Parameter> paramList = new ArrayList<Parameter>();
+        ArrayList<RealParameter> paramList = new ArrayList<RealParameter>();
         int paramsCount = paramsXO.getChildCount();
 
         for(int i = 0; i < paramsCount; i++){
 
             XMLObject paramXO = (XMLObject) paramsXO.getChild(i);
             int[] inModels = paramXO.getIntegerArrayAttribute(IN_MODELS);
-            Parameter param = (Parameter)paramXO.getChild(Parameter.class);
+            RealParameter param = (RealParameter)paramXO.getChild(RealParameter.class);
 
             for(int j = 0; j < inModels.length; j++){
                 if(paramModelMap[paramIndex][inModels[j]] == null){
@@ -200,7 +200,7 @@ public class MsatBMAParser extends AbstractXMLObjectParser{
         return paramList;
     }
 
-    public void printParameters(Parameter[][] paramModelMap){
+    public void printParameters(RealParameter[][] paramModelMap){
         for(int i = 0; i < paramModelMap.length; i++){
             for(int j = 0; j < paramModelMap[i].length; j++){
                 System.out.print(paramModelMap[i][j]+" ");
@@ -241,7 +241,7 @@ public class MsatBMAParser extends AbstractXMLObjectParser{
                                 RATE_PROP,
                                 new XMLSyntaxRule[]{
                                         AttributeRule.newIntegerArrayRule(IN_MODELS, false),
-                                        new ElementRule(Parameter.class)
+                                        new ElementRule(RealParameter.class)
                                 },
                                 1,
                                 18
@@ -255,7 +255,7 @@ public class MsatBMAParser extends AbstractXMLObjectParser{
                                 RATE_QUAD,
                                 new XMLSyntaxRule[]{
                                         AttributeRule.newIntegerArrayRule(IN_MODELS, false),
-                                        new ElementRule(Parameter.class)
+                                        new ElementRule(RealParameter.class)
                                 },
                                 1,
                                 9
@@ -269,7 +269,7 @@ public class MsatBMAParser extends AbstractXMLObjectParser{
                                 BIAS_CONST,
                                 new XMLSyntaxRule[]{
                                         AttributeRule.newIntegerArrayRule(IN_MODELS, false),
-                                        new ElementRule(Parameter.class)
+                                        new ElementRule(RealParameter.class)
                                 },
                                 1,
                                 18
@@ -283,7 +283,7 @@ public class MsatBMAParser extends AbstractXMLObjectParser{
                                 BIAS_LIN,
                                 new XMLSyntaxRule[]{
                                         AttributeRule.newIntegerArrayRule(IN_MODELS, false),
-                                        new ElementRule(Parameter.class)
+                                        new ElementRule(RealParameter.class)
                                 },
                                 1,
                                 9
@@ -297,7 +297,7 @@ public class MsatBMAParser extends AbstractXMLObjectParser{
                                 GEO,
                                 new XMLSyntaxRule[]{
                                         AttributeRule.newIntegerArrayRule(IN_MODELS, false),
-                                        new ElementRule(Parameter.class)
+                                        new ElementRule(RealParameter.class)
                                 },
                                 1,
                                 18
@@ -311,15 +311,15 @@ public class MsatBMAParser extends AbstractXMLObjectParser{
                                 PHASE_PROB,
                                 new XMLSyntaxRule[]{
                                         AttributeRule.newIntegerArrayRule(IN_MODELS, false),
-                                        new ElementRule(Parameter.class)
+                                        new ElementRule(RealParameter.class)
                                 },
                                 1,
                                 9
                         )
                     }
             ),
-            new ElementRule(MODEL_CHOOSE, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-            new ElementRule(MODEL_INDICATOR, new XMLSyntaxRule[]{new ElementRule(Parameter.class)})
+            new ElementRule(MODEL_CHOOSE, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+            new ElementRule(MODEL_INDICATOR, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)})
 
     };
 

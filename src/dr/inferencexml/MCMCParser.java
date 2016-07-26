@@ -169,9 +169,9 @@ public class MCMCParser extends AbstractXMLObjectParser {
 //                        ", of class " + m.getClass().getName() + " is not being handled by the MCMC.");
 //            }
 //        }
-//        for (Parameter p : Parameter.FULL_PARAMETER_SET) {
+//        for (RealParameter p : RealParameter.FULL_PARAMETER_SET) {
 //            if (!p.isUsed()) {
-//                java.util.logging.Logger.getLogger("dr.inference").warning("Parameter, " + p.getId() +
+//                java.util.logging.Logger.getLogger("dr.inference").warning("RealParameter, " + p.getId() +
 //                        ", of class " + p.getClass().getName() + " is not being handled by the MCMC.");
 //            }
 //        }

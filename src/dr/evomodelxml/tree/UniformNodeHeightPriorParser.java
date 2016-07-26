@@ -25,7 +25,7 @@
 
 package dr.evomodelxml.tree;
 
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.evomodel.tree.UniformNodeHeightPrior;
 import dr.xml.*;
 
@@ -59,7 +59,7 @@ public class UniformNodeHeightPriorParser extends AbstractXMLObjectParser {
 
         Logger.getLogger("dr.evomodel").info("\nConstructing a uniform node height prior:");
 
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
         if (xo.hasAttribute(MAX_ROOT_HEIGHT)) {
             // the Nicholls & Gray variant
             double maxRootHeight = xo.getDoubleAttribute(MAX_ROOT_HEIGHT);
@@ -115,7 +115,7 @@ public class UniformNodeHeightPriorParser extends AbstractXMLObjectParser {
             AttributeRule.newIntegerRule(MC_SAMPLE,true),
             AttributeRule.newBooleanRule(MARGINAL,true),
             AttributeRule.newBooleanRule(LEADING_TERM,true),
-            new ElementRule(TreeModel.class)
+            new ElementRule(Tree.class)
     };
 
 }

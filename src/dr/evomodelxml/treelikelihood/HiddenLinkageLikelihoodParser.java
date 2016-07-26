@@ -26,7 +26,7 @@
 package dr.evomodelxml.treelikelihood;
 
 import dr.evomodel.tree.HiddenLinkageModel;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.evomodel.treelikelihood.HiddenLinkageLikelihood;
 import dr.xml.*;
 
@@ -57,7 +57,7 @@ public class HiddenLinkageLikelihoodParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 		HiddenLinkageModel hlm = (HiddenLinkageModel) xo.getChild(HiddenLinkageModel.class);
-		TreeModel tree = (TreeModel) xo.getChild(TreeModel.class);
+		Tree tree = (Tree) xo.getChild(Tree.class);
         return new HiddenLinkageLikelihood(hlm, tree);
 	*/
 		}
@@ -70,7 +70,7 @@ public class HiddenLinkageLikelihoodParser extends AbstractXMLObjectParser {
 
 	private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             new ElementRule(HiddenLinkageModel.class),
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
     };
 
 }

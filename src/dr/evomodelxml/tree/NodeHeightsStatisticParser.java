@@ -26,8 +26,8 @@
 package dr.evomodelxml.tree;
 
 import dr.evomodel.tree.NodeHeightsStatistic;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+import beast.evolution.tree.Tree;
+import beast.core.parameter.RealParameter;
 import dr.inference.model.Statistic;
 import dr.xml.*;
 
@@ -51,7 +51,7 @@ public class NodeHeightsStatisticParser extends AbstractXMLObjectParser {
         String name = xo.getAttribute(Statistic.NAME, xo.getId());
         Tree tree = (Tree) xo.getChild(Tree.class);
 
-        Parameter groupSizes = (Parameter) xo.getChild(Parameter.class);
+        RealParameter groupSizes = (RealParameter) xo.getChild(RealParameter.class);
 
         return new NodeHeightsStatistic(name, tree, groupSizes);
     */
@@ -78,8 +78,8 @@ public class NodeHeightsStatisticParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newStringRule(Statistic.NAME, true),
-            new ElementRule(TreeModel.class),
-            new ElementRule(Parameter.class, true),
+            new ElementRule(Tree.class),
+            new ElementRule(RealParameter.class, true),
     };
 
 }

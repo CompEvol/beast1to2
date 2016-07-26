@@ -28,7 +28,7 @@ package dr.evomodelxml.coalescent;
 import dr.evolution.tree.Tree;
 import dr.evomodel.coalescent.EmergingEpidemicModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -60,11 +60,11 @@ public class EmergingEpidemicModelParser extends AbstractXMLObjectParser {
 
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
-        Parameter growthRateParameter =  (Parameter)xo.getElementFirstChild(GROWTH_RATE);
-        Parameter generationTimeParameter = (Parameter)xo.getElementFirstChild(GENERATION_TIME);
-        Parameter generationShapeParameter = (Parameter)xo.getElementFirstChild(GENERATION_DISTRIBUTION_SHAPE);
-        Parameter offspringDispersionParameter = (Parameter)xo.getElementFirstChild(OFFSPRING_DISPERSION);
-        TreeModel tree = (TreeModel)xo.getElementFirstChild(TREE);
+        RealParameter growthRateParameter =  (RealParameter)xo.getElementFirstChild(GROWTH_RATE);
+        RealParameter generationTimeParameter = (RealParameter)xo.getElementFirstChild(GENERATION_TIME);
+        RealParameter generationShapeParameter = (RealParameter)xo.getElementFirstChild(GENERATION_DISTRIBUTION_SHAPE);
+        RealParameter offspringDispersionParameter = (RealParameter)xo.getElementFirstChild(OFFSPRING_DISPERSION);
+        Tree tree = (Tree)xo.getElementFirstChild(TREE);
 
         return new EmergingEpidemicModel(growthRateParameter, generationTimeParameter, generationShapeParameter, offspringDispersionParameter, tree, units);
     */
@@ -90,10 +90,10 @@ public class EmergingEpidemicModelParser extends AbstractXMLObjectParser {
     }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
-            new ElementRule(GROWTH_RATE, Parameter.class),
-            new ElementRule(GENERATION_TIME, Parameter.class),
-            new ElementRule(GENERATION_DISTRIBUTION_SHAPE, Parameter.class),
-            new ElementRule(OFFSPRING_DISPERSION, Parameter.class),
+            new ElementRule(GROWTH_RATE, RealParameter.class),
+            new ElementRule(GENERATION_TIME, RealParameter.class),
+            new ElementRule(GENERATION_DISTRIBUTION_SHAPE, RealParameter.class),
+            new ElementRule(OFFSPRING_DISPERSION, RealParameter.class),
             new ElementRule(TREE, Tree.class),
 
             XMLUnits.SYNTAX_RULES[0]

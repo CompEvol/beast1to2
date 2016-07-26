@@ -26,7 +26,7 @@
 package dr.inferencexml.model;
 
 import dr.inference.model.MarkovRandomFieldMatrix;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.util.Transform;
 import dr.xml.*;
 
@@ -58,12 +58,12 @@ public class MarkovRandomFieldMatrixParser extends AbstractXMLObjectParser {
         final int dim = xo.getIntegerAttribute(DIM);
 
         XMLObject cxo = xo.getChild(DIAGONAL);
-        Parameter diagonalParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter diagonalParameter = (RealParameter) cxo.getChild(RealParameter.class);
         Transform.ParsedTransform tmp = (Transform.ParsedTransform) cxo.getChild(Transform.ParsedTransform.class);
         Transform diagonalTransform = (tmp != null) ? tmp.transform : null;
 
         cxo = xo.getChild(OFF_DIAGONAL);
-        Parameter offDiagonalParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter offDiagonalParameter = (RealParameter) cxo.getChild(RealParameter.class);
         tmp = (Transform.ParsedTransform) cxo.getChild(Transform.ParsedTransform.class);
         Transform offDiagonalTransform = (tmp != null) ? tmp.transform : null;
 
@@ -74,7 +74,7 @@ public class MarkovRandomFieldMatrixParser extends AbstractXMLObjectParser {
         }
 
         cxo = xo.getChild(NUGGET);
-        Parameter nuggetParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter nuggetParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         return new MarkovRandomFieldMatrix(name, dim, diagonalParameter, offDiagonalParameter, nuggetParameter,
                 asCorrelation,
@@ -99,17 +99,17 @@ public class MarkovRandomFieldMatrixParser extends AbstractXMLObjectParser {
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             new ElementRule(DIAGONAL,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class),
+                            new ElementRule(RealParameter.class),
                             new ElementRule(Transform.ParsedTransform.class, true),
                     }),
             new ElementRule(OFF_DIAGONAL,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class),
+                            new ElementRule(RealParameter.class),
                             new ElementRule(Transform.ParsedTransform.class, true),
                     }),
             new ElementRule(NUGGET,
                     new XMLSyntaxRule[] {
-                            new ElementRule(Parameter.class),
+                            new ElementRule(RealParameter.class),
                     }),
             AttributeRule.newBooleanRule(AS_CORRELATION, true),
             AttributeRule.newIntegerRule(DIM),

@@ -27,7 +27,7 @@ package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.ExpConstExpDemographicModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -57,19 +57,19 @@ public class ExpConstExpDemographicModelParser extends AbstractXMLObjectParser {
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
         XMLObject cxo = xo.getChild(POPULATION_SIZE);
-        Parameter N0Param = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter N0Param = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(RELATIVE_PLATEAU_SIZE);
-        Parameter N1Param = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter N1Param = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(RELATIVE_TIME_OF_MODERN_GROWTH);
-        Parameter rtParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter rtParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(TIME_PLATEAU);
-        Parameter tParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter tParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(ANCIENT_GROWTH_RATE);
-        Parameter rParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter rParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         return new ExpConstExpDemographicModel(N0Param, N1Param, rParam, tParam, rtParam, units);
     */
@@ -96,18 +96,18 @@ public class ExpConstExpDemographicModelParser extends AbstractXMLObjectParser {
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             new ElementRule(POPULATION_SIZE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(RELATIVE_PLATEAU_SIZE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                     "The size of plateau relative to modern population size."),
             new ElementRule(RELATIVE_TIME_OF_MODERN_GROWTH,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                     "The time spanned by modern growth phase relative to time back to start of plateau phase."),
             new ElementRule(TIME_PLATEAU,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                     "The time of the start of plateauPhase."),
             new ElementRule(ANCIENT_GROWTH_RATE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                     "The growth rate of early growth phase"),
             XMLUnits.SYNTAX_RULES[0]
     };

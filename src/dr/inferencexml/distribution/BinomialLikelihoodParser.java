@@ -27,7 +27,7 @@ package dr.inferencexml.distribution;
 
 import dr.inference.distribution.BinomialLikelihood;
 import dr.inference.model.Likelihood;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -55,10 +55,10 @@ public class BinomialLikelihoodParser extends AbstractXMLObjectParser {
         final boolean onLogitScale = xo.getAttribute(ON_LOGIT_SCALE, false);
 
         XMLObject cxo = xo.getChild(COUNTS);
-        Parameter countsParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter countsParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(PROPORTION);
-        Parameter proportionParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter proportionParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         if (proportionParam.getDimension() != 1 && proportionParam.getDimension() != countsParam.getDimension()) {
             throw new XMLParseException("Proportion dimension (" + proportionParam.getDimension() + ") " +
@@ -66,16 +66,16 @@ public class BinomialLikelihoodParser extends AbstractXMLObjectParser {
         }
 
         cxo = xo.getChild(TRIALS);
-        Parameter trialsParam;
+        RealParameter trialsParam;
         if (cxo.hasAttribute(VALUES)) {
             int[] tmp = cxo.getIntegerArrayAttribute(VALUES);
             double[] v = new double[tmp.length];
             for (int i = 0; i < tmp.length; ++i) {
                 v[i] = tmp[i];
             }
-            trialsParam = new Parameter.Default(v);
+            trialsParam = new RealParameter.Default(v);
         } else {
-            trialsParam = (Parameter) cxo.getChild(Parameter.class);
+            trialsParam = (RealParameter) cxo.getChild(RealParameter.class);
         }
 
         if (trialsParam.getDimension() != countsParam.getDimension()) {
@@ -100,15 +100,15 @@ public class BinomialLikelihoodParser extends AbstractXMLObjectParser {
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newBooleanRule(ON_LOGIT_SCALE, true),
             new ElementRule(COUNTS,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(PROPORTION,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new XORRule(
                     new ElementRule(TRIALS,
                             new XMLSyntaxRule[]{AttributeRule.newIntegerArrayRule(VALUES, false),})
                     ,
                     new ElementRule(TRIALS,
-                            new XMLSyntaxRule[]{new ElementRule(Parameter.class)}
+                            new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}
                     )),
     };
 

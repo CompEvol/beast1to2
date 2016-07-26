@@ -26,7 +26,7 @@
 package dr.evomodelxml.operators;
 
 import dr.evomodel.operators.GibbsPruneAndRegraft;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
 
@@ -47,7 +47,7 @@ public class GibbsPruneAndRegraftParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
         double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
         boolean pruned = true;
         if (xo.hasAttribute("pruned")) {
@@ -84,7 +84,7 @@ public class GibbsPruneAndRegraftParser extends AbstractXMLObjectParser {
         rules = new XMLSyntaxRule[]{
                 AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
                 AttributeRule.newBooleanRule("pruned"),
-                new ElementRule(TreeModel.class)};
+                new ElementRule(Tree.class)};
     }
 
 }

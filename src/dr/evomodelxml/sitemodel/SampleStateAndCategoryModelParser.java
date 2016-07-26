@@ -27,7 +27,7 @@ package dr.evomodelxml.sitemodel;
 
 import dr.evomodel.sitemodel.SampleStateAndCategoryModel;
 import dr.evomodel.substmodel.SubstitutionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -51,10 +51,10 @@ public class SampleStateAndCategoryModelParser extends AbstractXMLObjectParser {
 		/*
 
         XMLObject cxo = xo.getChild(MUTATION_RATE);
-        Parameter muParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter muParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(CATEGORY_PARAMETER);
-        Parameter catParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter catParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         Vector subModels = new Vector();
         for (int i = 0; i < xo.getChildCount(); i++) {
@@ -91,9 +91,9 @@ public class SampleStateAndCategoryModelParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             new ElementRule(MUTATION_RATE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(CATEGORY_PARAMETER,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(SubstitutionModel.class, 1, Integer.MAX_VALUE)
     };
 

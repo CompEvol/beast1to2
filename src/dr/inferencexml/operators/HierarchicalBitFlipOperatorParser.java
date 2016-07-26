@@ -25,7 +25,7 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.operators.HierarchicalBitFlipOperator;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
@@ -59,14 +59,14 @@ import dr.xml.*;
 	        boolean usesPriorOnSum = xo.getAttribute(USES_SUM_PRIOR,false);
 	        
 	        XMLObject cxo = xo.getChild(H_PARAMETER);
-	        Parameter hParameter = (Parameter) cxo.getChild(Parameter.class);
+	        RealParameter hParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
 	        cxo = xo.getChild(STRATA_PARAMETERS);
 	        int NStrata = cxo.getChildCount();
 	        
-	        Parameter[] strataParameters = new Parameter[NStrata];
+	        RealParameter[] strataParameters = new RealParameter[NStrata];
 	       for (int i = 0; i < NStrata; i++) {
-	            Parameter parameter = (Parameter) cxo.getChild(i);
+	            RealParameter parameter = (RealParameter) cxo.getChild(i);
 	            strataParameters[i] = parameter;
 	       }
 	
@@ -98,9 +98,9 @@ import dr.xml.*;
 	            AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
 	            AttributeRule.newBooleanRule(USES_SUM_PRIOR,true),
 	            new ElementRule(H_PARAMETER,
-	                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+	                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
 	            new ElementRule(STRATA_PARAMETERS,
-	                    new XMLSyntaxRule[]{new ElementRule(Parameter.class, 1, Integer.MAX_VALUE)}),
+	                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class, 1, Integer.MAX_VALUE)}),
 	    };
 
 	}

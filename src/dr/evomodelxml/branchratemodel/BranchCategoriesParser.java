@@ -27,8 +27,8 @@ package dr.evomodelxml.branchratemodel;
 
 import dr.evolution.util.Taxa;
 import dr.evomodel.branchratemodel.CountableBranchCategoryProvider;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+import beast.evolution.tree.Tree;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -52,9 +52,9 @@ public class BranchCategoriesParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        Parameter allocationParameter = (Parameter) xo.getElementFirstChild(ALLOCATION);
+        RealParameter allocationParameter = (RealParameter) xo.getElementFirstChild(ALLOCATION);
         CountableBranchCategoryProvider cladeModel;
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
 
         if (!xo.getAttribute(RANDOMIZE, true)) {
             CountableBranchCategoryProvider.CladeBranchCategoryModel cm = new
@@ -119,8 +119,8 @@ public class BranchCategoriesParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(TreeModel.class),
-            new ElementRule(ALLOCATION, Parameter.class, "Allocation parameter", false),
+            new ElementRule(Tree.class),
+            new ElementRule(ALLOCATION, RealParameter.class, "Allocation parameter", false),
             AttributeRule.newBooleanRule(RANDOMIZE, true),
             new ElementRule(LocalClockModelParser.CLADE,
                     new XMLSyntaxRule[]{

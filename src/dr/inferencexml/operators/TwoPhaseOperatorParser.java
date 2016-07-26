@@ -77,7 +77,7 @@ public class TwoPhaseOperatorParser extends AbstractXMLObjectParser {
             throw new XMLParseException("scaleFactor must be between 0.0 and 1.0");
         }* /
 
-        //final Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+        //final RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
 
         if (DEBUG) {
             System.err.println("child count: " + xo.getChildCount());
@@ -123,7 +123,7 @@ public class TwoPhaseOperatorParser extends AbstractXMLObjectParser {
 
         //keep track of the parameters of phase one here, as apparently we can't get to them afterwards
         //let's just get them from phase two, as there I can implement whatever I want
-        List<Parameter> parameters = new ArrayList<Parameter>();
+        List<RealParameter> parameters = new ArrayList<RealParameter>();
         for (int i = 0; i < phaseTwoCount; i++) {
             parameters.add(phaseTwoOperators.get(i).getParameter());
         }

@@ -25,7 +25,7 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.operators.MCMCOperator;
 import dr.inference.operators.MultipleRandomWalkIntegerOperator;
 import dr.xml.*;
@@ -61,7 +61,7 @@ public class MultipleRandomWalkIntegerOperatorParser extends AbstractXMLObjectPa
 
         int windowSize = (int)w;
         int sampleSize = (int)s;
-        Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+        RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
 
         return new MultipleRandomWalkIntegerOperator(parameter, windowSize, sampleSize, weight);
     */
@@ -90,7 +90,7 @@ public class MultipleRandomWalkIntegerOperatorParser extends AbstractXMLObjectPa
             AttributeRule.newDoubleRule(RandomWalkIntegerOperatorParser.WINDOW_SIZE),
             AttributeRule.newDoubleRule(SAMPLE_SIZE),
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
-            new ElementRule(Parameter.class)
+            new ElementRule(RealParameter.class)
     };
 
 }

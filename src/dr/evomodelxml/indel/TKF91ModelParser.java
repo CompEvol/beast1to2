@@ -27,7 +27,7 @@ package dr.evomodelxml.indel;
 
 import dr.evomodel.indel.TKF91Model;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -51,8 +51,8 @@ public class TKF91ModelParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        Parameter lengthDistParameter = (Parameter) xo.getElementFirstChild(TKF91_LENGTH_DIST);
-        Parameter deathParameter = (Parameter) xo.getElementFirstChild(DEATH_RATE);
+        RealParameter lengthDistParameter = (RealParameter) xo.getElementFirstChild(TKF91_LENGTH_DIST);
+        RealParameter deathParameter = (RealParameter) xo.getElementFirstChild(DEATH_RATE);
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
         return new TKF91Model(lengthDistParameter, deathParameter, units);
@@ -80,9 +80,9 @@ public class TKF91ModelParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             new ElementRule(TKF91_LENGTH_DIST,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(DEATH_RATE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             XMLUnits.SYNTAX_RULES[0]
     };
 }

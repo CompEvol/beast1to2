@@ -25,7 +25,7 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.operators.MCMCOperator;
 import dr.inference.operators.SetOperator;
 import dr.xml.*;
@@ -51,7 +51,7 @@ public class SetOperatorParser extends AbstractXMLObjectParser {
         double[] values = xo.getDoubleArrayAttribute(SET);
         double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
 
-        Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+        RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
 
         System.out.println("Creating set operator for parameter " + parameter.getParameterName());
         System.out.print("  set = {" + values[0]);
@@ -89,6 +89,6 @@ public class SetOperatorParser extends AbstractXMLObjectParser {
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             AttributeRule.newDoubleArrayRule(SET),
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
-            new ElementRule(Parameter.class)
+            new ElementRule(RealParameter.class)
     };
 }

@@ -26,7 +26,7 @@
 package dr.evomodelxml.substmodel;
 
 import dr.evomodel.substmodel.BinaryCovarionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -52,25 +52,25 @@ public class BinaryCovarionModelParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        Parameter alphaParameter;
-        Parameter switchingRateParameter;
+        RealParameter alphaParameter;
+        RealParameter switchingRateParameter;
 
         XMLObject cxo = xo.getChild(FREQUENCIES);
-        Parameter frequencies = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter frequencies = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(HIDDEN_FREQUENCIES);
-        Parameter hiddenFrequencies = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter hiddenFrequencies = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(ALPHA);
-        alphaParameter = (Parameter) cxo.getChild(Parameter.class);
+        alphaParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         // alpha must be positive and less than 1.0 because the fast rate is normalized to 1.0
-        alphaParameter.addBounds(new Parameter.DefaultBounds(1.0, 0.0, 1));
-        hiddenFrequencies.addBounds(new Parameter.DefaultBounds(1.0, 0.0, hiddenFrequencies.getDimension()));
-        frequencies.addBounds(new Parameter.DefaultBounds(1.0, 0.0, frequencies.getDimension()));
+        alphaParameter.addBounds(new RealParameter.DefaultBounds(1.0, 0.0, 1));
+        hiddenFrequencies.addBounds(new RealParameter.DefaultBounds(1.0, 0.0, hiddenFrequencies.getDimension()));
+        frequencies.addBounds(new RealParameter.DefaultBounds(1.0, 0.0, frequencies.getDimension()));
 
         cxo = xo.getChild(SWITCHING_RATE);
-        switchingRateParameter = (Parameter) cxo.getChild(Parameter.class);
+        switchingRateParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         BinaryCovarionModel.Version version = DEFAULT_VERSION;
         if (xo.hasAttribute(VERSION)) {
@@ -106,15 +106,15 @@ public class BinaryCovarionModelParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(FREQUENCIES, Parameter.class),
-            new ElementRule(HIDDEN_FREQUENCIES, Parameter.class),
+            new ElementRule(FREQUENCIES, RealParameter.class),
+            new ElementRule(HIDDEN_FREQUENCIES, RealParameter.class),
             new ElementRule(ALPHA,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class, true)}
+                            new ElementRule(RealParameter.class, true)}
             ),
             new ElementRule(SWITCHING_RATE,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class, true)}
+                            new ElementRule(RealParameter.class, true)}
             ),
             AttributeRule.newStringRule(VERSION, true),
     };

@@ -26,7 +26,7 @@
 package dr.evomodelxml.operators;
 
 import dr.xml.*;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.operators.MCMCOperator;
 
 /**
@@ -49,12 +49,12 @@ public class MsatBitFlipOperatorParser extends AbstractXMLObjectParser{
 		return null;
 		/*
              double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
-        Parameter modelChoose = (Parameter) xo.getElementFirstChild(MODEL_CHOOSE);
-        Parameter dependencies = (Parameter)xo.getElementFirstChild(DEPENDENCIES);
+        RealParameter modelChoose = (RealParameter) xo.getElementFirstChild(MODEL_CHOOSE);
+        RealParameter dependencies = (RealParameter)xo.getElementFirstChild(DEPENDENCIES);
         int[] variableIndices;
             if(xo.hasChildNamed(VARIABLE_INDICES)){
 
-                double[] temp = ((Parameter)xo.getElementFirstChild(VARIABLE_INDICES)).getParameterValues();
+                double[] temp = ((RealParameter)xo.getElementFirstChild(VARIABLE_INDICES)).getParameterValues();
                 variableIndices = new int[temp.length];
                 for(int i = 0; i < temp.length;i++){
                     variableIndices[i] = (int)temp[i];
@@ -86,8 +86,8 @@ public class MsatBitFlipOperatorParser extends AbstractXMLObjectParser{
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
-            new ElementRule(MODEL_CHOOSE, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-            new ElementRule(DEPENDENCIES, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-            new ElementRule(VARIABLE_INDICES, new XMLSyntaxRule[]{new ElementRule(Parameter.class)},true)
+            new ElementRule(MODEL_CHOOSE, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+            new ElementRule(DEPENDENCIES, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+            new ElementRule(VARIABLE_INDICES, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},true)
     };
 }

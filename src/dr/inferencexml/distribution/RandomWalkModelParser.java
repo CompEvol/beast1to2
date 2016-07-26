@@ -28,7 +28,7 @@ package dr.inferencexml.distribution;
 import dr.inference.distribution.DistributionLikelihood;
 import dr.inference.distribution.ParametricDistributionModel;
 import dr.inference.distribution.RandomWalkModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -50,7 +50,7 @@ public class RandomWalkModelParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        Parameter data = (Parameter) xo.getChild(Parameter.class);
+        RealParameter data = (RealParameter) xo.getChild(RealParameter.class);
         ParametricDistributionModel distribution = (ParametricDistributionModel) xo.getChild(ParametricDistributionModel.class);
 
         boolean logScale = false;
@@ -73,7 +73,7 @@ public class RandomWalkModelParser extends AbstractXMLObjectParser {
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             AttributeRule.newBooleanRule(LOG_SCALE, true),
-            new ElementRule(Parameter.class),
+            new ElementRule(RealParameter.class),
             new XORRule(
                     new ElementRule(ParametricDistributionModel.class),
                     new ElementRule(DistributionLikelihood.class)

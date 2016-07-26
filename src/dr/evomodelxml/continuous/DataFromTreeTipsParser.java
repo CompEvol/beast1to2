@@ -28,7 +28,7 @@ package dr.evomodelxml.continuous;
 import dr.evolution.tree.MultivariateTraitTree;
 import dr.evomodelxml.treelikelihood.TreeTraitParserUtilities;
 import dr.inference.model.MatrixParameter;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -71,7 +71,7 @@ public class DataFromTreeTipsParser extends AbstractXMLObjectParser {
             new ElementRule(MultivariateTraitTree.class),
             AttributeRule.newStringRule(TreeTraitParserUtilities.TRAIT_NAME),
             new ElementRule(TreeTraitParserUtilities.TRAIT_PARAMETER, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }),
     };
 

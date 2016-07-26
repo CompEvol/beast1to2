@@ -25,10 +25,10 @@
 
 package dr.evomodelxml.tree;
 
-import dr.evolution.tree.Tree;
+//import dr.evolution.tree.Tree;
 import dr.evomodel.tree.StarTreeModel;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+import beast.evolution.tree.Tree;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -62,19 +62,19 @@ public class StarTreeModelParser extends AbstractXMLObjectParser {
         rules = new XMLSyntaxRule[]{
                 new ElementRule(Tree.class),
                 new XORRule(
-                        new ElementRule(ROOT_HEIGHT, Parameter.class, "A parameter definition with id only (cannot be a reference!)", false),
-                        new ElementRule(SHARE_ROOT, TreeModel.class)
+                        new ElementRule(ROOT_HEIGHT, RealParameter.class, "A parameter definition with id only (cannot be a reference!)", false),
+                        new ElementRule(SHARE_ROOT, Tree.class)
                 ),
                 new ElementRule(LEAF_HEIGHT,
                         new XMLSyntaxRule[]{
                                 AttributeRule.newStringRule(TAXON, false, "The name of the taxon for the leaf"),
-                                new ElementRule(Parameter.class, "A parameter definition with id only (cannot be a reference!)")
+                                new ElementRule(RealParameter.class, "A parameter definition with id only (cannot be a reference!)")
                         }, 0, Integer.MAX_VALUE),
                 new ElementRule(LEAF_TRAIT,
                         new XMLSyntaxRule[]{
                                 AttributeRule.newStringRule(TAXON, false, "The name of the taxon for the leaf"),
                                 AttributeRule.newStringRule(NAME, false, "The name of the trait attribute in the taxa"),
-                                new ElementRule(Parameter.class, "A parameter definition with id only (cannot be a reference!)")
+                                new ElementRule(RealParameter.class, "A parameter definition with id only (cannot be a reference!)")
                         }, 0, Integer.MAX_VALUE)
         };
     }
@@ -107,14 +107,14 @@ public class StarTreeModelParser extends AbstractXMLObjectParser {
 
                     if (cxo.getRawChild(0) instanceof Reference) {
                         // Co-opt existing parameter
-//                        treeModel.setRootHeightParameter((Parameter) cxo.getChild(Parameter.class));
+//                        treeModel.setRootHeightParameter((RealParameter) cxo.getChild(RealParameter.class));
                         throw new XMLParseException("Can not provide idref to a new root height parameter");
                     } else {
                         ParameterParser.replaceParameter(cxo, treeModel.getRootHeightParameter());
                     }
 
                 } else if (cxo.getName().equals(SHARE_ROOT)) {
-                    TreeModel sharedRoot = (TreeModel) cxo.getChild(TreeModel.class);
+                    Tree sharedRoot = (Tree) cxo.getChild(Tree.class);
                     treeModel.setSharedRootHeightParameter(sharedRoot);
                 } else if (cxo.getName().equals(LEAF_HEIGHT)) {
 
@@ -198,7 +198,7 @@ public class StarTreeModelParser extends AbstractXMLObjectParser {
                     }
                     NodeRef node = treeModel.getExternalNode(index);
 
-                    Parameter parameter = treeModel.getNodeTraitParameter(node, name);
+                    RealParameter parameter = treeModel.getNodeTraitParameter(node, name);
 
                     if (parameter == null)
                         throw new XMLParseException("trait '" + name + "' not found for leafTrait (taxon, " + taxonName + ") element in treeModel element");

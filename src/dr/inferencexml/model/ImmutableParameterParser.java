@@ -1,6 +1,6 @@
 package dr.inferencexml.model;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.model.Statistic;
 import dr.xml.*;
 
@@ -18,7 +18,7 @@ public class ImmutableParameterParser extends AbstractXMLObjectParser {
 		/*
         final Statistic statistic = (Statistic) xo.getChild(Statistic.class);
 
-        Parameter.Abstract immutableParameter = new Parameter.Abstract() {
+        RealParameter.Abstract immutableParameter = new RealParameter.Abstract() {
             public void setParameterValueNotifyChangedAll(int dim, double value) {
                 throw new RuntimeException("Forbidden call to ImmutableParameter.");
             }
@@ -45,7 +45,7 @@ public class ImmutableParameterParser extends AbstractXMLObjectParser {
                     return "immutable." + statistic.getStatisticName();
                 return getId();
             }
-            public void adoptValues(Parameter source) {
+            public void adoptValues(RealParameter source) {
                 throw new RuntimeException("Forbidden call to ImmutableParameter.");
             }
             public void addDimension(int index, double value) {
@@ -82,7 +82,7 @@ public class ImmutableParameterParser extends AbstractXMLObjectParser {
 
     @Override
 	public Class getReturnType() {
-        return Parameter.class;
+        return RealParameter.class;
     }
 
     @Override

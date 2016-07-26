@@ -28,7 +28,7 @@ package dr.evomodelxml.substmodel;
 import dr.evolution.datatype.GeneticCode;
 import dr.evomodel.substmodel.FrequencyModel;
 import dr.evomodel.substmodel.YangCodonModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -83,8 +83,8 @@ public class YangCodonModelParser extends AbstractXMLObjectParser {
             }
         }
 
-        Parameter omegaParam = (Parameter)xo.getElementFirstChild(OMEGA);
-        Parameter kappaParam = (Parameter)xo.getElementFirstChild(KAPPA);
+        RealParameter omegaParam = (RealParameter)xo.getElementFirstChild(OMEGA);
+        RealParameter kappaParam = (RealParameter)xo.getElementFirstChild(KAPPA);
         FrequencyModel freqModel = (FrequencyModel)xo.getChild(FrequencyModel.class);
 
 //            codonModel.printRateMap();
@@ -127,9 +127,9 @@ public class YangCodonModelParser extends AbstractXMLObjectParser {
                 GeneticCode.BLEPHARISMA_NUC.getName(),
                 GeneticCode.NO_STOPS.getName()}, true),
         new ElementRule(OMEGA,
-            new XMLSyntaxRule[] { new ElementRule(Parameter.class) }),
+            new XMLSyntaxRule[] { new ElementRule(RealParameter.class) }),
         new ElementRule(KAPPA,
-            new XMLSyntaxRule[] { new ElementRule(Parameter.class) }),
+            new XMLSyntaxRule[] { new ElementRule(RealParameter.class) }),
         new ElementRule(FrequencyModel.class)
     };
 }

@@ -27,7 +27,7 @@ package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.EmpiricalPiecewiseModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -60,16 +60,16 @@ public class EmpiricalPiecewiseModelParser extends AbstractXMLObjectParser {
         double[] intervalWidths = cxo.getDoubleArrayAttribute("values");
 
         cxo = xo.getChild(POPULATION_SIZES);
-        Parameter popSizes = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter popSizes = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(TAU);
-        Parameter scaleParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter scaleParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(THRESHOLD);
-        Parameter bParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter bParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(LAG);
-        Parameter offsetParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter offsetParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         return new EmpiricalPiecewiseModel(intervalWidths, popSizes, scaleParam, bParam, offsetParam, units);
     */
@@ -100,16 +100,16 @@ public class EmpiricalPiecewiseModelParser extends AbstractXMLObjectParser {
                     new XMLSyntaxRule[]{AttributeRule.newDoubleArrayRule("values", false),}),
             XMLUnits.SYNTAX_RULES[0],
             new ElementRule(POPULATION_SIZES,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                     "The effective population sizes of each interval."),
             new ElementRule(TAU,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                     "The scale factor."),
             new ElementRule(THRESHOLD,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                     "The threshold before counts occur."),
             new ElementRule(LAG,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                     "The lag between actual population sizes and genetic diversity.")
     };
 }

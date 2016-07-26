@@ -29,7 +29,7 @@ import dr.evolution.datatype.Microsatellite;
 import dr.evomodel.substmodel.FrequencyModel;
 import dr.evomodel.substmodel.OnePhaseModel;
 import dr.evomodel.substmodel.TwoPhaseModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -62,13 +62,13 @@ public class TwoPhaseModelParser extends AbstractXMLObjectParser{
         OnePhaseModel subModel = (OnePhaseModel) xo.getElementFirstChild(SUBMODEL);
         Microsatellite dataType = (Microsatellite)xo.getChild(Microsatellite.class);
 
-        Parameter.Default geoParam =(Parameter.Default) xo.getElementFirstChild(GEO_PARAM);
+        RealParameter.Default geoParam =(RealParameter.Default) xo.getElementFirstChild(GEO_PARAM);
 
-        Parameter paramP = (Parameter) xo.getElementFirstChild(ONEPHASEPR_PARAM);
+        RealParameter paramP = (RealParameter) xo.getElementFirstChild(ONEPHASEPR_PARAM);
 
-        Parameter limitE = null;
+        RealParameter limitE = null;
         if(xo.hasChildNamed(TRANS_PARAM)){
-            limitE = (Parameter) xo.getElementFirstChild(TRANS_PARAM);
+            limitE = (RealParameter) xo.getElementFirstChild(TRANS_PARAM);
         }
 
         boolean estimateSubmodelParams =  xo.getAttribute(ESTIMATE_SUBMODEL_PARAMS,false);
@@ -96,9 +96,9 @@ public class TwoPhaseModelParser extends AbstractXMLObjectParser{
         new ElementRule(Microsatellite.class),
         new ElementRule(FrequencyModelParser.FREQUENCIES, new XMLSyntaxRule[]{new ElementRule(FrequencyModel.class)},true),
         new ElementRule(SUBMODEL,new XMLSyntaxRule[]{new ElementRule(OnePhaseModel.class)}),
-        new ElementRule(ONEPHASEPR_PARAM,new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-        new ElementRule(GEO_PARAM,new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-        new ElementRule(TRANS_PARAM,new XMLSyntaxRule[]{new ElementRule(Parameter.class)},true),
+        new ElementRule(ONEPHASEPR_PARAM,new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+        new ElementRule(GEO_PARAM,new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+        new ElementRule(TRANS_PARAM,new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},true),
         new StringAttributeRule(ESTIMATE_SUBMODEL_PARAMS,"whether or not to esitmate the parameters of the submodel",true)
     };
 

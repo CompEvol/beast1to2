@@ -26,7 +26,7 @@
 package dr.evoxml;
 
 import dr.xml.*;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.model.PearsonCorrelation;
 
 /**
@@ -48,8 +48,8 @@ public class PearsonCorrelationParser extends AbstractXMLObjectParser {
 		/*
 
         boolean log = xo.getAttribute(LOG, false);
-        Parameter X = (Parameter)xo.getChild(0);
-        Parameter Y = (Parameter)xo.getChild(1);
+        RealParameter X = (RealParameter)xo.getChild(0);
+        RealParameter Y = (RealParameter)xo.getChild(1);
 
         // System.out.println("Correlating " + X + " with " + Y + " using log = " + log);
         PearsonCorrelation pearsonCorrelation = new PearsonCorrelation(X, Y, log);
@@ -83,7 +83,7 @@ public class PearsonCorrelationParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
         // There should be two and only two Parameters (X & Y)
-        new ElementRule(Parameter.class, 2, 2),
+        new ElementRule(RealParameter.class, 2, 2),
         // the optional log attribute has to be a Boolean
         AttributeRule.newBooleanRule(LOG, true),
     };

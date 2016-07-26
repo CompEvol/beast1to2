@@ -109,7 +109,7 @@ public class CoalescentLikelihoodParser extends AbstractXMLObjectParser {
         XMLObject cxo = xo.getChild(MODEL);
         DemographicModel demoModel = (DemographicModel) cxo.getChild(DemographicModel.class);
 
-        List<TreeModel> trees = new ArrayList<TreeModel>();
+        List<Tree> trees = new ArrayList<Tree>();
         List<Double> popFactors = new ArrayList<Double>();
         MultiLociTreeSet treesSet = demoModel instanceof MultiLociTreeSet ? (MultiLociTreeSet) demoModel : null;
 
@@ -118,7 +118,7 @@ public class CoalescentLikelihoodParser extends AbstractXMLObjectParser {
             if (child instanceof XMLObject) {
                 cxo = (XMLObject) child;
                 if (cxo.getName().equals(POPULATION_TREE)) {
-                    final TreeModel t = (TreeModel) cxo.getChild(TreeModel.class);
+                    final Tree t = (Tree) cxo.getChild(Tree.class);
                     assert t != null;
                     trees.add(t);
 
@@ -131,7 +131,7 @@ public class CoalescentLikelihoodParser extends AbstractXMLObjectParser {
 //                }
         }
 
-        TreeModel treeModel = null;
+        Tree treeModel = null;
         if (trees.size() == 1 && popFactors.get(0) == 1.0) {
             treeModel = trees.get(0);
         } else if (trees.size() > 1) {

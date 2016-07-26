@@ -27,7 +27,7 @@ package dr.evomodelxml.operators;
 
 import dr.inference.operators.MCMCOperator;
 import dr.evomodel.operators.MsatSingleAncestralStateGibbsOperator;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 import dr.evomodel.tree.MicrosatelliteSamplerTreeModel;
 import dr.evomodel.substmodel.MicrosatelliteModel;
@@ -48,7 +48,7 @@ public class MsatSingleAncestralStateGibbsOperatorParser extends AbstractXMLObje
 		return null;
 		/*
         final double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
-        final Parameter parameter = (Parameter)xo.getChild(Parameter.class);
+        final RealParameter parameter = (RealParameter)xo.getChild(RealParameter.class);
         final MicrosatelliteSamplerTreeModel msatSamplerTreeModel = (MicrosatelliteSamplerTreeModel)xo.getChild(MicrosatelliteSamplerTreeModel.class);
         final MicrosatelliteModel msatModel = (MicrosatelliteModel)xo.getChild(MicrosatelliteModel.class);
         final BranchRateModel branchRateModel = (BranchRateModel)xo.getChild(BranchRateModel.class);
@@ -73,7 +73,7 @@ public class MsatSingleAncestralStateGibbsOperatorParser extends AbstractXMLObje
     }
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
-            new ElementRule(Parameter.class),
+            new ElementRule(RealParameter.class),
             new ElementRule(MicrosatelliteSamplerTreeModel.class),
             new ElementRule(MicrosatelliteModel.class),
             new ElementRule(BranchRateModel.class)

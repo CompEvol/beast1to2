@@ -29,9 +29,9 @@ import dr.evolution.alignment.PatternList;
 import dr.evomodel.MSSD.ALSTreeLikelihood;
 import dr.evomodel.branchratemodel.BranchRateModel;
 import dr.evomodel.sitemodel.SiteModel;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.evomodelxml.treelikelihood.TreeLikelihoodParser;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -73,15 +73,15 @@ public class ALSTreeLikelihoodParser extends AbstractXMLObjectParser {
 
 
         PatternList patternList = (PatternList) xo.getChild(PatternList.class);
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
         SiteModel siteModel = (SiteModel) xo.getChild(SiteModel.class);
         BranchRateModel branchRateModel = (BranchRateModel) xo.getChild(BranchRateModel.class);
-        Parameter mu = ((MutationDeathModel) siteModel.getSubstitutionModel()).getDeathParameter();
-        Parameter lam;
+        RealParameter mu = ((MutationDeathModel) siteModel.getSubstitutionModel()).getDeathParameter();
+        RealParameter lam;
         if (!integrateGainRate) {
-            lam = (Parameter) xo.getElementFirstChild(IMMIGRATION_RATE);
+            lam = (RealParameter) xo.getElementFirstChild(IMMIGRATION_RATE);
         } else {
-            lam = new Parameter.Default("gainRate", 1.0, 0.001, 1.999);
+            lam = new RealParameter.Default("gainRate", 1.0, 0.001, 1.999);
         }
         AbstractObservationProcess observationProcess = null;
 
@@ -139,9 +139,9 @@ public class ALSTreeLikelihoodParser extends AbstractXMLObjectParser {
             AttributeRule.newBooleanRule(TreeLikelihoodParser.STORE_PARTIALS, true),
             AttributeRule.newBooleanRule(INTEGRATE_GAIN_RATE),
             AttributeRule.newBooleanRule(FORCE_RESCALING, true),
-            new ElementRule(IMMIGRATION_RATE, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}, true),
+            new ElementRule(IMMIGRATION_RATE, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}, true),
             new ElementRule(PatternList.class),
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             new ElementRule(SiteModel.class),
             new ElementRule(BranchRateModel.class, true),
             new ElementRule(OBSERVATION_PROCESS,

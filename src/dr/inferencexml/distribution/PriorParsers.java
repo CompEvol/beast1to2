@@ -110,7 +110,7 @@ public class PriorParsers {
                     System.out.println(xo.getChild(j));
                 }
                 if (xo.getChild(j) instanceof Function) {
-                	x = (Parameter<?>) xo.getChild(j);
+                	x = (RealParameter) xo.getChild(j);
                 } else {
                     throw new XMLParseException("illegal element in " + xo.getName() + " element");
                 }

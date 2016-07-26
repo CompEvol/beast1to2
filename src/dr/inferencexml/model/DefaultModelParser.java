@@ -26,7 +26,7 @@
 package dr.inferencexml.model;
 
 import dr.inference.model.DefaultModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.AbstractXMLObjectParser;
 import dr.xml.ElementRule;
 import dr.xml.XMLObject;
@@ -53,7 +53,7 @@ public class DefaultModelParser extends AbstractXMLObjectParser {
         DefaultModel likelihood = new DefaultModel();
 
         for (int i = 0; i < xo.getChildCount(); i++) {
-            Parameter parameter = (Parameter) xo.getChild(i);
+            RealParameter parameter = (RealParameter) xo.getChild(i);
             likelihood.addVariable(parameter);
         }
 
@@ -81,7 +81,7 @@ public class DefaultModelParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(Parameter.class, 1, Integer.MAX_VALUE)
+            new ElementRule(RealParameter.class, 1, Integer.MAX_VALUE)
     };
 
 }

@@ -25,7 +25,7 @@
 
 package dr.inferencexml.model;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.AbstractXMLObjectParser;
 import dr.xml.XMLObject;
 import dr.xml.XMLParseException;
@@ -48,8 +48,8 @@ public class DifferenceMatrixParameterParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        Parameter parameter1 = (Parameter) xo.getElementFirstChild(PARAMETER1);
-        Parameter parameter2 = (Parameter) xo.getElementFirstChild(PARAMETER2);
+        RealParameter parameter1 = (RealParameter) xo.getElementFirstChild(PARAMETER1);
+        RealParameter parameter2 = (RealParameter) xo.getElementFirstChild(PARAMETER2);
 //        if(parameter1.getDimension() != parameter2.getDimension()){
 //            throw new XMLParseException("Parameters in ratio '" + xo.getId() + "' must have the same dimension");
 //        }
@@ -72,7 +72,7 @@ public class DifferenceMatrixParameterParser extends AbstractXMLObjectParser {
 
     @Override
     public Class getReturnType() {
-        return Parameter.class;
+        return RealParameter.class;
     }
 
 

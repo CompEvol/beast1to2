@@ -28,7 +28,7 @@ package dr.evomodelxml.speciation;
 import dr.evomodel.speciation.SpeciesTreeBMPrior;
 import dr.evomodel.speciation.SpeciesTreeModel;
 import dr.inference.distribution.ParametricDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -66,8 +66,8 @@ public class SpeciesTreeBMPriorParser extends AbstractXMLObjectParser {
 
             //ParametricDistributionModel pr = (ParametricDistributionModel) xo.getChild(ParametricDistributionModel.class);
             final Object child = xo.getChild(SIGMA);
-            Parameter popSigma = child != null ? (Parameter)((XMLObject) child).getChild(Parameter.class) : null;
-            Parameter stSigma = (Parameter)((XMLObject)xo.getChild(STSIGMA)).getChild(Parameter.class);
+            RealParameter popSigma = child != null ? (RealParameter)((XMLObject) child).getChild(RealParameter.class) : null;
+            RealParameter stSigma = (RealParameter)((XMLObject)xo.getChild(STSIGMA)).getChild(RealParameter.class);
 
             final XMLObject cxo = (XMLObject) xo.getChild(TIPS);
             final ParametricDistributionModel tipsPrior =
@@ -85,8 +85,8 @@ public class SpeciesTreeBMPriorParser extends AbstractXMLObjectParser {
                     new ElementRule(TIPS,
                             new XMLSyntaxRule[] { new ElementRule(ParametricDistributionModel.class) }),
                     //new ElementRule(ParametricDistributionModel.class),
-                    new ElementRule(SIGMA, new XMLSyntaxRule[] { new ElementRule(Parameter.class) }, true),
-                    new ElementRule(STSIGMA, new XMLSyntaxRule[] { new ElementRule(Parameter.class) })
+                    new ElementRule(SIGMA, new XMLSyntaxRule[] { new ElementRule(RealParameter.class) }, true),
+                    new ElementRule(STSIGMA, new XMLSyntaxRule[] { new ElementRule(RealParameter.class) })
             };
         }
 }

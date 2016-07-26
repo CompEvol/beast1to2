@@ -27,7 +27,7 @@ package dr.evomodelxml.speciation;
 
 import dr.evolution.tree.Tree;
 import dr.evomodel.speciation.BetaSplittingModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -52,7 +52,7 @@ public class BetaSplittingModelParser extends AbstractXMLObjectParser {
 		/*
 
         XMLObject cxo = xo.getChild(PHI);
-        Parameter phiParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter phiParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(TREE);
         Tree tree = (Tree) cxo.getChild(Tree.class);
@@ -82,7 +82,7 @@ public class BetaSplittingModelParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             new ElementRule(PHI,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}, "A parameter that ranges from -infinity (comb-tree) to +infinity (balanced tree)"),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}, "A parameter that ranges from -infinity (comb-tree) to +infinity (balanced tree)"),
             new ElementRule(TREE,
                     new XMLSyntaxRule[]{new ElementRule(Tree.class)})
     };

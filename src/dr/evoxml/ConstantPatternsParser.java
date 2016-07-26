@@ -26,7 +26,7 @@
 package dr.evoxml;
 
 import dr.evolution.alignment.*;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -56,7 +56,7 @@ public class ConstantPatternsParser extends AbstractXMLObjectParser {
 		/*
 
         PatternList source = (PatternList)xo.getChild(PatternList.class);
-        Parameter constantPatternCounts = (Parameter) xo.getElementFirstChild(COUNTS);
+        RealParameter constantPatternCounts = (RealParameter) xo.getElementFirstChild(COUNTS);
 
         Patterns patterns = new Patterns(source.getDataType(), source);
 
@@ -81,7 +81,7 @@ public class ConstantPatternsParser extends AbstractXMLObjectParser {
             new ElementRule(PatternList.class),
             new ElementRule(COUNTS,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class)
+                            new ElementRule(RealParameter.class)
                     })
     };
 

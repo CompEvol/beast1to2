@@ -27,7 +27,7 @@ package dr.inferencexml.model;
 
 import dr.inference.model.DummyLikelihood;
 import dr.inference.model.Model;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -47,7 +47,7 @@ public class DummyLikelihoodParser extends AbstractXMLObjectParser {
 		/*
 
         Model model = (Model)xo.getChild(Model.class);
-        Parameter parameter = (Parameter)xo.getChild(Parameter.class);
+        RealParameter parameter = (RealParameter)xo.getChild(RealParameter.class);
 
         if (model == null) {
             model = new DefaultModel();
@@ -78,7 +78,7 @@ public class DummyLikelihoodParser extends AbstractXMLObjectParser {
     private final XMLSyntaxRule[] rules = {
             new XORRule(
                     new ElementRule(Model.class, "A model element"),
-                    new ElementRule(Parameter.class, "A parameter")
+                    new ElementRule(RealParameter.class, "A parameter")
             )
     };
 }

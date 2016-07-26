@@ -27,7 +27,7 @@ package dr.evomodelxml.tree;
 
 import dr.evomodel.tree.TipHeightLikelihood;
 import dr.inference.distribution.ParametricDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -52,7 +52,7 @@ public class TipHeightLikelihoodParser extends AbstractXMLObjectParser {
 		/*
 
         ParametricDistributionModel model = (ParametricDistributionModel) xo.getElementFirstChild(DISTRIBUTION);
-        Parameter tipHeights = (Parameter) xo.getElementFirstChild(TIP_HEIGHTS);
+        RealParameter tipHeights = (RealParameter) xo.getElementFirstChild(TIP_HEIGHTS);
 
         return new TipHeightLikelihood(model, tipHeights);
     */
@@ -71,7 +71,7 @@ public class TipHeightLikelihoodParser extends AbstractXMLObjectParser {
             new ElementRule(DISTRIBUTION,
                     new XMLSyntaxRule[]{new ElementRule(ParametricDistributionModel.class)}),
             new ElementRule(TIP_HEIGHTS,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
     };
 
     @Override

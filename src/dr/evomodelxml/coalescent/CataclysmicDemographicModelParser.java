@@ -27,7 +27,7 @@ package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.CataclysmicDemographicModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -57,27 +57,27 @@ public class CataclysmicDemographicModelParser extends AbstractXMLObjectParser {
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
         XMLObject cxo = xo.getChild(POPULATION_SIZE);
-        Parameter N0Param = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter N0Param = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(GROWTH_RATE);
-        Parameter rParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter rParam = (RealParameter) cxo.getChild(RealParameter.class);
 
-        Parameter secondParam = null;
+        RealParameter secondParam = null;
         boolean useSpike = true;
 
         if (xo.hasChildNamed(SPIKE_SIZE)) {
             cxo = xo.getChild(SPIKE_SIZE);
-            secondParam = (Parameter) cxo.getChild(Parameter.class);
+            secondParam = (RealParameter) cxo.getChild(RealParameter.class);
         } else if (xo.hasChildNamed(DECLINE_RATE)) {
             cxo = xo.getChild(DECLINE_RATE);
-            secondParam = (Parameter) cxo.getChild(Parameter.class);
+            secondParam = (RealParameter) cxo.getChild(RealParameter.class);
             useSpike = false;
         } else {
             throw new XMLParseException("Must provide either a spike factor or decline rate");
         }
 
         cxo = xo.getChild(TIME_OF_CATACLYSM);
-        Parameter tParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter tParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         return new CataclysmicDemographicModel(N0Param, secondParam, rParam, tParam, units, useSpike);
     */
@@ -104,18 +104,18 @@ public class CataclysmicDemographicModelParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             new ElementRule(POPULATION_SIZE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(GROWTH_RATE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                     "The rate of exponential growth before the cataclysmic event."),
             new XORRule(
                     new ElementRule(SPIKE_SIZE,
-                        new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                        new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                         "The factor larger the population size was at its height."),
                     new ElementRule(DECLINE_RATE,
-                            new XMLSyntaxRule[] { new ElementRule(Parameter.class)})),
+                            new XMLSyntaxRule[] { new ElementRule(RealParameter.class)})),
             new ElementRule(TIME_OF_CATACLYSM,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)},
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},
                     "The time of the cataclysmic event that lead to exponential decline."),
             XMLUnits.SYNTAX_RULES[0]
     };

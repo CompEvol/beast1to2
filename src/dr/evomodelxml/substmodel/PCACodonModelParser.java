@@ -30,7 +30,7 @@ import java.util.logging.Logger;
 import dr.evolution.datatype.DataType;
 import dr.evolution.datatype.GeneticCode;
 import dr.evomodel.substmodel.*;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -89,7 +89,7 @@ public class PCACodonModelParser extends AbstractXMLObjectParser {
         }
         
         // get number of PCs
-        Parameter pcaDimensionParameter = (Parameter)xo.getElementFirstChild(PCA_DIMENSION);
+        RealParameter pcaDimensionParameter = (RealParameter)xo.getElementFirstChild(PCA_DIMENSION);
         
         // get directory with pca rate matrix files; fallback to default "pcadata"
         String dirString = "pcadata";
@@ -180,7 +180,7 @@ public class PCACodonModelParser extends AbstractXMLObjectParser {
         	"The directory with the PCA data files",
             "pcadata", true),
         new ElementRule(PCA_DIMENSION,
-        	new XMLSyntaxRule[] { new ElementRule(Parameter.class) }),
+        	new XMLSyntaxRule[] { new ElementRule(RealParameter.class) }),
         new ElementRule(FrequencyModel.class, true)
     };
 }

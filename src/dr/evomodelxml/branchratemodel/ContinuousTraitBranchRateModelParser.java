@@ -28,7 +28,7 @@ package dr.evomodelxml.branchratemodel;
 import dr.evomodel.branchratemodel.BranchRateModel;
 import dr.evomodel.branchratemodel.ContinuousTraitBranchRateModel;
 import dr.evomodel.continuous.SampledMultivariateTraitLikelihood;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 public class ContinuousTraitBranchRateModelParser extends AbstractXMLObjectParser {
@@ -64,8 +64,8 @@ public class ContinuousTraitBranchRateModelParser extends AbstractXMLObjectParse
         Logger.getLogger("dr.evomodel").info("Using trait '" + trait + "' as log rate estimates.");
 
         if (xo.hasChildNamed(RATE)) {
-            Parameter rateParameter = (Parameter) xo.getElementFirstChild(RATE);
-            Parameter ratioParameter = (Parameter) xo.getElementFirstChild(RATIO);
+            RealParameter rateParameter = (RealParameter) xo.getElementFirstChild(RATE);
+            RealParameter ratioParameter = (RealParameter) xo.getElementFirstChild(RATIO);
 
             return new ContinuousTraitBranchRateModel(trait, rateParameter, ratioParameter);
         } else {
@@ -98,8 +98,8 @@ public class ContinuousTraitBranchRateModelParser extends AbstractXMLObjectParse
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
 //                AttributeRule.newStringRule(TRAIT, false, "The name of the trait that provides the log rates at nodes"),
             AttributeRule.newIntegerRule(DIMENSION, true, "The dimension that supplies the rate"),
-            new ElementRule(RATE, Parameter.class, "The rate parameter", true),
-            new ElementRule(RATIO, Parameter.class, "The ratio parameter", true),
+            new ElementRule(RATE, RealParameter.class, "The rate parameter", true),
+            new ElementRule(RATIO, RealParameter.class, "The ratio parameter", true),
             new ElementRule(SampledMultivariateTraitLikelihood.class, true),
     };
 

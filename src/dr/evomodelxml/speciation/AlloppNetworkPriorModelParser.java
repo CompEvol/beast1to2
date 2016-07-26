@@ -27,7 +27,7 @@ package dr.evomodelxml.speciation;
 
 import dr.evomodel.speciation.AlloppNetworkPriorModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.distribution.ParametricDistributionModel;
 import dr.xml.AbstractXMLObjectParser;
 import dr.xml.ElementRule;
@@ -106,9 +106,9 @@ public class AlloppNetworkPriorModelParser extends AbstractXMLObjectParser {
 		/*
 		final Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 		final XMLObject erXo = xo.getChild(EVENTRATE);
-		final Parameter eventrate = (Parameter) erXo.getChild(Parameter.class);
+		final RealParameter eventrate = (RealParameter) erXo.getChild(RealParameter.class);
         final XMLObject psfXo = xo.getChild(POPULATION_SCALING_FACTOR);
-        final Parameter popscalingfactor = (Parameter) psfXo.getChild(Parameter.class);
+        final RealParameter popscalingfactor = (RealParameter) psfXo.getChild(RealParameter.class);
         final XMLObject tpdXo = xo.getChild(TIP_POPULATION_DISTRIBUTION);
         ParametricDistributionModel tippopmodel = (ParametricDistributionModel) tpdXo.getChild(ParametricDistributionModel.class);
         final XMLObject rpdXo = xo.getChild(ROOT_POPULATION_DISTRIBUTION);
@@ -123,14 +123,14 @@ public class AlloppNetworkPriorModelParser extends AbstractXMLObjectParser {
 
 	private XMLSyntaxRule[] eventrateRules() {
 				return new XMLSyntaxRule[]{
-				new ElementRule(Parameter.class)
+				new ElementRule(RealParameter.class)
 		};
 	}
 
 
     private XMLSyntaxRule[] popscalingfactorRules() {
         return new XMLSyntaxRule[]{
-                new ElementRule(Parameter.class)
+                new ElementRule(RealParameter.class)
         };
     }
 

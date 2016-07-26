@@ -27,7 +27,7 @@ package dr.inferencexml.model;
 
 import dr.inference.model.IndianBuffetProcessPrior;
 import dr.inference.model.MatrixParameter;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -45,16 +45,16 @@ public class IndianBuffetProcessPriorParser extends AbstractXMLObjectParser {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
-        Parameter alpha=(Parameter) xo.getChild(ALPHA).getChild(0);
+        RealParameter alpha=(RealParameter) xo.getChild(ALPHA).getChild(0);
         MatrixParameter data=(MatrixParameter) xo.getChild(DATA).getChild(0);
-        Parameter beta;
+        RealParameter beta;
         if(xo.hasChildNamed(BETA))
         {
-            beta=(Parameter) xo.getChild(BETA).getChild(0);
+            beta=(RealParameter) xo.getChild(BETA).getChild(0);
         }
         else
         {
-            beta=new Parameter.Default(1);
+            beta=new RealParameter.Default(1);
         }
         return new IndianBuffetProcessPrior(alpha, beta, data);
     */
@@ -68,12 +68,12 @@ public class IndianBuffetProcessPriorParser extends AbstractXMLObjectParser {
     private final XMLSyntaxRule[] rules = {
             new ElementRule(BETA,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class)
+                            new ElementRule(RealParameter.class)
                     }
             , true),
             new ElementRule(ALPHA,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class)
+                            new ElementRule(RealParameter.class)
                     }
             ),
             new ElementRule(DATA,

@@ -28,7 +28,7 @@ package dr.inferencexml.distribution;
 import dr.inference.distribution.MultivariateDistributionLikelihood;
 import dr.inference.distribution.MultivariateNormalDistributionModel;
 import dr.inference.model.MatrixParameter;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -50,7 +50,7 @@ public class MultivariateNormalDistributionModelParser extends AbstractXMLObject
 		/*
 
         XMLObject cxo = xo.getChild(MultivariateDistributionLikelihood.MVN_MEAN);
-        Parameter mean = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter mean = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(MultivariateDistributionLikelihood.MVN_PRECISION);
         MatrixParameter precision = (MatrixParameter) cxo.getChild(MatrixParameter.class);
@@ -74,7 +74,7 @@ public class MultivariateNormalDistributionModelParser extends AbstractXMLObject
 
     private final XMLSyntaxRule[] rules = {
             new ElementRule(MultivariateDistributionLikelihood.MVN_MEAN,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(MultivariateDistributionLikelihood.MVN_PRECISION,
                     new XMLSyntaxRule[]{new ElementRule(MatrixParameter.class)}),
     };

@@ -93,7 +93,7 @@ public class GMRFSkyrideLikelihoodParser extends AbstractXMLObjectParser {
             }
         }
 
-//        TreeModel treeModel = (TreeModel) cxo.getChild(TreeModel.class);
+//        Tree treeModel = (Tree) cxo.getChild(Tree.class);
 
         cxo = xo.getChild(GROUP_SIZES);
         RealParameter groupParameter = null;
@@ -112,10 +112,10 @@ public class GMRFSkyrideLikelihoodParser extends AbstractXMLObjectParser {
             lambda = new RealParameter("1.0");
         }
         /*
-        Parameter gridPoints = null;
+        RealParameter gridPoints = null;
         if (xo.getChild(GRID_POINTS) != null) {
             cxo = xo.getChild(GRID_POINTS);
-            gridPoints = (Parameter) cxo.getChild(Parameter.class);
+            gridPoints = (RealParameter) cxo.getChild(RealParameter.class);
         }
         */
         RealParameter numGridPoints = null;

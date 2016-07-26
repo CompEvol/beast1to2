@@ -26,7 +26,7 @@
 package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.GPSkytrackAnalysis;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -72,10 +72,10 @@ public class GPSkytrackAnalysisParser extends AbstractXMLObjectParser {
 
 
 
-            Parameter numGridPoints = new Parameter.Default(0,1);
+            RealParameter numGridPoints = new RealParameter.Default(0,1);
             if (xo.getChild(N_GRID) != null) {
                 XMLObject cxo = xo.getChild(N_GRID);
-                numGridPoints = (Parameter) cxo.getChild(Parameter.class);
+                numGridPoints = (RealParameter) cxo.getChild(RealParameter.class);
             }
 
 
@@ -119,7 +119,7 @@ public class GPSkytrackAnalysisParser extends AbstractXMLObjectParser {
                     "the analysis"),
             new ElementRule(LOG_FILE_NAME, String.class, "The name of a BEAST log file"),
             new ElementRule(N_GRID, new XMLSyntaxRule[]{
-             new ElementRule(Parameter.class)
+             new ElementRule(RealParameter.class)
     })
     };
 

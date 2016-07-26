@@ -25,7 +25,7 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.operators.CenteredScaleOperator;
 import dr.inference.operators.CoercableMCMCOperator;
 import dr.inference.operators.MCMCOperator;
@@ -49,7 +49,7 @@ public class CenteredScaleOperatorParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+        RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
 
         double scale = xo.getDoubleAttribute(SCALE_FACTOR);
         double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
@@ -80,7 +80,7 @@ public class CenteredScaleOperatorParser extends AbstractXMLObjectParser {
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
             AttributeRule.newDoubleRule(SCALE_FACTOR),
             AttributeRule.newBooleanRule(CoercableMCMCOperator.AUTO_OPTIMIZE, true),
-            new ElementRule(Parameter.class)
+            new ElementRule(RealParameter.class)
     };
 
 }

@@ -92,7 +92,7 @@ public class ExchangeOperatorParser {
 		return null;
 		/*
 
-            final TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+            final Tree treeModel = (Tree) xo.getChild(Tree.class);
             final double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
             return new ExchangeOperator(ExchangeOperator.INTERMEDIATE, treeModel, weight);
         */

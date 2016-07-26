@@ -53,12 +53,12 @@ public class BuildCompoundSymmetricMatrix extends AbstractXMLObjectParser {
         int diag=xo.getAttribute(DIAGONAL,1);
         int offDiag=xo.getAttribute(OFF_DIAGONAL, 0);
         final String name = xo.hasId() ? xo.getId() : null;
-        Parameter[] answer = new Parameter[dim];
+        RealParameter[] answer = new RealParameter[dim];
 
 
 
         for (int i=0;i<dim; i++){
-            answer[i] = new Parameter.Default(dim);
+            answer[i] = new RealParameter.Default(dim);
             for(int j=0; j<dim; j++)
         {if(i==j) {
             answer[i].setParameterValue(j, diag);
@@ -87,6 +87,6 @@ public class BuildCompoundSymmetricMatrix extends AbstractXMLObjectParser {
 
     @Override
     public String getParserDescription() {
-        return "Returns a compound symmetric Matrix Parameter that is flexible, i.e. when exposed to a transition kernel can yield a result that is not compound symmetric";  //To change body of implemented methods use File | Settings | File Templates.
+        return "Returns a compound symmetric Matrix RealParameter that is flexible, i.e. when exposed to a transition kernel can yield a result that is not compound symmetric";  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

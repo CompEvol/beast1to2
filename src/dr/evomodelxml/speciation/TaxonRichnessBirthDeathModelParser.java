@@ -27,7 +27,7 @@ package dr.evomodelxml.speciation;
 
 import dr.evomodel.speciation.TaxonRichnessBirthDeathModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -55,12 +55,12 @@ public class TaxonRichnessBirthDeathModelParser extends AbstractXMLObjectParser 
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
         XMLObject cxo = xo.getChild(BIRTH_RATE);
-        Parameter brParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter brParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(BIRTH_RATE_INDICATORS);
-        Parameter indicatorsParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter indicatorsParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
-        Parameter meanRate = (Parameter) xo.getElementFirstChild(MEAN_RATE);
+        RealParameter meanRate = (RealParameter) xo.getElementFirstChild(MEAN_RATE);
 
         boolean ratesAsMultipliers = xo.getBooleanAttribute(RATES_AS_MULTIPLIERS);
 
@@ -91,11 +91,11 @@ public class TaxonRichnessBirthDeathModelParser extends AbstractXMLObjectParser 
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             new ElementRule(BIRTH_RATE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(BIRTH_RATE_INDICATORS,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(MEAN_RATE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             AttributeRule.newBooleanRule(RATES_AS_MULTIPLIERS),
             AttributeRule.newIntegerRule("dp", true),
             XMLUnits.SYNTAX_RULES[0]

@@ -26,7 +26,7 @@
 package dr.inferencexml.model;
 
 import dr.inference.model.MatrixParameter;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -55,11 +55,11 @@ public class MaskedMatrixParameterParser extends AbstractXMLObjectParser {
 //        System.err.println("parDim " + matrix.getParameterCount());
 
 
-        Parameter mask;
+        RealParameter mask;
 
         XMLObject cxo = xo.getChild(MASKING);
         if (cxo != null) {
-            mask = (Parameter) cxo.getChild(Parameter.class);
+            mask = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
             int from = xo.getAttribute(FROM, 1) - 1;
             int to = xo.getAttribute(TO, matrix.getRowDimension()) - 1;
@@ -72,7 +72,7 @@ public class MaskedMatrixParameterParser extends AbstractXMLObjectParser {
             if (every <= 0) throw new XMLParseException("illegal 'every' attribute in " + MASKED_MATRIX_PARAMETER
                     + " element");
 
-            mask = new Parameter.Default(matrix.getRowDimension(), 0.0);
+            mask = new RealParameter.Default(matrix.getRowDimension(), 0.0);
             for (int i = from; i <= to; i += every) {
                 mask.setParameterValue(i, 1.0);
             }
@@ -108,7 +108,7 @@ public class MaskedMatrixParameterParser extends AbstractXMLObjectParser {
             new ElementRule(MatrixParameter.class),
             new ElementRule(MASKING,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class)
+                            new ElementRule(RealParameter.class)
                     }, true),
             AttributeRule.newBooleanRule(COMPLEMENT, true),
             AttributeRule.newIntegerRule(FROM, true),

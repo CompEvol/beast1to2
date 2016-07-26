@@ -27,7 +27,7 @@ package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.ExponentialLogisticModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -59,19 +59,19 @@ public class ExponentialLogisticModelParser extends AbstractXMLObjectParser {
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
         XMLObject cxo = xo.getChild(POPULATION_SIZE);
-        Parameter N0Param = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter N0Param = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(LOGISTIC_GROWTH_RATE);
-        Parameter logGrowthParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter logGrowthParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(LOGISTIC_SHAPE);
-        Parameter shapeParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter shapeParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(EXPONENTIAL_GROWTH_RATE);
-        Parameter expGrowthParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter expGrowthParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(TRANSITION_TIME);
-        Parameter timeParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter timeParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         double alpha = xo.getDoubleAttribute(ALPHA);
 
@@ -101,15 +101,15 @@ public class ExponentialLogisticModelParser extends AbstractXMLObjectParser {
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             XMLUnits.SYNTAX_RULES[0],
             new ElementRule(POPULATION_SIZE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(LOGISTIC_GROWTH_RATE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(LOGISTIC_SHAPE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(EXPONENTIAL_GROWTH_RATE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(TRANSITION_TIME,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             AttributeRule.newDoubleRule(ALPHA)
     };
 }

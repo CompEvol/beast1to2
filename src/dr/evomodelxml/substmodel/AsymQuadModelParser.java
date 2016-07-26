@@ -28,7 +28,7 @@ package dr.evomodelxml.substmodel;
 import dr.evolution.datatype.Microsatellite;
 import dr.evomodel.substmodel.AsymmetricQuadraticModel;
 import dr.evomodel.substmodel.FrequencyModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -61,17 +61,17 @@ public class AsymQuadModelParser extends AbstractXMLObjectParser{
 
         Microsatellite microsatellite = (Microsatellite) xo.getChild(Microsatellite.class);
 
-        Parameter expanConst = processModelParameter(xo, EXPANSION_CONSTANT);
+        RealParameter expanConst = processModelParameter(xo, EXPANSION_CONSTANT);
 
-        Parameter expanLin = processModelParameter(xo, EXPANSION_LIN);
+        RealParameter expanLin = processModelParameter(xo, EXPANSION_LIN);
 
-        Parameter expanQuad = processModelParameter(xo, EXPANSION_QUAD);
+        RealParameter expanQuad = processModelParameter(xo, EXPANSION_QUAD);
 
-        Parameter contractConst = processModelParameter(xo, CONTRACTION_CONSTANT);
+        RealParameter contractConst = processModelParameter(xo, CONTRACTION_CONSTANT);
 
-        Parameter contractLin = processModelParameter(xo, CONTRACTION_LIN);
+        RealParameter contractLin = processModelParameter(xo, CONTRACTION_LIN);
 
-        Parameter contractQuad = processModelParameter(xo, CONTRACTION_QUAD);
+        RealParameter contractQuad = processModelParameter(xo, CONTRACTION_QUAD);
 
         //get FrequencyModel
         FrequencyModel freqModel = null;
@@ -95,12 +95,12 @@ public class AsymQuadModelParser extends AbstractXMLObjectParser{
     */
 		}
 
-    private Parameter processModelParameter(XMLObject xo,
+    private RealParameter processModelParameter(XMLObject xo,
                                           String parameterName)throws XMLParseException{
-        Parameter param = null;
+        RealParameter param = null;
         if(xo.hasChildNamed(parameterName)){
             XMLObject paramXO = xo.getChild(parameterName);
-            param =(Parameter) paramXO.getChild(Parameter.class);           
+            param =(RealParameter) paramXO.getChild(RealParameter.class);           
         }
         return param;
     }
@@ -118,12 +118,12 @@ public class AsymQuadModelParser extends AbstractXMLObjectParser{
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             new ElementRule(Microsatellite.class),
             new ElementRule(FrequencyModel.class,true),
-            new ElementRule(EXPANSION_CONSTANT,new XMLSyntaxRule[]{new ElementRule(Parameter.class)},true),
-            new ElementRule(CONTRACTION_CONSTANT,new XMLSyntaxRule[]{new ElementRule(Parameter.class)},true),
-            new ElementRule(EXPANSION_LIN,new XMLSyntaxRule[]{new ElementRule(Parameter.class)},true),
-            new ElementRule(CONTRACTION_LIN,new XMLSyntaxRule[]{new ElementRule(Parameter.class)},true),
-            new ElementRule(EXPANSION_QUAD,new XMLSyntaxRule[]{new ElementRule(Parameter.class)},true),
-            new ElementRule(CONTRACTION_QUAD,new XMLSyntaxRule[]{new ElementRule(Parameter.class)},true),
+            new ElementRule(EXPANSION_CONSTANT,new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},true),
+            new ElementRule(CONTRACTION_CONSTANT,new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},true),
+            new ElementRule(EXPANSION_LIN,new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},true),
+            new ElementRule(CONTRACTION_LIN,new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},true),
+            new ElementRule(EXPANSION_QUAD,new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},true),
+            new ElementRule(CONTRACTION_QUAD,new XMLSyntaxRule[]{new ElementRule(RealParameter.class)},true),
             AttributeRule.newBooleanRule(IS_SUBMODEL,true)
     };
 

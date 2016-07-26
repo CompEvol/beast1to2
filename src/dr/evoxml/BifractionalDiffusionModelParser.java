@@ -26,7 +26,7 @@
 package dr.evoxml;
 
 import dr.xml.*;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.evomodel.continuous.MultivariateDiffusionModel;
 
 /**
@@ -51,10 +51,10 @@ public class BifractionalDiffusionModelParser extends AbstractXMLObjectParser {
 		/*
 
             XMLObject cxo = xo.getChild(ALPHA_PARAMETER);
-            Parameter alpha = (Parameter) cxo.getChild(Parameter.class);
+            RealParameter alpha = (RealParameter) cxo.getChild(RealParameter.class);
 
             cxo = xo.getChild(BETA_PARAMETER);
-            Parameter beta = (Parameter) cxo.getChild(Parameter.class);
+            RealParameter beta = (RealParameter) cxo.getChild(RealParameter.class);
 
             return new BifractionalDiffusionModel(alpha, beta);
         */
@@ -76,9 +76,9 @@ public class BifractionalDiffusionModelParser extends AbstractXMLObjectParser {
 
         private final XMLSyntaxRule[] rules = {
                 new ElementRule(ALPHA_PARAMETER,
-                        new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                        new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
                 new ElementRule(BETA_PARAMETER,
-                        new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                        new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
         };
 
         @Override

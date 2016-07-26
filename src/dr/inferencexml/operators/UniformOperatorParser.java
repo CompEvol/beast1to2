@@ -72,7 +72,7 @@ public class UniformOperatorParser extends AbstractXMLObjectParser {
 		/*
 
         double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
-        Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+        RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
 
         if( parameter.getDimension() == 0 ) {
              throw new XMLParseException("parameter with 0 dimension.");

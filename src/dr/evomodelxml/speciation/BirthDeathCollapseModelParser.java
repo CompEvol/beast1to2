@@ -34,7 +34,7 @@ package dr.evomodelxml.speciation;
 import dr.evolution.tree.Tree;
 import dr.evomodel.speciation.BirthDeathCollapseModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 
@@ -75,10 +75,10 @@ public class BirthDeathCollapseModelParser extends AbstractXMLObjectParser {
         XMLObject cxo = xo.getChild(TREE);
         final Tree tree = (Tree) cxo.getChild(Tree.class);
 
-        final Parameter birthMinusDeath = (Parameter) xo.getElementFirstChild(BIRTHDIFF_RATE);
-        final Parameter relativeDeathRate = (Parameter) xo.getElementFirstChild(RELATIVE_DEATH_RATE);
-        final Parameter originHeight = (Parameter) xo.getElementFirstChild(ORIGIN_HEIGHT);
-        final Parameter collapseWeight = (Parameter) xo.getElementFirstChild(COLLAPSE_WEIGHT);
+        final RealParameter birthMinusDeath = (RealParameter) xo.getElementFirstChild(BIRTHDIFF_RATE);
+        final RealParameter relativeDeathRate = (RealParameter) xo.getElementFirstChild(RELATIVE_DEATH_RATE);
+        final RealParameter originHeight = (RealParameter) xo.getElementFirstChild(ORIGIN_HEIGHT);
+        final RealParameter collapseWeight = (RealParameter) xo.getElementFirstChild(COLLAPSE_WEIGHT);
 
         final String modelName = xo.getId();
 
@@ -109,10 +109,10 @@ public class BirthDeathCollapseModelParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             new ElementRule(TREE, new XMLSyntaxRule[]{new ElementRule(Tree.class)}),
-            new ElementRule(BIRTHDIFF_RATE, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-            new ElementRule(RELATIVE_DEATH_RATE, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-            new ElementRule(ORIGIN_HEIGHT, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-            new ElementRule(COLLAPSE_WEIGHT, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+            new ElementRule(BIRTHDIFF_RATE, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+            new ElementRule(RELATIVE_DEATH_RATE, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+            new ElementRule(ORIGIN_HEIGHT, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+            new ElementRule(COLLAPSE_WEIGHT, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             XMLUnits.SYNTAX_RULES[0],
             newDoubleRule(COLLAPSE_HEIGHT),
     };

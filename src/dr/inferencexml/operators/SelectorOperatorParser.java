@@ -25,7 +25,7 @@
 
 package dr.inferencexml.operators;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.operators.MCMCOperator;
 import dr.inference.operators.SelectorOperator;
 import dr.xml.*;
@@ -46,7 +46,7 @@ public class SelectorOperatorParser extends AbstractXMLObjectParser {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
-        final Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+        final RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
         final double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
         final SelectorOperator op = new SelectorOperator(parameter);
         op.setWeight(weight);
@@ -72,7 +72,7 @@ public class SelectorOperatorParser extends AbstractXMLObjectParser {
 	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
                 AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
-                new ElementRule(Parameter.class),
+                new ElementRule(RealParameter.class),
         };
     }
 }

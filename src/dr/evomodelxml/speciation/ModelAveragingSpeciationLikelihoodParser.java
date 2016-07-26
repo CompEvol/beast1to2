@@ -28,7 +28,7 @@ package dr.evomodelxml.speciation;
 import dr.evolution.tree.Tree;
 import dr.evomodel.speciation.MaskableSpeciationModel;
 import dr.evomodel.speciation.ModelAveragingSpeciationLikelihood;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.model.Variable;
 import dr.xml.*;
 
@@ -73,7 +73,7 @@ public class ModelAveragingSpeciationLikelihoodParser extends AbstractXMLObjectP
 
 //        cxo = xo.getChild(INDEX);
         index = (Variable<Integer>) xo.getElementFirstChild(INDEX); // integer index parameter size = real size - 1
-        Parameter maxIndex = (Parameter) xo.getElementFirstChild(MAX_INDEX);
+        RealParameter maxIndex = (RealParameter) xo.getElementFirstChild(MAX_INDEX);
 //        System.out.println(index.getClass());
 //        for (int i=0; i<index.getSize(); i++) {
 //            System.out.println(index.getValue(i).getClass());
@@ -126,7 +126,7 @@ public class ModelAveragingSpeciationLikelihoodParser extends AbstractXMLObjectP
                     new ElementRule(Variable.class)
             }),
             new ElementRule(MAX_INDEX, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }, true),
     };
 

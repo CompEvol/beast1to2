@@ -28,7 +28,7 @@ package dr.evomodelxml.speciation;
 import dr.evomodel.speciation.SpeciesTreeModel;
 import dr.evomodel.speciation.SpeciesTreeSimplePrior;
 import dr.inference.distribution.ParametricDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -60,7 +60,7 @@ public class SpeciesTreeSimplePriorParser extends AbstractXMLObjectParser {
             SpeciesTreeModel st = (SpeciesTreeModel) xo.getChild(SpeciesTreeModel.class);
 
             //ParametricDistributionModel pr = (ParametricDistributionModel) xo.getChild(ParametricDistributionModel.class);
-            Parameter pr = (Parameter)((XMLObject)xo.getChild("sigma")).getChild(Parameter.class);
+            RealParameter pr = (RealParameter)((XMLObject)xo.getChild("sigma")).getChild(RealParameter.class);
 
             final XMLObject cxo = xo.getChild(TIPS);
             final ParametricDistributionModel tipsPrior = (ParametricDistributionModel) cxo.getChild(ParametricDistributionModel.class);
@@ -76,7 +76,7 @@ public class SpeciesTreeSimplePriorParser extends AbstractXMLObjectParser {
                     new ElementRule(TIPS,
                             new XMLSyntaxRule[] { new ElementRule(ParametricDistributionModel.class) }),
                     //new ElementRule(ParametricDistributionModel.class),
-                    new ElementRule("sigma", new XMLSyntaxRule[] { new ElementRule(Parameter.class) })
+                    new ElementRule("sigma", new XMLSyntaxRule[] { new ElementRule(RealParameter.class) })
             };
         }
 }

@@ -29,7 +29,7 @@ import dr.evolution.alignment.Alignment;
 import dr.evomodel.indel.TKF91Likelihood;
 import dr.evomodel.indel.TKF91Model;
 import dr.evomodel.sitemodel.GammaSiteModel;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.xml.*;
 
 /**
@@ -52,7 +52,7 @@ public class TKF91LikelihoodParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        TreeModel tree = (TreeModel) xo.getChild(TreeModel.class);
+        Tree tree = (Tree) xo.getChild(Tree.class);
         Alignment alignment = (Alignment) xo.getChild(Alignment.class);
         GammaSiteModel siteModel = (GammaSiteModel) xo.getChild(GammaSiteModel.class);
         TKF91Model tkfModel = (TKF91Model) xo.getChild(TKF91Model.class);
@@ -82,7 +82,7 @@ public class TKF91LikelihoodParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             new ElementRule(Alignment.class),
             new ElementRule(GammaSiteModel.class),
             new ElementRule(TKF91Model.class)

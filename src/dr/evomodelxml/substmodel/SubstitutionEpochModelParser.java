@@ -27,7 +27,7 @@ package dr.evomodelxml.substmodel;
 
 import dr.evomodel.substmodel.AbstractSubstitutionModel;
 import dr.evomodel.substmodel.SubstitutionEpochModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -64,7 +64,7 @@ public class SubstitutionEpochModelParser extends AbstractXMLObjectParser {
             modelList.add(model);
         }
 
-        Parameter transitionTimes = (Parameter) xo.getChild(Parameter.class);
+        RealParameter transitionTimes = (RealParameter) xo.getChild(RealParameter.class);
 
         if (transitionTimes.getDimension() != modelList.size() - 1) {
             throw new XMLParseException("# of transition times must equal # of substitution models - 1\n" + transitionTimes.getDimension() + "\n" + modelList.size());
@@ -81,7 +81,7 @@ public class SubstitutionEpochModelParser extends AbstractXMLObjectParser {
                         new XMLSyntaxRule[]{
                                 new ElementRule(AbstractSubstitutionModel.class, 1, Integer.MAX_VALUE),
                         }),
-                new ElementRule(Parameter.class),
+                new ElementRule(RealParameter.class),
         };
     }
 

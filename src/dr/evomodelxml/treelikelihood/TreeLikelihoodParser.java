@@ -96,7 +96,7 @@ public class TreeLikelihoodParser extends AbstractXMLObjectParser {
         }
 
         PatternList patternList = (PatternList) xo.getChild(PatternList.class);
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
         SiteModel siteModel = (SiteModel) xo.getChild(SiteModel.class);
 
         BranchRateModel branchRateModel = (BranchRateModel) xo.getChild(BranchRateModel.class);

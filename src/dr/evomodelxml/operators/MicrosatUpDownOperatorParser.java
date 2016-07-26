@@ -26,6 +26,7 @@
 package dr.evomodelxml.operators;
 
 import dr.evomodel.operators.MicrosatUpDownOperator;
+import beast.core.parameter.RealParameter;
 import dr.inference.model.Parameter;
 import dr.inference.operators.*;
 import dr.inferencexml.operators.ScaleOperatorParser;
@@ -51,7 +52,7 @@ public class MicrosatUpDownOperatorParser extends AbstractXMLObjectParser {
         Scalable.Default[] args = new Scalable.Default[list.getChildCount()];
         for (int k = 0; k < list.getChildCount(); ++k) {
             final Object child = list.getChild(k);
-            if (child instanceof Parameter) {
+            if (child instanceof RealParameter) {
                 args[k] = new Scalable.Default((Parameter) child);
             }
 
@@ -96,7 +97,7 @@ public class MicrosatUpDownOperatorParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] ee = {
-            new ElementRule(Parameter.class, true)
+            new ElementRule(RealParameter.class, true)
     };
 
     private final XMLSyntaxRule[] rules = {

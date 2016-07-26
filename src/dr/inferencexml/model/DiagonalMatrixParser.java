@@ -26,7 +26,7 @@
 package dr.inferencexml.model;
 
 import dr.inference.model.MatrixParameter;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -48,7 +48,7 @@ public class DiagonalMatrixParser extends AbstractXMLObjectParser {
 		/*
 
 
-        Parameter diagonalParameter = (Parameter) xo.getChild(Parameter.class);
+        RealParameter diagonalParameter = (RealParameter) xo.getChild(RealParameter.class);
 
         return new DiagonalMatrix(diagonalParameter);
     */
@@ -69,7 +69,7 @@ public class DiagonalMatrixParser extends AbstractXMLObjectParser {
     }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
-            new ElementRule(Parameter.class, 1, 1),
+            new ElementRule(RealParameter.class, 1, 1),
     };
 
     @Override

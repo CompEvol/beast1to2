@@ -27,7 +27,7 @@ package dr.evomodelxml.sitemodel;
 
 import dr.evomodel.sitemodel.CategorySiteModel;
 import dr.evomodel.substmodel.SubstitutionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -58,13 +58,13 @@ public class CategorySiteModelParser extends AbstractXMLObjectParser {
         SubstitutionModel substitutionModel = (SubstitutionModel) cxo.getChild(SubstitutionModel.class);
 
         cxo = xo.getChild(MUTATION_RATE);
-        Parameter muParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter muParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(RATE_PARAMETER);
-        Parameter rateParam = null;
+        RealParameter rateParam = null;
         int relativeTo = 0;
         if (cxo != null) {
-            rateParam = (Parameter) cxo.getChild(Parameter.class);
+            rateParam = (RealParameter) cxo.getChild(RealParameter.class);
             relativeTo = cxo.getIntegerAttribute(RELATIVE_TO);
         }
 
@@ -105,11 +105,11 @@ public class CategorySiteModelParser extends AbstractXMLObjectParser {
                     new ElementRule(SubstitutionModel.class)
             }),
             new ElementRule(MUTATION_RATE, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }),
             new ElementRule(RATE_PARAMETER, new XMLSyntaxRule[]{
                     AttributeRule.newIntegerRule(RELATIVE_TO, true),
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }, true),
             new ElementRule(CATEGORIES, new XMLSyntaxRule[]{
                     AttributeRule.newStringRule(CATEGORY_STRING, true),

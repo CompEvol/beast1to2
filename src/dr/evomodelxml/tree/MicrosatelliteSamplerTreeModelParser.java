@@ -27,8 +27,8 @@ package dr.evomodelxml.tree;
 
 import dr.evolution.alignment.Patterns;
 import dr.evomodel.tree.MicrosatelliteSamplerTreeModel;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+import beast.evolution.tree.Tree;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -54,8 +54,8 @@ public class MicrosatelliteSamplerTreeModelParser extends AbstractXMLObjectParse
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
-        TreeModel  tree = (TreeModel)xo.getElementFirstChild(TREE);
-        Parameter internalVal = (Parameter)xo.getElementFirstChild(INTERNAL_VALUES);
+        Tree  tree = (Tree)xo.getElementFirstChild(TREE);
+        RealParameter internalVal = (RealParameter)xo.getElementFirstChild(INTERNAL_VALUES);
         Patterns microsatellitePattern = (Patterns)xo.getElementFirstChild(EXTERNAL_VALUES);
         int[] externalValues = microsatellitePattern.getPattern(0);
         HashMap<String, Integer> taxaMap = new HashMap<String, Integer>(externalValues.length);
@@ -76,8 +76,8 @@ public class MicrosatelliteSamplerTreeModelParser extends AbstractXMLObjectParse
 	public XMLSyntaxRule[] getSyntaxRules() { return rules; }
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newBooleanRule(USE_PROVIDED_INTERNAL_VALUES, true),
-            new ElementRule(TREE, TreeModel.class),
-            new ElementRule(INTERNAL_VALUES, Parameter.class),
+            new ElementRule(TREE, Tree.class),
+            new ElementRule(INTERNAL_VALUES, RealParameter.class),
             new ElementRule(EXTERNAL_VALUES, Patterns.class)
     };
 

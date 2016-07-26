@@ -26,7 +26,7 @@
 package dr.evomodelxml.tree;
 
 import dr.evomodel.tree.TreeHeightStatistic;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.inference.model.Statistic;
 import dr.xml.*;
 
@@ -76,6 +76,6 @@ public class TreeHeightStatisticParser extends AbstractXMLObjectParser {
 
         private final XMLSyntaxRule[] rules = {
                 AttributeRule.newStringRule(Statistic.NAME, true),
-                new ElementRule(TreeModel.class),
+                new ElementRule(Tree.class),
         };
 }

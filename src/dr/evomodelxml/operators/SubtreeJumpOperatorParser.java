@@ -26,7 +26,7 @@
 package dr.evomodelxml.operators;
 
 import dr.evomodel.operators.SubtreeJumpOperator;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.inference.operators.CoercableMCMCOperator;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
@@ -57,7 +57,7 @@ public class SubtreeJumpOperatorParser extends AbstractXMLObjectParser {
             }
         }
 
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
         final double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
 
 //        final double targetAcceptance = xo.getAttribute(TARGET_ACCEPTANCE, 0.234);
@@ -97,7 +97,7 @@ public class SubtreeJumpOperatorParser extends AbstractXMLObjectParser {
             AttributeRule.newDoubleRule("bias", true),
             AttributeRule.newBooleanRule("arctanTransform", true),
             AttributeRule.newBooleanRule(CoercableMCMCOperator.AUTO_OPTIMIZE, true),
-            new ElementRule(TreeModel.class)
+            new ElementRule(Tree.class)
     };
 
 }

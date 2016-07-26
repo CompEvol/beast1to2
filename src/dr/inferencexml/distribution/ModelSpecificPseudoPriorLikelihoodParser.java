@@ -57,9 +57,9 @@ public class ModelSpecificPseudoPriorLikelihoodParser  extends AbstractXMLObject
         DistributionLikelihood pseudoPriorLikelihood = (DistributionLikelihood)xo.getElementFirstChild(PSEUDO_PRIOR);
         Distribution prior = priorLikelihood.getDistribution();
         Distribution pseudoPrior = pseudoPriorLikelihood.getDistribution();
-        Parameter modelIndicator = (Parameter)xo.getElementFirstChild(MODEL_INDICATOR);
+        RealParameter modelIndicator = (RealParameter)xo.getElementFirstChild(MODEL_INDICATOR);
         int[] models = xo.getIntegerArrayAttribute(MODELS);
-        Parameter selectedVariable = (Parameter)xo.getElementFirstChild(SELECTED_VARIABLE);
+        RealParameter selectedVariable = (RealParameter)xo.getElementFirstChild(SELECTED_VARIABLE);
 
 
         ModelSpecificPseudoPriorLikelihood likelihood =

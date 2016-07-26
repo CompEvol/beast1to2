@@ -44,7 +44,7 @@ public class ScaledBetaDistributionModelParser extends BetaDistributionModelPars
     }
 
     ParametricDistributionModel parseDistributionModel(Parameter[] parameters, double offset) {
-        return new BetaDistributionModel(parameters[0], parameters[1], offset, parameters[2].getParameterValue(0));
+        return new BetaDistributionModel(parameters[0], parameters[1], offset, parameters[2].getValue(0));
     }
 
     @Override

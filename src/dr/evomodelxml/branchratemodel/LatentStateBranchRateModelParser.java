@@ -26,8 +26,8 @@
 package dr.evomodelxml.branchratemodel;
 
 import dr.evomodel.branchratemodel.*;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+import beast.evolution.tree.Tree;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -49,15 +49,15 @@ public class LatentStateBranchRateModelParser extends AbstractXMLObjectParser {
 		return null;
 		/*
         BranchRateModel nonLatentRateModel = (BranchRateModel) xo.getChild(BranchRateModel.class);
-        TreeModel tree = (TreeModel) xo.getChild(TreeModel.class);
-        Parameter latentTransitionRateParameter = (Parameter) xo.getElementFirstChild(LATENT_TRANSITION_RATE);
-        Parameter latentTransitionFrequencyParameter = (Parameter) xo.getElementFirstChild(LATENT_TRANSITION_FREQUENCY);
+        Tree tree = (Tree) xo.getChild(Tree.class);
+        RealParameter latentTransitionRateParameter = (RealParameter) xo.getElementFirstChild(LATENT_TRANSITION_RATE);
+        RealParameter latentTransitionFrequencyParameter = (RealParameter) xo.getElementFirstChild(LATENT_TRANSITION_FREQUENCY);
 
         CountableBranchCategoryProvider branchCategoryProvider = (CountableBranchCategoryProvider)xo.getChild(CountableBranchCategoryProvider.class);
 
-        Parameter latentStateProportionParameter = null;
+        RealParameter latentStateProportionParameter = null;
         if (xo.hasChildNamed(LATENT_STATE_PROPORTIONS)) {
-            latentStateProportionParameter = (Parameter) xo.getElementFirstChild(LATENT_STATE_PROPORTIONS);
+            latentStateProportionParameter = (RealParameter) xo.getElementFirstChild(LATENT_STATE_PROPORTIONS);
         }
 
         Logger.getLogger("dr.evomodel").info("Creating a latent state branch rate model");
@@ -95,11 +95,11 @@ public class LatentStateBranchRateModelParser extends AbstractXMLObjectParser {
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
 
             new ElementRule(BranchRateModel.class, "A branch rate model to provide the rates for the non-latent state"),
-            new ElementRule(TreeModel.class, "The tree on which this will operate"),
+            new ElementRule(Tree.class, "The tree on which this will operate"),
             new ElementRule(CountableBranchCategoryProvider.class, true),
-            new ElementRule(LATENT_TRANSITION_RATE, Parameter.class, "A parameter which gives the instantaneous rate of switching to and from the latent state", false),
-            new ElementRule(LATENT_TRANSITION_FREQUENCY, Parameter.class, "A parameter which gives the rate bias of switching to and from the latent state", false),
-            new ElementRule(LATENT_STATE_PROPORTIONS, Parameter.class, "The proportion of each branch which is spend in a latent state", true)
+            new ElementRule(LATENT_TRANSITION_RATE, RealParameter.class, "A parameter which gives the instantaneous rate of switching to and from the latent state", false),
+            new ElementRule(LATENT_TRANSITION_FREQUENCY, RealParameter.class, "A parameter which gives the rate bias of switching to and from the latent state", false),
+            new ElementRule(LATENT_STATE_PROPORTIONS, RealParameter.class, "The proportion of each branch which is spend in a latent state", true)
 
     };
 

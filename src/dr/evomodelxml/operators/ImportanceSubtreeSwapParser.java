@@ -26,7 +26,7 @@
 package dr.evomodelxml.operators;
 
 import dr.evomodel.operators.ImportanceSubtreeSwap;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
 
@@ -47,7 +47,7 @@ public class ImportanceSubtreeSwapParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        final TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        final Tree treeModel = (Tree) xo.getChild(Tree.class);
         final double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
         final int samples = xo.getIntegerAttribute("samples");
 
@@ -79,7 +79,7 @@ public class ImportanceSubtreeSwapParser extends AbstractXMLObjectParser {
         rules = new XMLSyntaxRule[]{
                 AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
                 AttributeRule.newIntegerRule("samples"),
-                new ElementRule(TreeModel.class)
+                new ElementRule(Tree.class)
         };
     }
 

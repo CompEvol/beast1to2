@@ -47,7 +47,7 @@ public class BinarySubstitutionModelParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        Parameter ratesParameter;
+        RealParameter ratesParameter;
 
         XMLObject cxo = xo.getChild(GeneralSubstitutionModelParser.FREQUENCIES);
         FrequencyModel freqModel = (FrequencyModel) cxo.getChild(FrequencyModel.class);
@@ -59,7 +59,7 @@ public class BinarySubstitutionModelParser extends AbstractXMLObjectParser {
 
         int relativeTo = 0;
 
-        ratesParameter = new Parameter.Default(0);
+        ratesParameter = new RealParameter.Default(0);
 
         return new GeneralSubstitutionModel(dataType, freqModel, ratesParameter, relativeTo);
     */

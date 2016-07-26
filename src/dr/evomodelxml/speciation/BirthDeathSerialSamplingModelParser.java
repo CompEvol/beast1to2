@@ -90,8 +90,8 @@ public class BirthDeathSerialSamplingModelParser extends AbstractXMLObjectParser
                 (RealParameter) xo.getElementFirstChild(SAMPLE_BECOMES_NON_INFECTIOUS) : new RealParameter("0.0");
 //        r.setParameterValueQuietly(0, 1 - r.getParameterValue(0)); // donot use it, otherwise log is changed improperly
 
-//        final Parameter finalTimeInterval = xo.hasChildNamed(FINAL_TIME_INTERVAL) ?
-//                (Parameter) xo.getElementFirstChild(FINAL_TIME_INTERVAL) : new Parameter.Default(0.0);
+//        final RealParameter finalTimeInterval = xo.hasChildNamed(FINAL_TIME_INTERVAL) ?
+//                (RealParameter) xo.getElementFirstChild(FINAL_TIME_INTERVAL) : new RealParameter.Default(0.0);
 
         Logger.getLogger("dr.evomodel").info(xo.hasChildNamed(SAMPLE_BECOMES_NON_INFECTIOUS) ? getCitationRT() : getCitationPsiOrg());
 
@@ -142,7 +142,7 @@ public class BirthDeathSerialSamplingModelParser extends AbstractXMLObjectParser
     private final XMLSyntaxRule[] rules = {
             AttributeRule.newStringRule(TREE_TYPE, true),
             AttributeRule.newBooleanRule(HAS_FINAL_SAMPLE, true),
-//            new ElementRule(FINAL_TIME_INTERVAL, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}, true),
+//            new ElementRule(FINAL_TIME_INTERVAL, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}, true),
             new ElementRule(ORIGIN, RealParameter.class, "The origin of the infection, x0 > tree.rootHeight", true),
             new ElementRule(LAMBDA, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new XORRule(
@@ -151,7 +151,7 @@ public class BirthDeathSerialSamplingModelParser extends AbstractXMLObjectParser
             new ElementRule(PSI, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(SAMPLE_BECOMES_NON_INFECTIOUS, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}, true),
             //Issue 656
-//            new ElementRule(SAMPLE_PROBABILITY, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+//            new ElementRule(SAMPLE_PROBABILITY, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
 //            XMLUnits.SYNTAX_RULES[0]
     };
 }

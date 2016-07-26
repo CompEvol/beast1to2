@@ -106,9 +106,9 @@ public class RandomWalkOperatorParser extends AbstractXMLObjectParser {
             if (xo.hasChildNamed(UPDATE_INDEX)) {
             	Log.warning.println(Beast1to2Converter.NIY + " Attribute " + UPDATE_INDEX + " is ignored");
 //                XMLObject cxo = xo.getChild(UPDATE_INDEX);
-//                Parameter updateIndex = (Parameter) cxo.getChild(Parameter.class);
+//                RealParameter updateIndex = (RealParameter) cxo.getChild(RealParameter.class);
 //                if (updateIndex.getDimension() != parameter.getDimension())
-//                    throw new RuntimeException("Parameter to update and missing indices must have the same dimension");
+//                    throw new RuntimeException("RealParameter to update and missing indices must have the same dimension");
 //                return new RandomWalkOperator(parameter, updateIndex, windowSize, condition,
 //                        weight, mode, lower, upper);
             }
@@ -143,9 +143,9 @@ public class RandomWalkOperatorParser extends AbstractXMLObjectParser {
                 AttributeRule.newBooleanRule(CoercableMCMCOperator.AUTO_OPTIMIZE, true),
                 new ElementRule(UPDATE_INDEX,
                         new XMLSyntaxRule[] {
-                                new ElementRule(Parameter.class),
+                                new ElementRule(RealParameter.class),
                         },true),
                 new StringAttributeRule(BOUNDARY_CONDITION, null, RandomWalkOperator.BoundaryCondition.values(), true),
-                new ElementRule(Parameter.class)
+                new ElementRule(RealParameter.class)
         };
 }

@@ -26,8 +26,8 @@
 package dr.evomodelxml.branchratemodel;
 
 import dr.evomodel.branchratemodel.RelaxedDriftModel;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+import beast.evolution.tree.Tree;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -55,15 +55,15 @@ public class RelaxedDriftModelParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        TreeModel tree = (TreeModel) xo.getChild(TreeModel.class);
+        Tree tree = (Tree) xo.getChild(Tree.class);
 
-        Parameter ratesParameter = (Parameter) xo.getElementFirstChild(RATES);
+        RealParameter ratesParameter = (RealParameter) xo.getElementFirstChild(RATES);
 
-        Parameter rateIndicatorParameter = (Parameter) xo.getElementFirstChild(RATE_IND);
+        RealParameter rateIndicatorParameter = (RealParameter) xo.getElementFirstChild(RATE_IND);
 
-        Parameter driftRates = null;
+        RealParameter driftRates = null;
         if (xo.hasChildNamed(DRIFT_RATES)) {
-            driftRates = (Parameter) xo.getElementFirstChild(DRIFT_RATES);
+            driftRates = (RealParameter) xo.getElementFirstChild(DRIFT_RATES);
         }
 
 
@@ -96,9 +96,9 @@ public class RelaxedDriftModelParser extends AbstractXMLObjectParser {
     }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
-            new ElementRule(TreeModel.class),
-            new ElementRule(RATES, Parameter.class, "The rates parameter", false),
-            new ElementRule(RATE_IND, Parameter.class, "The indicator parameter", false),
-            new ElementRule(DRIFT_RATES, Parameter.class, "the drift rates parameter", true)
+            new ElementRule(Tree.class),
+            new ElementRule(RATES, RealParameter.class, "The rates parameter", false),
+            new ElementRule(RATE_IND, RealParameter.class, "The indicator parameter", false),
+            new ElementRule(DRIFT_RATES, RealParameter.class, "the drift rates parameter", true)
     };
 }

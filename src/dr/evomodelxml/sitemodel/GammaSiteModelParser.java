@@ -136,22 +136,22 @@ public class GammaSiteModelParser extends AbstractXMLObjectParser {
             new XORRule(
                     new XORRule(
                             new ElementRule(SUBSTITUTION_RATE, new XMLSyntaxRule[]{
-                                    new ElementRule(Parameter.class)
+                                    new ElementRule(RealParameter.class)
                             }),
                             new ElementRule(MUTATION_RATE, new XMLSyntaxRule[]{
-                                    new ElementRule(Parameter.class)
+                                    new ElementRule(RealParameter.class)
                             })
                     ),
                     new ElementRule(RELATIVE_RATE, new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class)
+                            new ElementRule(RealParameter.class)
                     }), true
             ),
             new ElementRule(GAMMA_SHAPE, new XMLSyntaxRule[]{
                     AttributeRule.newIntegerRule(GAMMA_CATEGORIES, true),
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }, true),
             new ElementRule(PROPORTION_INVARIANT, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)
+                    new ElementRule(RealParameter.class)
             }, true)
     };
 }

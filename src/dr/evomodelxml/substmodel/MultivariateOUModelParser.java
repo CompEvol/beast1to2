@@ -30,7 +30,7 @@ import dr.evomodel.substmodel.SubstitutionModel;
 import dr.inference.distribution.GeneralizedLinearModel;
 import dr.inference.model.DesignMatrix;
 import dr.inference.model.MatrixParameter;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inferencexml.distribution.GeneralizedLinearModelParser;
 import dr.xml.*;
 
@@ -57,9 +57,9 @@ public class MultivariateOUModelParser extends AbstractXMLObjectParser {
 		/*
 
         SubstitutionModel substitutionModel = (SubstitutionModel) xo.getChild(SubstitutionModel.class);
-        Parameter effectParameter = (Parameter) ((XMLObject) xo.getChild(DATA)).getChild(Parameter.class);
-        Parameter timesParameter = (Parameter) ((XMLObject) xo.getChild(TIME)).getChild(Parameter.class);
-        Parameter designParameter = (Parameter) ((XMLObject) xo.getChild(DESIGN)).getChild(Parameter.class);
+        RealParameter effectParameter = (RealParameter) ((XMLObject) xo.getChild(DATA)).getChild(RealParameter.class);
+        RealParameter timesParameter = (RealParameter) ((XMLObject) xo.getChild(TIME)).getChild(RealParameter.class);
+        RealParameter designParameter = (RealParameter) ((XMLObject) xo.getChild(DESIGN)).getChild(RealParameter.class);
         MatrixParameter gammaParameter = (MatrixParameter) xo.getChild(MatrixParameter.class);
 
         if (effectParameter.getDimension() != timesParameter.getDimension() ||
@@ -86,21 +86,22 @@ public class MultivariateOUModelParser extends AbstractXMLObjectParser {
 		}
 
     public void addIndependentParameters(XMLObject xo, GeneralizedLinearModel glm,
-                                         Parameter dependentParam) throws XMLParseException {
+                                         RealParameter dependentParam) throws XMLParseException {
         int totalCount = xo.getChildCount();
 
         for (int i = 0; i < totalCount; i++) {
             if (xo.getChildName(i).compareTo(GeneralizedLinearModelParser.INDEPENDENT_VARIABLES) == 0) {
                 XMLObject cxo = (XMLObject) xo.getChild(i);
-                Parameter independentParam = (Parameter) cxo.getChild(Parameter.class);
+                RealParameter independentParam = (RealParameter) cxo.getChild(RealParameter.class);
                 DesignMatrix designMatrix = (DesignMatrix) cxo.getChild(DesignMatrix.class);
                 checkDimensions(independentParam, dependentParam, designMatrix);
-                glm.addIndependentParameter(independentParam, designMatrix, null);
+                // TODO: fix the following line
+                // glm.addIndependentParameter(independentParam, designMatrix, null);
             }
         }
     }
 
-    private void checkDimensions(Parameter independentParam, Parameter dependentParam, DesignMatrix designMatrix)
+    private void checkDimensions(RealParameter independentParam, RealParameter dependentParam, DesignMatrix designMatrix)
             throws XMLParseException {
         if ((dependentParam.getDimension() != designMatrix.getRowDimension()) ||
                 (independentParam.getDimension() != designMatrix.getColumnDimension())) {
@@ -109,7 +110,7 @@ public class MultivariateOUModelParser extends AbstractXMLObjectParser {
             System.err.println(designMatrix.getRowDimension() + " rows");
             System.err.println(designMatrix.getColumnDimension() + " cols");
             throw new XMLParseException(
-                    "dim(" + dependentParam.getId() + ") != dim(" + designMatrix.getId() + " %*% " + independentParam.getId() + ")"
+                    "dim(" + dependentParam.getID() + ") != dim(" + designMatrix.getId() + " %*% " + independentParam.getID() + ")"
             );
         }
     }
@@ -127,11 +128,11 @@ public class MultivariateOUModelParser extends AbstractXMLObjectParser {
             new ElementRule(SubstitutionModel.class),
             new ElementRule(MatrixParameter.class),
             new ElementRule(DATA, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)}),
+                    new ElementRule(RealParameter.class)}),
             new ElementRule(TIME, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)}),
+                    new ElementRule(RealParameter.class)}),
             new ElementRule(DESIGN, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class)}),
+                    new ElementRule(RealParameter.class)}),
             new ElementRule(GeneralizedLinearModelParser.INDEPENDENT_VARIABLES,
                     new XMLSyntaxRule[]{new ElementRule(MatrixParameter.class)}, 0, 3),
     };

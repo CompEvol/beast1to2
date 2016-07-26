@@ -117,14 +117,14 @@ public class ScaleOperatorParser extends AbstractXMLObjectParser {
             throw new XMLParseException("scaleFactor must be between 0.0 and 1.0");
         }
 
-        final Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+        final RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
 
-        Parameter indicator = null;
+        RealParameter indicator = null;
         double indicatorOnProb = 1.0;
         final XMLObject inds = xo.getChild(INDICATORS);
 
         if (inds != null) {
-            indicator = (Parameter) inds.getChild(Parameter.class);
+            indicator = (RealParameter) inds.getChild(RealParameter.class);
             if (inds.hasAttribute(PICKONEPROB)) {
                 indicatorOnProb = inds.getDoubleAttribute(PICKONEPROB);
                 if (!(0 <= indicatorOnProb && indicatorOnProb <= 1)) {

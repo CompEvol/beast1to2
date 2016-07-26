@@ -27,7 +27,7 @@ package dr.evomodelxml.substmodel;
 
 import dr.evomodel.substmodel.AbstractCovarionDNAModel;
 import dr.evomodel.substmodel.CovarionHKY;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -60,13 +60,13 @@ public class CovarionHKYParser extends AbstractXMLObjectParser {
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             new ElementRule(KAPPA, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class,
+                    new ElementRule(RealParameter.class,
                             "A parameter representing the transition transversion bias")}),
             new ElementRule(AbstractCovarionDNAModel.SWITCHING_RATES, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class,
+                    new ElementRule(RealParameter.class,
                             "A parameter representing the rate of change between the different classes")}),
             new ElementRule(AbstractCovarionDNAModel.HIDDEN_CLASS_RATES, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class,
+                    new ElementRule(RealParameter.class,
                             "A parameter representing the rates of the hidden classes relative to the first hidden class.")})
     };
 
@@ -76,14 +76,14 @@ public class CovarionHKYParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        Parameter kappaParam;
-        Parameter switchingRates;
-        Parameter hiddenClassRates;
+        RealParameter kappaParam;
+        RealParameter switchingRates;
+        RealParameter hiddenClassRates;
         FrequencyModel freqModel;
 
-        kappaParam = (Parameter) xo.getElementFirstChild(KAPPA);
-        switchingRates = (Parameter) xo.getElementFirstChild(AbstractCovarionDNAModel.SWITCHING_RATES);
-        hiddenClassRates = (Parameter) xo.getElementFirstChild(AbstractCovarionDNAModel.HIDDEN_CLASS_RATES);
+        kappaParam = (RealParameter) xo.getElementFirstChild(KAPPA);
+        switchingRates = (RealParameter) xo.getElementFirstChild(AbstractCovarionDNAModel.SWITCHING_RATES);
+        hiddenClassRates = (RealParameter) xo.getElementFirstChild(AbstractCovarionDNAModel.HIDDEN_CLASS_RATES);
         freqModel = (FrequencyModel) xo.getElementFirstChild(AbstractCovarionDNAModel.FREQUENCIES);
 
         if (!(freqModel.getDataType() instanceof HiddenNucleotides)) {

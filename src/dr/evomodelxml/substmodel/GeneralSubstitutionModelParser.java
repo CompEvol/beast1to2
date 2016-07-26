@@ -27,7 +27,7 @@ package dr.evomodelxml.substmodel;
 
 import dr.evolution.datatype.DataType;
 import dr.evomodel.substmodel.FrequencyModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -61,7 +61,7 @@ public class GeneralSubstitutionModelParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        Parameter ratesParameter = null;
+        RealParameter ratesParameter = null;
         FrequencyModel freqModel = null;
 
         if (xo.hasChildNamed(FREQUENCIES)) {
@@ -93,7 +93,7 @@ public class GeneralSubstitutionModelParser extends AbstractXMLObjectParser {
         }
 
         XMLObject cxo = xo.getChild(RATES);
-        ratesParameter = (Parameter) cxo.getChild(Parameter.class);
+        ratesParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         int states = dataType.getStateCount();
         Logger.getLogger("dr.evomodel").info("  General Substitution Model (stateCount=" + states + ")");
@@ -107,7 +107,7 @@ public class GeneralSubstitutionModelParser extends AbstractXMLObjectParser {
         boolean hasIndicator = xo.hasChildNamed(INDICATOR);
 
         if (!hasRelativeRates) {
-            Parameter indicatorParameter = null;
+            RealParameter indicatorParameter = null;
 
             if (ratesParameter.getDimension() != reversibleRateCount && ratesParameter.getDimension() != nonReversibleRateCount) {
                 throw new XMLParseException("Rates parameter in " + getParserName() + " element should have " + (reversibleRateCount)
@@ -117,7 +117,7 @@ public class GeneralSubstitutionModelParser extends AbstractXMLObjectParser {
 
             if (hasIndicator) { // this is using BSSVS
                 cxo = xo.getChild(INDICATOR);
-                indicatorParameter = (Parameter) cxo.getChild(Parameter.class);
+                indicatorParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
                 if (indicatorParameter.getDimension() != ratesParameter.getDimension()) {
                     throw new XMLParseException("Rates and indicator parameters in " + getParserName() + " element must be the same dimension.");
@@ -210,11 +210,11 @@ public class GeneralSubstitutionModelParser extends AbstractXMLObjectParser {
             new ElementRule(FREQUENCIES, FrequencyModel.class),
             new ElementRule(RATES,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class)}
+                            new ElementRule(RealParameter.class)}
             ),
             new ElementRule(INDICATOR,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class),
+                            new ElementRule(RealParameter.class),
                     }, true),
             AttributeRule.newBooleanRule(ComplexSubstitutionModelParser.RANDOMIZE, true),
     };

@@ -27,7 +27,7 @@ package dr.evomodelxml.tree;
 
 import dr.evolution.util.Taxa;
 import dr.evomodel.tree.ParsimonyStateStatistic;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.inference.model.Statistic;
 import dr.xml.*;
 
@@ -89,7 +89,7 @@ public class ParsimonyStateStatisticParser extends AbstractXMLObjectParser {
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             new StringAttributeRule(Statistic.NAME, "A name for this statistic for the purposes of logging", true),
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             new ElementRule(STATE,
                     new XMLSyntaxRule[]{new ElementRule(Taxa.class)}),
             new ElementRule(MRCA,

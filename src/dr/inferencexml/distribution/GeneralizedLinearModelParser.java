@@ -30,7 +30,7 @@ import cern.colt.matrix.linalg.SingularValueDecomposition;
 import dr.inference.distribution.GeneralizedLinearModel;
 import dr.inference.model.DesignMatrix;
 import dr.inference.model.Likelihood;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -69,9 +69,9 @@ public class GeneralizedLinearModelParser extends AbstractXMLObjectParser {
 
         System.err.println("PASSED 0");
         XMLObject cxo = xo.getChild(DEPENDENT_VARIABLES);
-        Parameter dependentParam = null;
+        RealParameter dependentParam = null;
         if (cxo != null)
-            dependentParam = (Parameter) cxo.getChild(Parameter.class);
+            dependentParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         String family = xo.getStringAttribute(FAMILY);
         GeneralizedLinearModel glm;
@@ -88,20 +88,20 @@ public class GeneralizedLinearModelParser extends AbstractXMLObjectParser {
 
         if (glm.requiresScale()) {
             cxo = xo.getChild(SCALE_VARIABLES);
-            Parameter scaleParameter = null;
+            RealParameter scaleParameter = null;
 //                DesignMatrix designMatrix = null;
-            Parameter scaleDesign = null;
+            RealParameter scaleDesign = null;
             if (cxo != null) {
-                scaleParameter = (Parameter) cxo.getChild(Parameter.class);
+                scaleParameter = (RealParameter) cxo.getChild(RealParameter.class);
                 XMLObject gxo = cxo.getChild(INDICATOR);
                 if (gxo != null)
-                    scaleDesign = (Parameter) gxo.getChild(Parameter.class);
+                    scaleDesign = (RealParameter) gxo.getChild(RealParameter.class);
 //                    designMatrix = (DesignMatrix) cxo.getChild(DesignMatrix.class);
             }
             if (scaleParameter == null)
                 throw new XMLParseException("Family '" + family + "' requires scale parameters");
             if (scaleDesign == null)
-                scaleDesign = new Parameter.Default(dependentParam.getDimension(), 0.0);
+                scaleDesign = new RealParameter.Default(dependentParam.getDimension(), 0.0);
             else {
                 if (scaleDesign.getDimension() != dependentParam.getDimension())
                     throw new XMLParseException("Scale ("+dependentParam.getDimension()+") and scaleDesign parameters ("+scaleDesign.getDimension()+") must be the same dimension");
@@ -135,36 +135,36 @@ public class GeneralizedLinearModelParser extends AbstractXMLObjectParser {
 		}
 
     public void addRandomEffects(XMLObject xo, GeneralizedLinearModel glm,
-                                 Parameter dependentParam) throws XMLParseException {
+                                 RealParameter dependentParam) throws XMLParseException {
         int totalCount = xo.getChildCount();
 
         for (int i = 0; i < totalCount; i++) {
             if (xo.getChildName(i).compareTo(RANDOM_EFFECTS) == 0) {
                 XMLObject cxo = (XMLObject) xo.getChild(i);
-                Parameter randomEffect = (Parameter) cxo.getChild(Parameter.class);
+                RealParameter randomEffect = (RealParameter) cxo.getChild(RealParameter.class);
                 checkRandomEffectsDimensions(randomEffect, dependentParam);
-                glm.addRandomEffectsParameter(randomEffect);
+                //TODO: fix this: glm.addRandomEffectsParameter(randomEffect);
             }
         }
     }
 
     public void addIndependentParameters(XMLObject xo, GeneralizedLinearModel glm,
-                                         Parameter dependentParam) throws XMLParseException {
+                                         RealParameter dependentParam) throws XMLParseException {
         int totalCount = xo.getChildCount();
 //        System.err.println("number of independent parameters = "+totalCount);
 
         for (int i = 0; i < totalCount; i++) {
             if (xo.getChildName(i).compareTo(INDEPENDENT_VARIABLES) == 0) {
                 XMLObject cxo = (XMLObject) xo.getChild(i);
-                Parameter independentParam = (Parameter) cxo.getChild(Parameter.class);
+                RealParameter independentParam = (RealParameter) cxo.getChild(RealParameter.class);
                 DesignMatrix designMatrix = (DesignMatrix) cxo.getChild(DesignMatrix.class);
                 checkDimensions(independentParam, dependentParam, designMatrix);
                 cxo = cxo.getChild(INDICATOR);
-                Parameter indicator = null;
+                RealParameter indicator = null;
                 if (cxo != null) {
-                    indicator = (Parameter) cxo.getChild(Parameter.class);
+                    indicator = (RealParameter) cxo.getChild(RealParameter.class);
                     if (indicator.getDimension() != independentParam.getDimension())
-                        throw new XMLParseException("dim(" + independentParam.getId() + ") != dim(" + indicator.getId() + ")");
+                        throw new XMLParseException("dim(" + independentParam.getID() + ") != dim(" + indicator.getID() + ")");
                 }
 //                System.err.println("A");
                 if (checkFullRankOfMatrix) {
@@ -175,7 +175,7 @@ public class GeneralizedLinearModelParser extends AbstractXMLObjectParser {
 //                System.err.println(new Matrix(designMatrix.getParameterAsMatrix()));
 //                System.exit(-1);
 
-                glm.addIndependentParameter(independentParam, designMatrix, indicator);
+                // TODO: fix this: glm.addIndependentParameter(independentParam, designMatrix, indicator);
 //                System.err.println("C");
             }
         }
@@ -197,29 +197,29 @@ public class GeneralizedLinearModelParser extends AbstractXMLObjectParser {
         }
     }
 
-    private void checkRandomEffectsDimensions(Parameter randomEffect, Parameter dependentParam)
+    private void checkRandomEffectsDimensions(RealParameter randomEffect, RealParameter dependentParam)
             throws XMLParseException {
         if (dependentParam != null) {
             if (randomEffect.getDimension() != dependentParam.getDimension()) {
                 throw new XMLParseException(
-                        "dim(" + dependentParam.getId() + ") != dim(" + randomEffect.getId() + ")"
+                        "dim(" + dependentParam.getID() + ") != dim(" + randomEffect.getID() + ")"
                 );
             }
         }
     }
 
-    private void checkDimensions(Parameter independentParam, Parameter dependentParam, DesignMatrix designMatrix)
+    private void checkDimensions(RealParameter independentParam, RealParameter dependentParam, DesignMatrix designMatrix)
             throws XMLParseException {
         if (dependentParam != null) {
             if ((dependentParam.getDimension() != designMatrix.getRowDimension()) ||
                     (independentParam.getDimension() != designMatrix.getColumnDimension()))
                 throw new XMLParseException(
-                        "dim(" + dependentParam.getId() + ") != dim(" + designMatrix.getId() + " %*% " + independentParam.getId() + ")"
+                        "dim(" + dependentParam.getID() + ") != dim(" + designMatrix.getId() + " %*% " + independentParam.getID() + ")"
                 );
         } else {
             if (independentParam.getDimension() != designMatrix.getColumnDimension()) {
                 throw new XMLParseException(
-                        "dim(" + independentParam.getId() + ") is incompatible with dim (" + designMatrix.getId() + ")"
+                        "dim(" + independentParam.getID() + ") is incompatible with dim (" + designMatrix.getId() + ")"
                 );
             }
 //            System.err.println(independentParam.getId()+" and "+designMatrix.getId());
@@ -240,18 +240,18 @@ public class GeneralizedLinearModelParser extends AbstractXMLObjectParser {
             AttributeRule.newBooleanRule(CHECK_IDENTIFIABILITY, true),
             AttributeRule.newBooleanRule(CHECK_FULL_RANK, true),
             new ElementRule(DEPENDENT_VARIABLES,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}, true),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}, true),
             new ElementRule(INDEPENDENT_VARIABLES,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class, true),
+                            new ElementRule(RealParameter.class, true),
                             new ElementRule(DesignMatrix.class),
                             new ElementRule(INDICATOR,
                                     new XMLSyntaxRule[]{
-                                            new ElementRule(Parameter.class)
+                                            new ElementRule(RealParameter.class)
                                     }, true),
                     }, 1, 3),
             new ElementRule(RANDOM_EFFECTS,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}, 0, 3),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}, 0, 3),
 //				new ElementRule(BASIS_MATRIX,
 //						new XMLSyntaxRule[]{new ElementRule(DesignMatrix.class)})
     };

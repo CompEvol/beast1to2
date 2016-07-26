@@ -26,7 +26,7 @@
 package dr.evomodelxml.MSSD;
 
 import dr.evomodel.MSSD.ExponentialBranchLengthTreePrior;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.xml.*;
 
 /**
@@ -46,7 +46,7 @@ public class ExponentialBranchLengthTreePriorParser extends AbstractXMLObjectPar
 		return null;
 		/*
 
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
 
         return new ExponentialBranchLengthTreePrior(treeModel);
     */
@@ -73,6 +73,6 @@ public class ExponentialBranchLengthTreePriorParser extends AbstractXMLObjectPar
     }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
     };
 }

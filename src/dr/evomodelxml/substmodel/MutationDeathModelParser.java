@@ -28,7 +28,7 @@ package dr.evomodelxml.substmodel;
 import dr.evolution.datatype.MutationDeathType;
 import dr.evomodel.substmodel.AbstractSubstitutionModel;
 import dr.evomodel.substmodel.MutationDeathModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -49,8 +49,8 @@ public class MutationDeathModelParser extends AbstractXMLObjectParser {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
-        Parameter dummyFreqParameter;
-        Parameter delParam = (Parameter) xo.getChild(Parameter.class);
+        RealParameter dummyFreqParameter;
+        RealParameter delParam = (RealParameter) xo.getChild(RealParameter.class);
 
         Logger.getLogger("dr.evomodel").info("Creating MutationDeath substitution model.\n\tInitial death rate is "
                 + delParam.getParameterValue(0));
@@ -60,9 +60,9 @@ public class MutationDeathModelParser extends AbstractXMLObjectParser {
         AbstractSubstitutionModel evoModel = (AbstractSubstitutionModel) xo.getChild(AbstractSubstitutionModel.class);
         if (evoModel == null) {  // Assuming pure survival model
             Logger.getLogger("dr.evomodel").info("\tSubstitutionModel not provided assuming pure death/survival model.");
-            dummyFreqParameter = new Parameter.Default(new double[]{1.0, 0.0});
+            dummyFreqParameter = new RealParameter.Default(new double[]{1.0, 0.0});
         } else {
-            dummyFreqParameter = new Parameter.Default(dT.getStateCount());
+            dummyFreqParameter = new RealParameter.Default(dT.getStateCount());
             double freqs[] = evoModel.getFrequencyModel().getFrequencies();
             for (int i = 0; i < freqs.length; ++i) {
                 dummyFreqParameter.setParameterValueQuietly(i, freqs[i]);
@@ -72,12 +72,12 @@ public class MutationDeathModelParser extends AbstractXMLObjectParser {
 
         FrequencyModel dummyFrequencies = new FrequencyModel(dT, dummyFreqParameter);
 
-        Parameter mutationRate;
+        RealParameter mutationRate;
 
         if (xo.hasChildNamed(MUTATION_RATE)) {
-            mutationRate = (Parameter) xo.getElementFirstChild(MUTATION_RATE);
+            mutationRate = (RealParameter) xo.getElementFirstChild(MUTATION_RATE);
         } else {
-            mutationRate = new Parameter.Default(new double[]{1.0});
+            mutationRate = new RealParameter.Default(new double[]{1.0});
         }
         Logger.getLogger("dr.evomodel").info("\tInitial mutation rate is " + mutationRate.getParameterValue(0));
 
@@ -106,9 +106,9 @@ public class MutationDeathModelParser extends AbstractXMLObjectParser {
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             new ElementRule(AbstractSubstitutionModel.class, true),
-            new ElementRule(Parameter.class),
+            new ElementRule(RealParameter.class),
             new ElementRule(MutationDeathType.class),
-            new ElementRule(MUTATION_RATE, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}, true)
+            new ElementRule(MUTATION_RATE, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}, true)
     };
 
 }

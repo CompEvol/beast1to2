@@ -29,8 +29,8 @@ import dr.evolution.alignment.PatternList;
 import dr.evolution.datatype.DataType;
 import dr.evolution.tree.TreeTraitProvider;
 import dr.evomodel.branchratemodel.DiscreteTraitBranchRateModel;
-import dr.evomodel.tree.TreeModel;
-import dr.inference.model.Parameter;
+import beast.evolution.tree.Tree;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 public class DiscreteTraitBranchRateModelParser extends AbstractXMLObjectParser {
@@ -54,31 +54,31 @@ public class DiscreteTraitBranchRateModelParser extends AbstractXMLObjectParser 
 		return null;
 		/*
 
-        TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        Tree treeModel = (Tree) xo.getChild(Tree.class);
 
         PatternList patternList = (PatternList) xo.getChild(PatternList.class);
 
         TreeTraitProvider traitProvider = (TreeTraitProvider) xo.getChild(TreeTraitProvider.class);
         DataType dataType = DataTypeUtils.getDataType(xo);
 
-        Parameter rateParameter = null;
-        Parameter relativeRatesParameter = null;
-        Parameter indicatorsParameter = null;
+        RealParameter rateParameter = null;
+        RealParameter relativeRatesParameter = null;
+        RealParameter indicatorsParameter = null;
 
         if (xo.getChild(RATE) != null) {
-            rateParameter = (Parameter) xo.getElementFirstChild(RATE);
+            rateParameter = (RealParameter) xo.getElementFirstChild(RATE);
         }
 
         if (xo.getChild(RATES) != null) {
-            rateParameter = (Parameter) xo.getElementFirstChild(RATES);
+            rateParameter = (RealParameter) xo.getElementFirstChild(RATES);
         }
 
         if (xo.getChild(RELATIVE_RATES) != null) {
-            relativeRatesParameter = (Parameter) xo.getElementFirstChild(RELATIVE_RATES);
+            relativeRatesParameter = (RealParameter) xo.getElementFirstChild(RELATIVE_RATES);
         }
 
         if (xo.getChild(INDICATORS) != null) {
-            indicatorsParameter = (Parameter) xo.getElementFirstChild(INDICATORS);
+            indicatorsParameter = (RealParameter) xo.getElementFirstChild(INDICATORS);
         }
 
         int traitIndex = xo.getAttribute(TRAIT_INDEX, 1) - 1;
@@ -140,7 +140,7 @@ public class DiscreteTraitBranchRateModelParser extends AbstractXMLObjectParser 
     }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
-            new ElementRule(TreeModel.class, "The tree model"),
+            new ElementRule(Tree.class, "The tree model"),
             new XORRule(
                     new AndRule(
                             new ElementRule(TreeTraitProvider.class, "The trait provider"),
@@ -152,10 +152,10 @@ public class DiscreteTraitBranchRateModelParser extends AbstractXMLObjectParser 
                     new ElementRule(PatternList.class)),
             new XORRule(
                     new AndRule(
-                            new ElementRule(RATE, Parameter.class, "The over-all rate"),
-                            new ElementRule(RELATIVE_RATES, Parameter.class, "The state-specific relative rates")
+                            new ElementRule(RATE, RealParameter.class, "The over-all rate"),
+                            new ElementRule(RELATIVE_RATES, RealParameter.class, "The state-specific relative rates")
                     ),
-                    new ElementRule(RATES, Parameter.class, "The state-specific rates")),
+                    new ElementRule(RATES, RealParameter.class, "The state-specific rates")),
             AttributeRule.newIntegerRule(TRAIT_INDEX, true),
             AttributeRule.newStringRule(TRAIT_NAME, true)
     };

@@ -27,7 +27,7 @@ package dr.evomodelxml.tree;
 
 import dr.evolution.util.Taxa;
 import dr.evomodel.tree.ExternalLengthStatistic;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.xml.*;
 
 /**
@@ -80,7 +80,7 @@ public class ExternalLengthStatisticParser extends AbstractXMLObjectParser {
     }
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             new StringAttributeRule("name", "A name for this statistic primarily for the purposes of logging", true),
             new ElementRule(Taxa.class)
     };

@@ -27,7 +27,7 @@ package dr.evomodelxml.speciation;
 
 import dr.evomodel.speciation.BirthDeathSerialSamplingModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -58,13 +58,13 @@ public class BirthDeathEpidemiologyModelParser extends AbstractXMLObjectParser {
         final String modelName = xo.getId();
         final Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
-        final Parameter R0Parameter = (Parameter) xo.getElementFirstChild(R0);
-        final Parameter recoveryRateParameter = (Parameter) xo.getElementFirstChild(RECOVERY_RATE);
-        final Parameter samplingProbabiltyParameter = (Parameter) xo.getElementFirstChild(SAMPLING_PROBABILITY);
+        final RealParameter R0Parameter = (RealParameter) xo.getElementFirstChild(R0);
+        final RealParameter recoveryRateParameter = (RealParameter) xo.getElementFirstChild(RECOVERY_RATE);
+        final RealParameter samplingProbabiltyParameter = (RealParameter) xo.getElementFirstChild(SAMPLING_PROBABILITY);
 
-        Parameter origin = null;
+        RealParameter origin = null;
         if (xo.hasChildNamed(ORIGIN)) {
-            origin = (Parameter) xo.getElementFirstChild(ORIGIN);
+            origin = (RealParameter) xo.getElementFirstChild(ORIGIN);
         }
 
         Logger.getLogger("dr.evomodel").info("Using epidemiological parameterization of " + getCitationRT());
@@ -103,10 +103,10 @@ public class BirthDeathEpidemiologyModelParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(ORIGIN, Parameter.class, "The origin of the infection, x0 > tree.rootHeight", true),
-            new ElementRule(R0, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-            new ElementRule(RECOVERY_RATE, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
-            new ElementRule(SAMPLING_PROBABILITY, new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+            new ElementRule(ORIGIN, RealParameter.class, "The origin of the infection, x0 > tree.rootHeight", true),
+            new ElementRule(R0, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+            new ElementRule(RECOVERY_RATE, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
+            new ElementRule(SAMPLING_PROBABILITY, new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             XMLUnits.SYNTAX_RULES[0]
     };
 }

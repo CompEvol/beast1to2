@@ -25,10 +25,10 @@
 
 package dr.evomodelxml.continuous;
 
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.evomodelxml.tree.TreeModelParser;
 import dr.inference.model.CompoundParameter;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -45,7 +45,7 @@ public class LeafTraitExtractorParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        TreeModel model = (TreeModel) xo.getChild(TreeModel.class);
+        Tree model = (Tree) xo.getChild(Tree.class);
         final CompoundParameter allTraits = (CompoundParameter) xo.getChild(CompoundParameter.class);
 
         String taxonString = (String) xo.getAttribute(TreeModelParser.TAXON);
@@ -53,12 +53,12 @@ public class LeafTraitExtractorParser extends AbstractXMLObjectParser {
         if (leafIndex == -1) {
             throw new XMLParseException("Unable to find taxon '" + taxonString + "' in trees.");
         }
-        final Parameter leafTrait = allTraits.getParameter(leafIndex);
+        final RealParameter leafTrait = allTraits.getParameter(leafIndex);
 
         boolean setBounds = xo.getAttribute(SET_BOUNDS, true);
         if (setBounds) {
 
-            Parameter.DefaultBounds bound = new Parameter.DefaultBounds(Double.MAX_VALUE, -Double.MAX_VALUE,
+            RealParameter.DefaultBounds bound = new RealParameter.DefaultBounds(Double.MAX_VALUE, -Double.MAX_VALUE,
                     leafTrait.getDimension());
             leafTrait.addBounds(bound);
         }
@@ -72,7 +72,7 @@ public class LeafTraitExtractorParser extends AbstractXMLObjectParser {
         return new XMLSyntaxRule[]{
                 AttributeRule.newStringRule(TreeModelParser.TAXON),
                 AttributeRule.newBooleanRule(SET_BOUNDS, true),
-                new ElementRule(TreeModel.class),
+                new ElementRule(Tree.class),
                 new ElementRule(CompoundParameter.class),
         };
     }
@@ -84,7 +84,7 @@ public class LeafTraitExtractorParser extends AbstractXMLObjectParser {
 
     @Override
     public Class getReturnType() {
-        return Parameter.class;
+        return RealParameter.class;
     }
 
     @Override

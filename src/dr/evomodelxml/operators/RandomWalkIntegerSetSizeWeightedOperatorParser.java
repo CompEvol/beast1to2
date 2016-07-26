@@ -28,7 +28,7 @@ package dr.evomodelxml.operators;
 import dr.xml.*;
 import dr.inference.operators.MCMCOperator;
 import dr.evomodel.operators.RandomWalkIntegerSetSizeWeightedOperator;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.evomodel.tree.MicrosatelliteSamplerTreeModel;
 
 /**
@@ -64,7 +64,7 @@ public class RandomWalkIntegerSetSizeWeightedOperatorParser extends AbstractXMLO
         double baseSetSize = xo.getDoubleAttribute(BASE_SET_SIZE);
 
         int windowSize = (int)d;
-        Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+        RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
         MicrosatelliteSamplerTreeModel msatSampleTreeModel = (MicrosatelliteSamplerTreeModel)xo.getChild(MicrosatelliteSamplerTreeModel.class);
 
         return new RandomWalkIntegerSetSizeWeightedOperator(parameter, windowSize, weight, msatSampleTreeModel, baseSetSize);
@@ -90,7 +90,7 @@ public class RandomWalkIntegerSetSizeWeightedOperatorParser extends AbstractXMLO
             AttributeRule.newDoubleRule(WINDOW_SIZE),
             AttributeRule.newDoubleRule(MCMCOperator.WEIGHT),
             AttributeRule.newDoubleRule(BASE_SET_SIZE),
-            new ElementRule(Parameter.class),
+            new ElementRule(RealParameter.class),
             new ElementRule(MicrosatelliteSamplerTreeModel.class)
     };
 }

@@ -25,7 +25,7 @@
 
 package dr.evomodelxml.speciation;
 
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.evomodel.tree.randomlocalmodel.RLTVLogger;
 import dr.evomodel.tree.randomlocalmodel.RandomLocalTreeVariable;
 import dr.xml.*;
@@ -50,7 +50,7 @@ public class RLTVLoggerParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-            TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+            Tree treeModel = (Tree) xo.getChild(Tree.class);
             RandomLocalTreeVariable randomLocal =
                     (RandomLocalTreeVariable) xo.getChild(RandomLocalTreeVariable.class);
 
@@ -88,7 +88,7 @@ public class RLTVLoggerParser extends AbstractXMLObjectParser {
         }
 
         private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
-                new ElementRule(TreeModel.class),
+                new ElementRule(Tree.class),
                 new ElementRule(RandomLocalTreeVariable.class),
                 AttributeRule.newIntegerRule(LOG_EVERY),
                 AttributeRule.newStringRule(FILENAME),

@@ -28,7 +28,7 @@ package dr.evomodelxml.tree;
 import dr.evolution.tree.TreeTraitProvider;
 import dr.evolution.util.Taxa;
 import dr.evomodel.tree.AncestralTrait;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.xml.*;
 
 /**
@@ -105,7 +105,7 @@ public class AncestralTraitParser extends AbstractXMLObjectParser {
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             new StringAttributeRule(NAME, "A name for this statistic primarily for the purposes of logging", true),
             new StringAttributeRule(TRAIT_NAME, "The name of the trait to log", true),
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             new ElementRule(TreeTraitProvider.class),
             new ElementRule(MRCA, new XMLSyntaxRule[]{new ElementRule(Taxa.class)},  "The MRCA to reconstruct the trait at (default root node)", true)
     };

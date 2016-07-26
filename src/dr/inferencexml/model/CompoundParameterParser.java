@@ -26,7 +26,7 @@
 package dr.inferencexml.model;
 
 import dr.inference.model.CompoundParameter;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -49,7 +49,7 @@ public class CompoundParameterParser extends AbstractXMLObjectParser {
         CompoundParameter compoundParameter = new CompoundParameter((String) null);
 
         for (int i = 0; i < xo.getChildCount(); i++) {
-            compoundParameter.addParameter((Parameter) xo.getChild(i));
+            compoundParameter.addParameter((RealParameter) xo.getChild(i));
         }
 
         return compoundParameter;
@@ -72,7 +72,7 @@ public class CompoundParameterParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules;{
         rules = new XMLSyntaxRule[]{
-                new ElementRule(Parameter.class, 1, Integer.MAX_VALUE),
+                new ElementRule(RealParameter.class, 1, Integer.MAX_VALUE),
         };
     }
 

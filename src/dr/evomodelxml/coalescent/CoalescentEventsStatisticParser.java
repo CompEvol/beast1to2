@@ -51,7 +51,7 @@ public class CoalescentEventsStatisticParser extends AbstractXMLObjectParser {
 	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
                 new ElementRule(CoalescentIntervalProvider.class)//,
-                //new ElementRule(TreeModel.class)
+                //new ElementRule(Tree.class)
         };
     }
 
@@ -64,7 +64,7 @@ public class CoalescentEventsStatisticParser extends AbstractXMLObjectParser {
             System.err.println("Parsing coalescentEventsStatistic");
         }
         CoalescentIntervalProvider coalescent = (CoalescentIntervalProvider) xo.getChild(CoalescentIntervalProvider.class);
-        //TreeModel treeModel = (TreeModel) xo.getChild(TreeModel.class);
+        //Tree treeModel = (Tree) xo.getChild(Tree.class);
         //return new CoalescentEventsStatistic(coalescent, treeModel);
         return new CoalescentEventsStatistic(coalescent);
     */

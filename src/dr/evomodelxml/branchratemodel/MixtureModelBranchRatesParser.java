@@ -26,9 +26,9 @@
 package dr.evomodelxml.branchratemodel;
 
 import dr.evomodel.branchratemodel.MixtureModelBranchRates;
-import dr.evomodel.tree.TreeModel;
+import beast.evolution.tree.Tree;
 import dr.inference.distribution.ParametricDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -66,7 +66,7 @@ public class MixtureModelBranchRatesParser extends AbstractXMLObjectParser {
 
         final boolean useQuantilesForRates = xo.getAttribute(USE_QUANTILE, true);
 
-        TreeModel tree = (TreeModel) xo.getChild(TreeModel.class);
+        Tree tree = (Tree) xo.getChild(Tree.class);
 
         //while (xo.hasChildNamed(DISTRIBUTION)) {
 
@@ -80,13 +80,13 @@ public class MixtureModelBranchRatesParser extends AbstractXMLObjectParser {
             }
         }
 
-        //Parameter rateCategoryParameter = (Parameter) xo.getElementFirstChild(RATE_CATEGORIES);
+        //RealParameter rateCategoryParameter = (RealParameter) xo.getElementFirstChild(RATE_CATEGORIES);
 
         ParametricDistributionModel[] models = modelsList.toArray(new ParametricDistributionModel[modelsList.size()]);
 
-        Parameter rateCategoryQuantilesParameter = (Parameter) xo.getElementFirstChild(RATE_CATEGORY_QUANTILES);
+        RealParameter rateCategoryQuantilesParameter = (RealParameter) xo.getElementFirstChild(RATE_CATEGORY_QUANTILES);
 
-        Parameter distributionIndexParameter = (Parameter) xo.getElementFirstChild(DISTRIBUTION_INDEX);
+        RealParameter distributionIndexParameter = (RealParameter) xo.getElementFirstChild(DISTRIBUTION_INDEX);
 
         Logger.getLogger("dr.evomodel").info("Using random discretized relaxed clock model with a mixture distribution.");
         for(int i=0; i<models.length; i++) {
@@ -143,13 +143,13 @@ public class MixtureModelBranchRatesParser extends AbstractXMLObjectParser {
             AttributeRule.newDoubleRule(NORMALIZE_BRANCH_RATE_TO, true, "The mean rate to normalize to, if normalizing"),
             AttributeRule.newBooleanRule(USE_QUANTILE, true, "Whether or not to use quantiles to represent rates. If false then rates are not drawn " +
                 "specifically from any of the distributions"),
-            new ElementRule(TreeModel.class),
+            new ElementRule(Tree.class),
             //new ElementRule(DISTRIBUTION, ParametricDistributionModel.class, "The distribution model for rates among branches", false),
             /* Can have an infinite number of rate distribution models */
             new ElementRule(DISTRIBUTION, ParametricDistributionModel.class, "The distribution model for rates among branches", 1, Integer.MAX_VALUE),
-            new ElementRule(DISTRIBUTION_INDEX, Parameter.class, "Operator that switches between the distributions of the branch rate distribution model", false),
-            /*new ElementRule(RATE_CATEGORIES, Parameter.class, "The rate categories parameter", false),      */
-            new ElementRule(RATE_CATEGORY_QUANTILES, Parameter.class, "The quantiles for", false),
+            new ElementRule(DISTRIBUTION_INDEX, RealParameter.class, "Operator that switches between the distributions of the branch rate distribution model", false),
+            /*new ElementRule(RATE_CATEGORIES, RealParameter.class, "The rate categories parameter", false),      */
+            new ElementRule(RATE_CATEGORY_QUANTILES, RealParameter.class, "The quantiles for", false),
     };
 
 		}

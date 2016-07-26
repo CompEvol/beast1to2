@@ -27,7 +27,7 @@ package dr.evomodelxml.coalescent;
 
 import dr.evomodel.coalescent.PowerLawGrowthModel;
 import dr.evoxml.util.XMLUnits;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -55,12 +55,12 @@ public class PowerLawGrowthModelParser extends AbstractXMLObjectParser {
         Units.Type units = XMLUnits.Utils.getUnitsAttr(xo);
 
         XMLObject cxo = xo.getChild(N0);
-        Parameter N0Param = (Parameter) cxo.getChild(Parameter.class);
-        Parameter rParam;
+        RealParameter N0Param = (RealParameter) cxo.getChild(RealParameter.class);
+        RealParameter rParam;
 
 
         cxo = xo.getChild(POWER);
-        rParam = (Parameter) cxo.getChild(Parameter.class);
+        rParam = (RealParameter) cxo.getChild(RealParameter.class);
         return new PowerLawGrowthModel(N0Param, rParam, units);
     */
 		}
@@ -86,11 +86,11 @@ public class PowerLawGrowthModelParser extends AbstractXMLObjectParser {
 
     private XMLSyntaxRule[] rules = new XMLSyntaxRule[]{
             new ElementRule(N0,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
 
 
             new ElementRule(POWER,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
 
             XMLUnits.SYNTAX_RULES[0]
     };

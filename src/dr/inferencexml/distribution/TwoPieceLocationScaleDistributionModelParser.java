@@ -25,7 +25,7 @@
 
 package dr.inferencexml.distribution;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.math.distributions.Distribution;
 import dr.xml.*;
 
@@ -51,15 +51,15 @@ public class TwoPieceLocationScaleDistributionModelParser extends AbstractXMLObj
 		return null;
 		/*
 
-        Parameter locationParam;
-        Parameter sigmaParam;
-        Parameter gammaParam;
+        RealParameter locationParam;
+        RealParameter sigmaParam;
+        RealParameter gammaParam;
 
         XMLObject cxo = xo.getChild(LOCATION);
-        if (cxo.getChild(0) instanceof Parameter) {
-            locationParam = (Parameter) cxo.getChild(Parameter.class);
+        if (cxo.getChild(0) instanceof RealParameter) {
+            locationParam = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            locationParam = new Parameter.Default(cxo.getDoubleChild(0));
+            locationParam = new RealParameter.Default(cxo.getDoubleChild(0));
         }
 
         String parameterizationLabel = (String) xo.getAttribute(PARAMETERIZATION);
@@ -70,17 +70,17 @@ public class TwoPieceLocationScaleDistributionModelParser extends AbstractXMLObj
         }
 
         cxo = xo.getChild(SIGMA);
-        if (cxo.getChild(0) instanceof Parameter) {
-            sigmaParam = (Parameter) cxo.getChild(Parameter.class);
+        if (cxo.getChild(0) instanceof RealParameter) {
+            sigmaParam = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            sigmaParam = new Parameter.Default(cxo.getDoubleChild(0));
+            sigmaParam = new RealParameter.Default(cxo.getDoubleChild(0));
         }
 
         cxo = xo.getChild(GAMMA);
-        if (cxo.getChild(0) instanceof Parameter) {
-            gammaParam = (Parameter) cxo.getChild(Parameter.class);
+        if (cxo.getChild(0) instanceof RealParameter) {
+            gammaParam = (RealParameter) cxo.getChild(RealParameter.class);
         } else {
-            gammaParam = new Parameter.Default(cxo.getDoubleChild(0));
+            gammaParam = new RealParameter.Default(cxo.getDoubleChild(0));
         }
 
         Distribution distribution = (Distribution) xo.getChild(Distribution.class);
@@ -105,21 +105,21 @@ public class TwoPieceLocationScaleDistributionModelParser extends AbstractXMLObj
             new ElementRule(LOCATION,
                     new XMLSyntaxRule[]{
                             new XORRule(
-                                    new ElementRule(Parameter.class),
+                                    new ElementRule(RealParameter.class),
                                     new ElementRule(Double.class)
                             )}
             ),
             new ElementRule(SIGMA,
                     new XMLSyntaxRule[]{
                             new XORRule(
-                                    new ElementRule(Parameter.class),
+                                    new ElementRule(RealParameter.class),
                                     new ElementRule(Double.class)
                             )}, true
             ),
             new ElementRule(GAMMA,
                     new XMLSyntaxRule[]{
                             new XORRule(
-                                    new ElementRule(Parameter.class),
+                                    new ElementRule(RealParameter.class),
                                     new ElementRule(Double.class)
                             )}, true
             ),

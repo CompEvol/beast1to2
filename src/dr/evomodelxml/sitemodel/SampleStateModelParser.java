@@ -27,7 +27,7 @@ package dr.evomodelxml.sitemodel;
 
 import dr.evomodel.sitemodel.SampleStateModel;
 import dr.evomodel.substmodel.SubstitutionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -50,10 +50,10 @@ public class SampleStateModelParser extends AbstractXMLObjectParser {
 		/*
 
         XMLObject cxo = xo.getChild(MUTATION_RATE);
-        Parameter muParam = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter muParam = (RealParameter) cxo.getChild(RealParameter.class);
 
         cxo = xo.getChild(PROPORTIONS);
-        Parameter proportionParameter = (Parameter) cxo.getChild(Parameter.class);
+        RealParameter proportionParameter = (RealParameter) cxo.getChild(RealParameter.class);
 
         Vector<Object> subModels = new Vector<Object>();
 
@@ -89,9 +89,9 @@ public class SampleStateModelParser extends AbstractXMLObjectParser {
 
     private final XMLSyntaxRule[] rules = {
             new ElementRule(MUTATION_RATE,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(PROPORTIONS,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)}),
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)}),
             new ElementRule(SubstitutionModel.class, 1, Integer.MAX_VALUE)
     };
 }

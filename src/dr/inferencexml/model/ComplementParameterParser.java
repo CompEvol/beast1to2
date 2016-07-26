@@ -25,7 +25,7 @@
 
 package dr.inferencexml.model;
 
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -40,7 +40,7 @@ public class ComplementParameterParser extends AbstractXMLObjectParser {
 		return null;
 		/*
 
-        Parameter parameter = (Parameter) xo.getChild(Parameter.class);
+        RealParameter parameter = (RealParameter) xo.getChild(RealParameter.class);
         return new ComplementParameter(parameter);
     */
 		}
@@ -51,7 +51,7 @@ public class ComplementParameterParser extends AbstractXMLObjectParser {
     }
 
     private final XMLSyntaxRule[] rules = {
-            new ElementRule(Parameter.class),
+            new ElementRule(RealParameter.class),
     };
 
     @Override
@@ -61,7 +61,7 @@ public class ComplementParameterParser extends AbstractXMLObjectParser {
 
     @Override
 	public Class getReturnType() {
-        return Parameter.class;
+        return RealParameter.class;
     }
 
     @Override

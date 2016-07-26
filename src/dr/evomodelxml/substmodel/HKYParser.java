@@ -86,6 +86,6 @@ public class HKYParser extends AbstractXMLObjectParser {
             new ElementRule(FrequencyModelParser.FREQUENCIES,
                     new XMLSyntaxRule[]{new ElementRule(Frequencies.class)}),
             new ElementRule(KAPPA,
-                    new XMLSyntaxRule[]{new ElementRule(Parameter.class)})
+                    new XMLSyntaxRule[]{new ElementRule(RealParameter.class)})
     };
 }

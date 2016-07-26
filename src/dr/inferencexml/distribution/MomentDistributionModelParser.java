@@ -26,7 +26,7 @@
 package dr.inferencexml.distribution;
 
 import dr.inference.distribution.MomentDistributionModel;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -45,12 +45,12 @@ public class MomentDistributionModelParser extends AbstractXMLObjectParser {
 		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
 		return null;
 		/*
-        Parameter mean=(Parameter) xo.getChild(MEAN).getChild(0);
-        Parameter prec=(Parameter) xo.getChild(PREC).getChild(0);
-        Parameter cutoff=null;
+        RealParameter mean=(RealParameter) xo.getChild(MEAN).getChild(0);
+        RealParameter prec=(RealParameter) xo.getChild(PREC).getChild(0);
+        RealParameter cutoff=null;
         if(xo.getChild(CUTOFF) != null){
-        cutoff=(Parameter) xo.getChild(CUTOFF).getChild(0);}
-        Parameter data=(Parameter) xo.getChild(DATA).getChild(0);
+        cutoff=(RealParameter) xo.getChild(CUTOFF).getChild(0);}
+        RealParameter data=(RealParameter) xo.getChild(DATA).getChild(0);
 
         return new MomentDistributionModel(mean, prec, cutoff, data);
     */
@@ -64,22 +64,22 @@ public class MomentDistributionModelParser extends AbstractXMLObjectParser {
     private final XMLSyntaxRule[] rules = {
             new ElementRule(MEAN,
                     new XMLSyntaxRule[]{
-                                            new ElementRule(Parameter.class)
+                                            new ElementRule(RealParameter.class)
                             }
             ),
                     new ElementRule(CUTOFF,
                             new XMLSyntaxRule[]{
-                                            new ElementRule(Parameter.class, true)
+                                            new ElementRule(RealParameter.class, true)
                                     },true
                     ),
                     new ElementRule(PREC,
                             new XMLSyntaxRule[]{
-                                            new ElementRule(Parameter.class)
+                                            new ElementRule(RealParameter.class)
                                     }
             ),
             new ElementRule(DATA,
                     new XMLSyntaxRule[]{
-                            new ElementRule(Parameter.class)
+                            new ElementRule(RealParameter.class)
                     }
             )
     };

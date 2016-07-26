@@ -26,7 +26,7 @@
 package dr.inferencexml.operators;
 
 import dr.inference.distribution.MultivariateDistributionLikelihood;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.inference.operators.EllipticalSliceOperator;
 import dr.inference.operators.MCMCOperator;
 import dr.math.distributions.GaussianProcessRandomGenerator;
@@ -56,7 +56,7 @@ public class EllipticalSliceOperatorParser extends AbstractXMLObjectParser {
 		/*
 
         final double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
-        final Parameter variable = (Parameter) xo.getChild(Parameter.class);
+        final RealParameter variable = (RealParameter) xo.getChild(RealParameter.class);
         boolean drawByRowTemp=false;
         if(xo.hasAttribute(DRAW_BY_ROW))
             drawByRowTemp=xo.getBooleanAttribute(DRAW_BY_ROW);
@@ -125,7 +125,7 @@ public class EllipticalSliceOperatorParser extends AbstractXMLObjectParser {
             AttributeRule.newBooleanRule(TRANSLATION_INVARIANT, true),
             AttributeRule.newBooleanRule(ROTATION_INVARIANT, true),
 
-            new ElementRule(Parameter.class),
+            new ElementRule(RealParameter.class),
             new XORRule(
                     new ElementRule(GaussianProcessRandomGenerator.class),
                     new ElementRule(MultivariateDistributionLikelihood.class)

@@ -27,7 +27,7 @@ package dr.inferencexml.model;
 
 import dr.inference.model.MatrixParameter;
 import dr.inference.model.MatrixVectorProductParameter;
-import dr.inference.model.Parameter;
+import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
 /**
@@ -47,7 +47,7 @@ public class MatrixVectorProductParameterParser extends AbstractXMLObjectParser 
 		/*
 
         MatrixParameter matrix = (MatrixParameter) xo.getChild(MATRIX).getChild(MatrixParameter.class);
-        Parameter vector = (Parameter) xo.getChild(VECTOR).getChild(Parameter.class);
+        RealParameter vector = (RealParameter) xo.getChild(VECTOR).getChild(RealParameter.class);
 
         if (matrix.getColumnDimension() != vector.getDimension()) {
             throw new XMLParseException("Wrong matrix-vector dimensions in " + xo.getId());
@@ -67,7 +67,7 @@ public class MatrixVectorProductParameterParser extends AbstractXMLObjectParser 
                     new ElementRule(MatrixParameter.class),
             }),
             new ElementRule(VECTOR, new XMLSyntaxRule[]{
-                    new ElementRule(Parameter.class),
+                    new ElementRule(RealParameter.class),
             }),
     };
 
