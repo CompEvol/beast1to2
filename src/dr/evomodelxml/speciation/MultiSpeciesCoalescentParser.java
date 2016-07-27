@@ -25,9 +25,10 @@
 
 package dr.evomodelxml.speciation;
 
-import dr.evomodel.speciation.MultiSpeciesCoalescent;
-import dr.evomodel.speciation.SpeciesBindings;
-import dr.evomodel.speciation.SpeciesTreeModel;
+import beast.core.util.CompoundDistribution;
+import beast.evolution.speciation.GeneTreeForSpeciesTreeDistribution;
+import beast.evolution.speciation.SpeciesTreePrior;
+import beast.evolution.tree.Tree;
 import dr.xml.*;
 
 /**
@@ -37,20 +38,32 @@ public class MultiSpeciesCoalescentParser extends AbstractXMLObjectParser {
 
     @Override
 	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
-        final SpeciesBindings sb = (SpeciesBindings) xo.getChild(SpeciesBindings.class);
-        final SpeciesTreeModel tree = (SpeciesTreeModel) xo.getChild(SpeciesTreeModel.class);
-        return new MultiSpeciesCoalescent(sb, tree);
-    */
+        final SpeciesBindingsParser.Binding sb = (SpeciesBindingsParser.Binding) xo.getChild(SpeciesBindingsParser.Binding.class);
+        final Tree sptree = (Tree) xo.getChild(Tree.class);
+		CompoundDistribution distr = new CompoundDistribution();
+		
+		SpeciesTreePrior prior = new SpeciesTreePrior();
+		prior.initByName("tree", sb.sptree, 
+				"popFunction", sb.popFunction,
+				"bottomPopSize", sb.sppSplitPopulations,
+				"topPopSize", sb.sppSplitPopulations,
+				"taxonset", sb.taxonset,
+				"gammaParameter", "1.0"
+		);
+		distr.pDistributions.get().add(prior);
+		for (GeneTreeForSpeciesTreeDistribution d : sb.genes) {
+			d.initByName("speciesTree", sptree, "speciesTreePrior", prior);
+			distr.pDistributions.get().add(d);
 		}
+		return distr;
+        //return new MultiSpeciesCoalescent(sb, tree);
+	}
 
     @Override
 	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
-                new ElementRule(SpeciesBindings.class),
-                new ElementRule(SpeciesTreeModel.class),
+                new ElementRule(SpeciesBindingsParser.Binding.class),
+                new ElementRule(Tree.class),
         };
     }
 
@@ -61,7 +74,7 @@ public class MultiSpeciesCoalescentParser extends AbstractXMLObjectParser {
 
     @Override
 	public Class getReturnType() {
-        return MultiSpeciesCoalescent.class;
+        return CompoundDistribution.class;
     }
 
     @Override

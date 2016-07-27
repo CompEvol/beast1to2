@@ -25,9 +25,9 @@
 
 package dr.evomodelxml.operators;
 
-import dr.evomodel.operators.TreeNodeSlide;
-import dr.evomodel.speciation.SpeciesBindings;
-import dr.evomodel.speciation.SpeciesTreeModel;
+import beast.evolution.operators.NodeReheight;
+import beast.evolution.tree.Tree;
+import dr.evomodelxml.speciation.SpeciesBindingsParser;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
 
@@ -43,20 +43,20 @@ public class TreeNodeSlideParser extends AbstractXMLObjectParser {
 
     @Override
 	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
-        SpeciesBindings species = (SpeciesBindings) xo.getChild(SpeciesBindings.class);
-        SpeciesTreeModel tree = (SpeciesTreeModel) xo.getChild(SpeciesTreeModel.class);
+        SpeciesBindingsParser.Binding species = (SpeciesBindingsParser.Binding) xo.getChild(SpeciesBindingsParser.Binding.class);
+        Tree tree = (Tree) xo.getChild(Tree.class);
 
         final double weight = xo.getDoubleAttribute(MCMCOperator.WEIGHT);
+        
+        NodeReheight operator = new NodeReheight();
+        operator.initByName("weight", weight, "tree", tree, "taxonset", species.taxonset);
+        return operator;
 //            final double range = xo.getAttribute("range", 1.0);
 //            if( range <= 0 || range > 1.0 ) {
 //                throw new XMLParseException("range out of range");
 //            }
         //final boolean oo = xo.getAttribute("outgroup", false);
-        return new TreeNodeSlide(tree, species /*, range* //*, oo* /, weight);
-    */
+//        return new TreeNodeSlide(tree, species /*, range* //*, oo* /, weight);
 		}
 
     @Override
@@ -66,7 +66,7 @@ public class TreeNodeSlideParser extends AbstractXMLObjectParser {
 
     @Override
 	public Class getReturnType() {
-        return TreeNodeSlide.class;
+        return NodeReheight.class;
     }
 
     @Override
@@ -76,8 +76,8 @@ public class TreeNodeSlideParser extends AbstractXMLObjectParser {
                // AttributeRule.newDoubleRule("range", true),
               //  AttributeRule.newBooleanRule("outgroup", true),
 
-                new ElementRule(SpeciesBindings.class),
-                new ElementRule(SpeciesTreeModel.class)
+                new ElementRule(SpeciesBindingsParser.Binding.class),
+                new ElementRule(Tree.class)
         };
     }
 

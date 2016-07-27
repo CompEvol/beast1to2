@@ -25,10 +25,10 @@
 
 package dr.evomodelxml.speciation;
 
-import dr.evolution.tree.Tree;
-import dr.evomodel.speciation.SpeciesBindings;
-import dr.evomodel.speciation.SpeciesTreeModel;
 import beast.core.parameter.RealParameter;
+import beast.evolution.speciation.SpeciesTreePrior;
+import beast.evolution.tree.Tree;
+import beast1to2.Beast1to2Converter;
 import dr.util.Attributable;
 import dr.xml.*;
 
@@ -44,13 +44,11 @@ public class SpeciesTreeModelParser extends AbstractXMLObjectParser {
     public static final String BMPRIOR = "bmPrior";
     public static final String CONST_ROOT_POPULATION = "constantRoot";
     public static final String CONSTANT_POPULATION = "constantPopulation";
+    
 
     @Override
 	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
-        SpeciesBindings spb = (SpeciesBindings) xo.getChild(SpeciesBindings.class);
+        SpeciesBindingsParser.Binding spb = (SpeciesBindingsParser.Binding) xo.getChild(SpeciesBindingsParser.Binding.class);
 
         RealParameter coalPointsPops = null;
         RealParameter coalPointsIndicators = null;
@@ -61,18 +59,19 @@ public class SpeciesTreeModelParser extends AbstractXMLObjectParser {
         {
             XMLObject cxo = xo.getChild(COALESCENT_POINTS_POPULATIONS);
             if( cxo != null ) {
-                final double value = cxo.getAttribute(Attributable.VALUE, 1.0);
-                coalPointsPops = SpeciesTreeModel.createCoalPointsPopParameter(spb, cxo.getAttribute(Attributable.VALUE, value), bmp);
-                ParameterParser.replaceParameter(cxo, coalPointsPops);
-                coalPointsPops.addBounds(
-                        new RealParameter.DefaultBounds(Double.MAX_VALUE, 0, coalPointsPops.getDimension()));
-
-                cxo = xo.getChild(COALESCENT_POINTS_INDICATORS);
-                if( cxo == null ) {
-                    throw new XMLParseException("Must have indicators");
-                }
-                coalPointsIndicators = new RealParameter.Default(coalPointsPops.getDimension(), 0);
-                ParameterParser.replaceParameter(cxo, coalPointsIndicators);
+            	throw new XMLParseException(Beast1to2Converter.NIY + " " + COALESCENT_POINTS_POPULATIONS + " attribute");
+//                final double value = cxo.getAttribute(Attributable.VALUE, 1.0);
+//                coalPointsPops = SpeciesTreeModel.createCoalPointsPopParameter(spb, cxo.getAttribute(Attributable.VALUE, value), bmp);
+//                ParameterParser.replaceParameter(cxo, coalPointsPops);
+//                coalPointsPops.addBounds(
+//                        new RealParameter.DefaultBounds(Double.MAX_VALUE, 0, coalPointsPops.getDimension()));
+//
+//                cxo = xo.getChild(COALESCENT_POINTS_INDICATORS);
+//                if( cxo == null ) {
+//                    throw new XMLParseException("Must have indicators");
+//                }
+//                coalPointsIndicators = new RealParameter.Default(coalPointsPops.getDimension(), 0);
+//                ParameterParser.replaceParameter(cxo, coalPointsIndicators);
             } else {
                // assert ! bmp;
             }
@@ -82,18 +81,28 @@ public class SpeciesTreeModelParser extends AbstractXMLObjectParser {
 
         final double value = cxo.getAttribute(Attributable.VALUE, 1.0);
         final boolean nonConstRootPopulation = coalPointsPops == null && !cr;
-        final RealParameter sppSplitPopulations = SpeciesTreeModel.createSplitPopulationsParameter(spb, value, nonConstRootPopulation, cp);
-        ParameterParser.replaceParameter(cxo, sppSplitPopulations);
+        final RealParameter sppSplitPopulations = (RealParameter) cxo.getChild(RealParameter.class);
+        //		SpeciesTreeModel.createSplitPopulationsParameter(spb, value, nonConstRootPopulation, cp);
+        //ParameterParser.replaceParameter(cxo, sppSplitPopulations);
 
-        final RealParameter.DefaultBounds bounds =
-                new RealParameter.DefaultBounds(Double.MAX_VALUE, 0, sppSplitPopulations.getDimension());
-        sppSplitPopulations.addBounds(bounds);
+        //final RealParameter.DefaultBounds bounds =
+        //        new RealParameter.DefaultBounds(Double.MAX_VALUE, 0, sppSplitPopulations.getDimension());
+        sppSplitPopulations.setBounds(0.0, Double.MAX_VALUE);
 
-        final Tree startTree = (Tree) xo.getChild(Tree.class);
-
-        return new SpeciesTreeModel(spb, sppSplitPopulations, coalPointsPops, coalPointsIndicators, startTree, bmp,
-                nonConstRootPopulation, cp);
-    */
+       final Tree startTree = (Tree) xo.getChild(Tree.class);
+        
+        
+        Tree tree = new Tree();
+        tree.setID(xo.getId());
+        spb.taxonset.initAndValidate();
+        tree.initByName("taxonset", spb.taxonset);
+        
+        spb.sptree = tree;
+        spb.popFunction = (cp ? "constant" : (cr ? "linear_with_constant_root" : "linear"));
+        spb.sppSplitPopulations = sppSplitPopulations;
+        return tree;
+//        return new SpeciesTreeModel(spb, sppSplitPopulations, coalPointsPops, coalPointsIndicators, startTree, bmp,
+//                nonConstRootPopulation, cp);
 		}
 
     @Override
@@ -102,7 +111,7 @@ public class SpeciesTreeModelParser extends AbstractXMLObjectParser {
                 AttributeRule.newBooleanRule(BMPRIOR, true),
                 AttributeRule.newBooleanRule(CONST_ROOT_POPULATION, true),
                  AttributeRule.newBooleanRule(CONSTANT_POPULATION, true),
-                new ElementRule(SpeciesBindings.class),
+                new ElementRule(SpeciesBindingsParser.Binding.class),
                 // A starting tree. Can be very minimal, i.e. no branch lengths and not resolved
                 new ElementRule(Tree.class, true),
                 new ElementRule(SPP_SPLIT_POPULATIONS, new XMLSyntaxRule[]{
@@ -125,7 +134,7 @@ public class SpeciesTreeModelParser extends AbstractXMLObjectParser {
 
     @Override
 	public Class getReturnType() {
-        return SpeciesTreeModel.class;
+        return Tree.class;
     }
 
     @Override

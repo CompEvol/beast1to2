@@ -26,6 +26,7 @@
 package dr.evomodelxml.speciation;
 
 import beast.evolution.alignment.Taxon;
+import beast.evolution.alignment.TaxonSet;
 import dr.evomodel.speciation.SpeciesBindings;
 import dr.xml.*;
 
@@ -41,16 +42,15 @@ public class SpeciesBindingsSPinfoParser extends AbstractXMLObjectParser {
 
     @Override
 	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
         Taxon[] taxa = new Taxon[xo.getChildCount()];
+        TaxonSet t = new TaxonSet();
         for (int nt = 0; nt < taxa.length; ++nt) {
             taxa[nt] = (Taxon) xo.getChild(nt);
+            t.setInputValue("taxon", taxa[nt]);
         }
-        return new SpeciesBindings.SPinfo(xo.getId(), taxa);
-    */
-		}
+        t.setID(xo.getId());
+        return t;
+	}
 
     @Override
 	public XMLSyntaxRule[] getSyntaxRules() {
@@ -66,6 +66,6 @@ public class SpeciesBindingsSPinfoParser extends AbstractXMLObjectParser {
 
     @Override
 	public Class getReturnType() {
-        return SpeciesBindings.SPinfo.class;
+        return TaxonSet.class;
     }
 }

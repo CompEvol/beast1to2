@@ -211,9 +211,12 @@ public class XMLParser {
 
     public BEASTInterface getMCMC() {
         for (int i=0; i < root.getChildCount(); i++) {
-            BEASTInterface child = (BEASTInterface) root.getChild(i);
-            if (child.getID().equalsIgnoreCase("mcmc"))
-                return child;
+        	if (root.getChild(i) instanceof BEASTInterface) {
+	            BEASTInterface child = (BEASTInterface) root.getChild(i);
+	            if (child.getID().equalsIgnoreCase("mcmc")) {
+	                return child;
+	            }
+        	}
         }
         return null;
     }

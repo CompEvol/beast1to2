@@ -26,6 +26,13 @@
 package dr.evomodelxml.speciation;
 
 import dr.evomodel.speciation.SpeciesBindings;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import beast.core.parameter.RealParameter;
+import beast.evolution.alignment.TaxonSet;
+import beast.evolution.speciation.GeneTreeForSpeciesTreeDistribution;
 import beast.evolution.tree.Tree;
 import dr.xml.*;
 
@@ -43,17 +50,27 @@ public class SpeciesBindingsParser extends AbstractXMLObjectParser {
         return SPECIES;
     }
 
+    public class Binding {
+    	List<GeneTreeForSpeciesTreeDistribution> genes;
+    	public TaxonSet taxonset;
+    	Tree sptree;
+    	String popFunction;
+    	RealParameter sppSplitPopulations;
+
+    	Binding(List<GeneTreeForSpeciesTreeDistribution> genes, TaxonSet taxonset) {
+    		this.genes = genes;
+    		this.taxonset = taxonset;
+    	}
+    }
+    
     @Override
 	public Object parseXMLObject(XMLObject xo) throws XMLParseException {
-		System.out.println(getParserName() + " " + beast1to2.Beast1to2Converter.NIY);
-		return null;
-		/*
 
-        List<SpeciesBindings.SPinfo> sp = new ArrayList<SpeciesBindings.SPinfo>();
+        TaxonSet sp = new TaxonSet();
         for (int k = 0; k < xo.getChildCount(); ++k) {
             final Object child = xo.getChild(k);
-            if (child instanceof SpeciesBindings.SPinfo) {
-                sp.add((SpeciesBindings.SPinfo) child);
+            if (child instanceof TaxonSet) {
+                sp.setInputValue("taxon", (TaxonSet) child);
             }
         }
 
@@ -62,6 +79,7 @@ public class SpeciesBindingsParser extends AbstractXMLObjectParser {
         final Tree[] trees = new Tree[nTrees];
         double[] popFactors = new double[nTrees];
 
+        List<GeneTreeForSpeciesTreeDistribution> genes = new ArrayList<>();
         for (int nt = 0; nt < trees.length; ++nt) {
             Object child = xogt.getChild(nt);
             if (!(child instanceof Tree)) {
@@ -73,14 +91,18 @@ public class SpeciesBindingsParser extends AbstractXMLObjectParser {
                 popFactors[nt] = -1;
             }
             trees[nt] = (Tree) child;
+            GeneTreeForSpeciesTreeDistribution distr = new GeneTreeForSpeciesTreeDistribution();
+            distr.setInputValue("tree", trees[nt]);
+            distr.setInputValue("ploidy", popFactors[nt]);
+            genes.add(distr);
         }
 
         try {
-            return new SpeciesBindings(sp.toArray(new SpeciesBindings.SPinfo[sp.size()]), trees, popFactors);
+        	return new Binding(genes, sp);
+//            return new SpeciesBindings(sp.toArray(new SpeciesBindings.SPinfo[sp.size()]), trees, popFactors);
         } catch (Error e) {
             throw new XMLParseException(e.getMessage());
         }
-    */
 		}
 
     /* Can't be tree because XML parser supports usage of global tags only as main tags */
@@ -92,7 +114,7 @@ public class SpeciesBindingsParser extends AbstractXMLObjectParser {
     @Override
 	public XMLSyntaxRule[] getSyntaxRules() {
         return new XMLSyntaxRule[]{
-                new ElementRule(SpeciesBindings.SPinfo.class, 2, Integer.MAX_VALUE),
+                new ElementRule(TaxonSet.class, 2, Integer.MAX_VALUE),
                 // new ElementRule(GENE_TREES, someTree,  1, Integer.MAX_VALUE )
                 new ElementRule(GENE_TREES,
                         new XMLSyntaxRule[]{
@@ -110,7 +132,7 @@ public class SpeciesBindingsParser extends AbstractXMLObjectParser {
 
     @Override
 	public Class getReturnType() {
-        return SpeciesBindings.class;
+        return Binding.class;
     }
 
 }
