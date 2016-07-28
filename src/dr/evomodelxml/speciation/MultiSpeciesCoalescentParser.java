@@ -46,7 +46,7 @@ public class MultiSpeciesCoalescentParser extends AbstractXMLObjectParser {
 		prior.initByName("tree", sb.sptree, 
 				"popFunction", sb.popFunction,
 				"bottomPopSize", sb.sppSplitPopulations,
-				"topPopSize", sb.sppSplitPopulations,
+				"topPopSize", sb.sppSplitPopulationsTop,
 				"taxonset", sb.taxonset,
 				"gammaParameter", "1.0"
 		);

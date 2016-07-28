@@ -82,12 +82,15 @@ public class SpeciesTreeModelParser extends AbstractXMLObjectParser {
         final double value = cxo.getAttribute(Attributable.VALUE, 1.0);
         final boolean nonConstRootPopulation = coalPointsPops == null && !cr;
         final RealParameter sppSplitPopulations = (RealParameter) cxo.getChild(RealParameter.class);
+        sppSplitPopulations.valuesInput.setValue(value + "", sppSplitPopulations);
         //		SpeciesTreeModel.createSplitPopulationsParameter(spb, value, nonConstRootPopulation, cp);
         //ParameterParser.replaceParameter(cxo, sppSplitPopulations);
 
         //final RealParameter.DefaultBounds bounds =
         //        new RealParameter.DefaultBounds(Double.MAX_VALUE, 0, sppSplitPopulations.getDimension());
         sppSplitPopulations.setBounds(0.0, Double.MAX_VALUE);
+        final RealParameter sppSplitPopulationsTop = new RealParameter(value + "");
+        sppSplitPopulationsTop.setID("popSizesTop");
 
        final Tree startTree = (Tree) xo.getChild(Tree.class);
         
@@ -99,7 +102,8 @@ public class SpeciesTreeModelParser extends AbstractXMLObjectParser {
         
         spb.sptree = tree;
         spb.popFunction = (cp ? "constant" : (cr ? "linear_with_constant_root" : "linear"));
-        spb.sppSplitPopulations = sppSplitPopulations;
+        spb.sppSplitPopulations = sppSplitPopulations;        
+        spb.sppSplitPopulationsTop = sppSplitPopulationsTop;        
         return tree;
 //        return new SpeciesTreeModel(spb, sppSplitPopulations, coalPointsPops, coalPointsIndicators, startTree, bmp,
 //                nonConstRootPopulation, cp);

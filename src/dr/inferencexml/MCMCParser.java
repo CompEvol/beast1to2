@@ -31,10 +31,13 @@ import beast.core.OperatorSchedule;
 import beast.core.State;
 import beast.core.StateNode;
 import beast.core.StateNodeInitialiser;
+import beast.core.parameter.RealParameter;
 import beast.core.MCMC;
 import beast.core.Operator;
 import beast.core.util.CompoundDistribution;
 import beast.core.util.Log;
+import beast.evolution.operators.ScaleOperator;
+import beast.evolution.speciation.SpeciesTreePrior;
 import dr.xml.*;
 
 import java.util.ArrayList;
@@ -118,6 +121,9 @@ public class MCMCParser extends AbstractXMLObjectParser {
                 mcmc.loggersInput.get().add((Logger) o);
         	}
         }
+        
+        starBeastHack(mcmc);
+        
         mcmc.initAndValidate();
 
         return mcmc;
@@ -237,7 +243,50 @@ public class MCMCParser extends AbstractXMLObjectParser {
     // AbstractXMLObjectParser implementation
     //************************************************************************
 
-    @Override
+    private void starBeastHack(MCMC mcmc) {
+		// test whether this is a *BEAST analysis
+    	Distribution d = mcmc.posteriorInput.get();
+    	if (d instanceof CompoundDistribution) {
+    		CompoundDistribution post = (CompoundDistribution) d;
+    		if (post.pDistributions.get().size() > 0) {
+    			d = post.pDistributions.get().get(0);
+    	    	if (d instanceof CompoundDistribution) {
+    	    		CompoundDistribution prior = (CompoundDistribution) d;
+    	    		Distribution popSizePrior = null;
+	    			for (Distribution d2 : prior.pDistributions.get()) {
+	    				if (d2.getID() != null && d2.getID().equals("species.popSizesLikelihood")) {
+	    					popSizePrior = d2;
+	    				}
+	    				if (d2 instanceof SpeciesTreePrior) {
+	    					SpeciesTreePrior spPrior = (SpeciesTreePrior) d2;
+	    					if (spPrior.getInputValue("popFunction").toString().equals("linear")) {
+	    						RealParameter topPopSizes = spPrior.popSizesTopInput.get();
+	    						State state = mcmc.startStateInput.get();
+	    						state.stateNodeInput.setValue(topPopSizes, state);
+	    						
+	    						ScaleOperator operator = new ScaleOperator();
+	    						operator.initByName("parameter", topPopSizes, "weight", 5, 
+	    								"degreesOfFreedom", 1, "scaleAll", false, "scaleAllIndependently", false, 
+	    								"scaleFactor", 0.5);
+	    						mcmc.setInputValue("operator", operator);
+	    						// TODO: more operators to connect topPopSizes to
+	    					}
+	    				}
+	    			}
+	    			if (popSizePrior != null) {
+		            	// suppress species.popSizesLikelihood -- this is already calculated by the SpeciesTreePrior class
+	    				prior.pDistributions.get().remove(popSizePrior);
+	    				for (Logger logger : mcmc.loggersInput.get()) {
+	    					logger.loggersInput.get().remove(popSizePrior);
+	    				}
+	    			}
+    	    	}    					
+    		}
+    	}
+		
+	}
+
+	@Override
 	public String getParserDescription() {
         return "This element returns an MCMC chain and runs the chain as a side effect.";
     }

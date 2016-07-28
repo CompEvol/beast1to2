@@ -55,7 +55,7 @@ public class SpeciesBindingsParser extends AbstractXMLObjectParser {
     	public TaxonSet taxonset;
     	Tree sptree;
     	String popFunction;
-    	RealParameter sppSplitPopulations;
+    	RealParameter sppSplitPopulations, sppSplitPopulationsTop;
 
     	Binding(List<GeneTreeForSpeciesTreeDistribution> genes, TaxonSet taxonset) {
     		this.genes = genes;
