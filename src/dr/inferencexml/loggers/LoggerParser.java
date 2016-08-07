@@ -80,7 +80,9 @@ public class LoggerParser extends AbstractXMLObjectParser {
         final int logEvery = xo.getIntegerAttribute(LOG_EVERY);
 
         Logger logger = new Logger();
-        logger.setID(xo.getStringAttribute("id"));
+        if (xo.hasAttribute("id")) {
+            logger.setID(xo.getStringAttribute("id"));
+        }
         logger.everyInput.setValue(logEvery, logger);
 
         if (xo.hasAttribute(FILE_NAME)) {
