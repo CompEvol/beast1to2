@@ -61,26 +61,33 @@ public class FrequencyModelParser extends AbstractXMLObjectParser {
 
         Frequencies freqs = new Frequencies();
         RealParameter freqsParam = (RealParameter) xo.getElementFirstChild(FREQUENCIES);
-        if (freqsParam != null) {
-        	double sum = 0;
-        	for (double d : freqsParam.getValues()) {
-        		sum += d;
-        	}
-        	if (Math.abs(sum) < 1e-10) {
-        		freqsParam.valuesInput.setValue(1.0/freqsParam.getDimension() +"", freqsParam);
-        		freqsParam.initAndValidate();
-        	}
-        	freqs.frequenciesInput.setValue(freqsParam, freqs);
+
+        // empirical
+        Alignment data = (Alignment) xo.getChild(Alignment.class);
+        if (data != null) {
+            freqs.dataInput.setValue(data, freqs);
+            freqs.initAndValidate();
+        } else if (freqsParam != null) {
+            // estimated, equal
+            double sum = 0;
+            for (double d : freqsParam.getValues()) {
+                sum += d;
+            }
+            if (Math.abs(sum) < 1e-10) {
+                freqsParam.valuesInput.setValue(1.0/freqsParam.getDimension() +"", freqsParam);
+                freqsParam.initAndValidate();
+            }
+            freqs.frequenciesInput.setValue(freqsParam, freqs);
         }
 
-        for (int i = 0; i < xo.getChildCount(); i++) {
-            Object obj = xo.getChild(i);
-            if (obj instanceof Alignment) {
-            	freqs.dataInput.setValue(obj, freqs);
-            	freqs.initAndValidate();
-                break;
-            }
-        }
+//        for (int i = 0; i < xo.getChildCount(); i++) {
+//            Object obj = xo.getChild(i);
+//            if (obj instanceof Alignment) {
+//            	freqs.dataInput.setValue(obj, freqs);
+//            	freqs.initAndValidate();
+//                break;
+//            }
+//        }
         
         StringBuilder sb = new StringBuilder("Creating state frequencies model '" + freqsParam.getID() + "': ");
         if (freqs.dataInput.get() != null) {
