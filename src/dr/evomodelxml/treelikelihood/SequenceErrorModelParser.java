@@ -26,7 +26,7 @@
 package dr.evomodelxml.treelikelihood;
 
 import beast.evolution.alignment.TaxonSet;
-import dr.evomodel.treelikelihood.SequenceErrorModel;
+//import dr.evomodel.treelikelihood.SequenceErrorModel;
 import beast.core.parameter.RealParameter;
 import dr.xml.*;
 
@@ -118,7 +118,8 @@ public class SequenceErrorModelParser extends AbstractXMLObjectParser {
 
     @Override
 	public Class getReturnType() {
-        return SequenceErrorModel.class;
+//        return SequenceErrorModel.class;
+    	return null;
     }
 
     @Override
